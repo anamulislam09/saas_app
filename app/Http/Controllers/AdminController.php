@@ -45,6 +45,7 @@ class AdminController extends Controller
             'name' =>$request->name,
             'address' =>$request->address,
             'phone' =>$request->phone,
+            'customer_id' =>$request->customer_id,
             'email' =>$request->email,
             'password' =>Hash::make($request->password),
             'created_at' =>Carbon::now(),

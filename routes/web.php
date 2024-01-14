@@ -18,19 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 /*---------------- Admin route start here ------------------*/
 
-    Route::prefix('admin')->group(function(){
-// admin login route start here 
-Route::get('/register',[AdminController::class,'AdminRegister'])->name('register_form');
-Route::post('/register/store',[AdminController::class,'Store'])->name('admin.store');
-// admin login route start here 
+Route::prefix('admin')->group(function () {
+    // admin register route start here 
+    Route::get('/register', [AdminController::class, 'AdminRegister'])->name('register_form');
+    Route::post('/register/store', [AdminController::class, 'Store'])->name('admin.store');
+    // admin register route ends here 
 
-        // admin login route start here 
-        Route::get('/login',[AdminController::class,'Index'])->name('login_form');
-        Route::post('/login/owner',[AdminController::class,'Login'])->name('admin.login');
-        Route::get('/dashboard',[AdminController::class,'Dashboard'])->name('admin.dashboard')->middleware('admin');
-       // admin login route start here 
-        Route::post('/logout',[AdminController::class,'AdminLogout'])->name('admin.logout')->middleware('admin');
-    });
+    // admin login route start here 
+    Route::get('/login', [AdminController::class, 'Index'])->name('login_form');
+    Route::post('/login/owner', [AdminController::class, 'Login'])->name('admin.login');
+    Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard')->middleware('admin');
+    // admin login route start here 
+    Route::post('/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout')->middleware('admin');
+});
 
 /*---------------- Admin route ends here ------------------*/
 
@@ -48,4 +48,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

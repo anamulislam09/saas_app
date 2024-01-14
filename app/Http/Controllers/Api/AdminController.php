@@ -23,7 +23,7 @@ class AdminController extends Controller
         } else {
             return response()->json([
                 'status' => 404,
-                'Products' => 'No data available'
+                'message' => 'No data available'
             ], 404);
         }
     }
@@ -40,19 +40,20 @@ class AdminController extends Controller
         } else {
             return response()->json([
                 'status' => 404,
-                'Products' => 'No such product !'
+                'message' => 'No such product !'
             ], 404);
         }
     }
 
     // customers create 
-    public function store(Request $request)
+    public function AdminRegister(Request $request)
     {
         $customer = Customer::insert([
 
             'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
+            'customer_id' => $request->customer_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
@@ -61,7 +62,7 @@ class AdminController extends Controller
         if ($customer) {
             return response()->json([
                 'status' => 200,
-                'message' => 'Customer inserted successfully'
+                'message' => 'Customer Register successfully'
             ], 200);
         } else {
             return response()->json([
@@ -84,7 +85,7 @@ class AdminController extends Controller
         } else {
             return response()->json([
                 'status' => 404,
-                'Products' => 'No such product !'
+                'message' => 'No such product !'
             ], 404);
         }
     }
@@ -99,6 +100,7 @@ class AdminController extends Controller
         $data['name'] = $request->name;
         $data['address'] = $request->address;
         $data['phone'] = $request->phone;
+        $data['customer_id'] = $request->customer_id;
         $data['status'] = $request->status;
         $data->save();
 
@@ -114,4 +116,41 @@ class AdminController extends Controller
             ], 500);
         }
     }
+
+       // delete single customer
+    //    public function delete($id)
+    //    {
+    //        $data = Customer::FindOrFail($id);
+    //        if ($data->count() > 0) {
+    //            return response()->json([
+    //                'status' => 200,
+    //                'products' => $data
+    //            ], 200);
+    //        } else {
+    //            return response()->json([
+    //                'status' => 404,
+    //                'Products' => 'No such product !'
+    //            ], 404);
+    //        }
+    //    }
+
+
+      // customers login 
+      public function AdminLogin(Request $request)
+      {
+        $check = $request->all();
+        if (Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Login Successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Invalid Email or Password!'
+            ], 500);
+           
+        }
+        //end method
+      }
 }
