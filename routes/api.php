@@ -34,6 +34,9 @@ Route::post('/admin-login', [AdminController::class, 'AdminLogin']);
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/user-register', [UserController::class, 'UserRegister']);
 Route::get('/user/{id}', [UserController::class, 'show']);
+Route::get('/user/edit/{id}', [UserController::class, 'edit']);
+Route::put('/user/edit/{id}', [UserController::class, 'update']);
+Route::delete('/user/delete/{id}', [UserController::class, 'delete']);
 
 // customer login 
 Route::post('/user-login', [UserController::class, 'UserLogin']);
