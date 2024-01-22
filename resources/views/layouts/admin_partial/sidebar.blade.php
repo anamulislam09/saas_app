@@ -14,7 +14,7 @@
                 <img src="{{asset('admin//dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{Auth::guard('admin')->user()->name}}</a>
+                <a href="{{route('admin.dashboard')}}" class="d-block">{{Auth::guard('admin')->user()->name}}</a>
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -22,19 +22,57 @@
         <nav class="">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
+                @if (Auth::guard('admin')->user()->role == 0)
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-circle"></i>
                         <p>
-                            Categories
+                        Customers
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview ml-3">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{route('customers.all')}}" class="nav-link">
                                 <i class="far fa-dot-circle nav-icon"></i>
-                                <p>Category</p>
+                                <p>Customers</p>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </li>
+                {{-- expense category start here --}}
+                <li class="nav-item">
+                    <a href="{{route('category.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>category</p>
+                    </a>
+                </li>
+                {{-- expense category ends here --}}
+                @endif
+                @if (Auth::guard('admin')->user()->role == 1)
+                {{-- Products start here --}}
+                <li class="nav-item">
+                    <a href="{{route('user.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                {{-- Products start here --}}
+                {{-- Roles & Parmission start here --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Roles & Parmission
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ml-3">
+                        <li class="nav-item">
+                            <a href="{{route('all.permission')}}" class="nav-link">
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>All Parmission</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -51,16 +89,8 @@
                         </li>
                     </ul>
                 </li>
-
-                {{-- Products start here --}}
-                <li class="nav-item">
-                    <a href="" class="nav-link">
-                        <i class="nav-icon fas fa-circle"></i>
-                        <p>Products</p>
-                    </a>
-                </li>
-
-                {{-- Products start here --}}
+                {{-- Roles & Parmission ends here --}}
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

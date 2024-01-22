@@ -17,16 +17,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// customer login 
+Route::post('/admin-login', [AdminController::class, 'AdminLogin']);
+Route::post('/admin-register', [AdminController::class, 'AdminRegister']);
+
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 /*----------------customers api route start here-------------------*/
 Route::get('/customers', [AdminController::class, 'index']);
-Route::post('/admin-register', [AdminController::class, 'AdminRegister']);
 Route::get('/customer/{id}', [AdminController::class, 'show']);
 Route::get('/customer/edit/{id}', [AdminController::class, 'edit']);
 Route::put('/customer/edit/{id}', [AdminController::class, 'update']);
 // Route::delete('/customer/delete/{id}', [AdminController::class, 'delete']);
 
-// customer login 
-Route::post('/admin-login', [AdminController::class, 'AdminLogin']);
 
 /*----------------customers api route ends here-------------------*/
 
@@ -47,3 +49,5 @@ Route::get('/roles', [RoleController::class, 'index']);
 Route::post('/add-role', [RoleController::class, 'store']);
 Route::delete('/role/delete/{id}', [RoleController::class, 'destroy']);
 /*----------------roles api route ends here-------------------*/
+
+});

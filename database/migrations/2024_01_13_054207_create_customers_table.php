@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
-            $table->integer('customer_id')->unique();
+            $table->string('nid_no')->unique();
+            $table->string('image')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('role')->default(1);
             $table->timestamps();
         });
     }

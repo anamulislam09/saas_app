@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class AdminController extends Controller
 {
@@ -31,33 +33,50 @@ class AdminController extends Controller
     // show single customer
     public function show($id)
     {
-        $data = Customer::FindOrFail($id);
-        if ($data->count() > 0) {
-            return response()->json([
-                'status' => 200,
-                'products' => $data
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such product !'
-            ], 404);
-        }
+        // if (Auth::check('role' == 1)) {
+            $data = Customer::FindOrFail($id);
+            if ($data->count() > 0) {
+                return response()->json([
+                    'status' => 200,
+                    'products' => $data
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'No such product !'
+                ], 404);
+            }
+        // } else {
+        //     return redirect()->back();
+        // }
     }
 
     // customers create 
     public function AdminRegister(Request $request)
     {
-        $customer = Customer::insert([
+        // $id = IdGenerator::generate(['table' => 'customers', 'length' => 6, 'prefix'=>'']);
+        $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
 
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'customer_id' => $request->customer_id,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'created_at' => Carbon::now(),
-        ]);
+        $start_at = 1001;
+
+        if ($start_at) {
+            $customer = Customer::find($start_at);
+            if (!$customer) {
+                $data['id'] = $start_at;
+            }
+        }
+
+
+        $data['name'] = $request->name;
+        $data['address'] = $request->address;
+        $data['phone'] = $request->phone;
+        $data['nid_no'] = $request->nid_no;
+        $data['image'] = $request->image;
+        $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
+        // dd($data);
+
+        $customer = Customer::create($data);
 
         if ($customer) {
             return response()->json([
@@ -117,7 +136,7 @@ class AdminController extends Controller
         }
     }
 
-       // delete single customer
+    // delete single customer
     //    public function delete($id)
     //    {
     //        $data = Customer::FindOrFail($id);
@@ -135,9 +154,9 @@ class AdminController extends Controller
     //    }
 
 
-      // customers login 
-      public function AdminLogin(Request $request)
-      {
+    // customers login 
+    public function AdminLogin(Request $request)
+    {
         $check = $request->all();
         if (Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])) {
             return response()->json([
@@ -149,8 +168,7 @@ class AdminController extends Controller
                 'status' => 500,
                 'message' => 'Invalid Email or Password!'
             ], 500);
-           
         }
         //end method
-      }
+    }
 }

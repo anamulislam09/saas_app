@@ -9,8 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class Customer extends Authenticatable
-{ 
-     use HasApiTokens, HasFactory, Notifiable;
+{
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -19,8 +19,11 @@ class Customer extends Authenticatable
      */
     protected $guard = 'admin';
     protected $fillable = [
+        'id',
         'name',
         'address',
+        'nid_no',
+        'image',
         'phone',
         'customer_id',
         'email',
