@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FlatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -20,15 +21,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-/*---------------- Admin route start here ------------------*/
-// admin login route start here 
-Route::get('/admin/login', [AdminController::class, 'Index'])->name('login_form');
-Route::post('/admin/login/owner', [AdminController::class, 'Login'])->name('admin.login');
+    /*---------------- Admin route start here ------------------*/
+    // admin login route start here 
+    Route::get('/admin/login', [AdminController::class, 'Index'])->name('login_form');
+    Route::post('/admin/login/owner', [AdminController::class, 'Login'])->name('admin.login');
 
-// admin register route start here 
-Route::get('/admin/register', [AdminController::class, 'AdminRegister'])->name('register_form');
-Route::post('/admin/register/store', [AdminController::class, 'Store'])->name('admin.store');
-// admin register route ends here 
+    // admin register route start here 
+    Route::get('/admin/register', [AdminController::class, 'AdminRegister'])->name('register_form');
+    Route::post('/admin/register/store', [AdminController::class, 'Store'])->name('admin.store');
+    // admin register route ends here 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
@@ -47,14 +48,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //   Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
     //   Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
 
-    //    users route 
-    Route::get('/users', [UserController::class, 'Index'])->name('user.index');
-    Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
-    Route::get('/users/store', [UserController::class, 'Store'])->name('user.store');
-    Route::get('/user/edit/{id}', [UserController::class, 'Edit'])->name('user.edit');
-    Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
-    Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
-
     //    Category route 
     Route::get('/category', [CategoryController::class, 'Index'])->name('category.index');
     Route::get('/category/create', [CategoryController::class, 'Create'])->name('category.create');
@@ -65,6 +58,24 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 });
 
 /*---------------- Admin route ends here ------------------*/
+
+/*---------------- Customer route start here ------------------*/
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+ //    Flat setup route 
+ Route::get('/flat', [FlatController::class, 'Index'])->name('flat.index');
+ Route::get('/flat/create', [FlatController::class, 'Create'])->name('flat.create');
+ Route::post('/flat/store', [FlatController::class, 'Store'])->name('flat.store');
+ 
+
+ //    users route 
+ Route::get('/users', [UserController::class, 'Index'])->name('user.index');
+ Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
+ Route::get('/users/store', [UserController::class, 'Store'])->name('user.store');
+ Route::get('/user/edit/{id}', [UserController::class, 'Edit'])->name('user.edit');
+ Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
+ Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
+});
+/*---------------- Customer route ends here ------------------*/
 
 Route::get('/', function () {
     return view('welcome');

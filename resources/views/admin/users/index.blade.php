@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
         <!-- Main content -->
         <section class="content mt-3">
@@ -14,96 +14,108 @@
                                     <div class="col-lg-10 col-sm-12">
                                         <h3 class="card-title">All Users</h3>
                                     </div>
+
                                     <div class="col-lg-2 col-sm-12">
-                                        {{-- <a href="{{ route('category.create') }}" class="btn btn-outline-primary">Add new</a> --}}
+                                        <a href="{{route('user.create')}}" class="btn btn-outline-primary">Create User</a>
                                     </div>
+                                    
                                 </div>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th>Customer_Id</th>
-                                            <th>User Name</th>
-                                            <th>Flat_no</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                            <th>Role_id</th>
-                                            <th> Action</th>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $key => $item)
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Customer_Id</th>
+                                        <th>User Name</th>
+                                        <th>Flat_no</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Role_id</th>
+                                        <th> Action</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $key => $item)
                                         @php
-                                             $role = DB::table('roles')->where('id', $item->role_id)->first();
+                                            $role = DB::table('roles')
+                                                ->where('id', $item->role_id)
+                                                ->first();
                                         @endphp
-                                            <tr>
-                                                <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->customer_id }}</td>
-                                                <td>{{$item->name}}</td>
-                                                <td>{{$item->flat_no}}</td>
-                                                <td>{{$item->phone}}</td>
-                                                <td>{{$item->email}}</td>
-                                                <td>@if ($item->status == 1)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item->customer_id }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->flat_no }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>
+                                                @if ($item->status == 1)
                                                     <span class="badge badge-primary">Active</span>
-                                                    @else
+                                                @else
                                                     <span class="badge badge-danger">Inactive</span>
-                                                @endif</td>
-                                                <td>@if ($item->role_id == 1)
-                                                    <span class="badge badge-primary">{{$role->name}}</span>
-                                                    @else
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($item->role_id == 1)
+                                                    <span class="badge badge-primary">{{ $role->name }}</span>
+                                                @else
                                                     <span class="badge badge-danger">Undefine role</span>
-                                                @endif</td>
-                                                <td>
-                                                    <a href="" class="btn btn-sm btn-info edit" data-id="{{$item->id}}" data-toggle="modal" data-target="#editUser"><i class="fas fa-edit"></i></a>
-                                                    <a href="{{ route('user.delete', $item->id) }}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-info edit"
+                                                    data-id="{{ $item->id }}" data-toggle="modal"
+                                                    data-target="#editUser"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('user.delete', $item->id) }}"
+                                                    class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
-  
-     {{-- category edit model --}}
-  <!-- Modal -->
-  <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div id="modal_body">
-
-        </div>
-       
-      </div>
+    </section>
     </div>
-  </div>
 
-   <!-- jQuery -->
-   <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.js"></script>
-  <script>
-$('body').on('click', '.edit', function(){
-  let user_id = $(this).data('id');
-  alert(user_id);
-  $.get("user/edit/"+user_id,function(data){
-    $('#modal_body').html(data);
-    
-  })
-})
+    {{-- category edit model --}}
+    <!-- Modal -->
+    <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-  </script>
+                <div id="modal_body">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.js"></script>
+    <script>
+        $('body').on('click', '.edit', function() {
+            let user_id = $(this).data('id');
+            alert(user_id);
+            $.get("user/edit/" + user_id, function(data) {
+                $('#modal_body').html(data);
+
+            })
+        })
+    </script>
 @endsection

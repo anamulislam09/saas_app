@@ -84,8 +84,15 @@
                         </ul>
                     </li>
                     {{-- Roles & Parmission ends here --}}
-                    {{-- Products start here --}}
-                    {{-- Products start here --}}
+                    {{-- Flat  start here --}}
+                    <li class="nav-item">
+                        <a href="{{ route('flat.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Manage flat</p>
+                        </a>
+                    </li>
+                    {{-- flat ends here --}}
+                    {{-- Expenses start here --}}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
@@ -121,7 +128,7 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- Products start here --}}
+                    {{-- Expenses start here --}}
                 @endif
             </ul>
         </nav>

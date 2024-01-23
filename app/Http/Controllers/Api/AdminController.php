@@ -55,7 +55,7 @@ class AdminController extends Controller
     public function AdminRegister(Request $request)
     {
         // $id = IdGenerator::generate(['table' => 'customers', 'length' => 6, 'prefix'=>'']);
-        $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
+        // $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
 
         $start_at = 1001;
 
