@@ -49,28 +49,40 @@ class UserController extends Controller
     // customers create 
     public function UserRegister(Request $request)
     {
+        $flat_id = $request->id;
         $customer_id = $request->customer_id;
-        $data = DB::table('customers')->where('customer_id', $customer_id)->first();
-        $customer = User::insert([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'customer_id' => $data->id,
-            'flat_no' => $request->flat_no,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'created_at' => Carbon::now(),
-        ]);
 
-        if ($customer) {
-            return response()->json([
-                'status' => 200,
-                'message' => 'User Register successfully'
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 500,
-                'message' => 'Something went wrong!'
-            ], 500);
+        // $flat_name = $request->flat_name;
+        $name = $request->name;
+        // var_dump($flat_name);
+        $phone = $request->phone;
+        $nid_no = $request->nid_no;
+        $address = $request->address;
+        $email = $request->email;
+        for ($i = 0; $i < count($flat_id); $i++) {
+           $user = User::insert([
+                'id' => $customer_id[$i] . $flat_id[$i],
+                'customer_id' => $customer_id[$i],
+                'flat_id' => $flat_id[$i],
+                'name' => $name[$i],
+                'phone' => $phone[$i],
+                'nid_no' => $nid_no[$i],
+                'address' => $address[$i],
+                'email' => $email[$i],
+                'password' => Hash::make($phone[$i]),
+            ]);
+
+            if ($user) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'User Created successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'message' => 'Something went wrong!'
+                ], 500);
+            }
         }
     }
 

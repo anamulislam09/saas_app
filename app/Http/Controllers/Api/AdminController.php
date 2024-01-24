@@ -31,7 +31,7 @@ class AdminController extends Controller
     }
 
     // show single customer
-    public function show($id)
+    public function Show($id)
     {
         // if (Auth::check('role' == 1)) {
             $data = Customer::FindOrFail($id);
@@ -54,9 +54,6 @@ class AdminController extends Controller
     // customers create 
     public function AdminRegister(Request $request)
     {
-        // $id = IdGenerator::generate(['table' => 'customers', 'length' => 6, 'prefix'=>'']);
-        // $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
-
         $start_at = 1001;
 
         if ($start_at) {
@@ -93,7 +90,7 @@ class AdminController extends Controller
 
     // customer edit 
 
-    public function edit($id)
+    public function Edit($id)
     {
         $data = Customer::FindOrFail($id);
         if ($data->count() > 0) {
@@ -110,7 +107,7 @@ class AdminController extends Controller
     }
 
     // customer update 
-    public function update(Request $request)
+    public function Update(Request $request)
     {
 
         $id = $request->id;
@@ -136,24 +133,7 @@ class AdminController extends Controller
         }
     }
 
-    // delete single customer
-    //    public function delete($id)
-    //    {
-    //        $data = Customer::FindOrFail($id);
-    //        if ($data->count() > 0) {
-    //            return response()->json([
-    //                'status' => 200,
-    //                'products' => $data
-    //            ], 200);
-    //        } else {
-    //            return response()->json([
-    //                'status' => 404,
-    //                'Products' => 'No such product !'
-    //            ], 404);
-    //        }
-    //    }
-
-
+    
     // customers login 
     public function AdminLogin(Request $request)
     {
@@ -171,4 +151,30 @@ class AdminController extends Controller
         }
         //end method
     }
+
+ // Logout method ends here
+ public function AdminLogout()
+ {
+    $logout = Auth::guard('admin')->logout();
+
+    if ($logout) {
+        return response()->json([
+            'status' => 200,
+            'message' => 'Admin Logout Successfully'
+        ], 200);
+    } else {
+        return response()->json([
+            'status' => 500,
+            'message' => 'Something went wrong!'
+        ], 500);
+    }
+     //end method
+ }
+ // Logout method ends here
+
+
+  /*-------------------Customers related method start here--------------*/
+
+
+
 }

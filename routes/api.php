@@ -21,14 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/admin-login', [AdminController::class, 'AdminLogin']);
 Route::post('/admin-register', [AdminController::class, 'AdminRegister']);
 
-Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
-/*----------------customers api route start here-------------------*/
-Route::get('/customers', [AdminController::class, 'index']);
-Route::get('/customer/{id}', [AdminController::class, 'show']);
-Route::get('/customer/edit/{id}', [AdminController::class, 'edit']);
-Route::put('/customer/edit/{id}', [AdminController::class, 'update']);
-// Route::delete('/customer/delete/{id}', [AdminController::class, 'delete']);
+// Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
+/*----------------customers api route start here-------------------*/
+Route::get('/customers', [AdminController::class, 'Index']);
+Route::get('/customer/{id}', [AdminController::class, 'Show']);
+Route::get('/customer/edit/{id}', [AdminController::class, 'Edit']);
+Route::put('/customer/edit/{id}', [AdminController::class, 'Update']);
+// Route::delete('/customer/delete/{id}', [AdminController::class, 'delete']);
 
 /*----------------customers api route ends here-------------------*/
 
@@ -50,4 +50,4 @@ Route::post('/add-role', [RoleController::class, 'store']);
 Route::delete('/role/delete/{id}', [RoleController::class, 'destroy']);
 /*----------------roles api route ends here-------------------*/
 
-});
+// });

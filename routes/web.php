@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
  //    users route 
  Route::get('/users', [UserController::class, 'Index'])->name('user.index');
  Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
- Route::get('/users/store', [UserController::class, 'Store'])->name('user.store');
+ Route::post('/users/store', [UserController::class, 'Store'])->name('user.store');
  Route::get('/user/edit/{id}', [UserController::class, 'Edit'])->name('user.edit');
  Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
  Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');

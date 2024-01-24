@@ -1,0 +1,7 @@
+1/manual flat add
+2/flat location
+3/secuence A/ or 1A
+4/flat uniqe id 
+
+customer login : email ,password
+customer register:name, address, phone, nid_no, email, password

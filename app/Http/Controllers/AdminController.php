@@ -72,13 +72,14 @@ class AdminController extends Controller
 
     // register method ends here
 
+    // Logout method ends here
     public function AdminLogout()
     {
         Auth::guard('admin')->logout();
         return redirect()->route('login_form')->with('message', 'Admin Logout Successfully');
         //end method
     }
-    // register method ends here
+    // Logout method ends here
 
     /*-------------------Customers related method start here--------------*/
     public function Customer(Request $request)

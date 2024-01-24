@@ -14,7 +14,6 @@
                                     <div class="col-lg-9 col-sm-12">
                                         <h3 class="card-title">All Flat</h3>
                                     </div>
-                                    {{-- @foreach ($data as $item ) --}}
                                     @php
                                         $isExist = DB::table('flats')->where('customer_id', Auth::guard('admin')->user()->id)->first();
                                     @endphp
@@ -22,8 +21,6 @@
                                     <div class="col-lg-3 col-sm-12">
                                         <a href="{{ !$isExist ? route('flat.create') :'javascript:void(0)' }}" class="btn btn-outline-primary">Flat Manage</a>
                                     </div>
-
-                                    {{-- @endforeach --}}
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -33,9 +30,9 @@
                                         <tr>
                                             <th>SL</th>
                                             <th>Customer ID</th>
-                                            <th>Flat name</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Flat Name</th>
+                                            {{-- <th>Status</th> --}}
+                                            {{-- <th>Action</th> --}}
                                         </tr>
                                     </thead>
 
@@ -45,19 +42,17 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->customer_id }}</td>
                                                 <td>{{ $item->flat_name }}</td>
-                                                <td>
+                                                {{-- <td>
                                                     @if ($item->status == 1)
                                                         <span class="badge badge-primary">Active</span>
                                                     @else
                                                         <span class="badge badge-danger">Inactive</span>
                                                     @endif
-                                                </td>
-                                                <td>
-                                                    {{-- <a href="" class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-eye"></i></a>
+                                                </td> --}}
+                                                {{-- <td>
                                                     <a href="{{ route('customer.edit', $item->id) }}"
-                                                        class="btn btn-sm btn-info edit"><i class="fas fa-edit"></i></a> --}}
-                                                </td>
+                                                        class="btn btn-sm btn-info edit"><i class="fas fa-edit"></i></a>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

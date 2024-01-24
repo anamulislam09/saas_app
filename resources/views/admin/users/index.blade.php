@@ -14,11 +14,17 @@
                                     <div class="col-lg-10 col-sm-12">
                                         <h3 class="card-title">All Users</h3>
                                     </div>
+                                    @php
+                                        $isExist = DB::table('users')
+                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->first();
+                                    @endphp
 
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{route('user.create')}}" class="btn btn-outline-primary">Create User</a>
+                                        <a href="{{ !$isExist ? route('user.create') : 'javascript:void(0)' }}"
+                                            class="btn btn-sm btn-outline-primary">User Manage</a>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -27,42 +33,36 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>SL</th>
-                                        <th>Customer_Id</th>
+                                        <th>User Id</th>
+                                        {{-- <th width="10%">Customer_Id</th> --}}
                                         <th>User Name</th>
-                                        <th>Flat_no</th>
+                                        <th>Flat_name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>NID</th>
                                         <th>Status</th>
-                                        <th>Role_id</th>
+                                        {{-- <th>Role_id</th> --}}
                                         <th> Action</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $key => $item)
                                         @php
-                                            $role = DB::table('roles')
-                                                ->where('id', $item->role_id)
+                                            $role = DB::table('flats')
+                                                ->where('id', $item->flat_id)
                                                 ->first();
                                         @endphp
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item->customer_id }}</td>
+                                            <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td>{{ $item->flat_no }}</td>
+                                            <td>{{ $role->flat_name }}</td>
                                             <td>{{ $item->phone }}</td>
                                             <td>{{ $item->email }}</td>
+                                            <td>{{ $item->nid_no }}</td>
                                             <td>
-                                                @if ($item->status == 1)
-                                                    <span class="badge badge-primary">Active</span>
-                                                @else
+                                                @if ($item->status == 0)
                                                     <span class="badge badge-danger">Inactive</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($item->role_id == 1)
-                                                    <span class="badge badge-primary">{{ $role->name }}</span>
                                                 @else
-                                                    <span class="badge badge-danger">Undefine role</span>
+                                                    <span class="badge badge-primary">Active</span>
                                                 @endif
                                             </td>
                                             <td>

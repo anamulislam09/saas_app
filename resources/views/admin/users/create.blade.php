@@ -43,29 +43,46 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <form action="{{route('user.store')}}" method="POST">
+                                                    @csrf
                                                 @foreach ($data as $key => $item)
+                                                {{-- <td><input type="hidden" name="customer_id" value="{{ $item->id }}"></td>
+                                                <td><input type="hidden" name="customer_id" value="{{ $item->flat_name }}"></td> --}}
                                                     <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td>{{ $item->flat_name }}</td>
-                                                        <td><input type="text" name="name"
+                                                        <input type="hidden" name="id[]" value="{{ $item->id }}">
+                                                        <input type="hidden" name="customer_id[]" value="{{ $item->customer_id }}">
+                                                        <td>{{ $key+1 }}</td>
+                                                        <td><input type="text" name="flat_name[]"
+                                                            style="width: 30px; border:none" disabled value="{{ $item->flat_name }}"></td>
+                                                        <td><input type="text" name="name[]"
                                                                 style="width: 100px; border:none" placeholder="User name">
                                                         </td>
-                                                        <td><input type="text" name="phone"
+                                                        <td><input type="text" name="phone[]"
                                                                 style="width: 100px ; border:none" placeholder="User phone">
                                                         </td>
-                                                        <td><input type="text" name="nid_no"
+                                                        <td><input type="text" name="nid_no[]"
                                                                 style="width: 100px ; border:none"
                                                                 placeholder="User NID No">
                                                         </td>
                                                         <td>
-                                                            <textarea name="address" class="" style="width: 100px ; border:none" id="" cols="" rows="1"
+                                                            <textarea name="address[]" class="" style="width: 100px ; border:none" id="" cols="" rows="1"
                                                                 placeholder="User Address"></textarea>
                                                         </td>
-                                                        <td><input type="email" name="email"
+                                                        <td><input type="email" name="email[]"
                                                                 style="width: 100px ; border:none" placeholder="User email">
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><input type="submit" class="btn btn-primary" value="Submit"></td>
+                                                </tr>
+                                            </form>
                                             </tbody>
                                         </table>
                                     </div>
