@@ -7,20 +7,26 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
   public function Index()
   {
-    $data = User::where('customer_id', Auth::guard('admin')->user()->id)->get();;
-    return view('admin.users.index', compact('data'));
+    $flat = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();;
+    if(!empty($flat)){
+      $data = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
+      return view('admin.users.index', compact('data'));
+    }
+    // $data = User::where('customer_id', Auth::guard('admin')->user()->id)->get();;
+    return view('admin.users.index');
     //end method
   }
 
   public function Create()
   {
-    $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
+    $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->get();
     // $user = User::
     return view('admin.users.create', compact('data'));
     //end method
@@ -51,6 +57,9 @@ class UserController extends Controller
         'email' => $email[$i],
         'password' =>Hash::make($phone[$i]),
       ]);
+      $status['status'] = 1;
+      DB::table('flats')->update($status);
+
     }
     return redirect()->route('user.index')->with('message', 'User Created Successfully');
   }

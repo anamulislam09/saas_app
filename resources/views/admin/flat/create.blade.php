@@ -11,8 +11,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-4 col-sm-12">
+                                    <div class="col-lg-10 col-sm-12">
                                         <h3 class="card-title">Manage Flat</h3>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12">
+                                        <a href="{{route('flat.index')}}" class="btn btn-sm btn-outline-primary">All Flats</a>
                                     </div>
 
                                 </div>
@@ -27,12 +30,21 @@
                                             <div class=" form-group">
                                                 <label for="floor" class="">No of floor :</label>
                                                 <input type="text" class="form-control" value="" name="floor"
-                                                    id="floor" placeholder="Enter Number Of Floor">
+                                                    id="floor" placeholder="Enter Number Of Floor" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="unit" class="">Unit per floor :</label>
                                                 <input type="text" class="form-control" value="" name="unit"
-                                                    id="unit" placeholder="Enter Number Of Unit Per Floor">
+                                                    id="unit" placeholder="Enter Number Of Unit Per Floor" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="unit" class="">Flat sequence :</label>
+                                                    <select name="sequence" id="" class="form-control" required>
+                                                        <option value="" selected disabled>Select Once</option>
+                                                        <option value="1">A1,A2,A3</option>
+                                                        <option value="2">A1,B1,C1</option>
+                                                        <option value="3">1A,2A,3A</option>
+                                                    </select>
                                             </div>
                                             <div class="">
                                                 <button type="submit" class="btn btn-sm btn-primary"

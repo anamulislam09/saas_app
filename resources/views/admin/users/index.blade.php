@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
 @section('admin_content')
+    <style>
+        a.disabled {
+            pointer-events: none;
+            cursor: default;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
         <!-- Main content -->
@@ -11,15 +17,30 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
+                                    <div class="col-lg-8 col-sm-12">
                                         <h3 class="card-title">All Users</h3>
                                     </div>
                                     @php
                                         $isExist = DB::table('users')
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
+                                        $flat = DB::table('flats')
+                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->where('status', 0)
+                                            ->first();
                                     @endphp
-
+                                    @if ($flat)
+                                        <div class="col-lg-2 col-sm-6">
+                                            <a href="{{ !$isExist ? 'javascript:void(0)' : route('user.create') }} "
+                                                class="btn btn-sm btn-outline-primary">Add
+                                                New User</a>
+                                        </div>
+                                    @elseif (!$flat)
+                                        <div class="col-lg-2 col-sm-6">
+                                            <a href="" class="btn btn-sm btn-outline-primary disabled">Add
+                                                New User</a>
+                                        </div>
+                                    @endif
                                     <div class="col-lg-2 col-sm-12">
                                         <a href="{{ !$isExist ? route('user.create') : 'javascript:void(0)' }}"
                                             class="btn btn-sm btn-outline-primary">User Manage</a>
@@ -47,14 +68,16 @@
                                 <tbody>
                                     @foreach ($data as $key => $item)
                                         @php
-                                            $role = DB::table('flats')
+                                            $flat = DB::table('flats')
                                                 ->where('id', $item->flat_id)
                                                 ->first();
                                         @endphp
                                         <tr>
                                             <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td>{{ $role->flat_name }}</td>
+                                            @if (empty($flat))
+                                            <td>{{ $flat->flat_name }}</td>
+                                            @endif
                                             <td>{{ $item->phone }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->nid_no }}</td>

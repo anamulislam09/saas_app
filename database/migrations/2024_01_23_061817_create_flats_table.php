@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('flats', function (Blueprint $table) {
             $table->id();
+            $table->integer('flat_unique_id')->nullable();
             $table->integer('customer_id');
             $table->string('flat_name');
             $table->tinyInteger('floor_no')->nullable();

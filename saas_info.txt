@@ -1,6 +1,6 @@
-1/manual flat add
+1/manual flat add  //done
 2/flat location
-3/secuence A/ or 1A
+3/secuence A/ or 1A   //done
 4/flat uniqe id 
 
 customer login : email ,password

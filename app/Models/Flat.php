@@ -9,6 +9,7 @@ class Flat extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'flat_unique_id',
         'customer_id',
         'flat_name',
         'floor_no',

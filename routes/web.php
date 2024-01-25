@@ -65,6 +65,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
  Route::get('/flat', [FlatController::class, 'Index'])->name('flat.index');
  Route::get('/flat/create', [FlatController::class, 'Create'])->name('flat.create');
  Route::post('/flat/store', [FlatController::class, 'Store'])->name('flat.store');
+ Route::get('/flat/single-create', [FlatController::class, 'SingleCreate'])->name('flat.singlecreate');
+ Route::post('/flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
  
 
  //    users route 
