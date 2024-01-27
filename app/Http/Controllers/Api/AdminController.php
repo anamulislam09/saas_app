@@ -20,7 +20,7 @@ class AdminController extends Controller
         if ($data->count() > 0) {
             return response()->json([
                 'status' => 200,
-                'products' => $data
+                'customers' => $data
             ], 200);
         } else {
             return response()->json([
@@ -38,12 +38,12 @@ class AdminController extends Controller
             if ($data->count() > 0) {
                 return response()->json([
                     'status' => 200,
-                    'products' => $data
+                    'customers' => $data
                 ], 200);
             } else {
                 return response()->json([
                     'status' => 404,
-                    'message' => 'No such product !'
+                    'message' => 'No such Customer !'
                 ], 404);
             }
         // } else {
@@ -96,12 +96,12 @@ class AdminController extends Controller
         if ($data->count() > 0) {
             return response()->json([
                 'status' => 200,
-                'products' => $data
+                'customers' => $data
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'message' => 'No such product !'
+                'message' => 'No such Customer !'
             ], 404);
         }
     }
@@ -139,9 +139,14 @@ class AdminController extends Controller
     {
         $check = $request->all();
         if (Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])) {
+            $customer = Auth::guard('admin')->user();
+            $success['token'] =  $customer->createToken('MyApp')->accessToken;
             return response()->json([
                 'status' => 200,
-                'message' => 'Login Successfully'
+                'message' => 'Login Successfully',
+                'customers_id' => Auth::guard('admin')->user()->id
+                
+
             ], 200);
         } else {
             return response()->json([

@@ -19,7 +19,7 @@ class UserController extends Controller
         if ($data->count() > 0) {
             return response()->json([
                 'status' => 200,
-                'products' => $data
+                'users' => $data
             ], 200);
         } else {
             return response()->json([
@@ -36,12 +36,12 @@ class UserController extends Controller
         if ($data->count() > 0) {
             return response()->json([
                 'status' => 200,
-                'products' => $data
+                'users' => $data
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'Products' => 'No such product !'
+                'message' => 'No such product !'
             ], 404);
         }
     }
@@ -49,7 +49,7 @@ class UserController extends Controller
     // customers create 
     public function UserRegister(Request $request)
     {
-        $flat_id = $request->id;
+        $flat_unique_id = $request->flat_unique_id;
         $customer_id = $request->customer_id;
 
         // $flat_name = $request->flat_name;
@@ -59,11 +59,11 @@ class UserController extends Controller
         $nid_no = $request->nid_no;
         $address = $request->address;
         $email = $request->email;
-        for ($i = 0; $i < count($flat_id); $i++) {
+        for ($i = 0; $i < count($flat_unique_id); $i++) {
            $user = User::insert([
-                'id' => $customer_id[$i] . $flat_id[$i],
+                'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id[$i],
                 'customer_id' => $customer_id[$i],
-                'flat_id' => $flat_id[$i],
+                'flat_id' => $flat_unique_id[$i],
                 'name' => $name[$i],
                 'phone' => $phone[$i],
                 'nid_no' => $nid_no[$i],
@@ -71,20 +71,23 @@ class UserController extends Controller
                 'email' => $email[$i],
                 'password' => Hash::make($phone[$i]),
             ]);
+            $status['status'] = 1;
+            DB::table('flats')->update($status);
+        }
 
-            if ($user) {
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'User Created successfully'
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => 500,
-                    'message' => 'Something went wrong!'
-                ], 500);
-            }
+        if ($user) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'User Created successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Something went wrong!'
+            ], 500);
         }
     }
+
 
     // customer edit 
     public function edit($id)
@@ -93,12 +96,12 @@ class UserController extends Controller
         if ($data->count() > 0) {
             return response()->json([
                 'status' => 200,
-                'products' => $data
+                'users' => $data
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'Products' => 'No such product !'
+                'message' => 'No such product !'
             ], 404);
         }
     }
@@ -106,16 +109,18 @@ class UserController extends Controller
     // customer update 
     public function update(Request $request)
     {
-
         $id = $request->id;
 
         $data = User::findOrFail($id);
         $data['name'] = $request->name;
         $data['phone'] = $request->phone;
         $data['email'] = $request->email;
+        $data['nid_no'] = $request->nid_no;
+        $data['address'] = $request->address;
         $data['status'] = $request->status;
         $data['role_id'] = $request->role_id;
         $data->save();
+
 
         if ($data) {
             return response()->json([

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\FlatController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ Route::get('/user/edit/{id}', [UserController::class, 'edit']);
 Route::put('/user/edit/{id}', [UserController::class, 'update']);
 Route::delete('/user/delete/{id}', [UserController::class, 'delete']);
 
-// customer login 
+// user login 
 Route::post('/user-login', [UserController::class, 'UserLogin']);
 /*----------------users api route ends here-------------------*/
 
@@ -50,4 +51,12 @@ Route::post('/add-role', [RoleController::class, 'store']);
 Route::delete('/role/delete/{id}', [RoleController::class, 'destroy']);
 /*----------------roles api route ends here-------------------*/
 
-// });
+/*----------------flat api route start here-------------------*/
+Route::get('/flat', [FlatController::class, 'Index']);
+Route::post('/flat-store', [FlatController::class, 'Store']);
+Route::post('/flat/single-store', [FlatController::class, 'SingleStore']);
+
+/*----------------flat api route ends here-------------------*/
+
+
+

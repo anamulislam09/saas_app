@@ -69,14 +69,16 @@
                                     @foreach ($data as $key => $item)
                                         @php
                                             $flat = DB::table('flats')
-                                                ->where('id', $item->flat_id)
+                                                ->where('flat_unique_id', $item->flat_id)
                                                 ->first();
                                         @endphp
                                         <tr>
-                                            <td>{{ $item->id }}</td>
+                                            <td>{{ $item->user_id }}</td>
                                             <td>{{ $item->name }}</td>
-                                            @if (empty($flat))
+                                            @if (!empty($flat))
                                             <td>{{ $flat->flat_name }}</td>
+                                            @else
+                                            <td>Undefine</td>
                                             @endif
                                             <td>{{ $item->phone }}</td>
                                             <td>{{ $item->email }}</td>

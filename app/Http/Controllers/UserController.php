@@ -35,7 +35,7 @@ class UserController extends Controller
 
   public function Store(Request $request)
   {
-    $flat_id = $request->id;
+    $flat_unique_id = $request->flat_unique_id;
     $customer_id = $request->customer_id;
 
     // $flat_name = $request->flat_name;
@@ -45,11 +45,11 @@ class UserController extends Controller
     $nid_no = $request->nid_no;
     $address = $request->address;
     $email = $request->email;
-    for ($i = 0; $i < count($flat_id); $i++) {
+    for ($i = 0; $i < count($flat_unique_id); $i++) {
       User::insert([
-        'id' => $customer_id[$i].$flat_id[$i],
+        'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id[$i],
         'customer_id' => $customer_id[$i],
-        'flat_id' => $flat_id[$i],
+        'flat_id' => $flat_unique_id[$i],
         'name' => $name[$i],
         'phone' => $phone[$i],
         'nid_no' => $nid_no[$i],

@@ -5,3 +5,12 @@
 
 customer login : email ,password
 customer register:name, address, phone, nid_no, email, password
+
+
+beforer uplode cpanel and run command :
+ php artisan cache:clear
+ php artisan view:clear
+ php artisan event:clear
+ php artisan route:clear
+ php artisan config:clear
+
