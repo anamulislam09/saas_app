@@ -16,7 +16,7 @@ class FlatController extends Controller
 // Index method start here 
 public function Index()
 {
-    // $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
+    $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
     $data = Flat::all();
     if ($data->count() > 0) {
         return response()->json([
@@ -112,31 +112,14 @@ public function Store(Request $request)
 public function SingleStore(Request $request)
 {
 
+    $unique_id = Flat::where('customer_id', Auth::guard('admin')->user()->id)->max('flat_unique_id');
+
+    $zeroo = '0';
+    $data['flat_unique_id'] = ($zeroo) . ++$unique_id;
     $data['customer_id'] = Auth::guard('admin')->user()->id;
     $data['flat_name'] = $request->flat_name;
     $data['floor_no'] = $request->floor_no;
-    $flatmaster = Flatmaster::create($data);
-
-    if ($flatmaster) {
-        $Fid = UniqueIdGenerator::generate(['table' => 'flatids', 'length' => 3]);
-        $flatid['flat_id'] = $Fid;
-        $flatid['customer_id'] = Auth::guard('admin')->user()->id;
-        Flatid::create($flatid);
-    }
-    if ($flatmaster) {
-        $flatmasters = Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->get();
-
-        foreach ($flatmasters as $flatmaster) {
-            $flatid = Flatid::where('id', $flatmaster->id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-            $flat['flat_unique_id'] = $flatid->flat_id;
-            $flat['customer_id'] = Auth::guard('admin')->user()->id;
-            $flat['flat_name'] = $flatmaster->flat_name;
-            $flat['floor_no'] = $flatmaster->floor_no;
-            $flat = Flat::create($flat);
-        }
-    }
-    Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->delete();
-    Flatid::where('customer_id', Auth::guard('admin')->user()->id)->delete();
+    $flat = Flat::create($data);
 
     if ($flat->count() > 0) {
         return response()->json([

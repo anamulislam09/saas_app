@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('exp_details', function (Blueprint $table) {
             $table->id();
-            $table->string('month')->nullable();
             $table->integer('year')->nullable();
+            $table->string('month')->nullable();
             $table->integer('cat_id');
-            $table->integer('exp_id');
             $table->integer('amount');
-            $table->tinyInteger('auth_id');
+            $table->integer('customer_id');
+            $table->bigInteger('auth_id');
             $table->timestamps();
         });
     }

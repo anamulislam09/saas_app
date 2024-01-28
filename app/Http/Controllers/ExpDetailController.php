@@ -2,33 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Exp_detail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ExpDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function Index()
     {
-        //
+        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        // dd($expDetails);
+        return view('admin.expense.exp_details.index', compact('expDetails'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function Create()
     {
-        //
+        $exp_cat = Category::get();
+        return view('admin.expense.exp_details.create', compact('exp_cat'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function Store(Request $request)
     {
-        //
+
+        $data['cat_id'] = $request->cat_id;
+        $data['customer_id'] = Auth::guard('admin')->user()->id;
+        $data['year'] = date('Y');
+        $data['month'] = $request->month;
+        $data['amount'] = $request->amount;
+        $data['auth_id'] = Auth::guard('admin')->user()->id;
+        // dd($data);
+       $exp = Exp_detail::create($data);
+
+        if(!$exp){
+            return redirect()->back()->with('message', 'Something went wrong');
+        }
+        return redirect()->route('expense-details.index')->with('message', 'Expense creted successfully');
+
     }
 
     /**

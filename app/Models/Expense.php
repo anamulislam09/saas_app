@@ -9,8 +9,13 @@ class Expense extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'year',
+        'month',
         'cat_id',
-        'exp_name',
+        'sub_total',
+        'total',
+        'customer_id',
+        'auth_id',
     ];
 }
 

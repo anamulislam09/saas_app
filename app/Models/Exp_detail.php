@@ -11,7 +11,10 @@ class Exp_detail extends Model
 
     protected $fillable = [
         'cat_id',
-        'exp_id',
+        'year',
+        'month',
         'amount',
+        'customer_id',
+        'auth_id',
     ];
 }

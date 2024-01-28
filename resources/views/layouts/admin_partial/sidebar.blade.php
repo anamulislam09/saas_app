@@ -103,13 +103,13 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{route('expense-details.index')}}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense details</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{route('expenses.index')}}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense</p>
                                 </a>

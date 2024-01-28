@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('cat_id');
-            $table->string('exp_name');
+            $table->integer('year')->nullable();
+            $table->string('month')->nullable();
+            $table->integer('cat_id');
+            $table->integer('sub_total');
+            $table->integer('total');
+            $table->integer('customer_id');
+            $table->bigInteger('auth_id');
             $table->timestamps();
         });
     }
