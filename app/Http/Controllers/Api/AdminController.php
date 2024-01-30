@@ -140,13 +140,14 @@ class AdminController extends Controller
         $check = $request->all();
         if (Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])) {
             $customer = Customer::where('email', $request->email)->first();
-            $token =  $customer->createToken($customer->id)->plainTextToken;
+            $token =  $customer->createToken('Personal Access Token')->plainTextToken;
             return response()->json([
                 'status' => 200,
                 'message' => 'Login Successfully',
                 'customers_id' => Auth::guard('admin')->user()->id,
                 'token' => $token,
-            ], 200);
+            ],
+             200);
         } else {
             return response()->json([
                 'status' => 500,

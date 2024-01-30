@@ -129,6 +129,44 @@
                         </ul>
                     </li>
                     {{-- Expenses start here --}}
+
+                    {{-- Income start here --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Income
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-3">
+                            <li class="nav-item">
+                                <a href="{{route('income.category')}}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Collection Category</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('generate.bill')}}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Collection</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Process & Generete data</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p> Expense log</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Income start here --}}
                 @endif
             </ul>
         </nav>

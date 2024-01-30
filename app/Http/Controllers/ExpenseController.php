@@ -31,28 +31,14 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        
-        //Create an array
-        $groups = [];
-        
-        //Retrieve the list of cat_id's in use.
-        $expenses = Exp_detail::groupBy('cat_id')->get();
-        // dd($expenses);
-// $cats = DB::table('Products')->distinct()->select('cat_id')->get()
-
-//for each cat_id in use, find the products associated and then add a collection of those products to the relevant array element
-// foreach($cats as $cat){
-//     $groups[$cat->cat_id] = DB::table('Products')->where('cat_id', $cat->cat_id)->get();
-// }
+        $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('cat_id')->get();
 
         foreach($expenses as $expense){
             $data['year'] = $expense->year;
             $data['month'] = $expense->month;
             $data['cat_id'] = $expense->cat_id;
-
-            $data['sub_total'] = Exp_detail::where('cat_id', $expense->cat_id)->SUM('amount')->get();
-            $data['total'] = $expense->cat_id;
-
+            $data['sub_total'] = Exp_detail::where('cat_id', $expense->cat_id)->SUM('amount');
+            // $data['total'] = $expense->cat_id;
             $data['customer_id'] = $expense->customer_id;
             $data['auth_id'] = $expense->auth_id;
             Expense::create($data);

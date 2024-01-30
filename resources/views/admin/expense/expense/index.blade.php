@@ -29,7 +29,6 @@
                                             <th>Month</th>
                                             <th>Expense</th>
                                             <th>SubTotal</th>
-                                            <th>Total</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($expense as $key => $item)
@@ -71,8 +70,7 @@
                                                 </td>
 
                                                 <td>{{ $data->name }}</td>
-                                                <td>{{ $item->sub_tatal }}</td>
-                                                <td>{{ $item->tatal }}</td>
+                                                <td>{{ $item->sub_total }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
