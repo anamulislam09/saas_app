@@ -92,8 +92,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
   Route::get('/income-category', [IncomeController::class, 'IncomeCategory'])->name('income.category');
   Route::post('/income-category/store', [IncomeController::class, 'StoreIncomeCategory'])->name('IncomeCategory.store');
   Route::get('/generate-bill', [IncomeController::class, 'billGenerate'])->name('generate.bill');
-  Route::get('/expense-details/create', [ExpDetailController::class, 'Create'])->name('expense-details.create');
-  Route::post('/expense-details/store', [ExpDetailController::class, 'Store'])->name('expense-details.store');
+  Route::get('/income', [IncomeController::class, 'Create'])->name('income.create');
+  Route::post('/income/store', [IncomeController::class, 'Store'])->name('income.store');
 
 });
 

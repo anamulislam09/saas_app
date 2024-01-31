@@ -50,6 +50,7 @@
                                                 <td><input type="hidden" name="customer_id" value="{{ $item->flat_name }}"></td> --}}
                                                     <tr>
                                                         <input type="hidden" name="flat_unique_id[]" value="{{ $item->flat_unique_id }}">
+                                                        <input type="hidden" name="amount[]" value="{{ $item->amount}}">
                                                         <input type="hidden" name="customer_id[]" value="{{ $item->customer_id }}">
                                                         <td>{{ $key+1 }}</td>
                                                         <td><input type="text" name="flat_name[]"

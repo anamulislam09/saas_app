@@ -39,6 +39,7 @@
                                             <th>SL</th>
                                             <th>Customer ID</th>
                                             <th>Flat Name</th>
+                                            <th>Service charge</th>
                                             <th>Status</th>
                                             {{-- <th>Action</th> --}}
                                         </tr>
@@ -50,6 +51,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->customer_id }}</td>
                                                 <td>{{ $item->flat_name }}</td>
+                                                <td>{{ $item->amount }}</td>
                                                 <td>
                                                     @if ($item->status == 1)
                                                         <span class="badge badge-primary">Active</span>

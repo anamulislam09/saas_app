@@ -5,14 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Flatmaster extends Model
+class Income extends Model
 {
     use HasFactory;
+
     protected $fillable = [
+        'month',
+        'year',
         'customer_id',
-        'flat_name',
-        'floor_no',
+        'auth_id',
+        'user_id',
+        'user_name',
+        'income_category',
         'amount',
-        'status',
+        'due',
+        'paid',
     ];
 }

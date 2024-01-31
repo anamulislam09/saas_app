@@ -22,6 +22,7 @@ class User extends Authenticatable
         'user_id',
         'customer_id',
         'flat_no',
+        'amount',
         'name',
         'phone',
         'nid_no',

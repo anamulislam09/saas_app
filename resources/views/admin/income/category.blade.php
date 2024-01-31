@@ -15,7 +15,7 @@
                                         <h3 class="card-title">Income Categoru</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{route('flat.index')}}" class="btn btn-sm btn-outline-primary">All Flats</a>
+                                        {{-- <a href="{{route('flat.index')}}" class="btn btn-sm btn-outline-primary">All Flats</a> --}}
                                     </div>
 
                                 </div>

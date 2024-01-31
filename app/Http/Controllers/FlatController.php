@@ -35,6 +35,8 @@ class FlatController extends Controller
             $floor = $request->floor;
             $unit = $request->unit;
             $sequence = $request->sequence;
+            $amount = $request->amount;
+            
             $flatChar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
             //  $flats = $floor;
 
@@ -51,8 +53,11 @@ class FlatController extends Controller
                     $data['customer_id'] = Auth::guard('admin')->user()->id;
                     $data['flat_name'] = $flatName;
                     $data['floor_no'] = $i + 1;
-
+                    $data['amount'] = $amount;
+                    // dd($data);
                     $flatmaster = Flatmaster::create($data);
+                    // dd($flatmaster);
+                    
 
                     if ($flatmaster) {
                         $Fid = UniqueIdGenerator::generate(['table' => 'flatids', 'length' => 3]);
@@ -65,6 +70,7 @@ class FlatController extends Controller
 
             if ($flatmaster) {
                 $flatmasters = Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->get();
+                // dd($flatmasters);
                 // $flatids = Flatid::where('customer_id', Auth::guard('admin')->user()->id)->get();
 
                 // foreach($flatids as $flatid){
@@ -78,6 +84,8 @@ class FlatController extends Controller
                     $flat['customer_id'] = Auth::guard('admin')->user()->id;
                     $flat['flat_name'] = $flatmaster->flat_name;
                     $flat['floor_no'] = $flatmaster->floor_no;
+                    $flat['amount'] = $flatmaster->amount;
+                    // dd($flatmaster->amount);
                     Flat::create($flat);
                 }
             }

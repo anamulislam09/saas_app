@@ -23,20 +23,26 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <!-- /.card-header -->
-                               <div class="row py-5">
-                                <div class="col-7 m-auto border p-5">
+                               <div class="row py-4">
+                                <div class="col-10 m-auto border p-5" style="background: #ddd">
                                     <form action="{{ route('flat.store') }}" method="POST">
                                         @csrf
-                                            <div class=" form-group">
-                                                <label for="floor" class="">No of floor :</label>
-                                                <input type="text" class="form-control" value="" name="floor"
-                                                    id="floor" placeholder="Enter Number Of Floor" required>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class=" form-group">
+                                                    <label for="floor" class="">No of floor :</label>
+                                                    <input type="text" class="form-control" value="" name="floor"
+                                                        id="floor" placeholder="Enter Number Of Floor" required>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="unit" class="">Unit per floor :</label>
-                                                <input type="text" class="form-control" value="" name="unit"
-                                                    id="unit" placeholder="Enter Number Of Unit Per Floor" required>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="unit" class="">Unit per floor :</label>
+                                                    <input type="text" class="form-control" value="" name="unit"
+                                                        id="unit" placeholder="Enter Number Of Unit Per Floor" required>
+                                                </div>
                                             </div>
+                                        </div>
                                             <div class="form-group">
                                                 <label for="unit" class="">Flat sequence :</label>
                                                     <select name="sequence" id="" class="form-control" required>
@@ -45,6 +51,10 @@
                                                         <option value="2">A1,B1,C1</option>
                                                         <option value="3">1A,2A,3A</option>
                                                     </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="unit" class="">Amount of service charge :</label>
+                                                <input type="text" class="form-control" value="" name="amount" placeholder="Enter Service charge" required>
                                             </div>
                                             <div class="">
                                                 <button type="submit" class="btn btn-sm btn-primary"

@@ -27,7 +27,6 @@ class UserController extends Controller
   public function Create()
   {
     $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->get();
-    // $user = User::
     return view('admin.users.create', compact('data'));
     //end method
   }
@@ -37,10 +36,9 @@ class UserController extends Controller
   {
     $flat_unique_id = $request->flat_unique_id;
     $customer_id = $request->customer_id;
+    $amount = $request->amount;
 
-    // $flat_name = $request->flat_name;
     $name = $request->name;
-    // var_dump($flat_name);
     $phone = $request->phone;
     $nid_no = $request->nid_no;
     $address = $request->address;
@@ -50,6 +48,7 @@ class UserController extends Controller
         'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id[$i],
         'customer_id' => $customer_id[$i],
         'flat_id' => $flat_unique_id[$i],
+        'amount' => $amount[$i],
         'name' => $name[$i],
         'phone' => $phone[$i],
         'nid_no' => $nid_no[$i],

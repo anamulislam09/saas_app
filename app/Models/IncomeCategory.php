@@ -10,6 +10,6 @@ class IncomeCategory extends Model
     use HasFactory;
     protected $fillable =[
         'customer_id',
-        'name'
+        'category_name'
     ];
 }
