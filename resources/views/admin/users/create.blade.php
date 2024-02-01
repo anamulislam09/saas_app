@@ -51,26 +51,27 @@
                                                     <tr>
                                                         <input type="hidden" name="flat_unique_id[]" value="{{ $item->flat_unique_id }}">
                                                         <input type="hidden" name="amount[]" value="{{ $item->amount}}">
+                                                        <input type="hidden" name="charge[]" value="{{ $item->charge}}">
                                                         <input type="hidden" name="customer_id[]" value="{{ $item->customer_id }}">
                                                         <td>{{ $key+1 }}</td>
                                                         <td><input type="text" name="flat_name[]"
-                                                            style="width: 30px; border:none" disabled value="{{ $item->flat_name }}"></td>
+                                                            style="width: 50px; border:none" disabled value="{{ $item->flat_name }}"></td>
                                                         <td><input type="text" name="name[]"
-                                                                style="width: 100px; border:none" placeholder="User name">
+                                                                style="width: 140px; border:none" placeholder="User name">
                                                         </td>
                                                         <td><input type="text" name="phone[]"
-                                                                style="width: 100px ; border:none" placeholder="User phone">
+                                                                style="width: 140px ; border:none" placeholder="User phone">
                                                         </td>
                                                         <td><input type="text" name="nid_no[]"
-                                                                style="width: 100px ; border:none"
+                                                                style="width: 140px ; border:none"
                                                                 placeholder="User NID No">
                                                         </td>
                                                         <td>
-                                                            <textarea name="address[]" class="" style="width: 100px ; border:none" id="" cols="" rows="1"
+                                                            <textarea name="address[]" class="" style="width: 140px ; border:none" id="" cols="" rows="1"
                                                                 placeholder="User Address"></textarea>
                                                         </td>
                                                         <td><input type="email" name="email[]"
-                                                                style="width: 100px ; border:none" placeholder="User email">
+                                                                style="width: 140px ; border:none" placeholder="User email">
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -16,9 +16,10 @@ class Income extends Model
         'auth_id',
         'user_id',
         'user_name',
-        'income_category',
+        'charge',
         'amount',
         'due',
         'paid',
+        'status',
     ];
 }

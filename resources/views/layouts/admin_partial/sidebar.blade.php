@@ -141,21 +141,15 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{route('income.category')}}" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Income Category</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{route('income.create')}}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('generate.bill')}}" class="nav-link">
+                                <a href="{{route('income.collection')}}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Generate Bill</p>
+                                    <p>Collection </p>
                                 </a>
                             </li>
                             <li class="nav-item">

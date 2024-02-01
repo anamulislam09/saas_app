@@ -19,10 +19,11 @@ return new class extends Migration
             $table->integer('auth_id')->nullable();
             $table->string('user_id')->nullable();
             $table->string('user_name')->nullable();
-            $table->string('income_category')->nullable();
+            $table->string('charge')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->bigInteger('due')->nullable();
             $table->bigInteger('paid')->nullable();
+            $table->bigInteger('status')->default(0);
             $table->timestamps();
         });
     }

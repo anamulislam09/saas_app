@@ -84,6 +84,7 @@ class FlatController extends Controller
                     $flat['customer_id'] = Auth::guard('admin')->user()->id;
                     $flat['flat_name'] = $flatmaster->flat_name;
                     $flat['floor_no'] = $flatmaster->floor_no;
+                    $flat['charge'] = "Service Charge";
                     $flat['amount'] = $flatmaster->amount;
                     // dd($flatmaster->amount);
                     Flat::create($flat);

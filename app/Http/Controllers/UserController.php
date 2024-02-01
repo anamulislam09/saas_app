@@ -37,6 +37,7 @@ class UserController extends Controller
     $flat_unique_id = $request->flat_unique_id;
     $customer_id = $request->customer_id;
     $amount = $request->amount;
+    $charge = $request->charge;
 
     $name = $request->name;
     $phone = $request->phone;
@@ -49,6 +50,7 @@ class UserController extends Controller
         'customer_id' => $customer_id[$i],
         'flat_id' => $flat_unique_id[$i],
         'amount' => $amount[$i],
+        'charge' => $charge[$i],
         'name' => $name[$i],
         'phone' => $phone[$i],
         'nid_no' => $nid_no[$i],

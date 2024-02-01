@@ -168,7 +168,6 @@ class AdminController extends Controller
             $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
             return redirect()->back()->with($notification);
         }
-
     }
 
     /*-------------------Customers related method start here--------------*/

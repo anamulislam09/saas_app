@@ -13,6 +13,7 @@ class Flat extends Model
         'customer_id',
         'flat_name',
         'floor_no',
+        'charge',
         'amount',
         'status',
     ];

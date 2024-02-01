@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->string('flat_name');
             $table->tinyInteger('floor_no')->nullable();
+            $table->string('charge')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
