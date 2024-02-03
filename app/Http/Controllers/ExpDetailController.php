@@ -15,7 +15,7 @@ class ExpDetailController extends Controller
      */
     public function Index()
     {
-        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
         // dd($expDetails);
         return view('admin.expense.exp_details.index', compact('expDetails'));
     }

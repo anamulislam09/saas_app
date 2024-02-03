@@ -6,6 +6,7 @@ use App\Models\Exp_detail;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Auth;
+use Carbon\Carbon;
 
 class ExpenseController extends Controller
 {
@@ -14,7 +15,7 @@ class ExpenseController extends Controller
      */
     public function Index()
     {
-        $expense = Expense::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        $expense = Expense::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
         return view('admin.expense.expense.index', compact('expense'));
     }
 
@@ -31,13 +32,17 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('cat_id')->get();
+        $month = Carbon::now()->month;
+        // $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('cat_id')->get();
+        $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->groupBy('cat_id')->get();
+        // dd($expenses);
 
         foreach($expenses as $expense){
             $data['year'] = $expense->year;
             $data['month'] = $expense->month;
             $data['cat_id'] = $expense->cat_id;
-            $data['sub_total'] = Exp_detail::where('cat_id', $expense->cat_id)->SUM('amount');
+            // $data['sub_total'] = Exp_detail::where('cat_id', $expense->cat_id)->SUM('amount');
+            $data['sub_total'] = Exp_detail::where('cat_id', $expense->cat_id)->where('month', $month)->SUM('amount');
             // $data['total'] = $expense->cat_id;
             $data['customer_id'] = $expense->customer_id;
             $data['auth_id'] = $expense->auth_id;

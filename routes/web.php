@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlanceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpDetailController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ExpProcessController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ProfileController;
@@ -24,15 +26,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-    /*---------------- Admin route start here ------------------*/
-    // admin login route start here 
-    Route::get('/admin/login', [AdminController::class, 'Index'])->name('login_form');
-    Route::post('/admin/login/owner', [AdminController::class, 'Login'])->name('admin.login');
+/*---------------- Admin route start here ------------------*/
+// admin login route start here 
+Route::get('/admin/login', [AdminController::class, 'Index'])->name('login_form');
+Route::post('/admin/login/owner', [AdminController::class, 'Login'])->name('admin.login');
 
-    // admin register route start here 
-    Route::get('/admin/register', [AdminController::class, 'AdminRegister'])->name('register_form');
-    Route::post('/admin/register/store', [AdminController::class, 'Store'])->name('admin.store');
-    // admin register route ends here 
+// admin register route start here 
+Route::get('/admin/register', [AdminController::class, 'AdminRegister'])->name('register_form');
+Route::post('/admin/register/store', [AdminController::class, 'Store'])->name('admin.store');
+// admin register route ends here 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
@@ -64,36 +66,47 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
 /*---------------- Customer route start here ------------------*/
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
- //    Flat setup route 
- Route::get('/flat', [FlatController::class, 'Index'])->name('flat.index');
- Route::get('/flat/create', [FlatController::class, 'Create'])->name('flat.create');
- Route::post('/flat/store', [FlatController::class, 'Store'])->name('flat.store');
- Route::get('/flat/single-create', [FlatController::class, 'SingleCreate'])->name('flat.singlecreate');
- Route::post('/flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
+    //    Flat setup route 
+    Route::get('/flat', [FlatController::class, 'Index'])->name('flat.index');
+    Route::get('/flat/create', [FlatController::class, 'Create'])->name('flat.create');
+    Route::post('/flat/store', [FlatController::class, 'Store'])->name('flat.store');
+    Route::get('/flat/single-create', [FlatController::class, 'SingleCreate'])->name('flat.singlecreate');
+    Route::post('/flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
 
- //    users route 
- Route::get('/users', [UserController::class, 'Index'])->name('user.index');
- Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
- Route::post('/users/store', [UserController::class, 'Store'])->name('user.store');
- Route::get('/user/edit/{id}', [UserController::class, 'Edit'])->name('user.edit');
- Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
- Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
+    //    users route 
+    Route::get('/users', [UserController::class, 'Index'])->name('user.index');
+    Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
+    Route::post('/users/store', [UserController::class, 'Store'])->name('user.store');
+    Route::get('/user/edit/{id}', [UserController::class, 'Edit'])->name('user.edit');
+    Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
+    Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
 
- //    Expense-details route 
- Route::get('/expense-details', [ExpDetailController::class, 'Index'])->name('expense-details.index');
- Route::get('/expense-details/create', [ExpDetailController::class, 'Create'])->name('expense-details.create');
- Route::post('/expense-details/store', [ExpDetailController::class, 'Store'])->name('expense-details.store');
- 
- //    Expense route 
- Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');
- Route::get('/expense/store', [ExpenseController::class, 'Store'])->name('expense.store');
+    //    Expense-details route 
+    Route::get('/expense-details', [ExpDetailController::class, 'Index'])->name('expense-details.index');
+    Route::get('/expense-details/create', [ExpDetailController::class, 'Create'])->name('expense-details.create');
+    Route::post('/expense-details/store', [ExpDetailController::class, 'Store'])->name('expense-details.store');
 
-  //    income route 
-  Route::get('/income', [IncomeController::class, 'Create'])->name('income.create');
-  Route::post('/income/store', [IncomeController::class, 'Store'])->name('income.store');
+    //    Expense route 
+    Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');
+    Route::get('/expense/store', [ExpenseController::class, 'Store'])->name('expense.store');
+
+    //    Expense process route 
+    Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
+    Route::get('/expense-process/store', [ExpProcessController::class, 'Store'])->name('expense_process.store');
+
+    //    Expense process route 
+    // Route::get('/expense.process', [ExpProcessController::class, 'Index'])->name('expenses.index');
+    // // Route::get('/expense-process/store', [ExpProcessController::class, 'Store'])->name('expense_process.store');
+
+    //    income route  
+    Route::get('/income', [IncomeController::class, 'Create'])->name('income.create');
+    Route::post('/income/store', [IncomeController::class, 'Store'])->name('income.store');
     Route::get('/income/collection', [IncomeController::class, 'Collection'])->name('income.collection');
     Route::post('/income/collection/store/', [IncomeController::class, 'StoreCollection'])->name('income.collection.store');
 
+    //    Expense process route 
+    Route::get('/blance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
+    Route::get('/blance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
 });
 
 /*---------------- Customer route ends here ------------------*/

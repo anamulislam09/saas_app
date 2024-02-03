@@ -103,19 +103,19 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{route('expense-details.index')}}" class="nav-link">
+                                <a href="{{ route('expense-details.index') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense details</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('expenses.index')}}" class="nav-link">
+                                <a href="{{ route('expenses.index') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('expenses.process') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Process & Generete data</p>
                                 </a>
@@ -141,26 +141,49 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{route('income.create')}}" class="nav-link">
+                                <a href="{{ route('income.create') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('income.collection')}}" class="nav-link">
+                                <a href="{{ route('income.collection') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Collection </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('income.collection') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p> Expense log</p>
+                                    <p>Ending Blance </p>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     {{-- Income start here --}}
+                    {{-- Blance  start here --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Blance<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-3">
+                            <li class="nav-item">
+                                <a href="{{ route('monthly.blance.index') }}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Monthly Blance</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('yearly.blance.index') }}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Yearly Blance </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Blance ends here --}}
                 @endif
             </ul>
         </nav>

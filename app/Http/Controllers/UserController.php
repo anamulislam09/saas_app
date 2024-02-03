@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Flat;
+use App\Models\Income;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class UserController extends Controller
     $address = $request->address;
     $email = $request->email;
     for ($i = 0; $i < count($flat_unique_id); $i++) {
-      User::insert([
+     $user = User::insert([
         'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id[$i],
         'customer_id' => $customer_id[$i],
         'flat_id' => $flat_unique_id[$i],
@@ -62,6 +63,7 @@ class UserController extends Controller
       DB::table('flats')->update($status);
 
     }
+
     return redirect()->route('user.index')->with('message', 'User Created Successfully');
   }
 

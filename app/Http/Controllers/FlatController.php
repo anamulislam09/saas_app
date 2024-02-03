@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Flat;
 use App\Models\Flatid;
 use App\Models\Flatmaster;
+use App\Models\Income;
 use Illuminate\Http\Request;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 use Auth;
@@ -109,13 +110,39 @@ class FlatController extends Controller
     public function SingleStore(Request $request)
     {
         $unique_id = Flat::where('customer_id', Auth::guard('admin')->user()->id)->max('flat_unique_id');
+        $flat = Flat::where('customer_id', Auth::guard('admin')->user()->id)->first();
 
         $zeroo = '0';
         $data['flat_unique_id'] = ($zeroo) . ++$unique_id;
         $data['customer_id'] = Auth::guard('admin')->user()->id;
         $data['flat_name'] = $request->flat_name;
         $data['floor_no'] = $request->floor_no;
-        Flat::create($data);
+        $data['charge'] = "Service Charge";
+        $data['amount'] = $flat->amount;
+       $flat = Flat::create($data);
+
+        if($flat){
+        // $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        $month = date('m');
+        $year = date('Y');
+  
+        // $flat_unique_id = $request->flat_unique_id;
+        // $customer_id = $request->customer_id;
+        // $amount = $request->amount;
+        // $charge = $request->charge;
+  
+        // for ($i = 0; $i < count($users); $i++) {
+            Income::insert([
+                'month' => $month,
+                'year' => $year,
+                'customer_id' => Auth::guard('admin')->user()->id,
+                'auth_id' => Auth::guard('admin')->user()->id,
+                'charge' => "Service Charge",
+                'amount' => $flat->amount,
+                'due' => $flat->amount,
+            ]);
+        // }
+      }
 
         return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
     }

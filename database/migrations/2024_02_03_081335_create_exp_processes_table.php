@@ -11,23 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('processes', function (Blueprint $table) {
+        Schema::create('exp_processes', function (Blueprint $table) {
             $table->id();
-            $table->string('month')->nullable();
-            $table->integer('year')->nullable();
-            $table->integer('cat_id');
-            $table->integer('exp_id');
-            $table->integer('amount');
-            $table->tinyInteger('auth_id');
+            $table->string('year');
+            $table->string('month');
+            $table->bigInteger('total');
+            $table->integer('customer_id');
+            $table->integer('auth_id');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('processes');
+        Schema::dropIfExists('exp_processes');
     }
 };

@@ -11,11 +11,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
+                                    <div class="col-lg-9 col-sm-12">
                                         <h3 class="card-title">Expenses</h3>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a>
+                                    <div class="col-lg-3 col-sm-12">
+                                        {{-- <a href="{{ route('expense.create') }}" class="btn btn-outline-primary">Add New</a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -27,16 +27,15 @@
                                             <th>SL</th>
                                             <th>Year</th>
                                             <th>Month</th>
-                                            <th>Expense</th>
-                                            <th>SubTotal</th>
+                                            <th>Total</th>
                                     </thead>
                                     <tbody>
-                                        @foreach ($expense as $key => $item)
-                                            @php
+                                        @foreach ($data as $key => $item)
+                                            {{-- @php
                                                 $data = DB::table('categories')
                                                     ->where('id', $item->cat_id)
                                                     ->first();
-                                            @endphp
+                                            @endphp --}}
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->year }}</td>
@@ -68,9 +67,7 @@
                                                         December
                                                     @endif
                                                 </td>
-
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $item->sub_total }}</td>
+                                                <td>{{ $item->total }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -15,7 +15,7 @@
                                         <h3 class="card-title">Expenses</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a>
+                                        {{-- <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -27,16 +27,11 @@
                                             <th>SL</th>
                                             <th>Year</th>
                                             <th>Month</th>
-                                            <th>Expense</th>
-                                            <th>SubTotal</th>
+                                            <th>Amount</th>
+                                            <th>Flag</th>
                                     </thead>
                                     <tbody>
-                                        @foreach ($expense as $key => $item)
-                                            @php
-                                                $data = DB::table('categories')
-                                                    ->where('id', $item->cat_id)
-                                                    ->first();
-                                            @endphp
+                                        @foreach ($data as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->year }}</td>
@@ -69,8 +64,14 @@
                                                     @endif
                                                 </td>
 
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $item->sub_total }}</td>
+                                                <td>{{ $data->amount }}</td>
+                                                <td>
+                                                    @if ($item->flag == 1)
+                                                    <span class="badge badge success">Profit</span>
+                                                    @elseif ($item->flag == 0)
+                                                    <span class="badge badge danger">Loss</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
