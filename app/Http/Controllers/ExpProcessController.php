@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Exp_detail;
 use App\Models\Exp_process;
 use App\Models\Expense;
+use App\Models\MonthlyBlance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ExpProcessController extends Controller
 {
@@ -31,24 +33,95 @@ class ExpProcessController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    
     public function store()
     {
         $month = Carbon::now()->month;
-        $expenses = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->groupBy('month')->get();
-        // dd($expense);
+        $year = Carbon::now()->year;    
+ 
+        $expenses = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('month')->get();
+        // $expenses = Expense::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('month')->get();   //previous month
 
         foreach ($expenses as $expense) {
             $data['year'] = $expense->year;
             $data['month'] = $expense->month;
-            $data['total'] = Expense::where('month', $expense->month)->where('month', $month)->SUM('sub_total');
+            // $data['total'] = Expense::SUM('sub_total');  //previous month
+            $data['total'] = Expense::where('month', $expense->month)->where('year', $expense->year)->SUM('sub_total');
             $data['customer_id'] = $expense->customer_id;
             $data['auth_id'] = $expense->auth_id;
             $exp_process = Exp_process::create($data);
         }
 
+
         if ($exp_process) {
-           return redirect()->route('expenses.process')->with('message', 'Expense store successfully');
-        }else{
+            // $month_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->first();  
+            $month_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)
+                ->first();           
+            // oprning blance
+            $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+
+            // total of this month
+            $income = DB::table('incomes')
+                ->where('month', $previousDate[1])      
+                ->where('year', $previousDate[0])
+                ->where('customer_id', Auth::guard('admin')->user()->id)
+                ->SUM('paid');
+
+            // $income = DB::table('incomes')  
+            //     ->where('customer_id', Auth::guard('admin')->user()->id)        //previous month
+            //     ->SUM('paid');
+            // total of this month
+
+            // oprning blance
+            $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+
+            $openingBlance = DB::table('monthly_blances')
+                ->where('month', $previousDate[1])
+                ->where('year', $previousDate[0])           
+                ->where('customer_id', Auth::guard('admin')->user()->id)
+                ->first();
+
+            // $openingBlance = DB::table('monthly_blances')
+            //     ->where('customer_id', Auth::guard('admin')->user()->id)    //previous month
+            //     ->first();
+            // oprning blance 
+
+            if (!$openingBlance) {
+                $balance = $income - $month_exp->total;
+
+                $data['year'] = $month_exp->year;
+                $data['month'] = $month_exp->month;
+                $data['amount'] = $balance;
+                $data['customer_id'] = $month_exp->customer_id;
+                $data['auth_id'] = $month_exp->auth_id;
+                $exp_process = MonthlyBlance::create($data);
+            } else {
+                if ($openingBlance->flag == 1) {
+                    $balance = ($openingBlance->amount + $income) - $month_exp->total;
+
+                    $data['year'] = $income->year;
+                    $data['month'] = $income->month;
+                    $data['amount'] = $balance;
+                    $data['customer_id'] = $income->customer_id;
+                    $data['auth_id'] = $income->auth_id;
+                    $exp_process = MonthlyBlance::create($data);
+                } else {
+                    $balance = ($income - $openingBlance->amount) - $month_exp->total;
+
+                    $data['year'] = $income->year;
+                    $data['month'] = $income->month;
+                    $data['amount'] = $balance;
+                    $data['customer_id'] = $income->customer_id;
+                    $data['auth_id'] = $income->auth_id;
+                    $exp_process = MonthlyBlance::create($data);
+                }
+            }
+        }
+
+
+        if ($exp_process) {
+            return redirect()->route('expenses.process')->with('message', 'Expense store successfully');
+        } else {
             return redirect()->back()->with('message', 'Something went wrong!');
         }
     }

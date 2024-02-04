@@ -64,12 +64,12 @@
                                                     @endif
                                                 </td>
 
-                                                <td>{{ $data->amount }}</td>
+                                                <td>{{ $item->amount}}</td>
                                                 <td>
                                                     @if ($item->flag == 1)
-                                                    <span class="badge badge success">Profit</span>
+                                                    <span class="badge badge-success">Profit</span>
                                                     @elseif ($item->flag == 0)
-                                                    <span class="badge badge danger">Loss</span>
+                                                    <span class="badge badge-danger">Loss</span>
                                                     @endif
                                                 </td>
                                             </tr>

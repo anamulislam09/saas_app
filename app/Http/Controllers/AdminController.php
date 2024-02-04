@@ -84,56 +84,8 @@ class AdminController extends Controller
     /*-------------------Customers related method start here--------------*/
     public function Customer(Request $request)
     {
-        // $data = Customer::where('role' == 1)->orderBy('id', 'DESC');
-        // dd($data);
-        // if ($request->ajax()) {
-        //     $data = "";
-
-
-        //     if ($request->status == 0) {
-        //         $query->where('status', 0);
-        //     } elseif ($request->status == 1) {
-        //         $query->where('status', 1);
-        //     }
-        //     $data = $query->get();
-        //    dd($data);
-        //     return DataTables::of($data)
-        //         ->addIndexColumn()
-        //         //status column start here
-        //         ->editColumn('status', function ($row) {
-        //             if ($row->status == 0) {
-        //                 return ' <span class="badge badge-danger">Inactive</span>';
-        //             } elseif ($row->status == 1) {
-        //                 return ' <span class="badge badge-primary" >Active</span>';
-        //             } 
-        //         })       
-        //           //status column ends here
-
-        //         //role column start here
-        //         ->editColumn('role', function ($row) {
-        //             if ($row->role == 0) {
-        //                 return ' <span class="badge badge-primary">SuperAdmin</span>';
-        //             } elseif ($row->role == 1) {
-        //                 return ' <span class="badge badge-info" >Customer</span>';
-        //             } 
-        //         })       
-        //           //role column ends here
-
-        //         ->addColumn('action', function ($row) {
-        //             $actionbtn = '
-        //             <a href="" class="btn btn-sm btn-primary" ><i class="fas fa-eye"></i></a> 
-        //             <a href="#" class="btn btn-sm btn-info edit" data-id="' . $row->id . '" data-toggle="modal" data-target="#editOrderModel"><i class="fas fa-edit"></i></a>
-        //             ';
-        //             return $actionbtn;
-        //         })
-        //         ->rawColumns(['action', 'role', 'status'])
-        //         ->make(true);
-        // }
-
         if (Auth::guard('admin')->user()->role == 0) {
-        // if (auth()->user()->role == 1) {
-            $data = Customer::all();
-            // dd(Auth::check('role' == 0))
+            $data = Customer::where('role', 1)->get();
             return view('superadmin.customers.index', compact('data'));
         } else {
             $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');

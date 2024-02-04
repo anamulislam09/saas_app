@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('exp_processes', function (Blueprint $table) {
             $table->id();
-            $table->string('year');
+            $table->integer('year');
             $table->string('month');
             $table->bigInteger('total');
             $table->integer('customer_id');

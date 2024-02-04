@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Exp_detail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,10 @@ class ExpDetailController extends Controller
      */
     public function Index()
     {
-        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->orderBy('id', 'DESC')->get();
+        // $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
         // dd($expDetails);
         return view('admin.expense.exp_details.index', compact('expDetails'));
     }
@@ -38,7 +42,7 @@ class ExpDetailController extends Controller
         $data['cat_id'] = $request->cat_id;
         $data['customer_id'] = Auth::guard('admin')->user()->id;
         $data['year'] = date('Y');
-        $data['month'] = $request->month;
+        $data['month'] = date('m');
         $data['amount'] = $request->amount;
         $data['auth_id'] = Auth::guard('admin')->user()->id;
         // dd($data);

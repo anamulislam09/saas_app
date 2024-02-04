@@ -15,7 +15,8 @@
                                         <h3 class="card-title">Expenses</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a>
+                                        <a href="{{ route('expense_process.store') }}"
+                                            class="btn btn-sm btn-outline-primary">Expense store</a>
                                     </div>
                                 </div>
                             </div>
@@ -29,50 +30,154 @@
                                             <th>Month</th>
                                             <th>Expense</th>
                                             <th>SubTotal</th>
+                                            <th>Total Cost</th>
+                                            <th>Income</th>
+                                            <th>Blance</th>
                                     </thead>
+                                    @php
+
+                                        $month = Carbon\Carbon::now()->month;
+                                        $year = Carbon\Carbon::now()->year;
+
+                                        $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->where('month', $month)
+                                            ->where('year', $year)
+                                            ->groupBy('month')
+                                            ->SUM('sub_total');
+
+                                        // $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)   //previous month
+                                        //     ->groupBy('month')
+                                        //     ->SUM('sub_total');
+
+                                    
+                                        // oprning blance
+                                        $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+
+                                        $openingBlance = DB::table('monthly_blances')
+                                            ->where('month', $previousDate[1])
+                                            ->where('year', $previousDate[0])
+                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->first();
+
+                                        // $openingBlance = DB::table('monthly_blances') //previous month
+
+                                        //     ->where('customer_id', Auth::guard('admin')->user()->id)
+                                        //     ->first();
+                                        // oprning blance
+
+                                        // total of this month
+                                        $month = date('m');
+                                        $year = date('Y');
+                                        $income = DB::table('incomes')
+                                            ->where('month', $month)
+                                            ->where('year', $year)
+                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->SUM('paid');
+
+                                        // $income = DB::table('incomes') //previous month
+                                        //     ->where('year', $year)
+                                        //     ->where('customer_id', Auth::guard('admin')->user()->id)
+                                        //     ->SUM('paid');
+                                        // total of this month
+                                    @endphp
                                     <tbody>
-                                        @foreach ($expense as $key => $item)
-                                            @php
-                                                $data = DB::table('categories')
-                                                    ->where('id', $item->cat_id)
-                                                    ->first();
-                                            @endphp
+                                        <tr>
+                                            <td colspan="6" class="text-center"> <strong>Opening
+                                                    Blance----------------></strong></td>
+                                            @if (!$openingBlance)
+                                                <td><strong>000</strong></td>
+                                            @else
+                                                @if ($openingBlance->flag == 1)
+                                                    <td><strong>{{ $openingBlance->amount }}</strong></td>
+                                                @else
+                                                    <td><strong>-{{ $openingBlance->amount }}</strong></td>
+                                                @endif
+                                            @endif
+                                            <td></td>
+                                        </tr>
+                                        @if (!empty($expense))
+                                            @foreach ($expense as $key => $item)
+                                                @php
+                                                    $data = DB::table('categories')
+                                                        ->where('id', $item->cat_id)
+                                                        ->first();
+                                                @endphp
+                                                <tr>
+                                                    <td style="border-right:1px solid #ddd">{{ $key + 1 }}</td>
+                                                    <td>{{ $item->year }}</td>
+
+                                                    <td>
+                                                        @if ($item->month == 1)
+                                                            January
+                                                        @elseif ($item->month == 2)
+                                                            February
+                                                        @elseif ($item->month == 3)
+                                                            March
+                                                        @elseif ($item->month == 4)
+                                                            April
+                                                        @elseif ($item->month == 5)
+                                                            May
+                                                        @elseif ($item->month == 6)
+                                                            June
+                                                        @elseif ($item->month == 7)
+                                                            July
+                                                        @elseif ($item->month == 8)
+                                                            August
+                                                        @elseif ($item->month == 9)
+                                                            September
+                                                        @elseif ($item->month == 10)
+                                                            October
+                                                        @elseif ($item->month == 11)
+                                                            November
+                                                        @elseif ($item->month == 12)
+                                                            December
+                                                        @endif
+                                                    </td>
+
+                                                    <td>{{ $data->name }}</td>
+                                                    <td>{{ $item->sub_total }}</td>
+                                                    <td rowspan=""></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->year }}</td>
-
-                                                <td>
-                                                    @if ($item->month == 1)
-                                                        January
-                                                    @elseif ($item->month == 2)
-                                                        February
-                                                    @elseif ($item->month == 3)
-                                                        March
-                                                    @elseif ($item->month == 4)
-                                                        April
-                                                    @elseif ($item->month == 5)
-                                                        May
-                                                    @elseif ($item->month == 6)
-                                                        June
-                                                    @elseif ($item->month == 7)
-                                                        July
-                                                    @elseif ($item->month == 8)
-                                                        August
-                                                    @elseif ($item->month == 9)
-                                                        September
-                                                    @elseif ($item->month == 10)
-                                                        October
-                                                    @elseif ($item->month == 11)
-                                                        November
-                                                    @elseif ($item->month == 12)
-                                                        December
-                                                    @endif
-                                                </td>
-
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $item->sub_total }}</td>
+                                                <td colspan="8">NO Expense Available</td>
                                             </tr>
-                                        @endforeach
+                                        @endif
+                                        <tr>
+                                            <td colspan="5" class="text-center"><strong>Total cost of this month-------->
+                                                </strong></td>
+                                            <td><strong>{{ $total }}</strong></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-center"><strong>Total income of this
+                                                    month------------------------------> </strong></td>
+                                            <td><strong>{{ $income }}</strong></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-center"><strong>Blance of this
+                                                    month------------------------------------------------------------>
+                                                </strong></td>
+                                            <td>
+                                                @if (!$openingBlance)
+                                                    <strong
+                                                        style="border-right:1px solid #ddd">{{ $income - $total }}</strong>
+                                                @else
+                                                    @if ($openingBlance->flag == 1)
+                                                        <strong
+                                                            style="border-right:1px solid #ddd">{{ $openingBlance->amount + $income - $total }}</strong>
+                                                    @else
+                                                        <strong
+                                                            style="border-right:1px solid #ddd">{{ $income - $openingBlance->amount - $total }}</strong>
+                                                    @endif
+                                                @endif
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -83,4 +188,3 @@
         </section>
     </div>
 @endsection
-

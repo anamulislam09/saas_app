@@ -29,7 +29,7 @@
                                         @csrf
                                             <div class=" form-group">
                                                 <label for="floor" class="">Month :</label>
-                                                <select name="month" class="form-control" id="" required>
+                                                <select name="month" class="form-control" id="">
                                                     <option value="" selected disabled>Select Once</option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>

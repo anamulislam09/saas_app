@@ -10,28 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IncomeController extends Controller
 {
-    /*-------------------IncomeCategory start here--------------*/
-    // public function IncomeCategory(){
-    //     return view('admin.income.category');
-
-    // }
-
-    // public function StoreIncomeCategory(Request $request){
-    //     $data['customer_id'] = Auth::guard('admin')->user()->id;
-    //     $data['name'] = $request->name;
-    //     IncomeCategory::create($data);
-    //     return redirect()->route('income.category')->with('message', 'successfully created' );
-    // }
-    /*-------------------IncomeCategory ends here--------------*/
-
     /*-------------------Income start here--------------*/
-    // generate bill 
-    // public function billGenerate(){
-    //     $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->get();
-    //     return view('admin.income.index', compact( 'data'));
-
-    // }
-
 
     public function Create()
     {
@@ -47,13 +26,11 @@ class IncomeController extends Controller
         } else {
             $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
             if ($data) {
-                $users = Income::where('customer_id', Auth::guard('admin')->user()->id)->get();
+                $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
+                $users = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('customer_id', Auth::guard('admin')->user()->id)->get();
                 // dd($users);
                 $month = $request->month;
                 $year = $request->year;
-
-                $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
-
                 for ($i = 0; $i < count($users); $i++) {
                     $previousMonthData = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
 
@@ -69,7 +46,6 @@ class IncomeController extends Controller
                         'due' => $users[$i]->amount + $previousMonthData->due,
                     ]);
                 }
-                // $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->get();
                 return redirect()->route('income.collection')->with('message', 'Service charge added successfully');
             } else {
                 $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
@@ -100,6 +76,7 @@ class IncomeController extends Controller
     public function Collection()
     {
         $data = Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
+        // $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->get();
 
         // $previousDate = explode('-',date('Y-m', strtotime(date('Y-m')." -1 month")));
         // foreach ($data as $key => $value) {
@@ -120,12 +97,14 @@ class IncomeController extends Controller
         // $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
         // $previousMonthData = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
 
+        // $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
         $data = Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
 
         $item['paid'] = $paid;
         $item['due'] = $data->due - $paid;
         $item['status'] = 1;
 
+        // Income::where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
         Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
         return redirect()->route('income.collection')->with('message', 'Collection successful');;
     }
