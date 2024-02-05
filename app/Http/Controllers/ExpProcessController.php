@@ -33,20 +33,18 @@ class ExpProcessController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
     public function store()
     {
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;    
  
         $expenses = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('month')->get();
-        // $expenses = Expense::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('month')->get();   //previous month
 
         foreach ($expenses as $expense) {
             $data['year'] = $expense->year;
             $data['month'] = $expense->month;
-            // $data['total'] = Expense::SUM('sub_total');  //previous month
-            $data['total'] = Expense::where('month', $expense->month)->where('year', $expense->year)->SUM('sub_total');
+            $data['total'] = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $expense->month)->where('year', $expense->year)->SUM('sub_total');
             $data['customer_id'] = $expense->customer_id;
             $data['auth_id'] = $expense->auth_id;
             $exp_process = Exp_process::create($data);
@@ -54,46 +52,41 @@ class ExpProcessController extends Controller
 
 
         if ($exp_process) {
-            // $month_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->first();  
-            $month_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)
-                ->first();           
-            // oprning blance
-            $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
-
-            // total of this month
+            $month_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();           
+            // total income of this month
             $income = DB::table('incomes')
-                ->where('month', $previousDate[1])      
-                ->where('year', $previousDate[0])
+                ->where('month', $month)      
+                ->where('year', $year)
                 ->where('customer_id', Auth::guard('admin')->user()->id)
                 ->SUM('paid');
-
-            // $income = DB::table('incomes')  
-            //     ->where('customer_id', Auth::guard('admin')->user()->id)        //previous month
-            //     ->SUM('paid');
-            // total of this month
 
             // oprning blance
             $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
 
             $openingBlance = DB::table('monthly_blances')
-                ->where('month', $previousDate[1])
-                ->where('year', $previousDate[0])           
+                ->where('month', $month)
+                ->where('year', $year)           
                 ->where('customer_id', Auth::guard('admin')->user()->id)
                 ->first();
 
-            // $openingBlance = DB::table('monthly_blances')
-            //     ->where('customer_id', Auth::guard('admin')->user()->id)    //previous month
-            //     ->first();
+
             // oprning blance 
 
             if (!$openingBlance) {
                 $balance = $income - $month_exp->total;
+                
 
                 $data['year'] = $month_exp->year;
                 $data['month'] = $month_exp->month;
                 $data['amount'] = $balance;
                 $data['customer_id'] = $month_exp->customer_id;
                 $data['auth_id'] = $month_exp->auth_id;
+                if($balance >= 0){
+                    $data['flag'] = 1;
+                }else{
+                    
+                    $data['flag'] = 0;
+                }
                 $exp_process = MonthlyBlance::create($data);
             } else {
                 if ($openingBlance->flag == 1) {
@@ -104,8 +97,14 @@ class ExpProcessController extends Controller
                     $data['amount'] = $balance;
                     $data['customer_id'] = $income->customer_id;
                     $data['auth_id'] = $income->auth_id;
+                    if($balance >= 0){
+                        $data['flag'] = 1;
+                    }else{
+                        
+                        $data['flag'] = 0;
+                    }
                     $exp_process = MonthlyBlance::create($data);
-                } else {
+                } elseif($openingBlance->flag == 0) {
                     $balance = ($income - $openingBlance->amount) - $month_exp->total;
 
                     $data['year'] = $income->year;
@@ -113,6 +112,12 @@ class ExpProcessController extends Controller
                     $data['amount'] = $balance;
                     $data['customer_id'] = $income->customer_id;
                     $data['auth_id'] = $income->auth_id;
+                    if($balance >= 0){
+                        $data['flag'] = 1;
+                    }else{
+                        
+                        $data['flag'] = 0;
+                    }
                     $exp_process = MonthlyBlance::create($data);
                 }
             }

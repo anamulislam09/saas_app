@@ -18,7 +18,7 @@ class ExpenseController extends Controller
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
         $expense = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->orderBy('id', 'DESC')->get();
-        // $expense = Expense::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get(); /*----LAST MONTH ---*/ 
+
         return view('admin.expense.expense.index', compact('expense'));
     }
 
@@ -44,7 +44,7 @@ class ExpenseController extends Controller
             $data['year'] = $expense->year;
             $data['month'] = $expense->month;
             $data['cat_id'] = $expense->cat_id;
-            $data['sub_total'] = Exp_detail::where('cat_id', $expense->cat_id)->SUM('amount');
+            $data['sub_total'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month',$month)->where('year',$year)->where('cat_id', $expense->cat_id)->SUM('amount');
             // $data['total'] = $expense->cat_id;
             $data['customer_id'] = $expense->customer_id;
             $data['auth_id'] = $expense->auth_id;

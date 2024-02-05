@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Income;
 use App\Models\IncomeCategory;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,20 +20,24 @@ class IncomeController extends Controller
 
     public function Store(Request $request)
     {
-        $data = Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $month = $request->month;
+        $year = $request->year;
+        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
 
         if ($data) {
             return redirect()->back()->with('message', 'You have already create!');
         } else {
             $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
             if ($data) {
-                $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
-                $users = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('customer_id', Auth::guard('admin')->user()->id)->get();
-                // dd($users);
                 $month = $request->month;
                 $year = $request->year;
+
+                $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
+                $users = Income::where('month', $month-1)->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
+           
                 for ($i = 0; $i < count($users); $i++) {
-                    $previousMonthData = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                    $previousMonthData = Income::where('month', $month-1)->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                    // $previousMonthData = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
 
                     Income::insert([
                         'month' => $month,
@@ -75,7 +80,9 @@ class IncomeController extends Controller
     /*-------------------Collection start here--------------*/
     public function Collection()
     {
-        $data = Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
         // $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->get();
 
         // $previousDate = explode('-',date('Y-m', strtotime(date('Y-m')." -1 month")));
@@ -86,26 +93,29 @@ class IncomeController extends Controller
         //     }
         // }
 
-        return view('admin.income.income', compact('data'));
+        return view('admin.income.collection', compact('data'));
     }
 
     public function StoreCollection(Request $request)
     {
         $user_id = $request->user_id;
         $paid = $request->pay;
-
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        
         // $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
         // $previousMonthData = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
 
         // $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
-        $data = Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
+        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
 
+      
         $item['paid'] = $paid;
         $item['due'] = $data->due - $paid;
         $item['status'] = 1;
-
-        // Income::where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
-        Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
+        // dd($item);
+        Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
+        // Income::where('month', date('m'))->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
         return redirect()->route('income.collection')->with('message', 'Collection successful');;
     }
     /*-------------------Collection ends here--------------*/

@@ -38,11 +38,13 @@ class ExpDetailController extends Controller
      */
     public function Store(Request $request)
     {
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
 
         $data['cat_id'] = $request->cat_id;
         $data['customer_id'] = Auth::guard('admin')->user()->id;
-        $data['year'] = date('Y');
-        $data['month'] = date('m');
+        $data['year'] = $year;
+        $data['month'] = $month;
         $data['amount'] = $request->amount;
         $data['auth_id'] = Auth::guard('admin')->user()->id;
         // dd($data);

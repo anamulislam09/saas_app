@@ -152,12 +152,12 @@
                                     <p>Collection </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('income.collection') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Ending Blance </p>
+                                    <p>Ending Balance </p>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     {{-- Income start here --}}
@@ -165,20 +165,20 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
-                            <p>Blance<i class="right fas fa-angle-left"></i>
+                            <p>Balance<i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
                                 <a href="{{ route('monthly.blance.index') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Monthly Blance</p>
+                                    <p>Monthly Balance</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('yearly.blance.index') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Yearly Blance </p>
+                                    <p>Yearly Balance </p>
                                 </a>
                             </li>
                         </ul>

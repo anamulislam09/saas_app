@@ -52,9 +52,10 @@
                                     
                                         // oprning blance
                                         $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+                                        // dd($previousDate);
 
                                         $openingBlance = DB::table('monthly_blances')
-                                            ->where('month', $previousDate[1])
+                                            ->where('month', $month-1)
                                             ->where('year', $previousDate[0])
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
@@ -66,8 +67,6 @@
                                         // oprning blance
 
                                         // total of this month
-                                        $month = date('m');
-                                        $year = date('Y');
                                         $income = DB::table('incomes')
                                             ->where('month', $month)
                                             ->where('year', $year)

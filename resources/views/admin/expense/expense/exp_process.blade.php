@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-9 col-sm-12">
-                                        <h3 class="card-title">Expenses</h3>
+                                        <h3 class="card-title">All Expenses</h3>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         {{-- <a href="{{ route('expense.create') }}" class="btn btn-outline-primary">Add New</a> --}}
@@ -31,11 +31,6 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($data as $key => $item)
-                                            {{-- @php
-                                                $data = DB::table('categories')
-                                                    ->where('id', $item->cat_id)
-                                                    ->first();
-                                            @endphp --}}
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->year }}</td>

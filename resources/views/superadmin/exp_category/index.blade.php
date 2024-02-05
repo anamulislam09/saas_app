@@ -35,7 +35,7 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{$item->name}}</td>
                                                 <td>
-                                                    <a href="" class="btn btn-sm btn-info edit" data-id="{{$item->id}}" data-toggle="modal" data-target="#editUser"><i class="fas fa-edit"></i></a>
+                                                    {{-- <a href="" class="btn btn-sm btn-info edit" data-id="{{$item->id}}" data-toggle="modal" data-target="#editUser"><i class="fas fa-edit"></i></a> --}}
                                                     <a href="{{ route('category.delete', $item->id) }}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr>

@@ -58,31 +58,31 @@
                                                     {{-- <label for="" class="col-form-label">Select Month</label> --}}
                                                     <select name="month" class="form-control" id="">
                                                         <option value="" selected disabled>Select Month </option>
-                                                        <option value="1"
-                                                            @if ('1' == date('m')) selected @endif>January
+                                                        <option value="01"
+                                                            @if ('01' == date('m')) selected @endif>January
                                                         </option>
-                                                        <option value="2"
-                                                            @if ('2' == date('m')) selected @endif>February
+                                                        <option value="02"
+                                                            @if ('02' == date('m')) selected @endif>February
                                                         </option>
-                                                        <option value="3"
-                                                            @if ('3' == date('m')) selected @endif>March
+                                                        <option value="03"
+                                                            @if ('03' == date('m')) selected @endif>March
                                                         </option>
-                                                        <option value="4"
-                                                            @if ('4' == date('m')) selected @endif>April
+                                                        <option value="04"
+                                                            @if ('04' == date('m')) selected @endif>April
                                                         </option>
-                                                        <option value="5"
-                                                            @if ('5' == date('m')) selected @endif>May</option>
-                                                        <option value="6"
-                                                            @if ('6' == date('m')) selected @endif>June
+                                                        <option value="05"
+                                                            @if ('05' == date('m')) selected @endif>May</option>
+                                                        <option value="06"
+                                                            @if ('06' == date('m')) selected @endif>June
                                                         </option>
-                                                        <option value="7"
-                                                            @if ('7' == date('m')) selected @endif>July
+                                                        <option value="07"
+                                                            @if ('07' == date('m')) selected @endif>July
                                                         </option>
-                                                        <option value="8"
-                                                            @if ('8' == date('m')) selected @endif>August
+                                                        <option value="08"
+                                                            @if ('08' == date('m')) selected @endif>August
                                                         </option>
-                                                        <option value="9"
-                                                            @if ('9' == date('m')) selected @endif>September
+                                                        <option value="09"
+                                                            @if ('09' == date('m')) selected @endif>September
                                                         </option>
                                                         <option value="10"
                                                             @if ('10' == date('m')) selected @endif>October
@@ -95,14 +95,6 @@
                                                         </option>
                                                     </select>
                                                 </div>
-
-                                                @if (Route::current()->getName() == 'income.create')
-                                                    <div class="col-lg-2">
-                                                        <label for="" class="col-form-label"></label>
-                                                        <input type="submit" class="btn btn-primary" value="submit">
-                                                    </div>
-                                                @else
-                                                @endif
                                             </div>
                                         </form>
                                     </div>

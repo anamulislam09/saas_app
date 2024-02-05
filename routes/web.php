@@ -59,7 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/category/store', [CategoryController::class, 'Store'])->name('category.store');
     Route::get('/category/edit/{id}', [CategoryController::class, 'Edit'])->name('category.edit');
     Route::post('/category/update', [CategoryController::class, 'Update'])->name('category.update');
-    Route::post('/category/delete', [CategoryController::class, 'Destroy'])->name('category.delete');
+    Route::get('/category/delete/{id}', [CategoryController::class, 'Destroy'])->name('category.delete');
 });
 
 /*---------------- Admin route ends here ------------------*/
