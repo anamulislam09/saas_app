@@ -99,7 +99,7 @@
                                                 @if (Route::current()->getName() == 'income.create')
                                                     <div class="col-lg-2">
                                                         <label for="" class="col-form-label"></label>
-                                                        <input type="submit" class="btn btn-primary" value="submit">
+                                                        <input type="submit" class="btn btn-primary" value="Generate">
                                                     </div>
                                                 @else
                                                 @endif
@@ -108,24 +108,23 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="dataTable" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>User ID</th>
-                                            <th>User Name</th>
-                                            <th>Charge</th>
-                                            <th>Amount</th>
-                                            <th>Due</th>
-                                            <th style="width: 15%">Collect</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @if (isset($data) && !empty($data))
+                            @if (isset($data) && !empty($data))
+                                <div class="card-body">
+                                    <table id="dataTable" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>User ID</th>
+                                                <th>User Name</th>
+                                                <th>Charge</th>
+                                                <th>Amount</th>
+                                                {{-- <th>Due</th> --}}
+                                                {{-- <th style="width: 15%">Collect</th> --}}
+                                                {{-- <th>Action</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- @if (isset($data) && !empty($data)) --}}
                                             @foreach ($data as $item)
                                                 <form action="{{ route('income.collection.store') }}" method="POST">
                                                     @csrf
@@ -135,28 +134,26 @@
                                                         <td>{{ $item->user_name }}</td>
                                                         <td>{{ $item->charge }}</td>
                                                         <td>{{ $item->amount }}</td>
-                                                        <td>{{ $item->due }}</td>
-                                                        <td><input type="text"
+                                                        {{-- <td>{{ $item->due }}</td> --}}
+                                                        {{-- <td><input type="text"
                                                                 style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="pay" placeholder="000" required></td>
-                                                        <td>
+                                                                name="pay" placeholder="000" required></td> --}}
+                                                        {{-- <td>
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>
                                                             @else
                                                                 <input type="submit" class="btn btn-sm btn-primary"
                                                                     value="Submit">
                                                             @endif
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                 </form>
                                             @endforeach
                                         @else
-                                        @endif
-                                        <tr></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

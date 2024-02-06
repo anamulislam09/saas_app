@@ -77,7 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/users', [UserController::class, 'Index'])->name('user.index');
     Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
     Route::post('/users/store', [UserController::class, 'Store'])->name('user.store');
-    Route::get('/user/edit/{id}', [UserController::class, 'Edit'])->name('user.edit');
+    Route::get('/user/edit/{id}', [UserController::class, 'Edit']);
     Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
     Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
 
@@ -85,6 +85,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/expense-details', [ExpDetailController::class, 'Index'])->name('expense-details.index');
     Route::get('/expense-details/create', [ExpDetailController::class, 'Create'])->name('expense-details.create');
     Route::post('/expense-details/store', [ExpDetailController::class, 'Store'])->name('expense-details.store');
+    Route::get('/expense-details/edit/{id}', [ExpDetailController::class, 'Edit']);
+    Route::post('/expense-details/update', [ExpDetailController::class, 'Update'])->name('expense-details.update');
+    Route::get('/expense-details/delate/{id}', [ExpDetailController::class, 'Delate'])->name('expense-details.delate');
 
     //    Expense route 
     Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');

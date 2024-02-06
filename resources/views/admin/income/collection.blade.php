@@ -5,6 +5,19 @@
         input:focus {
             outline: none
         }
+
+        .table td,
+        .table th {
+            padding: 0.4rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+        .table tr td{
+            text-align: center;
+        }
+        .table tr th{
+            text-align: center;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
@@ -21,7 +34,7 @@
                                             @csrf
                                             <div class="row my-4">
                                                 <div class="col-lg-3">
-                                                    <strong><span>Service charge</span></strong>
+                                                    <strong><span>Collection of Service charge</span></strong>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     {{-- <label for="" class="col-form-label">Select Year</label> --}}
@@ -106,19 +119,32 @@
                                 <table id="dataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>User ID</th>
-                                            <th>User Name</th>
-                                            <th>Charge</th>
-                                            <th>Amount</th>
-                                            <th>Due</th>
-                                            <th style="width: 15%">Collect</th>
-                                            <th>Action</th>
+                                            <th style="width: 8%">User ID</th>
+                                            <th style="width: 18%">User Name</th>
+                                            <th style="width: 18%">Charge</th>
+                                            <th style="width: 15%">Current amount</th>
+                                            <th style="width: 12%">Previous due</th>
+                                            <th style="width: 10%">Payble</th>
+                                            <th style="width: 10%">Collect</th>
+                                            <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         @if (isset($data) && !empty($data))
                                             @foreach ($data as $item)
+                                                @php
+                                                    // $month = Carbon::now()->month;
+                                                    // $year = Carbon::now()->year;
+                                                    $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+                                                  
+                                                    $previousMonthData = App\Models\Income::where('month', $item->month - 1)
+                                                        ->where('year', $previousDate[0])
+                                                        ->where('user_id', $item->user_id)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->first();
+                                                @endphp
+
                                                 <form action="{{ route('income.collection.store') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="user_id" value="{{ $item->user_id }}">
@@ -127,10 +153,15 @@
                                                         <td>{{ $item->user_name }}</td>
                                                         <td>{{ $item->charge }}</td>
                                                         <td>{{ $item->amount }}</td>
+                                                        @if (!$previousMonthData)
+                                                        <td >000</td>
+                                                        @else
+                                                        <td>{{ $previousMonthData->due }}</td>
+                                                        @endif
                                                         <td>{{ $item->due }}</td>
                                                         <td><input type="text"
                                                                 style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="pay" placeholder="000" required></td>
+                                                                name="paid" value="{{old('paid')}}" placeholder="000" required></td>
                                                         <td>
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>

@@ -12,10 +12,11 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Create Exp_Details</h3>
+                                        <h3 class="card-title">Create Expense</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{route('expense-details.index')}}" class="btn btn-sm btn-outline-primary">See All</a>
+                                        <a href="{{ route('expense-details.index') }}"
+                                            class="btn btn-sm btn-outline-primary">See All</a>
                                     </div>
 
                                 </div>
@@ -23,54 +24,142 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <!-- /.card-header -->
-                               <div class="row">
-                                <div class="col-12 m-auto border p-5">
-                                    <form action="{{ route('expense-details.store') }}" method="POST">
-                                        @csrf
-                                            <div class=" form-group">
-                                                <label for="floor" class="">Month :</label>
-                                                <select name="month" class="form-control" id="">
-                                                    <option value="" selected disabled>Select Once</option>
-                                                    <option value="1">January</option>
-                                                    <option value="2">February</option>
-                                                    <option value="3">March</option>
-                                                    <option value="4">April</option>
-                                                    <option value="5">May</option>
-                                                    <option value="6">June</option>
-                                                    <option value="7">July</option>
-                                                    <option value="8">August</option>
-                                                    <option value="9">September</option>
-                                                    <option value="10">October</option>
-                                                    <option value="11">November</option>
-                                                    <option value="12">December</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="unit" class="">Expense Category :</label>
-                                                <select name="cat_id" class="form-control" id="" required>
-                                                    <option value="" selected disabled>Select Once</option>
+                                <div class="row">
+                                    <div class="col-12 m-auto border p-5">
+                                        <form action="{{ route('expense-details.store') }}" method="POST">
+                                            @csrf
+                                            <div class="row">
+                                                <div class=" col-lg-5 form-group">
+                                                    <label for="unit" class="">Expense Category :</label>
+                                                    <select name="cat_id" class="form-control" id="" required>
+                                                        <option value="" selected disabled>Select Once</option>
                                                         @foreach ($exp_cat as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @endforeach
 
-                                                </select>
+                                                    </select>
+                                                </div>
+                                                <div class=" col-lg-5 form-group">
+                                                    <label for="unit" class="">Expense amount:</label>
+                                                    <input type="text" name="amount" class="form-control"
+                                                        placeholder="Enter Expense Amount" required>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <button type="submit" class="btn btn-sm btn-primary float-end"
+                                                        style="margin-top: 35px" id="">Submit</button>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="unit" class="">Expense amount:</label>
-                                                   <input type="text" name="amount" class="form-control" placeholder="Enter Expense Amount" required>
-                                            </div>
-                                            <div class="">
-                                                <button type="submit" class="btn btn-sm btn-primary float-end"
-                                                    id="">Submit</button>
-                                            </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                               </div>
                             </div>
                         </div>
+                        @if (count($expDetails) < 1)
+                        @else
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Year</th>
+                                                <th>Month</th>
+                                                <th>Expense</th>
+                                                <th>Amount</th>
+                                                <th>Action</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($expDetails as $key => $item)
+                                                @php
+                                                    $data = DB::table('categories')
+                                                        ->where('id', $item->cat_id)
+                                                        ->first();
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $item->year }}</td>
+
+                                                    <td>
+                                                        @if ($item->month == 1)
+                                                            January
+                                                        @elseif ($item->month == 2)
+                                                            February
+                                                        @elseif ($item->month == 3)
+                                                            March
+                                                        @elseif ($item->month == 4)
+                                                            April
+                                                        @elseif ($item->month == 5)
+                                                            May
+                                                        @elseif ($item->month == 6)
+                                                            June
+                                                        @elseif ($item->month == 7)
+                                                            July
+                                                        @elseif ($item->month == 8)
+                                                            August
+                                                        @elseif ($item->month == 9)
+                                                            September
+                                                        @elseif ($item->month == 10)
+                                                            October
+                                                        @elseif ($item->month == 11)
+                                                            November
+                                                        @elseif ($item->month == 12)
+                                                            December
+                                                        @endif
+                                                    </td>
+
+                                                    <td>{{ $data->name }}</td>
+                                                    <td>{{ $item->amount }}</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-sm btn-info edit"
+                                                            data-id="{{ $item->id }}" data-toggle="modal"
+                                                            data-target="#editexp"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('expense-details.delate', $item->id) }}"
+                                                            class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </section>
     </div>
+
+    {{-- category edit model --}}
+    <!-- Modal -->
+    <div class="modal fade" id="editexp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Expense </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id="modal_body">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        $('body').on('click', '.edit', function() {
+            let exp_id = $(this).data('id');
+            $.get("/admin/expense-details/edit/" + exp_id, function(data) {
+                $('#modal_body').html(data);
+                // console.log(data);
+            })
+        })
+    </script>
+
 @endsection

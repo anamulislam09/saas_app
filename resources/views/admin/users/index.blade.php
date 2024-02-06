@@ -94,8 +94,8 @@
                                                 <a href="" class="btn btn-sm btn-info edit"
                                                     data-id="{{ $item->id }}" data-toggle="modal"
                                                     data-target="#editUser"><i class="fas fa-edit"></i></a>
-                                                <a href="{{ route('user.delete', $item->id) }}"
-                                                    class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                                {{-- <a href="{{ route('user.delete', $item->id) }}"
+                                                    class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -131,13 +131,12 @@
     </div>
 
     <!-- jQuery -->
-    <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.js"></script>
     <script>
         $('body').on('click', '.edit', function() {
             let user_id = $(this).data('id');
-            alert(user_id);
-            $.get("user/edit/" + user_id, function(data) {
+            $.get("/admin/user/edit/" + user_id, function(data) {
                 $('#modal_body').html(data);
 
             })

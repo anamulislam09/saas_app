@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-9 col-sm-12">
-                                        <h3 class="card-title">All Expenses</h3>
+                                        <h3 class="card-title">Total expense end of the month</h3>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         {{-- <a href="{{ route('expense.create') }}" class="btn btn-outline-primary">Add New</a> --}}

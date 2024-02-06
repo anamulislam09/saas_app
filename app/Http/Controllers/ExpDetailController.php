@@ -30,7 +30,11 @@ class ExpDetailController extends Controller
     public function Create()
     {
         $exp_cat = Category::get();
-        return view('admin.expense.exp_details.create', compact('exp_cat'));
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->orderBy('id', 'DESC')->get();
+
+        return view('admin.expense.exp_details.create', compact('exp_cat', 'expDetails'));
     }
 
     /**
@@ -48,13 +52,12 @@ class ExpDetailController extends Controller
         $data['amount'] = $request->amount;
         $data['auth_id'] = Auth::guard('admin')->user()->id;
         // dd($data);
-       $exp = Exp_detail::create($data);
+        $exp = Exp_detail::create($data);
 
-        if(!$exp){
+        if (!$exp) {
             return redirect()->back()->with('message', 'Something went wrong');
         }
-        return redirect()->route('expense-details.index')->with('message', 'Expense creted successfully');
-
+        return redirect()->back()->with('message', 'Expense creted successfully');
     }
 
     /**
@@ -68,24 +71,33 @@ class ExpDetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exp_detail $exp_detail)
+    public function Edit($id)
     {
-        //
+        $data = Exp_detail::findOrFail($id);
+        $exp_cat = Category::get();
+        return view('admin.expense.exp_details.edit', compact('data', 'exp_cat'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Exp_detail $exp_detail)
+    public function Update(Request $request)
     {
-        //
+        $id = $request->id;
+        $data = Exp_detail::findOrFail($id);
+        $data['cat_id'] = $request->cat_id;
+        $data['amount'] = $request->amount;
+        $data->save();
+        return redirect()->back()->with('message', 'Expense updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exp_detail $exp_detail)
+    public function Delate($id)
     {
-        //
+        $data = Exp_detail::findOrFail($id);
+        $data->delete();
+        return redirect()->back()->with('message', 'Expense deleted successfully.');
     }
 }

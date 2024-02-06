@@ -16,7 +16,7 @@
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
                                         <a href="{{ route('expense_process.store') }}"
-                                            class="btn btn-sm btn-outline-primary">Expense store</a>
+                                            class="btn btn-sm btn-outline-primary">Ledger Posting</a>
                                     </div>
                                 </div>
                             </div>
@@ -49,13 +49,12 @@
                                         //     ->groupBy('month')
                                         //     ->SUM('sub_total');
 
-                                    
                                         // oprning blance
                                         $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
                                         // dd($previousDate);
 
                                         $openingBlance = DB::table('monthly_blances')
-                                            ->where('month', $month-1)
+                                            ->where('month', $month - 1)
                                             ->where('year', $previousDate[0])
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
@@ -78,6 +77,7 @@
                                         //     ->where('customer_id', Auth::guard('admin')->user()->id)
                                         //     ->SUM('paid');
                                         // total of this month
+
                                     @endphp
                                     <tbody>
                                         <tr>
