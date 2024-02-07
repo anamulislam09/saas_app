@@ -15,15 +15,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-
+                            <div class="row ml-3">
                                 <div class="col-3 form-group">
                                     <label for="">Status</label>
                                     <select name="status" class="form-control submitable" id="status">
                                         <option value="">All</option>
                                         <option value="0">Inactive</option>
                                         <option value="1">Active</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -44,12 +42,18 @@
 
                                     <tbody>
                                         @foreach ($data as $item)
+                                        @php
+                                            $details =App\Models\CustomerDetail::where('customer_id', $item->id)->get();
+                                            // dd($details);
+                                        @endphp
                                             <tr>
                                                 <td>{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
-                                                <td>{{ $item->phone }}</td>
-                                                <td>{{ $item->address }}</td>
+                                                @foreach ($details as $detail)
+                                                <td>{{ $detail->phone }}</td>
+                                                <td>{{ $detail->address }}</td>
+                                                @endforeach
                                                 <td>
                                                     @if ($item->status == 1)
                                                         <span class="badge badge-primary">Active</span>

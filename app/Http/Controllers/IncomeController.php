@@ -31,7 +31,6 @@ class IncomeController extends Controller
             $month = $request->month;
             $year = $request->year;
             $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
-
             if ($data) {
                 return redirect()->back()->with('message', 'You have already create!');
             } else {
@@ -61,7 +60,7 @@ class IncomeController extends Controller
                     }
                     return redirect()->back()->with('message', 'Service charge added successfully');
                 } else {
-                    $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
+                    $users = User::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 1)->get();
                     $month = $request->month;
                     $year = $request->year;
 

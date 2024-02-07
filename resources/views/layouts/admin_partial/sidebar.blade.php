@@ -28,7 +28,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 @if (Auth::guard('admin')->user()->role == 0)
-                    <li class="nav-item">
+                    <li class="nav-item {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -38,7 +38,7 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('customers.all') }}" class="nav-link">
+                                <a href="{{ route('customers.all') }}" class="nav-link {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Customers</p>
                                 </a>
@@ -48,7 +48,7 @@
                     </li>
                     {{-- expense category start here --}}
                     <li class="nav-item">
-                        <a href="{{ route('category.index') }}" class="nav-link">
+                        <a href="{{ route('category.index') }}" class="nav-link {{ Request::routeIs('category.index') || Request::routeIs('category.create')? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Expense Category</p>
                         </a>

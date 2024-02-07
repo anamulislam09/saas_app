@@ -34,7 +34,7 @@
       <form action="{{route('admin.store')}}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="name" placeholder="Full name">
+          <input type="text" class="form-control" name="name" placeholder="Full name" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" name="phone" placeholder="Enter a valid number ">
+            <input type="text" class="form-control" name="phone" placeholder="Enter a valid number " required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-phone"></span>
@@ -50,7 +50,7 @@
             </div>
           </div>
         <div class="input-group mb-3">
-          <textarea name="address" id="" cols="" class="form-control" rows=""></textarea>
+          <textarea name="address" id="" cols="" class="form-control" rows="" required></textarea>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-house-user"></span>
@@ -58,7 +58,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="nid_no" placeholder="Enter NID Number">
+          <input type="text" class="form-control" name="nid_no" placeholder="Enter NID Number" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" name="email" placeholder="Email">
+          <input type="email" class="form-control" name="email" placeholder="Email" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -75,7 +75,7 @@
         </div>
         
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="Password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password_confirmation" placeholder="Retype password">
+          <input type="password" class="form-control" name="password_confirmation" placeholder="Retype password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

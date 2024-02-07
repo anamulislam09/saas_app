@@ -9,6 +9,7 @@ use App\Models\Income;
 use Illuminate\Http\Request;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 use Auth;
+use Carbon\Carbon;
 
 class FlatController extends Controller
 {
@@ -123,8 +124,8 @@ class FlatController extends Controller
 
         if($flat){
         // $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
-        $month = date('m');
-        $year = date('Y');
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
   
         // $flat_unique_id = $request->flat_unique_id;
         // $customer_id = $request->customer_id;

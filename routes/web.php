@@ -8,6 +8,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpProcessController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\PdfGeneratorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -88,6 +89,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/expense-details/edit/{id}', [ExpDetailController::class, 'Edit']);
     Route::post('/expense-details/update', [ExpDetailController::class, 'Update'])->name('expense-details.update');
     Route::get('/expense-details/delate/{id}', [ExpDetailController::class, 'Delate'])->name('expense-details.delate');
+
+    // generate  voucher
+    Route::get('/expense/generate-voucher/{id}', [PdfGeneratorController::class, 'Voucher'])->name('expense.voucher');
 
     //    Expense route 
     Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');

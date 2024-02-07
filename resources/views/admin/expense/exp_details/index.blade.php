@@ -40,7 +40,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $item->amount }}</td>
-                                                <td><a href="" class="btn btn-sm btn-primary">Generate vouchar</a></td>
+                                                <td><a href="{{route('expense.voucher', $item->id)}}" class="btn btn-sm btn-primary">Generate vouchar</a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

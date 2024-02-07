@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerDetail;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -45,29 +46,38 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        $email = Customer::where('email', $request->email)->exists();
+        if ($email) {
+            return redirect()->back()->with('message', 'This Email already used!');
+        } else {
+            // $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
+            $start_at = 1001;
 
-        // $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
-        $start_at = 1001;
-
-        if ($start_at) {
-            $customer = Customer::find($start_at);
-            if (!$customer) {
-                $data['id'] = $start_at;
+            if ($start_at) {
+                $customer = Customer::find($start_at);
+                if (!$customer) {
+                    $data['id'] = $start_at;
+                }
             }
+
+            $data['name'] = $request->name;
+            $data['email'] = $request->email;
+            $data['password'] = Hash::make($request->password);
+            $customer = Customer::create($data);
+
+            if ($customer) {
+                $customer = Customer::where('id', $customer->id)->first();
+
+                $data['customer_id'] = $customer->id;
+                $data['address'] = $request->address;
+                $data['phone'] = $request->phone;
+                $data['nid_no'] = $request->nid_no;
+                $data['image'] = $request->image;
+                CustomerDetail::create($data);
+            }
+            return redirect()->route('login_form')->with('message', 'Admin register Successfully');
+            //end method
         }
-
-        $data['name'] = $request->name;
-        $data['address'] = $request->address;
-        $data['phone'] = $request->phone;
-        $data['nid_no'] = $request->nid_no;
-        $data['image'] = $request->image;
-        $data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
-        // dd($data);
-
-        $customer = Customer::create($data);
-        return redirect()->route('login_form')->with('message', 'Admin register Successfully');
-        //end method
     }
 
     // register method ends here
@@ -110,13 +120,17 @@ class AdminController extends Controller
     public function CustomerUpdate(Request $request)
     {
         if (Auth::guard('admin')->user()->role == 0) {
-        $data = array();
-        $data['status'] = $request->status;
-        DB::table('customers')->where('id', $request->id)->update($data);
+            $data = array();
+            $data['status'] = $request->status;
+           $customer = DB::table('customers')->where('id', $request->id)->update($data);
 
-        $notification = array('message' => 'Customer status update successfully.', 'alert_type' => 'warning');
-        return redirect()->route('customers.all')->with($notification);
-         } else {
+        //    if($customer){
+
+        //    }
+
+            $notification = array('message' => 'Customer status update successfully.', 'alert_type' => 'warning');
+            return redirect()->route('customers.all')->with($notification);
+        } else {
             $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
             return redirect()->back()->with($notification);
         }

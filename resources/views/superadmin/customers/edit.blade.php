@@ -32,9 +32,14 @@
                                                 name="name">
                                         </div>
 
+                                        @php
+                                        $details =App\Models\CustomerDetail::where('customer_id', $data->id)->first();
+                                        // dd($details);
+                                    @endphp
+
                                         <div class="mb-3 mt-3">
                                             <label for="user_phone" class="form-label"> Customer phone:</label>
-                                            <input type="text" class="form-control" value="{{ $data->phone }}"
+                                            <input type="text" class="form-control" value="{{ $details->phone }}"
                                                 name="phone">
                                         </div>
 
@@ -54,7 +59,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        {{-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> --}}
                                         <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </form>

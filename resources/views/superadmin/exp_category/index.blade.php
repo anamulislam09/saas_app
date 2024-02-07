@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">All Expense</h3>
+                                        <h3 class="card-title">All Expense Category</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
                                         <a href="{{ route('category.create') }}" class="btn btn-outline-primary">Add new</a>
@@ -25,7 +25,7 @@
                                     <thead>
                                         <tr>
                                             <th>SL</th>
-                                            <th>name</th>
+                                            <th>Expense Name</th>
                                             <th> Action</th>
                                         </tr>
                                     </thead>
