@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
         <!-- Main content -->
         <section class="content mt-3">
@@ -12,10 +11,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Total balance end of the month</h3>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-12">
-                                        {{-- <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a> --}}
+                                        <h3 class="card-title">All Expenses</h3>
                                     </div>
                                 </div>
                             </div>
@@ -25,20 +21,39 @@
                                     <thead>
                                         <tr>
                                             <th>SL</th>
-                                            {{-- <th>Year</th>
-                                            <th>Month</th> --}}
-                                            <th>Total income</th>
-                                            <th>Total expense</th>
+                                            <th class="d-none">Year</th>
+                                            <th class="d-none">Month</th>
+                                            <th>Created By</th>
+                                            <th>Expense</th>
                                             <th>Amount</th>
-                                            <th>Flag</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $key => $item)
+                                        @foreach ($expDetails as $key => $item)
+                                            @php
+                                                $user = DB::table('users')
+                                                    ->where('user_id', $item->auth_id)
+                                                    ->exists();
+                                                $userName = DB::table('users')
+                                                    ->where('user_id', $item->auth_id)
+                                                    ->first();
+
+                                                $customer = DB::table('customers')
+                                                    ->where('id', $item->customer_id)
+                                                    ->exists();
+                                                // $customerName = DB::table('customers')->where('id', $item->customer_id)->first();
+
+                                                $data = DB::table('categories')
+                                                    ->where('id', $item->cat_id)
+                                                    ->first();
+
+                                                // dd($customer);
+
+                                            @endphp
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                {{-- <td>{{ $item->year }}</td>
-
-                                                <td>
+                                                <td class="d-none">{{ $item->year }}</td>
+                                                <td class="d-none">
                                                     @if ($item->month == 1)
                                                         January
                                                     @elseif ($item->month == 2)
@@ -64,18 +79,16 @@
                                                     @elseif ($item->month == 12)
                                                         December
                                                     @endif
-                                                </td> --}}
-
-                                                <td>{{ $item->total_income}}</td>
-                                                <td>{{ $item->total_expense}}</td>
-                                                <td>{{ $item->amount}}</td>
-                                                <td>
-                                                    @if ($item->flag == 1)
-                                                    <span class="badge badge-success">Profit</span>
-                                                    @elseif ($item->flag == 0)
-                                                    <span class="badge badge-danger">Loss</span>
-                                                    @endif
                                                 </td>
+
+                                                @if ($user)
+                                                    <td>{{ $userName->name }}</td>
+                                                @elseif ($customer)
+                                                    {{-- <td>{{ $customerName->name }}</td> --}}
+                                                    <td><span class="badge badge-success">Admin</span></td>
+                                                @endif
+                                                <td>{{ $data->name }}</td>
+                                                <td>{{ $item->amount }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -88,4 +101,3 @@
         </section>
     </div>
 @endsection
-

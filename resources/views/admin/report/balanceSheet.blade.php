@@ -12,10 +12,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Total balance end of the month</h3>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-12">
-                                        {{-- <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a> --}}
+                                        <h3 class="card-title">Balance Statement</h3>
                                     </div>
                                 </div>
                             </div>
@@ -25,20 +22,19 @@
                                     <thead>
                                         <tr>
                                             <th>SL</th>
-                                            {{-- <th>Year</th>
-                                            <th>Month</th> --}}
-                                            <th>Total income</th>
-                                            <th>Total expense</th>
-                                            <th>Amount</th>
+                                            <th class="d-none">Year</th>
+                                            <th class="d-none">Month</th>
+                                            <th>Expense</th>
+                                            <th>Income</th>
+                                            <th>Blance</th>
                                             <th>Flag</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                {{-- <td>{{ $item->year }}</td>
-
-                                                <td>
+                                                <td class="d-none">{{ $item->year }}</td>
+                                                <td class="d-none">
                                                     @if ($item->month == 1)
                                                         January
                                                     @elseif ($item->month == 2)
@@ -64,10 +60,10 @@
                                                     @elseif ($item->month == 12)
                                                         December
                                                     @endif
-                                                </td> --}}
+                                                </td>
 
-                                                <td>{{ $item->total_income}}</td>
                                                 <td>{{ $item->total_expense}}</td>
+                                                <td>{{ $item->total_income}}</td>
                                                 <td>{{ $item->amount}}</td>
                                                 <td>
                                                     @if ($item->flag == 1)

@@ -25,7 +25,7 @@ class PdfGeneratorController extends Controller
             'customer' => $customer,
             'custDetails' => $custDetails,
         ];
-        $pdf = PDF::loadView('admin.expense.voucher.index', $data);
+        $pdf = PDF::loadView('admin.expense.voucher.test', $data);
         // dd($pdf);
 
         return $pdf-> download('sdl.pdf');

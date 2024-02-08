@@ -28,7 +28,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 @if (Auth::guard('admin')->user()->role == 0)
-                    <li class="nav-item {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'menu-open' : '' }}">
+                    <li
+                        class="nav-item {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -38,7 +39,8 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('customers.all') }}" class="nav-link {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'active' : '' }}">
+                                <a href="{{ route('customers.all') }}"
+                                    class="nav-link {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Customers</p>
                                 </a>
@@ -48,7 +50,8 @@
                     </li>
                     {{-- expense category start here --}}
                     <li class="nav-item">
-                        <a href="{{ route('category.index') }}" class="nav-link {{ Request::routeIs('category.index') || Request::routeIs('category.create')? 'active' : '' }}">
+                        <a href="{{ route('category.index') }}"
+                            class="nav-link {{ Request::routeIs('category.index') || Request::routeIs('category.create') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Expense Category</p>
                         </a>
@@ -59,7 +62,8 @@
                 @if (Auth::guard('admin')->user()->role == 1)
                     {{-- Products start here --}}
                     <li class="nav-item">
-                        <a href="{{ route('user.index') }}" class="nav-link {{Request::routeIs('user.index') || Request::routeIs('user.create') || Request::routeIs('user.edit') ? 'active' : '' }}">
+                        <a href="{{ route('user.index') }}"
+                            class="nav-link {{ Request::routeIs('user.index') || Request::routeIs('user.create') || Request::routeIs('user.edit') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Users</p>
                         </a>
@@ -86,14 +90,16 @@
                     {{-- Roles & Parmission ends here --}}
                     {{-- Flat  start here --}}
                     <li class="nav-item">
-                        <a href="{{ route('flat.index') }}" class="nav-link {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
+                        <a href="{{ route('flat.index') }}"
+                            class="nav-link {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Manage flat</p>
                         </a>
                     </li>
                     {{-- flat ends here --}}
                     {{-- Expenses start here --}}
-                    <li class="nav-item {{ Request::routeIs('expense-details.create') || Request::routeIs('expense-details.index') || Request::routeIs('expenses.index') || Request::routeIs('expenses.process') ? 'menu-open active' : '' }}">
+                    <li
+                        class="nav-item {{ Request::routeIs('expense-details.create') || Request::routeIs('expense-details.index') || Request::routeIs('expenses.index') || Request::routeIs('expenses.process') ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -103,25 +109,29 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('expense-details.create') }}" class="nav-link {{ Request::routeIs('expense-details.create') ? 'active' : '' }}">
+                                <a href="{{ route('expense-details.create') }}"
+                                    class="nav-link {{ Request::routeIs('expense-details.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense Entry</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('expense-details.index') }}" class="nav-link {{ Request::routeIs('expense-details.index') ? 'active' : '' }}">
+                                <a href="{{ route('expense-details.index') }}"
+                                    class="nav-link {{ Request::routeIs('expense-details.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense details</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('expenses.index') }}" class="nav-link {{ Request::routeIs('expenses.index') ? 'active' : '' }}">
+                                <a href="{{ route('expenses.index') }}"
+                                    class="nav-link {{ Request::routeIs('expenses.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('expenses.process') }}" class="nav-link {{ Request::routeIs('expenses.process') ? 'active' : '' }}">
+                                <a href="{{ route('expenses.process') }}"
+                                    class="nav-link {{ Request::routeIs('expenses.process') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Process & Generete data</p>
                                 </a>
@@ -137,7 +147,8 @@
                     {{-- Expenses start here --}}
 
                     {{-- Income start here --}}
-                    <li class="nav-item {{ Request::routeIs('income.create') || Request::routeIs('income.collection') ? 'menu-open' : '' }}">
+                    <li
+                        class="nav-item {{ Request::routeIs('income.create') || Request::routeIs('income.collection') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -147,13 +158,15 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('income.create') }}" class="nav-link {{ Request::routeIs('income.create') ? 'active' : '' }}">
+                                <a href="{{ route('income.create') }}"
+                                    class="nav-link {{ Request::routeIs('income.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Generate Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('income.collection') }}" class="nav-link {{ Request::routeIs('income.collection') ? 'active' : '' }}">
+                                <a href="{{ route('income.collection') }}"
+                                    class="nav-link {{ Request::routeIs('income.collection') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Collection </p>
                                 </a>
@@ -168,7 +181,8 @@
                     </li>
                     {{-- Income start here --}}
                     {{-- Blance  start here --}}
-                    <li class="nav-item {{ Request::routeIs('monthly.blance.index') || Request::routeIs('yearly.blance.index') ? 'menu-open' : '' }}">
+                    <li
+                        class="nav-item {{ Request::routeIs('monthly.blance.index') || Request::routeIs('yearly.blance.index') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Balance<i class="right fas fa-angle-left"></i>
@@ -176,15 +190,64 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('monthly.blance.index') }}" class="nav-link {{ Request::routeIs('monthly.blance.index') ? 'active' : '' }}">
+                                <a href="{{ route('monthly.blance.index') }}"
+                                    class="nav-link {{ Request::routeIs('monthly.blance.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Monthly Balance</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('yearly.blance.index') }}" class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
+                                <a href="{{ route('yearly.blance.index') }}"
+                                    class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Yearly Balance </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Blance ends here --}}
+                    {{-- Blance  start here --}}
+                    <li
+                        class="nav-item {{ Request::routeIs('blance.index') || Request::routeIs('expense-all.index') || Request::routeIs('income.all') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Report<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-3">
+                            <li class="nav-item">
+                                <a href="{{ route('blance.index') }}"
+                                    class="nav-link {{ Request::routeIs('blance.index') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Balance Sheet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('expense-all.index') }}"
+                                    class="nav-link {{ Request::routeIs('expense-all.index') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Expense Report </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('yearly.blance.index') }}"
+                                    class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Voucher</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('income.all') }}"
+                                    class="nav-link {{ Request::routeIs('income.all') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Income Statement </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('yearly.blance.index') }}"
+                                    class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Trail Balance </p>
                                 </a>
                             </li>
                         </ul>

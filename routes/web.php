@@ -29,7 +29,9 @@ use Illuminate\Support\Facades\Route;
 
 /*---------------- Admin route start here ------------------*/
 // admin login route start here 
+
 Route::get('/admin/login', [AdminController::class, 'Index'])->name('login_form');
+
 Route::post('/admin/login/owner', [AdminController::class, 'Login'])->name('admin.login');
 
 // admin register route start here 
@@ -111,9 +113,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/income/collection', [IncomeController::class, 'Collection'])->name('income.collection');
     Route::post('/income/collection/store/', [IncomeController::class, 'StoreCollection'])->name('income.collection.store');
 
-    //    Expense process route 
+    //    Balance route 
     Route::get('/blance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
     Route::get('/blance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
+
+    //    Report route 
+    Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
+    Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
+    Route::get('/all-incomes', [BlanceController::class, 'Incomes'])->name('income.all');
 });
 
 /*---------------- Customer route ends here ------------------*/

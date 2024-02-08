@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('auth_id')->nullable();
             $table->integer('year');
             $table->string('month');
+            $table->bigInteger('total_income');
+            $table->bigInteger('total_expense');
             $table->bigInteger('amount');
             $table->tinyInteger('flag');
             $table->timestamps();

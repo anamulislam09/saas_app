@@ -13,6 +13,8 @@ class MonthlyBlance extends Model
         'auth_id',
         'year',
         'month',
+        'total_income',
+        'total_expense',
         'amount',
         'flag',
     ];
