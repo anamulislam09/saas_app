@@ -77,12 +77,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
 
     //    users route 
-    Route::get('/users', [UserController::class, 'Index'])->name('user.index');
-    Route::get('/users/create', [UserController::class, 'Create'])->name('user.create');
-    Route::post('/users/store', [UserController::class, 'Store'])->name('user.store');
-    Route::get('/user/edit/{id}', [UserController::class, 'Edit']);
-    Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
-    Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
+    Route::get('/users', [UserController::class, 'Index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'Create'])->name('users.create');
+    Route::post('/users/store', [UserController::class, 'Store'])->name('users.store');
+    Route::get('/users/edit/{id}', [UserController::class, 'Edit']);
+    Route::post('/users/update', [UserController::class, 'Update'])->name('users.update');
+    Route::post('/users/delete', [UserController::class, 'Destroy'])->name('users.delete');
+
+    // single users route
+    Route::get('/user/create', [UserController::class, 'SingleCreate'])->name('user.create');
+    Route::post('/user/store', [UserController::class, 'SingleStore'])->name('user.store');
 
     //    Expense-details route 
     Route::get('/expense-details', [ExpDetailController::class, 'Index'])->name('expense-details.index');

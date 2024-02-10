@@ -26,6 +26,7 @@ class UserController extends Controller
 
   }
 
+  //create multiple user method start here
   public function Create()
   {
     $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists();
@@ -74,9 +75,75 @@ class UserController extends Controller
         DB::table('flats')->update($status);
       }
 
-      return redirect()->route('user.index')->with('message', 'User Created Successfully');
+      return redirect()->route('users.index')->with('message', 'User Created Successfully');
     }
   }
+
+  //create multiple user method ends here
+
+   //create single user method start here
+   public function SingleCreate()
+   {
+     $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+
+
+     if (!$data) {
+       return redirect()->back()->with('message', 'Pls! Flat create first');
+     } else {
+       $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->get();
+       return view('admin.users.create_single', compact('data'));
+       //end method
+     }
+   }
+
+   public function SingleStore(Request $request)
+   {
+     $isExists = Flat::where('customer_id', Auth::guard('admin')->user()->id)->last();
+    dd($isExists);
+     if (!$isExists) {
+       return redirect()->back()->with('message', 'Pls! Flat create first');
+     } else {
+      // $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->first();
+       $flat_unique_id = $request->flat_unique_id;
+       $customer_id = $request->customer_id;
+       $amount = $request->amount;
+       $charge = $request->charge;
+ 
+       $name = $request->name;
+       $phone = $request->phone;
+       $nid_no = $request->nid_no;
+       $address = $request->address;
+       $email = $request->email; 
+
+   
+         $user = User::insert([
+           'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id,
+           'customer_id' => $customer_id,
+           'flat_id' => $flat_unique_id,
+           'amount' => $amount,
+           'charge' => $charge,
+           'name' => $name,
+           'phone' => $phone,
+           'nid_no' => $nid_no,
+           'address' => $address,
+           'email' => $email,
+           'password' => Hash::make($phone),
+         ]);
+         $status['status'] = 1;
+         DB::table('flats')->update($status);
+
+         if($user){
+            $income = Income::where('customer_id', Auth::guard('admin')->user()->id)->last();
+          $data['user_id'] = Auth::guard('admin')->user()->id . $flat_unique_id;
+          $data['user_name'] = $name;
+
+          DB::table('incomes')->insert($data);
+          return redirect()->route('users.index')->with('message', 'User Created Successfully');
+         }
+     }
+   }
+
+   //create single user method emds here
 
   // edit method 
   public function Edit($id)

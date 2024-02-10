@@ -42,7 +42,7 @@
                                         </div>
                                     @endif
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ !$isExist ? route('user.create') : 'javascript:void(0)' }}"
+                                        <a href="{{ !$isExist ? route('users.create') : 'javascript:void(0)' }}"
                                             class="btn btn-sm btn-outline-primary">User Manage</a>
                                     </div>
 

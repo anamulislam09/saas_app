@@ -62,8 +62,8 @@
                 @if (Auth::guard('admin')->user()->role == 1)
                     {{-- Products start here --}}
                     <li class="nav-item">
-                        <a href="{{ route('user.index') }}"
-                            class="nav-link {{ Request::routeIs('user.index') || Request::routeIs('user.create') || Request::routeIs('user.edit') ? 'active' : '' }}">
+                        <a href="{{ route('users.index') }}"
+                            class="nav-link {{ Request::routeIs('users.index') || Request::routeIs('users.create') || Request::routeIs('users.edit') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Users</p>
                         </a>
@@ -137,7 +137,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p> Expense log</p>
                                 </a>
@@ -171,12 +171,6 @@
                                     <p>Collection </p>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('income.collection') }}" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Ending Balance </p>
-                                </a>
-                            </li> --}}
                         </ul>
                     </li>
                     {{-- Income start here --}}
@@ -230,8 +224,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('yearly.blance.index') }}"
-                                    class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
+                                <a href="#"
+                                    class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Voucher</p>
                                 </a>
@@ -244,8 +238,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('yearly.blance.index') }}"
-                                    class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
+                                <a href="#"
+                                    class="nav-link ">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Trail Balance </p>
                                 </a>
