@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.6.0/bootstrap-tagsinput.css" />
 
-<form action="{{ route('user.update') }}" method="POST">
+<form action="{{ route('users.update') }}" method="POST">
     @csrf
     <input type="hidden" name="id" value="{{ $data->id }}">
     <input type="hidden" name="customer_id" value="{{ $data->customer_id }}">

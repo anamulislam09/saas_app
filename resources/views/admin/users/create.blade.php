@@ -21,7 +21,7 @@
                                         <h3 class="card-title">All Users</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('user.index') }}" class="btn btn-outline-primary">See Users
+                                        <a href="{{ route('users.index') }}" class="btn btn-outline-primary">See Users
                                         </a>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <form action="{{route('user.store')}}" method="POST">
+                                                <form action="{{route('users.store')}}" method="POST">
                                                     @csrf
                                                 @foreach ($data as $key => $item)
                                                 {{-- <td><input type="hidden" name="customer_id" value="{{ $item->id }}"></td>

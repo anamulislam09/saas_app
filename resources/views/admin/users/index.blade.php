@@ -136,7 +136,7 @@
     <script>
         $('body').on('click', '.edit', function() {
             let user_id = $(this).data('id');
-            $.get("/admin/user/edit/" + user_id, function(data) {
+            $.get("/admin/users/edit/" + user_id, function(data) {
                 $('#modal_body').html(data);
 
             })

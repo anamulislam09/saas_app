@@ -122,28 +122,28 @@ class FlatController extends Controller
         $data['amount'] = $flat->amount;
        $flat = Flat::create($data);
 
-        if($flat){
-        // $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
-        $month = Carbon::now()->month;
-        $year = Carbon::now()->year;
+    //     if($flat){
+    //     // $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
+    //     $month = Carbon::now()->month;
+    //     $year = Carbon::now()->year;
   
-        // $flat_unique_id = $request->flat_unique_id;
-        // $customer_id = $request->customer_id;
-        // $amount = $request->amount;
-        // $charge = $request->charge;
+    //     // $flat_unique_id = $request->flat_unique_id;
+    //     // $customer_id = $request->customer_id;
+    //     // $amount = $request->amount;
+    //     // $charge = $request->charge;
   
-        // for ($i = 0; $i < count($users); $i++) {
-            Income::insert([
-                'month' => $month,
-                'year' => $year,
-                'customer_id' => Auth::guard('admin')->user()->id,
-                'auth_id' => Auth::guard('admin')->user()->id,
-                'charge' => "Service Charge",
-                'amount' => $flat->amount,
-                'due' => $flat->amount,
-            ]);
-        // }
-      }
+    //     // for ($i = 0; $i < count($users); $i++) {
+    //         Income::insert([
+    //             'month' => $month,
+    //             'year' => $year,
+    //             'customer_id' => Auth::guard('admin')->user()->id,
+    //             'auth_id' => Auth::guard('admin')->user()->id,
+    //             'charge' => "Service Charge",
+    //             'amount' => $flat->amount,
+    //             'due' => $flat->amount,
+    //         ]);
+    //     // }
+    //   }
 
         return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
     }
