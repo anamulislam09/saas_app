@@ -184,6 +184,13 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
+                                <a href="{{ route('opening.balance.create') }}"
+                                    class="nav-link {{ Request::routeIs('opening.balance.create') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Opening Balance Entry</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('monthly.blance.index') }}"
                                     class="nav-link {{ Request::routeIs('monthly.blance.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>

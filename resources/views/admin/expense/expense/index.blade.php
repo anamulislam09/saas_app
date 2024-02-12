@@ -45,13 +45,8 @@
                                             ->groupBy('month')
                                             ->SUM('sub_total');
 
-                                        // $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)   //previous month
-                                        //     ->groupBy('month')
-                                        //     ->SUM('sub_total');
-
-                                        // oprning blance
+                                        // oprning blance of this year
                                         $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
-                                        // dd($previousDate);
 
                                         $openingBlance = DB::table('monthly_blances')
                                             ->where('month', $month - 1)
@@ -59,11 +54,15 @@
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
 
-                                        // $openingBlance = DB::table('monthly_blances') //previous month
+                                        // opening balannce of last year
+                                        $lastYear = date('Y') - 1;
+                                        $lastmonth = 12;
 
-                                        //     ->where('customer_id', Auth::guard('admin')->user()->id)
-                                        //     ->first();
-                                        // oprning blance
+                                        $lastYopeningBlance = DB::table('monthly_blances')
+                                            ->where('month', $lastmonth)
+                                            ->where('year', $lastYear)
+                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->first();
 
                                         // total of this month
                                         $income = DB::table('incomes')
@@ -72,26 +71,34 @@
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->SUM('paid');
 
-                                        // $income = DB::table('incomes') //previous month
-                                        //     ->where('year', $year)
-                                        //     ->where('customer_id', Auth::guard('admin')->user()->id)
-                                        //     ->SUM('paid');
-                                        // total of this month
-
                                     @endphp
                                     <tbody>
                                         <tr>
                                             <td colspan="6" class="text-center"> <strong>Opening
                                                     Blance----------------></strong></td>
-                                            @if (!$openingBlance)
-                                                <td><strong>000</strong></td>
-                                            @else
-                                                @if ($openingBlance->flag == 1)
-                                                    <td><strong>{{ $openingBlance->amount }}</strong></td>
+                                            @if ($month == 1)
+                                                @if (!$lastYopeningBlance)
+                                                    <td><strong>000</strong></td>
                                                 @else
-                                                    <td><strong>-{{ $openingBlance->amount }}</strong></td>
+                                                    @if ($lastYopeningBlance->flag == 1)
+                                                        <td><strong>{{ $lastYopeningBlance->amount }}</strong></td>
+                                                    @else
+                                                        <td><strong>-{{ $lastYopeningBlance->amount }}</strong></td>
+                                                    @endif
+                                                @endif
+                                            @else
+                                                @if (!$openingBlance)
+                                                    <td><strong>000</strong></td>
+                                                @else
+                                                    @if ($openingBlance->flag == 1)
+                                                        <td><strong>{{ $openingBlance->amount }}</strong></td>
+                                                    @else
+                                                        <td><strong>-{{ $openingBlance->amount }}</strong></td>
+                                                    @endif
                                                 @endif
                                             @endif
+
+
                                             <td></td>
                                         </tr>
                                         @if (!empty($expense))

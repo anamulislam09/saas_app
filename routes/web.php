@@ -118,8 +118,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/income/collection/store/', [IncomeController::class, 'StoreCollection'])->name('income.collection.store');
 
     //    Balance route 
-    Route::get('/blance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
-    Route::get('/blance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
+    Route::get('/opening-balance/create', [BlanceController::class, 'OpeningBalance'])->name('opening.balance.create');
+    Route::post('/opening-balance/store', [BlanceController::class, 'OpeningBalanceStore'])->name('opening.balance.store');
+    Route::get('/balance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
+    Route::get('/balance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
 
     //    Report route 
     Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');

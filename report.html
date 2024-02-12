@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <style>
+      .container {
+        width: 90%;
+        margin: auto;
+      }
+
+      .header {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .logo {
+        width: 25%;
+        float: left;
+      }
+
+      .header-text {
+        width: 50%;
+        float: left;
+        text-align: center;
+      }
+
+      .status {
+        width: 25%;
+        float: right;
+        text-align: end;
+      }
+
+      /* table style start here  */
+      table,
+      td,
+      th {
+        border: 1px solid;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      /* table style ends here  */
+
+      .Prepared {
+        width: 33.33%;
+        float: left;
+      }
+
+      .Prepared h4 {
+        border-top: 2px solid black;
+        width: 86px;
+      }
+
+      .Approved {
+        width: 33.33%;
+        float: left;
+        text-align: -webkit-center;
+      }
+
+      .Approved h4 {
+        border-top: 2px solid black;
+        width: 25%;
+      }
+
+      .Recipient {
+        width: 33.33%;
+        float: left;
+        text-align: -webkit-right;
+      }
+
+      .Recipient h4 {
+        border-top: 2px solid black;
+        width: 36%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <h2>Logo.png</h2>
+        </div>
+
+        <div class="header-text">
+          <h1>{{ $customer->name }}</h1>
+          <p>{{ $custDetails->address }}</p>
+          <p>{{ $custDetails->phone }}</p>
+          <p>{{ $customer->email }}</p>
+        </div>
+
+        <div class="status">
+          <h2>Payment Voucher</h2>
+        </div>
+      </div>
+
+      <div class="body">
+        <h1>{{ $date }}</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>SL#</th>
+              <th colspan="2">Payment Info</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td colspan="2">{{ $exp->name }}</td>
+              <td>{{ $exp->amount }}</td>
+              <td>paid</td>
+            </tr>
+            <tr>
+              <td colspan="2">Payment Method :</td>
+              <td>Total Amount</td>
+              <td>fghfg</td>
+              <td>Paid</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="textAmount">
+          <h3>In Word :</h3>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="Prepared"><h4>Prepared by</h4></div>
+        <div class="Approved"><h4>Approved by</h4></div>
+        <div class="Recipient"><h4>Recipient Signature</h4></div>
+      </div>
+    </div>
+  </body>
+</html>

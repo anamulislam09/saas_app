@@ -7,6 +7,7 @@ use App\Models\Exp_detail;
 use App\Models\Exp_process;
 use App\Models\Income;
 use App\Models\MonthlyBlance;
+use App\Models\OpeningBalance;
 use App\Models\User;
 use App\Models\YearlyBlance;
 use Illuminate\Http\Request;
@@ -14,6 +15,28 @@ use Illuminate\Support\Facades\Auth;
 
 class BlanceController extends Controller
 {
+    // OpeningBalance
+    public function OpeningBalance()
+    {
+        // $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        return view('admin.blances.opening_balance');
+    }
+
+    // OpeningBalanceStore
+    public function OpeningBalanceStore(Request $request)
+    {
+        OpeningBalance::insert([
+            'customer_id' => Auth::guard('admin')->user()->id,
+            'auth_id' => Auth::guard('admin')->user()->id,
+            'year' => $request->year,
+            'month' => $request->month,
+            'profit' => $request->income,
+            'loss' => $request->expense,
+            'entry_datetime' => date('Y-m-d H:i:s'),
+        ]);
+        return redirect()->back()->with('message', 'Opening Balance Added Successfully');
+    }
+
     // Monthly blance 
     public function Monthly()
     {
@@ -50,4 +73,3 @@ class BlanceController extends Controller
         return view('admin.report.incomes', compact('data'));
     }
 }
- 

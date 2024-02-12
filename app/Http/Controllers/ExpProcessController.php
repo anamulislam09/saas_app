@@ -105,7 +105,7 @@ class ExpProcessController extends Controller
                             $data['flag'] = 1;
                         } else {
 
-                            $data['flag'] = 0;
+                            $data['flag'] = 0; 
                         }
                         $exp_process = MonthlyBlance::create($data);
                     } elseif ($openingBlance->flag == 0) {

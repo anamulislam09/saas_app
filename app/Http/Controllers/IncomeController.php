@@ -21,68 +21,126 @@ class IncomeController extends Controller
         return view('admin.income.income', compact('data'));
     }
 
+    // store income 
     public function Store(Request $request)
     {
-
         $data = User::where('customer_id', Auth::guard('admin')->user()->id)->exists();
         if (!$data) {
             return redirect()->back()->with('message', 'User not found!');
         } else {
-            $month = $request->month;
-            $year = $request->year;
-            $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
-            if ($data) {
-                return redirect()->back()->with('message', 'You have already create!');
-            } else {
-                $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+            /*-------------------if previous year has data start here --------------*/
+            if ($request->month == 1) {
+                $month = $request->month;
+                $year = $request->year;
+                $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
                 if ($data) {
-                    $month = $request->month;
-                    $year = $request->year;
-
-                    $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
-                    $users = Income::where('month', $month - 1)->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
-
-                    for ($i = 0; $i < count($users); $i++) {
-                        $previousMonthData = Income::where('month', $month - 1)->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-                        // $previousMonthData = Income::where('month', $previousDate[1])->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-
-                        Income::insert([
-                            'month' => $month,
-                            'year' => $year,
-                            'user_id' => $users[$i]->user_id,
-                            'customer_id' => $users[$i]->customer_id,
-                            'auth_id' => Auth::guard('admin')->user()->id,
-                            'user_name' => $users[$i]->user_name,
-                            'charge' => $users[$i]->charge,
-                            'amount' => $users[$i]->amount,
-                            'due' => $users[$i]->amount + $previousMonthData->due,
-                        ]);
-                    }
-                    return redirect()->back()->with('message', 'Service charge added successfully');
+                    return redirect()->back()->with('message', 'You have already create!');
                 } else {
-                    $users = User::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 1)->get();
-                    $month = $request->month;
-                    $year = $request->year;
+                    $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                    if ($data) {
+                        $lastYear = date('Y') - 1;
+                        $lastmonth = 12;
 
-                    for ($i = 0; $i < count($users); $i++) {
-                        Income::insert([
-                            'month' => $month,
-                            'year' => $year,
-                            'user_id' => $users[$i]->user_id,
-                            'customer_id' => $users[$i]->customer_id,
-                            'auth_id' => Auth::guard('admin')->user()->id,
-                            'user_name' => $users[$i]->name,
-                            'charge' => $users[$i]->charge,
-                            'amount' => $users[$i]->amount,
-                            'due' => $users[$i]->amount,
-                        ]);
+                        $users = Income::where('month', $lastmonth)->where('year', $lastYear)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+                        for ($i = 0; $i < count($users); $i++) {
+                            $previousMonthData = Income::where('month', $lastmonth)->where('year', $lastYear)->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+
+                            $income = Income::insert([
+                                'month' => $month,
+                                'year' => $year,
+                                'user_id' => $users[$i]->user_id,
+                                'customer_id' => $users[$i]->customer_id,
+                                'auth_id' => Auth::guard('admin')->user()->id,
+                                'user_name' => $users[$i]->user_name,
+                                'charge' => $users[$i]->charge,
+                                'amount' => $users[$i]->amount,
+                                'due' => $users[$i]->amount + $previousMonthData->due,
+                            ]);
+                        }
+                        if ($income) {
+                            return redirect()->back()->with('message', 'LAST MONTH  Service charge added successfully');
+                        } else {
+                            return redirect()->back()->with('message', 'some thing went wrong');
+                        }
+                    } else {
+                        $users = User::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 1)->get();
+                        $month = $request->month;
+                        $year = $request->year;
+
+                        for ($i = 0; $i < count($users); $i++) {
+                            Income::insert([
+                                'month' => $month,
+                                'year' => $year,
+                                'user_id' => $users[$i]->user_id,
+                                'customer_id' => $users[$i]->customer_id,
+                                'auth_id' => Auth::guard('admin')->user()->id,
+                                'user_name' => $users[$i]->name,
+                                'charge' => $users[$i]->charge,
+                                'amount' => $users[$i]->amount,
+                                'due' => $users[$i]->amount,
+                            ]);
+                        }
+                        return redirect()->back()->with('message', 'Service charge added successfully');
                     }
-                    return redirect()->back()->with('message', 'Service charge added successfully');
+                }
+            }/*-------------------if previous year has data ends here --------------*/ 
+            else {
+                $month = $request->month;
+                $year = $request->year;
+                $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                if ($data) {
+                    return redirect()->back()->with('message', 'You have already create!');
+                } else {
+                    $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                    if ($data) {
+                        $month = $request->month;
+                        $year = $request->year;
+
+                        $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
+                        $users = Income::where('month', $month - 1)->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
+
+                        for ($i = 0; $i < count($users); $i++) {
+                            $previousMonthData = Income::where('month', $month - 1)->where('year', $previousDate[0])->where('user_id', $users[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+
+                            Income::insert([
+                                'month' => $month,
+                                'year' => $year,
+                                'user_id' => $users[$i]->user_id,
+                                'customer_id' => $users[$i]->customer_id,
+                                'auth_id' => Auth::guard('admin')->user()->id,
+                                'user_name' => $users[$i]->user_name,
+                                'charge' => $users[$i]->charge,
+                                'amount' => $users[$i]->amount,
+                                'due' => $users[$i]->amount + $previousMonthData->due,
+                            ]);
+                        }
+                        return redirect()->back()->with('message', 'Service charge added successfully');
+                    } else {
+                        $users = User::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 1)->get();
+                        $month = $request->month;
+                        $year = $request->year;
+
+                        for ($i = 0; $i < count($users); $i++) {
+                            Income::insert([
+                                'month' => $month,
+                                'year' => $year,
+                                'user_id' => $users[$i]->user_id,
+                                'customer_id' => $users[$i]->customer_id,
+                                'auth_id' => Auth::guard('admin')->user()->id,
+                                'user_name' => $users[$i]->name,
+                                'charge' => $users[$i]->charge,
+                                'amount' => $users[$i]->amount,
+                                'due' => $users[$i]->amount,
+                            ]);
+                        }
+                        return redirect()->back()->with('message', 'Service charge added successfully');
+                    }
                 }
             }
         }
     }
     /*-------------------Income ends here--------------*/
+
 
     /*-------------------Collection start here--------------*/
     public function Collection()
@@ -109,7 +167,7 @@ class IncomeController extends Controller
             $item['paid'] = $paid;
             $item['due'] = $data->due - $paid;
             $item['status'] = 1;
-            
+
             Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
             return redirect()->route('income.collection')->with('message', 'Collection successful');
         }
