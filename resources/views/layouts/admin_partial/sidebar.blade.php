@@ -89,14 +89,49 @@
                     </li>
                     {{-- Roles & Parmission ends here --}}
                     {{-- Flat  start here --}}
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('flat.index') }}"
                             class="nav-link {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Manage flat</p>
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- flat ends here --}}
+
+                    <li
+                    class="nav-item {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'menu-open active' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Manage flat
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ml-3">
+                        <li class="nav-item">
+                            <a href="{{ route('flat.index') }}"
+                                class="nav-link {{ Request::routeIs('flat.index') ? 'active' : '' }}">
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>All flat</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('flat.create') }}"
+                                class="nav-link {{ Request::routeIs('flat.create') ? 'active' : '' }}">
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>Manage flat</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('flat.singlecreate') }}"
+                                class="nav-link {{ Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>Add more flat</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                     {{-- Expenses start here --}}
                     <li
                         class="nav-item {{ Request::routeIs('expense-details.create') || Request::routeIs('expense-details.index') || Request::routeIs('expenses.index') || Request::routeIs('expenses.process') ? 'menu-open active' : '' }}">

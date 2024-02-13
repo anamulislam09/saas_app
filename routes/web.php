@@ -70,11 +70,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 /*---------------- Customer route start here ------------------*/
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //    Flat setup route 
-    Route::get('/flat', [FlatController::class, 'Index'])->name('flat.index');
-    Route::get('/flat/create', [FlatController::class, 'Create'])->name('flat.create');
-    Route::post('/flat/store', [FlatController::class, 'Store'])->name('flat.store');
-    Route::get('/flat/single-create', [FlatController::class, 'SingleCreate'])->name('flat.singlecreate');
-    Route::post('/flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
+    Route::get('/manage-flat', [FlatController::class, 'Index'])->name('flat.index');
+    Route::get('/manage-flat/create', [FlatController::class, 'Create'])->name('flat.create');
+    Route::post('/manage-flat/store', [FlatController::class, 'Store'])->name('flat.store');
+    Route::get('/manage-flat/single-create', [FlatController::class, 'SingleCreate'])->name('flat.singlecreate');
+    Route::post('/manage-flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
 
     //    users route 
     Route::get('/users', [UserController::class, 'Index'])->name('users.index');

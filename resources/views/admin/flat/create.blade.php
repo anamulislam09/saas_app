@@ -12,12 +12,11 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Manage Flat</h3>
+                                        <h3 class="card-title">Create New Flat</h3>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12">
+                                    {{-- <div class="col-lg-2 col-sm-12">
                                         <a href="{{route('flat.index')}}" class="btn btn-sm btn-outline-primary">All Flats</a>
-                                    </div>
-
+                                    </div> --}}
                                 </div>
                             </div>
                             <!-- /.card-header -->

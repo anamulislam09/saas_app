@@ -12,11 +12,11 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Manage Flat</h3>
+                                        <h3 class="card-title">Add More Flat</h3>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12">
+                                    {{-- <div class="col-lg-2 col-sm-12">
                                         <a href="{{route('flat.index')}}" class="btn btn-outline-primary">All Flats</a>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 <!-- /.card-header -->
                                <div class="row py-5">
-                                <div class="col-7 m-auto border p-5">
+                                <div class="col-7 m-auto border p-5" style="background: #ddd">
                                     <form action="{{ route('flat.singlestore') }}" method="POST">
                                         @csrf
                                             <div class=" form-group">

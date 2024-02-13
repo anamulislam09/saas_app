@@ -14,7 +14,7 @@
                                     <div class="col-lg-8 col-sm-12">
                                         <h3 class="card-title">All Flat</h3>
                                     </div>
-                                    @php
+                                    {{-- @php
                                         $isExist = DB::table('flats')
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
@@ -27,7 +27,7 @@
                                     <div class="col-lg-2 col-sm-6">
                                         <a href="{{ !$isExist ? route('flat.create') : 'javascript:void(0)' }}"
                                             class="btn btn-sm btn-outline-primary">Flat Manage</a>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                                     @if ($item->status == 1)
                                                         <span class="badge badge-primary">Active</span>
                                                     @else
-                                                        <span class="badge badge-danger">Inactive</span>
+                                                        <span class="badge badge-danger">Deactive</span>
                                                     @endif
                                                 </td>
                                                 {{-- <td>

@@ -32,7 +32,7 @@ class FlatController extends Controller
     public function Store(Request $request)
     {
         if (Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists()) {
-            return redirect()->route('flat.index')->with('message', ' OPS! You have already created!');
+            return redirect()->back()->with('message', ' OPS! You have already created!');
         } else {
             $floor = $request->floor;
             $unit = $request->unit;
