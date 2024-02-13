@@ -24,7 +24,7 @@
         </div>
         <!-- Sidebar Menu -->
         <!-- Category start here -->
-        <nav class="">
+        <nav class=" mb-5">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 @if (Auth::guard('admin')->user()->role == 0)
@@ -198,6 +198,13 @@
                                     <p>Collection </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href=""
+                                    class="nav-link ">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Collection Voucher</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     {{-- Income Management start here --}}
@@ -223,11 +230,32 @@
                                 <a href="{{ route('expenses.index') }}"
                                     class="nav-link {{ Request::routeIs('expenses.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Ledger Account </p>
+                                    <p>Ledger Posting </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href=""
+                                    class="nav-link ">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Expense Voucher </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="}"
+                                    class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Income Statement </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="}"
+                                    class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Balance Sheet </p>
                                 </a>
                             </li>
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('monthly.blance.index') }}"
                                     class="nav-link {{ Request::routeIs('monthly.blance.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
@@ -240,7 +268,7 @@
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Yearly Balance </p>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     {{-- Accounts ends here --}}
@@ -311,25 +339,6 @@
                                 <a href="{{ route('user.create') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Add More User</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Voucher</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('income.all') }}"
-                                    class="nav-link {{ Request::routeIs('income.all') ? 'active' : '' }}">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Income Statement </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link ">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Trail Balance </p>
                                 </a>
                             </li>
                         </ul>

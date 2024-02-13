@@ -64,8 +64,8 @@
                                                 <th>SL</th>
                                                 <th class="text-center">Year</th>
                                                 <th class="text-center">Month</th>
-                                                <th>Expense</th>
-                                                <th class="text-right">Amount</th>
+                                                <th class="text-center">Expense</th>
+                                                <th class="text-center">Amount</th>
                                                 <th width="20%" class="text-center">Action</th>
                                         </thead>
                                         <tbody>
