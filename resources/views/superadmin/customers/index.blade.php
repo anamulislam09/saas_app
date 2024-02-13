@@ -58,7 +58,7 @@
                                                     @if ($item->status == 1)
                                                         <span class="badge badge-primary">Active</span>
                                                     @else
-                                                        <span class="badge badge-danger">Inactive</span>
+                                                        <span class="badge badge-danger">Deactive</span>
                                                     @endif
                                                 </td>
                                                 <td>

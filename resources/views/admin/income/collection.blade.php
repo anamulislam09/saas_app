@@ -120,8 +120,8 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 8%">User ID</th>
-                                            <th style="width: 18%">User Name</th>
-                                            <th style="width: 18%">Charge</th>
+                                            <th style="width: 15%">User Name</th>
+                                            <th style="width: 15%">Charge</th>
                                             <th style="width: 15%">Current amount</th>
                                             <th style="width: 12%">Previous due</th>
                                             <th style="width: 10%">Payble</th>
@@ -165,9 +165,10 @@
                                                         <td>
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>
+                                                                <a href=""><span class="badge badge-primary">Voucher</span></a>
                                                             @else
                                                                 <input type="submit" class="btn btn-sm btn-primary"
-                                                                    value="Submit">
+                                                                    value="Collect">
                                                             @endif
                                                         </td>
                                                     </tr>

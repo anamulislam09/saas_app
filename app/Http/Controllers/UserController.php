@@ -152,7 +152,7 @@ class UserController extends Controller
           'charge' => "Service Charge",
           'amount' => $amount,
           'due' => $amount,
-      ]);
+        ]);
         return redirect()->route('users.index')->with('message', 'User Created Successfully');
       }
     }

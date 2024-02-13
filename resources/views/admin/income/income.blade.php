@@ -117,7 +117,7 @@
                                                 <th>User ID</th>
                                                 <th>User Name</th>
                                                 <th>Charge</th>
-                                                <th>Amount</th>
+                                                <th class="text-right">Amount</th>
                                                 {{-- <th>Due</th> --}}
                                                 {{-- <th style="width: 15%">Collect</th> --}}
                                                 {{-- <th>Action</th> --}}
@@ -133,7 +133,7 @@
                                                         <td>{{ $item->user_id }}</td>
                                                         <td>{{ $item->user_name }}</td>
                                                         <td>{{ $item->charge }}</td>
-                                                        <td>{{ $item->amount }}</td>
+                                                        <td class="text-right">{{ $item->amount }}</td>
                                                         {{-- <td>{{ $item->due }}</td> --}}
                                                         {{-- <td><input type="text"
                                                                 style="width:100%; border:none; border-radius:20px; text-align:center"

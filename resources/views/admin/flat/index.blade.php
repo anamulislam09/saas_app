@@ -33,40 +33,69 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="dataTable" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th>Customer ID</th>
-                                            <th>Flat Name</th>
-                                            <th>Service charge</th>
-                                            <th>Status</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        @foreach ($data as $key => $item)
+                                @php
+                                    $flat = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                                @endphp
+
+                                @if (!$flat)
+                                    <section class="page_404">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12 col-md-12 col-sm-12">
+                                                    <div class="col-sm-12 text-center">
+                                                        <div class="four_zero_four_bg">
+                                                            <h1 class="text-center ">404</h1>
+                                                        </div>
+                                                        <div class="contant_box_404">
+                                                            <h3 class="h2">
+                                                                Flat Not Found!
+                                                            </h3>
+                                                            <p>Pls! Flat created first</p>
+                                                            <a href="{{ route('users.index') }}" class="link_404">Create
+                                                                Flat</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                @else
+                                    <table id="dataTable" class="table table-bordered table-striped">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->customer_id }}</td>
-                                                <td>{{ $item->flat_name }}</td>
-                                                <td>{{ $item->amount }}</td>
-                                                <td>
-                                                    @if ($item->status == 1)
-                                                        <span class="badge badge-primary">Active</span>
-                                                    @else
-                                                        <span class="badge badge-danger">Deactive</span>
-                                                    @endif
-                                                </td>
-                                                {{-- <td>
+                                                <th class="text-center">SL</th>
+                                                <th class="text-center">Customer ID</th>
+                                                <th class="text-center">Flat Name</th>
+                                                <th class="text-center">Service charge</th>
+                                                <th class="text-center">Status</th>
+                                                {{-- <th>Action</th> --}}
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach ($data as $key => $item)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $item->customer_id }}</td>
+                                                    <td>{{ $item->flat_name }}</td>
+                                                    <td class="text-right">{{ $item->amount }}</td>
+                                                    <td class="text-center">
+                                                        @if ($item->status == 1)
+                                                            <span class="badge badge-primary">Active</span>
+                                                        @else
+                                                            <span class="badge badge-danger">Deactive</span>
+                                                        @endif
+                                                    </td>
+                                                    {{-- <td>
                                                     <a href="{{ route('customer.edit', $item->id) }}"
                                                         class="btn btn-sm btn-info edit"><i class="fas fa-edit"></i></a>
                                                 </td> --}}
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
                             </div>
                         </div>
                     </div>

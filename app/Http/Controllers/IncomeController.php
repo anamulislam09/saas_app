@@ -24,10 +24,10 @@ class IncomeController extends Controller
     // store income 
     public function Store(Request $request)
     {
-        $data = User::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $data = User::where('customer_id', Auth::guard('admin')->user()->id)->exists(); 
         if (!$data) {
-            return redirect()->back()->with('message', 'User not found!');
-        } else {
+            return redirect()->back()->with('message', 'User not found!');  // User has no exist
+        } else {                                                             // User has exist
             /*-------------------if previous year has data start here --------------*/
             if ($request->month == 1) {
                 $month = $request->month;
@@ -83,8 +83,7 @@ class IncomeController extends Controller
                         return redirect()->back()->with('message', 'Service charge added successfully');
                     }
                 }
-            }/*-------------------if previous year has data ends here --------------*/ 
-            else {
+            }/*-------------------if previous year has data ends here --------------*/ else {
                 $month = $request->month;
                 $year = $request->year;
                 $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();

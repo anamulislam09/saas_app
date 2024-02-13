@@ -53,7 +53,7 @@
                                             <label for="exampleInputEmail1"> Status </label>
                                             <select name="status" id="" class="form-control">
                                                     <option value="1" @if ($data->status == 1) selected @endif>Active</option>
-                                                    <option value="0" @if ($data->status == 0) selected @endif>Inactive</option>
+                                                    <option value="0" @if ($data->status == 0) selected @endif>Deactive</option>
                                             </select>
                                         </div>
 

@@ -20,7 +20,7 @@
                                     <div class="col-lg-8 col-sm-12">
                                         <h3 class="card-title">All Users</h3>
                                     </div>
-                                    @php
+                                    {{-- @php
                                         $isExist = DB::table('users')
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
@@ -44,7 +44,7 @@
                                     <div class="col-lg-2 col-sm-12">
                                         <a href="{{ !$isExist ? route('users.create') : 'javascript:void(0)' }}"
                                             class="btn btn-sm btn-outline-primary">User Manage</a>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                             <td>{{ $item->nid_no }}</td>
                                             <td>
                                                 @if ($item->status == 0)
-                                                    <span class="badge badge-danger">Inactive</span>
+                                                    <span class="badge badge-danger">Deactive</span>
                                                 @else
                                                     <span class="badge badge-primary">Active</span>
                                                 @endif

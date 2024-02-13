@@ -24,10 +24,10 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>SL</th>
-                                            <th>Expense</th>
-                                            <th>Amount</th>
-                                            <th>Action</th>
+                                            <th class="text-center">SL</th>
+                                            <th class="text-center">Expense</th>
+                                            <th class="text-center">Amount</th>
+                                            <th class="text-center">Action</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($expDetails as $key => $item)
@@ -39,8 +39,8 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $data->name }}</td>
-                                                <td>{{ $item->amount }}</td>
-                                                <td><a href="{{route('expense.voucher', $item->id)}}" class="btn btn-sm btn-primary">Generate vouchar</a></td>
+                                                <td class="text-right">{{ $item->amount }}</td>
+                                                <td class="text-center"><a href="{{route('expense.voucher', $item->id)}}" class="btn btn-sm btn-primary">Generate vouchar</a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

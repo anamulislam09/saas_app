@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4 p-0">
     <!-- Brand Logo -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
         <img src="{{ asset('admin//dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
@@ -11,7 +11,7 @@
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar mt-3">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel pb-3 mb-3 d-flex">
             <div class="image">
@@ -61,84 +61,89 @@
 
                 @if (Auth::guard('admin')->user()->role == 1)
                     {{-- Products start here --}}
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('users.index') }}"
                             class="nav-link {{ Request::routeIs('users.index') || Request::routeIs('users.create') || Request::routeIs('users.edit') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Users</p>
                         </a>
-                    </li>
-                    {{-- Products start here --}}
-                    {{-- Roles & Parmission start here --}}
-                    <li class="nav-item">
+                    </li> --}}
+
+
+
+                    {{-- flat Management ends here --}}
+                    <li
+                        class="nav-item {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
-                                Roles & Parmission
+                                Flat Management
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('all.permission') }}" class="nav-link">
+                                <a href="{{ route('flat.create') }}"
+                                    class="nav-link {{ Request::routeIs('flat.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>All Parmission</p>
+                                    <p>Create Flat</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('flat.index') }}"
+                                    class="nav-link {{ Request::routeIs('flat.index') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>All Flat</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    {{-- Roles & Parmission ends here --}}
-                    {{-- Flat  start here --}}
-                    {{-- <li class="nav-item">
-                        <a href="{{ route('flat.index') }}"
-                            class="nav-link {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-circle"></i>
-                            <p>Manage flat</p>
-                        </a>
-                    </li> --}}
-                    {{-- flat ends here --}}
+                    {{-- flat Management ends here --}}
 
-                    <li
-                    class="nav-item {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'menu-open active' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-circle"></i>
-                        <p>
-                            Manage flat
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview ml-3">
-                        <li class="nav-item">
-                            <a href="{{ route('flat.index') }}"
-                                class="nav-link {{ Request::routeIs('flat.index') ? 'active' : '' }}">
-                                <i class="far fa-dot-circle nav-icon"></i>
-                                <p>All flat</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('flat.create') }}"
-                                class="nav-link {{ Request::routeIs('flat.create') ? 'active' : '' }}">
-                                <i class="far fa-dot-circle nav-icon"></i>
-                                <p>Manage flat</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('flat.singlecreate') }}"
-                                class="nav-link {{ Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
-                                <i class="far fa-dot-circle nav-icon"></i>
-                                <p>Add more flat</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                    {{-- Expenses start here --}}
+                    {{-- User management start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('expense-details.create') || Request::routeIs('expense-details.index') || Request::routeIs('expenses.index') || Request::routeIs('expenses.process') ? 'menu-open active' : '' }}">
+                        class="nav-item {{ Request::routeIs('users.index') || Request::routeIs('users.create') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
-                                Expenses
+                                User Management
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-3">
+                            <li class="nav-item">
+                                <a href="{{ route('users.create') }}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Create User</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>All Users</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- User management ends here --}}
+
+                    {{-- Flat  start here --}}
+                    {{-- <li class="nav-item">
+                        <a href="{{ route('flat.index') }}"
+                        class="nav-link {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>Manage flat</p>
+                    </a>
+                </li> --}}
+
+                    {{-- Expense management ends here --}}
+                    <li
+                        class="nav-item {{ Request::routeIs('expense-details.create') || Request::routeIs('expense-details.index') || Request::routeIs('expenses.process') ? 'menu-open active' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Expense Management
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -154,40 +159,27 @@
                                 <a href="{{ route('expense-details.index') }}"
                                     class="nav-link {{ Request::routeIs('expense-details.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Expense details</p>
+                                    <p>Expense Summary</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('expenses.index') }}"
-                                    class="nav-link {{ Request::routeIs('expenses.index') ? 'active' : '' }}">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Expense</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('expenses.process') }}"
                                     class="nav-link {{ Request::routeIs('expenses.process') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Process & Generete data</p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p> Expense log</p>
-                                </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
-                    {{-- Expenses start here --}}
+                    {{-- Expenses Management start here --}}
 
-                    {{-- Income start here --}}
+                    {{-- Income Management start here --}}
                     <li
                         class="nav-item {{ Request::routeIs('income.create') || Request::routeIs('income.collection') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
-                                Incomes
+                                Income Management
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -208,13 +200,14 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- Income start here --}}
-                    {{-- Blance  start here --}}
+                    {{-- Income Management start here --}}
+
+                    {{-- Accounts  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('monthly.blance.index') || Request::routeIs('yearly.blance.index') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('monthly.blance.index') || Request::routeIs('yearly.blance.index') || Request::routeIs('expenses.index') || Request::routeIs('opening.balance.create') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
-                            <p>Balance<i class="right fas fa-angle-left"></i>
+                            <p>Accounts<i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
@@ -225,6 +218,15 @@
                                     <p>Opening Balance Entry</p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('expenses.index') }}"
+                                    class="nav-link {{ Request::routeIs('expenses.index') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Ledger Account </p>
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a href="{{ route('monthly.blance.index') }}"
                                     class="nav-link {{ Request::routeIs('monthly.blance.index') ? 'active' : '' }}">
@@ -241,8 +243,9 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- Blance ends here --}}
-                    {{-- Blance  start here --}}
+                    {{-- Accounts ends here --}}
+
+                    {{-- Report  start here --}}
                     <li
                         class="nav-item {{ Request::routeIs('blance.index') || Request::routeIs('expense-all.index') || Request::routeIs('income.all') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
@@ -266,8 +269,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#"
-                                    class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Voucher</p>
                                 </a>
@@ -280,15 +282,79 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#"
-                                    class="nav-link ">
+                                <a href="#" class="nav-link ">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Trail Balance </p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    {{-- Blance ends here --}}
+                    {{-- Report ends here --}}
+
+                    {{-- All Setup  start here --}}
+                    <li
+                        class="nav-item {{ Request::routeIs('flat.singlecreate') || Request::routeIs('user.create') || Request::routeIs('income.all') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Setup<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-3">
+                            <li class="nav-item">
+                                <a href="{{ route('flat.singlecreate') }}"
+                                    class="nav-link {{ Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Add More Flat</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('user.create') }}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Add More User</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Voucher</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('income.all') }}"
+                                    class="nav-link {{ Request::routeIs('income.all') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Income Statement </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link ">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Trail Balance </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- All Setup ends here --}}
+
+                    {{-- Roles & Parmission start here --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Roles & Parmission
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-3">
+                            <li class="nav-item">
+                                <a href="{{ route('all.permission') }}" class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>All Parmission</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Roles & Parmission ends here --}}
                 @endif
             </ul>
         </nav>

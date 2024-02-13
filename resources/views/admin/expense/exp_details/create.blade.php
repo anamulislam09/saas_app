@@ -62,11 +62,11 @@
                                         <thead>
                                             <tr>
                                                 <th>SL</th>
-                                                <th>Year</th>
-                                                <th>Month</th>
+                                                <th class="text-center">Year</th>
+                                                <th class="text-center">Month</th>
                                                 <th>Expense</th>
-                                                <th>Amount</th>
-                                                <th>Action</th>
+                                                <th class="text-right">Amount</th>
+                                                <th width="20%" class="text-center">Action</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($expDetails as $key => $item)
@@ -74,12 +74,19 @@
                                                     $data = DB::table('categories')
                                                         ->where('id', $item->cat_id)
                                                         ->first();
+                                                        // total amounrt 
+                                                    $month = Carbon\Carbon::now()->month;
+                                                    $year = Carbon\Carbon::now()->year;
+                                                    $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->where('month', $month)
+                                                        ->where('year', $year)
+                                                        ->sum('amount');
                                                 @endphp
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $item->year }}</td>
+                                                    <td class="text-center">{{ $item->year }}</td>
 
-                                                    <td>
+                                                    <td class="text-center">
                                                         @if ($item->month == 1)
                                                             January
                                                         @elseif ($item->month == 2)
@@ -108,16 +115,22 @@
                                                     </td>
 
                                                     <td>{{ $data->name }}</td>
-                                                    <td>{{ $item->amount }}</td>
-                                                    <td>
+                                                    <td class="text-right">{{ $item->amount }}</td>
+                                                    <td class="text-center">
                                                         <a href="#" class="btn btn-sm btn-info edit"
                                                             data-id="{{ $item->id }}" data-toggle="modal"
                                                             data-target="#editexp"><i class="fas fa-edit"></i></a>
                                                         <a href="{{ route('expense-details.delate', $item->id) }}"
                                                             class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <a href="{{ route('expense-details.delate', $item->id) }}"
+                                                            class="btn btn-sm"><span class="badge badge-primary">Voucher</span></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <td colspan="4" class="text-right"><strong>Total =</strong></td>
+                                                <td class="text-right"><strong>{{ $total }}</strong></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
