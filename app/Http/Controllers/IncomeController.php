@@ -27,7 +27,13 @@ class IncomeController extends Controller
         $data = User::where('customer_id', Auth::guard('admin')->user()->id)->exists(); 
         if (!$data) {
             return redirect()->back()->with('message', 'User not found!');  // User has no exist
-        } else {                                                             // User has exist
+        } else {      
+            $prevoiusMonth = Carbon::now()->month;
+            $month = $request->month;
+                    // dd($prevoiusMonth-1);                                                       // User has exist
+            if($prevoiusMonth-1 == $month ){
+                return 'you have get previous month'; 
+            }
             /*-------------------if previous year has data start here --------------*/
             if ($request->month == 1) {
                 $month = $request->month;
@@ -35,6 +41,7 @@ class IncomeController extends Controller
                 $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
                 if ($data) {
                     return redirect()->back()->with('message', 'You have already create!');
+
                 } else {
                     $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
                     if ($data) {
@@ -57,6 +64,7 @@ class IncomeController extends Controller
                                 'due' => $users[$i]->amount + $previousMonthData->due,
                             ]);
                         }
+                       
                         if ($income) {
                             return redirect()->back()->with('message', 'LAST MONTH  Service charge added successfully');
                         } else {
@@ -83,12 +91,14 @@ class IncomeController extends Controller
                         return redirect()->back()->with('message', 'Service charge added successfully');
                     }
                 }
-            }/*-------------------if previous year has data ends here --------------*/ else {
+            }
+            /*-------------------if previous year has data ends here --------------*/ else {
                 $month = $request->month;
                 $year = $request->year;
                 $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
                 if ($data) {
                     return redirect()->back()->with('message', 'You have already create!');
+                    
                 } else {
                     $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
                     if ($data) {
