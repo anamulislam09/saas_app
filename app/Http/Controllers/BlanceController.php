@@ -60,11 +60,11 @@ class BlanceController extends Controller
     }
 
     // Expense rreport 
-    public function Expenses()
-    {
-        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
-        return view('admin.report.expenses', compact('expDetails'));
-    }
+    // public function Expenses()
+    // {
+    //     $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
+    //     return view('admin.report.expenses', compact('expDetails'));
+    // }
 
     // Expense rreport 
     public function Incomes()

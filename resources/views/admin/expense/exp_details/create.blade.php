@@ -14,10 +14,10 @@
                                     <div class="col-lg-10 col-sm-12">
                                         <h3 class="card-title">Create Expense</h3>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12">
+                                    {{-- <div class="col-lg-2 col-sm-12">
                                         <a href="{{ route('expense-details.index') }}"
                                             class="btn btn-sm btn-outline-primary">See All</a>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>

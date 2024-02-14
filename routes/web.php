@@ -103,8 +103,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');
     Route::get('/expense/store', [ExpenseController::class, 'Store'])->name('expense.store');
 
-    //    Expense process route 
-    Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
+    //     report route start here 
+    // Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
+    Route::get('/expenses/month', [ExpDetailController::class, 'MonthlyExpense'])->name('expenses.month');
     Route::get('/expense-process/store', [ExpProcessController::class, 'Store'])->name('expense_process.store');
 
     //    Expense process route 
@@ -126,7 +127,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //    Report route 
     Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
     Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
-    Route::get('/all-incomes', [BlanceController::class, 'Incomes'])->name('income.all');
+    Route::get('/income-statement', [BlanceController::class, 'Incomes'])->name('income.statement');
 });
 
 /*---------------- Customer route ends here ------------------*/

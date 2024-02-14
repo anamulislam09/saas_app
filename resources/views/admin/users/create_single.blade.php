@@ -97,7 +97,7 @@
 
                                                                     <p>Pls! Flat create first</p>
 
-                                                                    <a href="{{route('users.index')}}" class="link_404">See Users</a>
+                                                                    <a href="{{route('flat.singlecreate')}}" class="link_404"> Create Flat</a>
                                                                 </div>
                                                             </div>
                                                         </div>

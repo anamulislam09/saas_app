@@ -30,9 +30,33 @@ class IncomeController extends Controller
         } else {      
             $prevoiusMonth = Carbon::now()->month;
             $month = $request->month;
+            $year = $request->year;
                     // dd($prevoiusMonth-1);                                                       // User has exist
             if($prevoiusMonth-1 == $month ){
-                return 'you have get previous month'; 
+                $previousData = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                if($previousData){
+                    return redirect()->back()->with('message', 'You have already create!');
+                }else{
+                    $users = User::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 1)->get();
+                    $month = $request->month;
+                    $year = $request->year;
+    
+                    for ($i = 0; $i < count($users); $i++) {
+                        Income::insert([
+                            'month' => $month,
+                            'year' => $year,
+                            'user_id' => $users[$i]->user_id,
+                            'customer_id' => $users[$i]->customer_id,
+                            'auth_id' => Auth::guard('admin')->user()->id,
+                            'user_name' => $users[$i]->name,
+                            'charge' => $users[$i]->charge,
+                            'amount' => $users[$i]->amount,
+                            'due' => $users[$i]->amount,
+                        ]);
+                    }
+                    return redirect()->back()->with('message', 'Service charge added successfully');
+                }
+              
             }
             /*-------------------if previous year has data start here --------------*/
             if ($request->month == 1) {
@@ -66,9 +90,9 @@ class IncomeController extends Controller
                         }
                        
                         if ($income) {
-                            return redirect()->back()->with('message', 'LAST MONTH  Service charge added successfully');
+                            return redirect()->back()->with('message', 'Service charge added successfully');
                         } else {
-                            return redirect()->back()->with('message', 'some thing went wrong');
+                            return redirect()->back()->with('message', 'something went wrong');
                         }
                     } else {
                         $users = User::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 1)->get();
@@ -92,7 +116,8 @@ class IncomeController extends Controller
                     }
                 }
             }
-            /*-------------------if previous year has data ends here --------------*/ else {
+            /*-------------------if previous year has data ends here --------------*/ 
+            else {
                 $month = $request->month;
                 $year = $request->year;
                 $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();

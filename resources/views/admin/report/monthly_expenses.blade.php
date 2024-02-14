@@ -22,14 +22,14 @@
                                         <tr>
                                             <th>SL</th>
                                             <th class="d-none">Year</th>
-                                            <th class="d-none">Month</th>
-                                            <th>Created By</th>
-                                            <th>Expense</th>
-                                            <th>Amount</th>
+                                            <th>Month</th>
+                                            <th class="text-center">Expense</th>
+                                            <th class="text-center">Amount</th>
+                                            <th class="text-center">Created By</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($expDetails as $key => $item)
+                                        @foreach ($monthly_expense as $key => $item)
                                             @php
                                                 $user = DB::table('users')
                                                     ->where('user_id', $item->auth_id)
@@ -48,12 +48,16 @@
                                                     ->first();
 
                                                 // dd($customer);
+                                                // Total amount
+                                                $total = App\Models\Exp_detail::where('customer_id', $item->customer_id)
+                                                ->where('month', $item->month)
+                                                     ->sum('amount');
 
                                             @endphp
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td class="d-none">{{ $item->year }}</td>
-                                                <td class="d-none">
+                                                <td>
                                                     @if ($item->month == 1)
                                                         January
                                                     @elseif ($item->month == 2)
@@ -80,18 +84,28 @@
                                                         December
                                                     @endif
                                                 </td>
-
+                                                <td>{{ $data->name }}</td>
+                                                <td class="text-right">{{ $item->amount }}</td>
                                                 @if ($user)
-                                                    <td>{{ $userName->name }}</td>
+                                                    <td class="text-center">{{ $userName->name }}</td>
                                                 @elseif ($customer)
                                                     {{-- <td>{{ $customerName->name }}</td> --}}
-                                                    <td><span class="badge badge-success">Admin</span></td>
+                                                    <td class="text-center"><span class="badge badge-success">Admin</span>
+                                                    </td>
                                                 @endif
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $item->amount }}</td>
                                             </tr>
-                                        @endforeach
+                                            @php
+                                            // $total  = '';
+                                                $total += $total+ $item->amount
+                                            @endphp
+                                            @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3"><strong>Total = </strong></td>
+                                            <td>{{$total}}</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
