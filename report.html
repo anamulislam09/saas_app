@@ -1,139 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <style>
-      .container {
-        width: 90%;
-        margin: auto;
-      }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
 
-      .header {
-        width: 100%;
-        overflow: hidden;
-      }
+        .header-section {
+            width: 100%;
+            /* height: 200px; */
+            background: #fb5200;
+        }
 
-      .logo {
-        width: 25%;
-        float: left;
-      }
+        .logo {
+            width: 25%;
+            float: left;
+        }
 
-      .header-text {
-        width: 50%;
-        float: left;
-        text-align: center;
-      }
+        .header-text {
+            width: 40%;
+            float: left;
+            text-align: center;
+        }
 
-      .status {
-        width: 25%;
-        float: right;
-        text-align: end;
-      }
+        .status {
+            width: 35%;
+            float: right;
+            text-align: end;
+        }
 
-      /* table style start here  */
-      table,
-      td,
-      th {
-        border: 1px solid;
-      }
+        .header-text h1 {
+            font-family: arial;
+            margin-bottom: -6Px;
+        }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      /* table style ends here  */
 
-      .Prepared {
-        width: 33.33%;
-        float: left;
-      }
+        .header-text p {
+            margin: 0px 10px;
+        }
 
-      .Prepared h4 {
-        border-top: 2px solid black;
-        width: 86px;
-      }
+        .status h2 {
+            padding: 10px 0px;
+            background: #ddd;
+            text-align: center;
+            width: 100%;
+        }
 
-      .Approved {
-        width: 33.33%;
-        float: left;
-        text-align: -webkit-center;
-      }
+   /* table style start here  */
+   table,
+        td,
+        th {
+            border: 1px solid;
+        }
 
-      .Approved h4 {
-        border-top: 2px solid black;
-        width: 25%;
-      }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-      .Recipient {
-        width: 33.33%;
-        float: left;
-        text-align: -webkit-right;
-      }
+        /* table style ends here  */
 
-      .Recipient h4 {
-        border-top: 2px solid black;
-        width: 36%;
-      }
+        .Prepared {
+            width: 33.33%;
+            float: left;
+        }
+
+        .Prepared h4 {
+            border-top: 2px solid black;
+            width: 45%;
+            text-align: center;
+        }
+
+        .Approved {
+            width: 33.33%;
+            float: left;
+            text-align: -webkit-center;
+        }
+
+        .Approved h4 {
+            border-top: 2px solid black;
+            width: 45%;
+            text-align: center;
+        }
+
+        .Recipient {
+            width: 33.33%;
+            float: left;
+            text-align: -webkit-right;
+        }
+
+        .Recipient h4 {
+            border-top: 2px solid black;
+            width: 70%;
+            text-align: center;
+        }
+
+        /* body text start here  */
+        .body-text {
+            /* display: flex;
+            justify-content: space-between; */
+            display: block;
+            padding: 20px 0px;
+            width: 100%;
+            background: #fb5200;
+        }
+
+        .left-text {
+            width: 60%;
+            float: left;
+        }
+
+        .righrightt-text {
+            width: 40%;
+            float: left;
+        }
+
+      
+
+        /* body text ends here  */
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
-      <div class="header">
-        <div class="logo">
-          <h2>Logo.png</h2>
+        <div class="header-section">
+            <div class="logo">
+                <h3>{{ $customer->name }}</h3>
+                {{-- <img src="" alt="$customer->name "> --}}
+            </div>
+
+            <div class="header-text">
+                <h1>{{ $customer->name }}</h1>
+                <p>{{ $custDetails->address }}</p>
+                <p>{{ $custDetails->phone }}</p>
+                <p>{{ $customer->email }}</p>
+            </div>
+
+            <div class="status">
+                <h2>Payment Voucher</h2>
+            </div>
+        </div>
+        <div class="body-text">
+            <div class="left-text">
+                <p>Name: </p>
+                <p>Address: </p>
+            </div>
+            <div class="right-text">
+                <p>Voucher No: {{ rand(999, 9999) }}</p>
+                <p>{{ $date }}</p>
+            </div>
         </div>
 
-        <div class="header-text">
-          <h1>{{ $customer->name }}</h1>
-          <p>{{ $custDetails->address }}</p>
-          <p>{{ $custDetails->phone }}</p>
-          <p>{{ $customer->email }}</p>
+        <div class="body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SL#</th>
+                        <th colspan="2">Payment Info</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td colspan="2">{{ $exp->name }}</td>
+                        <td>{{ $exp->amount }}</td>
+                        <td>paid</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Payment Method :</td>
+                        <td>Total Amount</td>
+                        <td>fghfg</td>
+                        <td>Paid</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="textAmount">
+                <h3>In Word :</h3>
+            </div>
         </div>
-
-        <div class="status">
-          <h2>Payment Voucher</h2>
+        <div class="footer">
+            <div class="Prepared">
+                <h4>Prepared by</h4>
+            </div>
+            <div class="Approved">
+                <h4>Approved by</h4>
+            </div>
+            <div class="Recipient">
+                <h4>Recipient Signature</h4>
+            </div>
         </div>
-      </div>
-
-      <div class="body">
-        <h1>{{ $date }}</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>SL#</th>
-              <th colspan="2">Payment Info</th>
-              <th>Amount</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td colspan="2">{{ $exp->name }}</td>
-              <td>{{ $exp->amount }}</td>
-              <td>paid</td>
-            </tr>
-            <tr>
-              <td colspan="2">Payment Method :</td>
-              <td>Total Amount</td>
-              <td>fghfg</td>
-              <td>Paid</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="textAmount">
-          <h3>In Word :</h3>
-        </div>
-      </div>
-      <div class="footer">
-        <div class="Prepared"><h4>Prepared by</h4></div>
-        <div class="Approved"><h4>Approved by</h4></div>
-        <div class="Recipient"><h4>Recipient Signature</h4></div>
-      </div>
     </div>
-  </body>
+</body>
+
 </html>

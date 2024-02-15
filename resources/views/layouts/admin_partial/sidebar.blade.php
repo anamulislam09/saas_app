@@ -199,7 +199,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href=""
+                                <a href="{{route('income.collection.index')}}"
                                     class="nav-link ">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Collection Voucher</p>
@@ -275,7 +275,7 @@
 
                     {{-- Report  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('expenses.month') || Request::routeIs('expense-all.index') || Request::routeIs('income.statement') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('expenses.month') || Request::routeIs('expense-all.index') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Report<i class="right fas fa-angle-left"></i>

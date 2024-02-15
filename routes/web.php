@@ -12,6 +12,7 @@ use App\Http\Controllers\PdfGeneratorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
@@ -117,6 +118,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/income/store', [IncomeController::class, 'Store'])->name('income.store');
     Route::get('/income/collection', [IncomeController::class, 'Collection'])->name('income.collection');
     Route::post('/income/collection/store/', [IncomeController::class, 'StoreCollection'])->name('income.collection.store');
+
+    // collection voucher route start here 
+    Route::get('/income/collection-voucher', [VoucherController::class, 'Index'])->name('income.collection.index');
 
     //    Balance route 
     Route::get('/opening-balance/create', [BlanceController::class, 'OpeningBalance'])->name('opening.balance.create');

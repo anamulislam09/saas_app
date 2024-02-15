@@ -96,78 +96,39 @@
                                                     </select>
                                                 </div>
 
-                                                @if (Route::current()->getName() == 'income.create')
-                                                    <div class="col-lg-2">
-                                                        <label for="" class="col-form-label"></label>
-                                                        <input type="submit" class="btn btn-primary" value="Generate">
-                                                    </div>
-                                                @else
-                                                @endif
+                                                {{-- @if (Route::current()->getName() == 'income.create') --}}
+                                                <div class="col-lg-2">
+                                                    <label for="" class="col-form-label"></label>
+                                                    <input type="submit" class="btn btn-primary" value="Generate">
+                                                </div>
+                                                {{-- @else --}}
+                                                {{-- @endif --}}
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            @if (isset($data) && !empty($data))
-                                <div class="card-body">
-                                    <caption class="text-center m-auto mb-3"> <strong>Process for the month of @if ('1' == date('m'))January
-                                        @elseif ('2' == date('m'))February
-                                        @elseif ('3' == date('m'))March
-                                        @elseif ('4' == date('m'))April
-                                        @elseif ('5' == date('m'))May
-                                        @elseif ('6' == date('m'))June
-                                        @elseif ('7' == date('m'))July
-                                        @elseif ('8' == date('m'))August
-                                        @elseif ('9' == date('m'))September
-                                        @elseif ('10' == date('m'))October
-                                        @elseif ('11' == date('m'))November
-                                        @elseif ('12' == date('m'))December
-                                        @endif</strong></caption>
-                                    <table id="dataTable" class="table table-bordered table-striped mt-3">
-                                        
-                                        <thead>
-                                            <tr>
-                                                <th>User ID</th>
-                                                <th>User Name</th>
-                                                <th>Charge</th>
-                                                <th class="text-right">Amount</th>
-                                                {{-- <th>Due</th> --}}
-                                                {{-- <th style="width: 15%">Collect</th> --}}
-                                                {{-- <th>Action</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- @if (isset($data) && !empty($data)) --}}
-                                            @foreach ($data as $item)
-                                                <form action="{{ route('income.collection.store') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="user_id" value="{{ $item->user_id }}">
-                                                    <tr>
-                                                        <td>{{ $item->user_id }}</td>
-                                                        <td>{{ $item->user_name }}</td>
-                                                        <td>{{ $item->charge }}</td>
-                                                        <td class="text-right">{{ $item->amount }}</td>
-                                                        {{-- <td>{{ $item->due }}</td> --}}
-                                                        {{-- <td><input type="text"
-                                                                style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="pay" placeholder="000" required></td> --}}
-                                                        {{-- <td>
-                                                            @if ($item->status == 1)
-                                                                <span class="badge badge-success">Paid</span>
-                                                            @else
-                                                                <input type="submit" class="btn btn-sm btn-primary"
-                                                                    value="Submit">
-                                                            @endif
-                                                        </td> --}}
-                                                    </tr>
-                                                </form>
-                                            @endforeach
-                                        @else
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
+                            <div class="card-body">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ class PdfGeneratorController extends Controller
     public function Voucher($id){
         
         $exp = Exp_detail::where('id', $id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+    
         $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
         // dd($exp);
@@ -25,7 +26,10 @@ class PdfGeneratorController extends Controller
             'customer' => $customer,
             'custDetails' => $custDetails,
         ];
-        $pdf = PDF::loadView('admin.expense.voucher.test', $data);
+
+        // dd($data);
+
+        $pdf = PDF::loadView('admin.expense.voucher.index', $data);
         // dd($pdf);
 
         return $pdf-> download('sdl.pdf');

@@ -1,72 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    {{-- <title></title> --}}
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <style>
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        .header-section {
+            width: 100%;
+            height: 200px;
+        }
+
+        .logo {
+            width: 25%;
+            float: left;
+        }
+
+        .header-text {
+            width: 40%;
+            float: left;
+            text-align: center;
+        }
+
+        .status {
+            width: 35%;
+            float: right;
+            text-align: end;
+        }
+
+        .header-text h1 {
+            font-family: arial;
+            margin-bottom: -6Px;
+        }
+
+
+        .header-text p {
+            margin: 0px 10px;
+        }
+
+        .status h2 {
+            padding: 10px 0px;
+            background: #ddd;
+            text-align: center;
+            width: 100%;
+        }
+
+   /* table style start here  */
+   table,
+        td,
+        th {
+            border: 1px solid;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* table style ends here  */
+
+        .Prepared {
+            width: 33.33%;
+            float: left;
+        }
+
+        .Prepared h4 {
+            border-top: 2px solid black;
+            width: 45%;
+            text-align: center;
+        }
+
+        .Approved {
+            width: 33.33%;
+            float: left;
+            text-align: -webkit-center;
+        }
+
+        .Approved h4 {
+            border-top: 2px solid black;
+            width: 45%;
+            text-align: center;
+        }
+
+        .Recipient {
+            width: 33.33%;
+            float: left;
+            text-align: -webkit-right;
+        }
+
+        .Recipient h4 {
+            border-top: 2px solid black;
+            width: 70%;
+            text-align: center;
+        }
+
+        /* body text start here  */
+        .bodyInfo {
+            display: flex;
+            justify-content: space-between;
+            display: block;
+            padding: 20px 0px;
+            width: 100%;
+            /* background: #fb5200; */
+        }
+
+        .left-text {
+            width: 60%;
+            float: left;
+        }
+
+        .righrightt-text {
+            width: 40%;
+            float: left;
+        }
+
+      
+
+        /* body text ends here  */
+    </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="header">
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3">
-                    <div class="logo">
-                        <h3>Company logo</h3>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="header-text">
-                        <h1>{{ $customer->name }}</h1>
-                        <p>{{ $custDetails->address }}</p>
-                        <p>{{ $custDetails->phone }}</p>
-                        <p>{{ $customer->email }}</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3">
-                    <div class="status">
-                        <h3>Expense vouher</h3>
-                    </div>
-                </div>
+        <div class="header-section">
+            <div class="logo">
+                <h3>{{ $customer->name }}</h3>
+                {{-- <img src="" alt="$customer->name "> --}}
+            </div>
+
+            <div class="header-text">
+                <h1>{{ $customer->name }}</h1>
+                <p>{{ $custDetails->address }}</p>
+                <p>{{ $custDetails->phone }}</p>
+                <p>{{ $customer->email }}</p>
+            </div>
+
+            <div class="status">
+                <h2>Payment Voucher</h2>
+            </div>
+        </div>
+        <div class="bodyInfo">
+            <div class="left-text">
+                <p>Name: </p>
+                <p>Address: </p>
+            </div>
+            <div class="right-text">
+                <p>Voucher No: {{ rand(999, 9999) }}</p>
+                <p>{{ $date }}</p>
             </div>
         </div>
 
         <div class="body">
-            <h1>{{ $date }}</h1>
-            <table class="table table-bordered">
+            <table>
                 <thead>
                     <tr>
-                        <th>Expense Name</th>
-                        <th>Expense Amount</th>
+                        <th>SL#</th>
+                        <th colspan="2">Payment Info</th>
+                        <th>Amount</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $exp->name }}</td>
+                        <td>1</td>
+                        <td colspan="2">{{ $exp->name }}</td>
                         <td>{{ $exp->amount }}</td>
+                        <td>paid</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Payment Method :</td>
+                        <td>Total Amount</td>
+                        <td>fghfg</td>
+                        <td>Paid</td>
                     </tr>
                 </tbody>
             </table>
+            <div class="textAmount">
+                <h3>In Word :</h3>
+            </div>
         </div>
         <div class="footer">
-            <div class="row">
-                <div class="col-lg-4 col-md-4"> Prepared by</div>
-                <div class="col-lg-4 col-md-4"> Approved by</div>
-                {{-- <div class="col-lg-4 col-md-4"> Recipient Signature</div> --}}
+            <div class="Prepared">
+                <h4>Prepared by</h4>
+            </div>
+            <div class="Approved">
+                <h4>Approved by</h4>
+            </div>
+            <div class="Recipient">
+                <h4>Recipient Signature</h4>
             </div>
         </div>
     </div>
-  
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
-    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
 </body>
+
 </html>
-
-

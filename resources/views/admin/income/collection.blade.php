@@ -12,10 +12,12 @@
             vertical-align: top;
             border-top: 1px solid #dee2e6;
         }
-        .table tr td{
+
+        .table tr td {
             text-align: center;
         }
-        .table tr th{
+
+        .table tr th {
             text-align: center;
         }
     </style>
@@ -116,7 +118,20 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="dataTable" class="table table-bordered table-striped">
+                                <caption class="text-center m-auto mb-3"> <strong>Process for the month of @if ('1' == date('m'))January
+                                    @elseif ('2' == date('m'))February
+                                    @elseif ('3' == date('m'))March
+                                    @elseif ('4' == date('m'))April
+                                    @elseif ('5' == date('m'))May
+                                    @elseif ('6' == date('m'))June
+                                    @elseif ('7' == date('m'))July
+                                    @elseif ('8' == date('m'))August
+                                    @elseif ('9' == date('m'))September
+                                    @elseif ('10' == date('m'))October
+                                    @elseif ('11' == date('m'))November
+                                    @elseif ('12' == date('m'))December
+                                    @endif</strong></caption>
+                                <table id="dataTable" class="table table-bordered table-striped mt-3">
                                     <thead>
                                         <tr>
                                             <th style="width: 8%">User ID</th>
@@ -137,7 +152,7 @@
                                                     // $month = Carbon::now()->month;
                                                     // $year = Carbon::now()->year;
                                                     $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
-                                                  
+
                                                     $previousMonthData = App\Models\Income::where('month', $item->month - 1)
                                                         ->where('year', $previousDate[0])
                                                         ->where('user_id', $item->user_id)
@@ -154,18 +169,20 @@
                                                         <td>{{ $item->charge }}</td>
                                                         <td>{{ $item->amount }}</td>
                                                         @if (!$previousMonthData)
-                                                        <td >000</td>
+                                                            <td>000</td>
                                                         @else
-                                                        <td>{{ $previousMonthData->due }}</td>
+                                                            <td>{{ $previousMonthData->due }}</td>
                                                         @endif
                                                         <td>{{ $item->due }}</td>
                                                         <td><input type="text"
                                                                 style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="paid" value="{{old('paid')}}" placeholder="000" required></td>
+                                                                name="paid" value="{{ old('paid') }}" placeholder="000"
+                                                                required></td>
                                                         <td>
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>
-                                                                <a href=""><span class="badge badge-primary">Voucher</span></a>
+                                                                <a href=""><span
+                                                                        class="badge badge-info">Voucher</span></a>
                                                             @else
                                                                 <input type="submit" class="btn btn-sm btn-primary"
                                                                     value="Collect">

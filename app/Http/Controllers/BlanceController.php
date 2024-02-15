@@ -69,7 +69,7 @@ class BlanceController extends Controller
     // Expense rreport 
     public function Incomes()
     {
-        $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('month', 'DESC')->get();
         return view('admin.report.incomes', compact('data'));
     }
 }
