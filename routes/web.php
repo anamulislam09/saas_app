@@ -10,6 +10,7 @@ use App\Http\Controllers\FlatController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\PdfGeneratorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
@@ -95,7 +96,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/expense-details/edit/{id}', [ExpDetailController::class, 'Edit']);
     Route::post('/expense-details/update', [ExpDetailController::class, 'Update'])->name('expense-details.update');
     Route::get('/expense-details/delate/{id}', [ExpDetailController::class, 'Delate'])->name('expense-details.delate');
-    
+
     Route::get('/expense-summary', [ExpDetailController::class, 'Index'])->name('expense-summary.index');
     // generate  voucher
     Route::get('/expense/generate-voucher/{id}', [PdfGeneratorController::class, 'Voucher'])->name('expense.voucher');
@@ -110,10 +111,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/expense-process/store', [ExpProcessController::class, 'Store'])->name('expense_process.store');
 
     // account route start here 
-     Route::get('/ledger-posting', [ExpenseController::class, 'Index'])->name('ledgerPosting.index');
-     Route::get('/ledger-posting/store', [ExpProcessController::class, 'Store'])->name('ledger-posting.store');
-     Route::get('/opening-balance/create', [BlanceController::class, 'OpeningBalance'])->name('opening.balance.create');
-     Route::post('/opening-balance/store', [BlanceController::class, 'OpeningBalanceStore'])->name('opening.balance.store');
+    Route::get('/ledger-posting', [ExpenseController::class, 'Index'])->name('ledgerPosting.index');
+    Route::get('/ledger-posting/store', [ExpProcessController::class, 'Store'])->name('ledger-posting.store');
+    Route::get('/opening-balance/create', [BlanceController::class, 'OpeningBalance'])->name('opening.balance.create');
+    Route::post('/opening-balance/store', [BlanceController::class, 'OpeningBalanceStore'])->name('opening.balance.store');
     // account route ends here 
 
     //    Expense process route 
@@ -126,23 +127,34 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/income/collection', [IncomeController::class, 'Collection'])->name('income.collection');
     Route::post('/income/collection/store/', [IncomeController::class, 'StoreCollection'])->name('income.collection.store');
 
-    /*--------------- collection voucher route start here ------------------*/
+    /*--------------- Accounts voucher route start here ------------------*/
     // collection
     Route::get('/income/collection-voucher', [VoucherController::class, 'Index'])->name('income.collection.index');
     Route::post('/income/collection-all', [VoucherController::class, 'CollectionAll'])->name('income.collection.all');
- //expense
- Route::get('/account/expense-voucher', [VoucherController::class, 'ExpenseIndex'])->name('account.expense.index');
- Route::post('/account/expense-all', [VoucherController::class, 'ExpenseAll'])->name('account.expense.all');
-    /*--------------- collection voucher route ends here ------------------*/
+    //expense
+    Route::get('/account/expense-voucher', [VoucherController::class, 'ExpenseIndex'])->name('account.expense.index');
+    Route::post('/account/expense-all', [VoucherController::class, 'ExpenseAll'])->name('account.expense.all');
+    //Balance sheet
+    Route::get('/account/balance', [VoucherController::class, 'BalanceSheet'])->name('account.balancesheet');
+    Route::get('/income-statement', [VoucherController::class, 'Incomes'])->name('income.statement');
+    /*--------------- Accounts voucher route ends here ------------------*/
+
+    /*--------------- Report route start here ------------------*/
+    Route::get('/expenses/month', [ReportController::class, 'MonthlyExpense'])->name('expenses.month');
+    Route::get('/expenses/yearly', [ReportController::class, 'YearlyExpense'])->name('expenses.year');
+    Route::get('/incomes/month', [ReportController::class, 'MonthlyIncome'])->name('incomes.month');
+    Route::get('/incomes/yearly', [ReportController::class, 'YearlyIncome'])->name('incomes.year');
+
+    /*--------------- Report route ends here ------------------*/
 
     //    Balance route 
     Route::get('/balance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
     Route::get('/balance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
 
+
     //    Report route 
     Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
     Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
-    Route::get('/income-statement', [BlanceController::class, 'Incomes'])->name('income.statement');
 });
 
 /*---------------- Customer route ends here ------------------*/

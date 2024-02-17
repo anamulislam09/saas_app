@@ -11,7 +11,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">All Expenses</h3>
+                                        <h3 class="card-title">Monthly Expenses</h3>
                                     </div>
                                 </div>
                             </div>
@@ -49,9 +49,9 @@
 
                                                 // dd($customer);
                                                 // Total amount
-                                                $total = App\Models\Exp_detail::where('customer_id', $item->customer_id)
-                                                ->where('month', $item->month)
-                                                     ->sum('amount');
+                                                // $total = App\Models\Exp_detail::where('customer_id', $item->customer_id)
+                                                // ->where('month', $item->month)
+                                                //      ->sum('amount');
 
                                             @endphp
                                             <tr>
@@ -85,7 +85,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $data->name }}</td>
-                                                <td class="text-right">{{ $item->amount }}</td>
+                                                <td class="text-right">{{ $item->sub_total }}</td>
                                                 @if ($user)
                                                     <td class="text-center">{{ $userName->name }}</td>
                                                 @elseif ($customer)
@@ -94,17 +94,17 @@
                                                     </td>
                                                 @endif
                                             </tr>
-                                            @php
+                                            {{-- @php
                                             // $total  = '';
                                                 $total += $total+ $item->amount
-                                            @endphp
+                                            @endphp --}}
                                             @endforeach
                                     </tbody>
                                     <tfoot>
-                                        <tr>
+                                        {{-- <tr>
                                             <td colspan="3"><strong>Total = </strong></td>
                                             <td>{{$total}}</td>
-                                        </tr>
+                                        </tr> --}}
                                     </tfoot>
                                 </table>
                             </div>

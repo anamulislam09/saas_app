@@ -99,11 +99,4 @@ class ExpDetailController extends Controller
         return redirect()->back()->with('message', 'Expense deleted successfully.');
     }
 
-
-    // Report for Monthly Ecpense
-    public function MonthlyExpense(){
-        // dd('hello');
-        $monthly_expense = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
-        return view('admin.report.monthly_expenses', compact('monthly_expense'));
-    }
 }

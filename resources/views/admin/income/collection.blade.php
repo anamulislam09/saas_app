@@ -138,8 +138,8 @@
                                 <table id="dataTable" class="table table-bordered table-striped mt-3">
                                     <thead>
                                         <tr>
-                                            <th style="width: 8%">User ID</th>
-                                            <th style="width: 15%">User Name</th>
+                                            <th style="width: 8%">SL</th>
+                                            <th style="width: 15%">Flat Name</th>
                                             <th style="width: 15%">Charge</th>
                                             <th style="width: 15%">Current amount</th>
                                             <th style="width: 12%">Previous due</th>
@@ -151,7 +151,7 @@
 
                                     <tbody>
                                         @if (isset($data) && !empty($data))
-                                            @foreach ($data as $item)
+                                            @foreach ($data as $key => $item)
                                                 @php
                                                     // $month = Carbon::now()->month;
                                                     // $year = Carbon::now()->year;
@@ -168,7 +168,7 @@
                                                     @csrf
                                                     <input type="hidden" name="user_id" value="{{ $item->user_id }}">
                                                     <tr>
-                                                        <td>{{ $item->user_id }}</td>
+                                                        <td>{{ $key + 1 }}</td>
                                                         <td>{{ $item->user_name }}</td>
                                                         <td>{{ $item->charge }}</td>
                                                         <td>{{ $item->amount }}</td>

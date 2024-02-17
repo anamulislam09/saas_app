@@ -34,7 +34,7 @@ class UserController extends Controller
     if (!$data) {
       return redirect()->back()->with('message', 'Pls! Flat create first');
     } else {
-      $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->get();
+      $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
       return view('admin.users.create', compact('data'));
       //end method
     }
@@ -91,7 +91,7 @@ class UserController extends Controller
     if (!$data) {
       return redirect()->back()->with('message', 'Pls! Flat create first');
     } else {
-      $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->get();
+      $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
       return view('admin.users.create_single', compact('data'));
       //end method
     }

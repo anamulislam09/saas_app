@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exp_detail;
+use App\Models\Exp_process;
 use App\Models\Income;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,13 +29,15 @@ class VoucherController extends Controller
         }
     }
 
+    //show voucher page
     public function ExpenseIndex()
-    {   //show voucher page
+    {
         return view('admin.accounts.expense_voucher');
     }
 
+    // show collection 
     public function ExpenseAll(Request $request)
-    { // show collection 
+    {
         $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
@@ -44,5 +48,21 @@ class VoucherController extends Controller
             return view('admin.accounts.expense_voucher', compact('data', 'months'));
         }
     }
-}
 
+    // BalanceSheet
+    public function BalanceSheet()
+    {
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $total_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('total');
+        $total_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('paid');
+        return view('admin.accounts.balance_sheet', compact('total_exp', 'total_income'));
+    }
+
+     // Expense rreport 
+     public function Incomes()
+     {
+         $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('month', 'DESC')->get();
+         return view('admin.accounts.incomes', compact('data'));
+     }
+}

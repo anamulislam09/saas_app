@@ -38,8 +38,9 @@
                         $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
                             ->where('month', $item->month)
                             ->where('year', $item->year)
-                            ->groupBy('cat_id')
+                            ->where('cat_id', $item->cat_id)
                             ->sum('amount');
+                            // dd($amount);
                       @endphp
                       <tr>
                         <td>{{ $key + 1 }}</td>

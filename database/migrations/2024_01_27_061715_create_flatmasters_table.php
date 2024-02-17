@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('flat_name');
             $table->tinyInteger('floor_no')->nullable();
             $table->bigInteger('amount')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

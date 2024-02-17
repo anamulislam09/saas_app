@@ -29,7 +29,7 @@ class BlanceController extends Controller
         if ($isExist) {
             return redirect()->back()->with('message', 'You have already created opening balance.');
         } else {
-            $balance = $request->income - $request->expense;
+           $balance = $request->income - $request->expense;
 
             $data['customer_id'] = Auth::guard('admin')->user()->id;
             $data['auth_id'] = Auth::guard('admin')->user()->id;
@@ -37,7 +37,12 @@ class BlanceController extends Controller
             $data['month'] = $request->month;
             $data['income'] = $request->income;
             $data['expense'] = $request->expense;
-            $data['balance'] = $balance;
+            if($request->income > $request->expense){
+                $data['balance']  = $request->income - $request->expense;
+            }else{
+                $data['balance'] = $request->expense - $request->income;
+            }
+
             $data['entry_datetime'] = date('Y-m-d H:i:s');
             if ($balance >= 0) {
                 $data['flag'] = 1;
@@ -79,10 +84,5 @@ class BlanceController extends Controller
     //     return view('admin.report.expenses', compact('expDetails'));
     // }
 
-    // Expense rreport 
-    public function Incomes()
-    {
-        $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('month', 'DESC')->get();
-        return view('admin.report.incomes', compact('data'));
-    }
+   
 }

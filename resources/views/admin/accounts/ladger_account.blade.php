@@ -54,6 +54,12 @@
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
 
+                                        $manualOpeningBlance = DB::table('opening_balances')
+                                            ->where('month', $month - 1)
+                                            ->where('year', $year)
+                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                            ->first();
+
                                         // opening balannce of last year
                                         $lastYear = date('Y') - 1;
                                         $lastmonth = 12;
@@ -75,7 +81,7 @@
                                     <tbody>
                                         <tr>
                                             <td colspan="6" class="text-center"> <strong>Opening
-                                                    Blance----------------></strong></td>
+                                                    Blance</strong></td>
                                             @if ($month == 1)
                                                 @if (!$lastYopeningBlance)
                                                     <td><strong>000</strong></td>
@@ -87,8 +93,15 @@
                                                     @endif
                                                 @endif
                                             @else
-                                                @if (!$openingBlance)
+                                                @if (!$openingBlance && !$manualOpeningBlance)
                                                     <td><strong>000</strong></td>
+                                                @elseif (!$openingBlance && $manualOpeningBlance)
+                                                    {{-- <td><strong>000</strong></td> --}}
+                                                    @if ($manualOpeningBlance->flag == 1)
+                                                        <td><strong>{{ $manualOpeningBlance->balance }}</strong></td>
+                                                    @else
+                                                        <td><strong>-{{ $manualOpeningBlance->balance }}</strong></td>
+                                                    @endif
                                                 @else
                                                     @if ($openingBlance->flag == 1)
                                                         <td><strong>{{ $openingBlance->amount }}</strong></td>
@@ -153,7 +166,7 @@
                                             </tr>
                                         @endif
                                         <tr>
-                                            <td colspan="5" class="text-center"><strong>Total cost of this month-------->
+                                            <td colspan="5" class="text-center"><strong>Total cost of this month
                                                 </strong></td>
                                             <td><strong>{{ $total }}</strong></td>
                                             <td></td>
@@ -161,18 +174,28 @@
                                         </tr>
                                         <tr>
                                             <td colspan="6" class="text-center"><strong>Total income of this
-                                                    month------------------------------> </strong></td>
+                                                    month</strong></td>
                                             <td><strong>{{ $income }}</strong></td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <td colspan="7" class="text-center"><strong>Blance of this
-                                                    month------------------------------------------------------------>
+                                                    month
                                                 </strong></td>
                                             <td>
-                                                @if (!$openingBlance)
+                                                @if (!$openingBlance && !$manualOpeningBlance)
                                                     <strong
                                                         style="border-right:1px solid #ddd">{{ $income - $total }}</strong>
+                                                @elseif (!$openingBlance && $manualOpeningBlance)
+                                                    {{-- <strong
+                                                        style="border-right:1px solid #ddd">{{ $income - $total }}</strong> --}}
+                                                    @if ($manualOpeningBlance->flag == 1)
+                                                        <strong
+                                                            style="border-right:1px solid #ddd">{{ $manualOpeningBlance->balance + $income - $total }}</strong>
+                                                    @else
+                                                        <strong
+                                                            style="border-right:1px solid #ddd">{{ $income - $manualOpeningBlance->balance - $total }}</strong>
+                                                    @endif
                                                 @else
                                                     @if ($openingBlance->flag == 1)
                                                         <strong

@@ -46,10 +46,11 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $email = Customer::where('email', $request->email)->exists();
-        if ($email) {
-            return redirect()->back()->with('message', 'This Email already used!');
-        } else {
+        // $email = Customer::where('email', $request->email)->exists();
+        // if ($email) {
+        //     return redirect()->back()->with('message', 'This Email already used!');
+        // } 
+        // else {
             // $id = UniqueIdGenerator::generate(['table' => 'customers', 'length' => 4]);
             $start_at = 1001;
 
@@ -77,7 +78,7 @@ class AdminController extends Controller
             }
             return redirect()->route('login_form')->with('message', 'Admin register Successfully');
             //end method
-        }
+        // }
     }
 
     // register method ends here

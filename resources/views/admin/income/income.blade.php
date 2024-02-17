@@ -132,8 +132,8 @@
                                         
                                         <thead>
                                             <tr>
-                                                <th>User ID</th>
-                                                <th>User Name</th>
+                                                <th> SL</th>
+                                                <th>Flat Name</th>
                                                 <th>Charge</th>
                                                 <th class="text-right">Amount</th>
                                                 {{-- <th>Due</th> --}}
@@ -143,12 +143,12 @@
                                         </thead>
                                         <tbody>
                                             {{-- @if (isset($data) && !empty($data)) --}}
-                                            @foreach ($data as $item)
+                                            @foreach ($data as $key => $item)
                                                 <form action="{{ route('income.collection.store') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="user_id" value="{{ $item->user_id }}">
                                                     <tr>
-                                                        <td>{{ $item->user_id }}</td>
+                                                        <td>{{ $key+1 }}</td>
                                                         <td>{{ $item->user_name }}</td>
                                                         <td>{{ $item->charge }}</td>
                                                         <td class="text-right">{{ $item->amount }}</td>

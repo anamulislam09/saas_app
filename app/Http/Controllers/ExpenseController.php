@@ -55,7 +55,7 @@ class ExpenseController extends Controller
                 Expense::create($data);
             }
 
-            return redirect()->back()->with('message', 'MOnth close successfully');
+            return redirect()->back()->with('message', 'Month close successfully');
         }
     }
 

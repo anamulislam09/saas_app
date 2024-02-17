@@ -19,7 +19,7 @@ return new class extends Migration
             $table->tinyInteger('floor_no')->nullable();
             $table->string('charge')->nullable();
             $table->bigInteger('amount')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

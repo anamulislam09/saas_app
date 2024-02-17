@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->integer('customer_id')->nullable();
             $table->integer('auth_id')->nullable();
-            $table->bigInteger('user_id')->nullable();
-            $table->string('user_name')->nullable();
+            $table->bigInteger('flat_id')->nullable();
+            $table->string('flat_name')->nullable();
             $table->string('charge')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->bigInteger('due')->nullable();

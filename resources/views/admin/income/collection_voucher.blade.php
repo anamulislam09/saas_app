@@ -138,7 +138,7 @@
                     <thead>
                       <tr>
                         <th style="width: 8%">SL</th>
-                        <th style="width: 15%">User Name</th>
+                        <th style="width: 15%">Flat Name</th>
                         <th style="width: 15%" class="text-right">Amount</th>
                         <th style="width: 15%" class="text-center">Status</th>
                         <th style="width: 15%" class="text-center">Action</th>
