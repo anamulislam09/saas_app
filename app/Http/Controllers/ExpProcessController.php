@@ -130,7 +130,7 @@ class ExpProcessController extends Controller
             }
 
             if ($exp_process) {
-                return redirect()->route('expenses.process')->with('message', 'Expense store successfully');
+                return redirect()->back()->with('message', 'Expense store successfully');
             } else {
                 return redirect()->back()->with('message', 'Something went wrong!');
             }

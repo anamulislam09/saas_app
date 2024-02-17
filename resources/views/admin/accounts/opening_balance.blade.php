@@ -31,7 +31,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6 form-group">
                                                     <label for="" class="col-form-label">Select Year</label>
-                                                    <select name="year" class="form-control" id="">
+                                                    <select name="year" class="form-control" id="" required>
                                                         <option value="" selected disabled>Select Year</option>
                                                         <option value="2023">Year 2023</option>
                                                         <option value="2024">Year 2024</option>
@@ -45,7 +45,7 @@
                                                 </div>
                                                 <div class="col-lg-6 form-group">
                                                     <label for="" class="col-form-label">Select Month</label>
-                                                    <select name="month" class="form-control" id="">
+                                                    <select name="month" class="form-control" id="" required>
                                                         <option value="" selected disabled>Select Month </option>
                                                         <option value="1">January</option>
                                                         <option value="2">February</option>
@@ -65,12 +65,12 @@
                                             <div class="form-group">
                                                 <label for="unit" class="">Amount of opening income :</label>
                                                 <input type="text" class="form-control" value="" name="income"
-                                                    placeholder="Enter Amount">
+                                                    placeholder="Enter Amount" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="unit" class="">Amount of opening expense :</label>
                                                 <input type="text" class="form-control" value="" name="expense"
-                                                    placeholder="Enter amount">
+                                                    placeholder="Enter amount" required>
                                             </div>
                                             <div class="">
                                                 <button type="submit" class="btn btn-sm btn-primary"

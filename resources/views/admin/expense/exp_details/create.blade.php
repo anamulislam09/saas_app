@@ -26,7 +26,7 @@
                                 <!-- /.card-header -->
                                 <div class="row">
                                     <div class="col-12 m-auto border p-5">
-                                        <form action="{{ route('expense-details.store') }}" method="POST">
+                                        <form action="{{ route('expense.store') }}" method="POST">
                                             @csrf
                                             <div class="row">
                                                 <div class=" col-lg-5 form-group">

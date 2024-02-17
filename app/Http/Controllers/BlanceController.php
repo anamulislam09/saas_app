@@ -19,22 +19,35 @@ class BlanceController extends Controller
     public function OpeningBalance()
     {
         // $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->get();
-        return view('admin.blances.opening_balance');
+        return view('admin.accounts.opening_balance');
     }
 
     // OpeningBalanceStore
     public function OpeningBalanceStore(Request $request)
     {
-        OpeningBalance::insert([
-            'customer_id' => Auth::guard('admin')->user()->id,
-            'auth_id' => Auth::guard('admin')->user()->id,
-            'year' => $request->year,
-            'month' => $request->month,
-            'profit' => $request->income,
-            'loss' => $request->expense,
-            'entry_datetime' => date('Y-m-d H:i:s'),
-        ]);
-        return redirect()->back()->with('message', 'Opening Balance Added Successfully');
+        $isExist = OpeningBalance::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        if ($isExist) {
+            return redirect()->back()->with('message', 'You have already created opening balance.');
+        } else {
+            $balance = $request->income - $request->expense;
+
+            $data['customer_id'] = Auth::guard('admin')->user()->id;
+            $data['auth_id'] = Auth::guard('admin')->user()->id;
+            $data['year'] = $request->year;
+            $data['month'] = $request->month;
+            $data['income'] = $request->income;
+            $data['expense'] = $request->expense;
+            $data['balance'] = $balance;
+            $data['entry_datetime'] = date('Y-m-d H:i:s');
+            if ($balance >= 0) {
+                $data['flag'] = 1;
+            } else {
+
+                $data['flag'] = 0;
+            }
+            $Obalance = OpeningBalance::create($data);
+            return redirect()->back()->with('message', 'Opening Balance Added Successfully');
+        }
     }
 
     // Monthly blance 

@@ -111,19 +111,23 @@
                             <!-- /.card-header -->
                             @if (isset($data) && !empty($data))
                                 <div class="card-body">
-                                    <caption class="text-center m-auto mb-3"> <strong>Process for the month of @if ('1' == date('m'))January
-                                        @elseif ('2' == date('m'))February
-                                        @elseif ('3' == date('m'))March
-                                        @elseif ('4' == date('m'))April
-                                        @elseif ('5' == date('m'))May
-                                        @elseif ('6' == date('m'))June
-                                        @elseif ('7' == date('m'))July
-                                        @elseif ('8' == date('m'))August
-                                        @elseif ('9' == date('m'))September
-                                        @elseif ('10' == date('m'))October
-                                        @elseif ('11' == date('m'))November
-                                        @elseif ('12' == date('m'))December
-                                        @endif</strong></caption>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong> Total collection month of @if ('1' == date('m'))January
+                                                @elseif ('2' == date('m'))February
+                                                @elseif ('3' == date('m'))March
+                                                @elseif ('4' == date('m'))April
+                                                @elseif ('5' == date('m'))May
+                                                @elseif ('6' == date('m'))June
+                                                @elseif ('7' == date('m'))July
+                                                @elseif ('8' == date('m'))August
+                                                @elseif ('9' == date('m'))September
+                                                @elseif ('10' == date('m'))October
+                                                @elseif ('11' == date('m'))November
+                                                @elseif ('12' == date('m'))December
+                                                @endif </strong>
+                                        </div>
+                                    </div>
                                     <table id="dataTable" class="table table-bordered table-striped mt-3">
                                         
                                         <thead>

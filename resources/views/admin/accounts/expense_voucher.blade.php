@@ -17,7 +17,7 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-lg-12" style="border: 1px solid #ddd">
-                    <form action="{{ route('income.collection.all') }}" method="post">
+                    <form action="{{ route('account.expense.all') }}" method="post">
                       @csrf
                       <div class="row my-4">
                         <div class="col-lg-3">
@@ -100,7 +100,7 @@
                     <div class="card-header">
                       <div class="row">
                         <div class="col-9">
-                          <strong> Total collection month of @if ($months->month == 1)
+                          <strong> Total expenses month of @if ($months->month == 1)
                               January
                             @elseif ($months->month == 2)
                               February
@@ -138,32 +138,42 @@
                     <thead>
                       <tr>
                         <th style="width: 8%">SL</th>
-                        <th style="width: 15%">User Name</th>
+                        <th style="width: 15%">Expense</th>
                         <th style="width: 15%" class="text-right">Amount</th>
-                        <th style="width: 15%" class="text-center">Status</th>
+                        {{-- <th style="width: 15%" class="text-center">Status</th> --}}
                         <th style="width: 15%" class="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
 
                       @foreach ($data as $key => $item)
+                      @php
+                      $data = DB::table('categories')
+                          ->where('id', $item->cat_id)
+                          ->first();
+                      $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                          ->where('month', $item->month)
+                          ->where('year', $item->year)
+                          ->groupBy('cat_id')
+                          ->sum('amount');
+                    @endphp
                         <tr>
                           <td>{{ $key + 1 }}</td>
-                          <td>{{ $item->user_name }}</td>
+                          <td>{{ $data->name }}</td>
                           <td class="text-right">
-                            @if ($item->paid > 0)
-                              {{ $item->paid }}
+                            @if ($amount > 0)
+                              {{ $amount }}
                             @else
                               00
                             @endif
                           </td>
-                          <td class="text-center">
+                          {{-- <td class="text-center">
                             @if ($item->status == 1)
                               <span class="badge badge-primary">Paid</span>
                             @else
                               <span class="badge badge-danger">UnPaid</span>
                             @endif
-                          </td>
+                          </td> --}}
                           <td class="text-center"><a href="#" class="btn btn-sm btn-info">Voucher</a></td>
                         </tr>
                       @endforeach

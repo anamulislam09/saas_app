@@ -18,10 +18,8 @@ class ExpDetailController extends Controller
     {
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
-        $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->orderBy('id', 'DESC')->get();
-        // $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
-        // dd($expDetails);
-        return view('admin.expense.exp_details.index', compact('expDetails'));
+        $expSummary = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('cat_id')->get();
+        return view('admin.expense.exp_details.expense_summary', compact('expSummary'));
     }
 
     /**

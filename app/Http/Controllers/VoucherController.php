@@ -2,11 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exp_detail;
+use App\Models\Income;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VoucherController extends Controller
 {
-    public function Index(){
+    public function Index()
+    {   //show voucher page
         return view('admin.income.collection_voucher');
     }
+
+    public function CollectionAll(Request $request)
+    { // show collection 
+        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+            $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            //    dd($month->month);
+            return view('admin.income.collection_voucher', compact('data', 'months'));
+        }
+    }
+
+    public function ExpenseIndex()
+    {   //show voucher page
+        return view('admin.accounts.expense_voucher');
+    }
+
+    public function ExpenseAll(Request $request)
+    { // show collection 
+        $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
+            $months = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->first();
+            //    dd($month->month);
+            return view('admin.accounts.expense_voucher', compact('data', 'months'));
+        }
+    }
 }
+

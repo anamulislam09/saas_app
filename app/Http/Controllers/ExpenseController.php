@@ -19,7 +19,7 @@ class ExpenseController extends Controller
         $year = Carbon::now()->year;
         $expense = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->orderBy('id', 'DESC')->get();
 
-        return view('admin.expense.expense.index', compact('expense'));
+        return view('admin.accounts.ladger_account', compact('expense'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ExpenseController extends Controller
                 Expense::create($data);
             }
 
-            return redirect()->route('expenses.index')->with('message', 'Successfully Creted');
+            return redirect()->back()->with('message', 'MOnth close successfully');
         }
     }
 

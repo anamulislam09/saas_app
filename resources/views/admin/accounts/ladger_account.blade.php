@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Expenses</h3>
+                                        <h3 class="card-title">Ladger Account</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
                                         <a href="{{ route('expense_process.store') }}"
