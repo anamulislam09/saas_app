@@ -19,20 +19,24 @@
                   <div class="col-lg-8 col-sm-8 ">
                     <h3 class="card-title pt-4 pb-4">Create New Flat</h3>
                   </div>
-                  @if (isset($flat) && !empty($flat))
+
+                  
+                  @if (isset($flat) && count($flat))
                     <div class="col-lg-4 col-sm-4" style="border: 1px solid #ddd">
                       @php
-                        $flat = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
+                        $no_flat = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
+                        $no_floor = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->max('floor_no');
                         $data = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->first();
-                        $total_income = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
 
                       @endphp
                       <ul>
-                        <li>No of Flat:{{$flat}} </li>
+                        <li>No of Flat:{{$no_flat}} </li>
+                        <li>No of Floor:{{$no_floor}} </li>
                         <li>Service Charge: {{$data->amount}} tk</li>
-                        <li>Created date: </li>
+                        <li>Created date:  <span style="font-size: 16px"> ({{ date('d F , Y'), strtotime($data->review_date) }})</span></li>
                       </ul>
                     </div>
+                    @else
                   @endif
                 </div>
               </div>

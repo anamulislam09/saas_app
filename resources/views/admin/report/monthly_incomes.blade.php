@@ -75,7 +75,7 @@
                                                     December
                                                 @endif
                                                 </td>
-                                                <td>{{ $item->user_name }}</td>
+                                                <td>{{ $item->flat_name }}</td>
                                                 <td class="text-right">
                                                     @if ( @empty($item->paid ))
                                                         00

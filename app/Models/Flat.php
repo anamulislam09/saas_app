@@ -16,9 +16,8 @@ class Flat extends Model
         'charge',
         'amount',
         'status',
+        'create_date',
+        'create_month',
+        'create_year',
     ];
-    
-
-
-
 }

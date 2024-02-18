@@ -149,7 +149,7 @@
                                                     <input type="hidden" name="user_id" value="{{ $item->user_id }}">
                                                     <tr>
                                                         <td>{{ $key+1 }}</td>
-                                                        <td>{{ $item->user_name }}</td>
+                                                        <td>{{ $item->flat_name }}</td>
                                                         <td>{{ $item->charge }}</td>
                                                         <td class="text-right">{{ $item->amount }}</td>
                                                         {{-- <td>{{ $item->due }}</td> --}}

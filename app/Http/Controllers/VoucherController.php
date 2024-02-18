@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exp_detail;
 use App\Models\Exp_process;
 use App\Models\Income;
+use App\Models\MonthlyBlance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,8 @@ class VoucherController extends Controller
             $data = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
             $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             //    dd($month->month);
-            return view('admin.income.collection_voucher', compact('data', 'months'));
+            // return view('admin.income.collection_voucher', compact('data', 'months'));
+            return redirect()->back()->with(['data'=>$data,'months'=>$months]);
         }
     }
 
@@ -45,7 +47,8 @@ class VoucherController extends Controller
             $data = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
             $months = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->first();
             //    dd($month->month);
-            return view('admin.accounts.expense_voucher', compact('data', 'months'));
+            // return view('admin.accounts.expense_voucher', compact('data', 'months'));
+            return redirect()->back()->with(['data'=>$data,'months'=>$months]);
         }
     }
 
@@ -54,9 +57,9 @@ class VoucherController extends Controller
     {
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
-        $total_exp = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('total');
-        $total_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('paid');
-        return view('admin.accounts.balance_sheet', compact('total_exp', 'total_income'));
+        $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();
+        // $total_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('paid');
+        return view('admin.accounts.balance_sheet', compact('data'));
     }
 
      // Expense rreport 

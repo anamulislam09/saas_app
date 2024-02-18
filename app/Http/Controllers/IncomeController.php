@@ -30,7 +30,7 @@ class IncomeController extends Controller
             return redirect()->back()->with('message', 'Flat not found!');  // User has no exist
         } else {
             $month = Carbon::now()->month;
-            $year = Carbon::now()->year;
+            $year = Carbon::now()->year; 
             // User has exist
             if ($request->month > $month || $request->year > $year)  {
                 return redirect()->back()->with('message', "OPS! It is not possible to add data for advance month. Please select the current month or year.");
@@ -55,7 +55,7 @@ class IncomeController extends Controller
                                 'due' => $flats[$i]->amount,
                             ]);
                         }
-                        return redirect()->back()->with('message', 'Service charge 1 added successfully');
+                        return redirect()->back()->with('message', 'Service charge added successfully');
                     }
                 } elseif(($month - 1 == $request->month) || ($year != $request->year)) {
                     return redirect()->back()->with('message', "PLS, Select current year.");
@@ -91,7 +91,7 @@ class IncomeController extends Controller
                             }
 
                             if ($income) {
-                                return redirect()->back()->with('message', 'Service charge2 added successfully');
+                                return redirect()->back()->with('message', 'Service charge added successfully');
                             } else {
                                 return redirect()->back()->with('message', 'something went wrong');
                             }
@@ -113,7 +113,7 @@ class IncomeController extends Controller
                                     'due' => $flats[$i]->amount,
                                 ]);
                             }
-                            return redirect()->back()->with('message', 'Service charge3 added successfully');
+                            return redirect()->back()->with('message', 'Service charge added successfully');
                         }
                     }
                 }
@@ -134,11 +134,11 @@ class IncomeController extends Controller
                             $flats = Income::where('month', $month - 1)->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
 
                             for ($i = 0; $i < count($flats); $i++) {
-                                $previousMonthData = Income::where('month', $month - 1)->where('year', $previousDate[0])->where('user_id', $flats[$i]->user_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                                $previousMonthData = Income::where('month', $month - 1)->where('year', $previousDate[0])->where('flat_id', $flats[$i]->flat_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
                                 Income::insert([
                                     'month' => $month,
                                     'year' => $year,
-                                    'flat_id' => $flats[$i]->flat_unique_id,
+                                    'flat_id' => $flats[$i]->flat_id,
                                     'customer_id' => $flats[$i]->customer_id,
                                     'auth_id' => Auth::guard('admin')->user()->id,
                                     'flat_name' => $flats[$i]->flat_name,
@@ -148,7 +148,7 @@ class IncomeController extends Controller
                                 ]);
                             }
                             // dd($previousMonthData);
-                            return redirect()->back()->with('message', 'Service charged4 added successfully');
+                            return redirect()->back()->with('message', 'Service charged added successfully');
                         } else {
                             $flats = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
                             $month = $request->month;
@@ -167,7 +167,7 @@ class IncomeController extends Controller
                                     'due' => $flats[$i]->amount,
                                 ]);
                             }
-                            return redirect()->back()->with('message', 'Service5 charge5 added successfully');
+                            return redirect()->back()->with('message', 'Service5 charge added successfully');
                         }
                     }
                 }
@@ -193,20 +193,20 @@ class IncomeController extends Controller
     {
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
-        $user_id = $request->user_id;
+        $flat_id = $request->flat_id;
         $paid = $request->paid;
-        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
+        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->first();
 
         if ($paid > $data->due) {
             return redirect()->back()->with('message', 'Something went wrong!');
         } else {
-            $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->first();
+            $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->first();
 
             $item['paid'] = $paid;
             $item['due'] = $data->due - $paid;
             $item['status'] = 1;
 
-            Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('user_id', $user_id)->update($item);
+            Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->update($item);
             return redirect()->route('income.collection')->with('message', 'Collection successful');
         }
     }

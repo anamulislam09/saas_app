@@ -108,11 +108,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //     report route start here 
     // Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
     Route::get('/expenses/month', [ExpDetailController::class, 'MonthlyExpense'])->name('expenses.month');
-    Route::get('/expense-process/store', [ExpProcessController::class, 'Store'])->name('expense_process.store');
 
     // account route start here 
     Route::get('/ledger-posting', [ExpenseController::class, 'Index'])->name('ledgerPosting.index');
     Route::get('/ledger-posting/store', [ExpProcessController::class, 'Store'])->name('ledger-posting.store');
+    // Route::get('/expense-process/store', [ExpProcessController::class, 'Store'])->name('expense_process.store');
     Route::get('/opening-balance/create', [BlanceController::class, 'OpeningBalance'])->name('opening.balance.create');
     Route::post('/opening-balance/store', [BlanceController::class, 'OpeningBalanceStore'])->name('opening.balance.store');
     // account route ends here 

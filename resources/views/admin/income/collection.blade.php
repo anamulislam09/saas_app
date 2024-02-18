@@ -159,17 +159,17 @@
 
                                                     $previousMonthData = App\Models\Income::where('month', $item->month - 1)
                                                         ->where('year', $previousDate[0])
-                                                        ->where('user_id', $item->user_id)
+                                                        ->where('flat_id', $item->flat_id)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->first();
                                                 @endphp
 
                                                 <form action="{{ route('income.collection.store') }}" method="POST">
                                                     @csrf
-                                                    <input type="hidden" name="user_id" value="{{ $item->user_id }}">
+                                                    <input type="hidden" name="flat_id" value="{{ $item->flat_id }}">
                                                     <tr>
                                                         <td>{{ $key + 1 }}</td>
-                                                        <td>{{ $item->user_name }}</td>
+                                                        <td>{{ $item->flat_name }}</td>
                                                         <td>{{ $item->charge }}</td>
                                                         <td>{{ $item->amount }}</td>
                                                         @if (!$previousMonthData)

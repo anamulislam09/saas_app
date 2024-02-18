@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('charge')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->string('create_date')->nullable();
+            $table->string('create_month')->nullable();
+            $table->integer('create_year')->nullable();
             $table->timestamps();
         });
     }

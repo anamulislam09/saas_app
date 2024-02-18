@@ -39,7 +39,7 @@ class FlatController extends Controller
             $unit = $request->unit;
             $sequence = $request->sequence;
             $amount = $request->amount;
-            
+
             $flatChar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
             //  $flats = $floor;
 
@@ -60,7 +60,7 @@ class FlatController extends Controller
                     // dd($data);
                     $flatmaster = Flatmaster::create($data);
                     // dd($flatmaster);
-                    
+
 
                     if ($flatmaster) {
                         $Fid = UniqueIdGenerator::generate(['table' => 'flatids', 'length' => 3]);
@@ -89,6 +89,10 @@ class FlatController extends Controller
                     $flat['floor_no'] = $flatmaster->floor_no;
                     $flat['charge'] = "Service Charge";
                     $flat['amount'] = $flatmaster->amount;
+                    $flat['create_date'] = date('Y-m-Y');
+                    $flat['create_month'] = date('F');
+                    $flat['create_year'] = date('Y');
+
                     // dd($flatmaster->amount);
                     Flat::create($flat);
                 }
@@ -121,31 +125,11 @@ class FlatController extends Controller
         $data['floor_no'] = $request->floor_no;
         $data['charge'] = "Service Charge";
         $data['amount'] = $flat->amount;
-       $flat = Flat::create($data);
+        $flat['create_date'] = date('Y-m-Y');
+        $flat['create_month'] = date('F');
+        $flat['create_year'] = date('Y');
 
-    //     if($flat){
-    //     // $users = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
-    //     $month = Carbon::now()->month;
-    //     $year = Carbon::now()->year;
-  
-    //     // $flat_unique_id = $request->flat_unique_id;
-    //     // $customer_id = $request->customer_id;
-    //     // $amount = $request->amount;
-    //     // $charge = $request->charge;
-  
-    //     // for ($i = 0; $i < count($users); $i++) {
-    //         Income::insert([
-    //             'month' => $month,
-    //             'year' => $year,
-    //             'customer_id' => Auth::guard('admin')->user()->id,
-    //             'auth_id' => Auth::guard('admin')->user()->id,
-    //             'charge' => "Service Charge",
-    //             'amount' => $flat->amount,
-    //             'due' => $flat->amount,
-    //         ]);
-    //     // }
-    //   }
-
+        $flat = Flat::create($data);
         return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
     }
     // flat SingleStore ends here

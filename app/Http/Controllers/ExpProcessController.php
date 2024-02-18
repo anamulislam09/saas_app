@@ -63,21 +63,26 @@ class ExpProcessController extends Controller
                     ->SUM('paid');
 
                 // oprning blance
-                $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+                // $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
 
                 $openingBlance = DB::table('monthly_blances')
-                    ->where('month', $month)
+                    ->where('month', $month - 1)
                     ->where('year', $year)
                     ->where('customer_id', Auth::guard('admin')->user()->id)
                     ->first();
 
                 // oprning blance 
+                $manualOpeningBlance = DB::table('opening_balances')
+                    ->where('month', $month)
+                    ->where('year', $year)
+                    ->where('customer_id', Auth::guard('admin')->user()->id)
+                    ->first();
 
-                if (!$openingBlance) {
+                if (!$openingBlance && !$manualOpeningBlance) {
                     $balance = $income - $month_exp->total;
 
-                    $data['year'] = $month_exp->year;
-                    $data['month'] = $month_exp->month;
+                    $data['year'] = $year;
+                    $data['month'] = $month;
                     $data['total_income'] = $income;
                     $data['total_expense'] = $month_exp->total;
                     $data['amount'] = $balance;
@@ -89,51 +94,112 @@ class ExpProcessController extends Controller
 
                         $data['flag'] = 0;
                     }
-                    $exp_process = MonthlyBlance::create($data);
-                } else {
-                    if ($openingBlance->flag == 1) {
-                        $balance = ($openingBlance->amount + $income) - $month_exp->total;
+                    $data = MonthlyBlance::create($data);
+                    if ($data) {
+                        return redirect()->back()->with('message', 'Expense store successfully');
+                    } else {
+                        return redirect()->back()->with('message', 'Something went wrong!');
+                    }
+                } elseif (!$openingBlance && $manualOpeningBlance) {
+                    if ($manualOpeningBlance->flag == 1) {
+                        $balance = ($manualOpeningBlance->profit + $income) - $month_exp->total;
 
-                        $data['year'] = $income->year;
-                        $data['month'] = $income->month;
-                        $data['total_income'] = $income;
+                        $data['year'] = $year;
+                        $data['month'] = $month;
+                        $data['total_income'] = $manualOpeningBlance->profit + $income;
                         $data['total_expense'] = $month_exp->total;
                         $data['amount'] = $balance;
-                        $data['customer_id'] = $income->customer_id;
-                        $data['auth_id'] = $income->auth_id;
-                        if ($balance >= 0) {
-                            $data['flag'] = 1;
-                        } else {
-
-                            $data['flag'] = 0; 
-                        }
-                        $exp_process = MonthlyBlance::create($data);
-                    } elseif ($openingBlance->flag == 0) {
-                        $balance = ($income - $openingBlance->amount) - $month_exp->total;
-
-                        $data['year'] = $income->year;
-                        $data['month'] = $income->month;
-                        $data['total_income'] = $income;
-                        $data['total_expense'] = $month_exp->total;
-                        $data['amount'] = $balance;
-                        $data['customer_id'] = $income->customer_id;
-                        $data['auth_id'] = $income->auth_id;
+                        $data['customer_id'] = $month_exp->customer_id;
+                        $data['auth_id'] = $month_exp->auth_id;
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
 
                             $data['flag'] = 0;
                         }
-                        $exp_process = MonthlyBlance::create($data);
+                        $data = MonthlyBlance::create($data);
+                        if ($data) {
+                            return redirect()->back()->with('message', 'Expense store successfully');
+                        } else {
+                            return redirect()->back()->with('message', 'Something went wrong!');
+                        }
+                    } elseif ($manualOpeningBlance->flag == 0) {
+                        $balance = ($income - $manualOpeningBlance->loss) - $month_exp->total;
+
+                        $data['year'] = $year;
+                        $data['month'] = $month;
+                        $data['total_income'] = $income;
+                        $data['total_expense'] = $month_exp->total + $manualOpeningBlance->loss;
+                        $data['amount'] = $balance;
+                        $data['customer_id'] = $month_exp->customer_id;
+                        $data['auth_id'] = $month_exp->auth_id;
+                        if ($balance >= 0) {
+                            $data['flag'] = 1;
+                        } else {
+
+                            $data['flag'] = 0;
+                        }
+                        $data = MonthlyBlance::create($data);
+                        if ($data) {
+                            return redirect()->back()->with('message', 'Expense store successfully');
+                        } else {
+                            return redirect()->back()->with('message', 'Something went wrong!');
+                        }
+                    }
+                } else {
+                    if ($openingBlance->flag == 1) {
+                        $balance = ($openingBlance->amount + $income) - $month_exp->total;
+
+                        $data['year'] = $year;
+                        $data['month'] = $month;
+                        $data['total_income'] = $openingBlance->amount + $income;
+                        $data['total_expense'] = $month_exp->total;
+                        $data['amount'] = $balance;
+                        $data['customer_id'] = $month_exp->customer_id;
+                        $data['auth_id'] = $month_exp->auth_id;
+                        if ($balance >= 0) {
+                            $data['flag'] = 1;
+                        } else {
+
+                            $data['flag'] = 0;
+                        }
+                        $data = MonthlyBlance::create($data);
+                        if ($data) {
+                            return redirect()->back()->with('message', 'Expense store successfully');
+                        } else {
+                            return redirect()->back()->with('message', 'Something went wrong!');
+                        }
+                    } elseif ($openingBlance->flag == 0) {
+                        $balance = ($income - $openingBlance->amount) - $month_exp->total;
+
+                        $data['year'] = $year;
+                        $data['month'] = $month;
+                        $data['total_income'] = $income;
+                        $data['total_expense'] = $month_exp->total + $openingBlance->amount;
+                        $data['amount'] = $balance;
+                        $data['customer_id'] = $month_exp->customer_id;
+                        $data['auth_id'] = $month_exp->auth_id;
+                        if ($balance >= 0) {
+                            $data['flag'] = 1;
+                        } else {
+
+                            $data['flag'] = 0;
+                        }
+                        $data = MonthlyBlance::create($data);
+                        if ($data) {
+                            return redirect()->back()->with('message', 'Expense store successfully');
+                        } else {
+                            return redirect()->back()->with('message', 'Something went wrong!');
+                        }
                     }
                 }
             }
 
-            if ($exp_process) {
-                return redirect()->back()->with('message', 'Expense store successfully');
-            } else {
-                return redirect()->back()->with('message', 'Something went wrong!');
-            }
+            // if ($exp_process) {
+            //     return redirect()->back()->with('message', 'Expense store successfully');
+            // } else {
+            //     return redirect()->back()->with('message', 'Something went wrong!');
+            // }
         }
     }
 

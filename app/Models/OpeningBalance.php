@@ -13,11 +13,9 @@ class OpeningBalance extends Model
         'auth_id',
         'year',
         'month',
-        'income',
-        'expense',
+        'profit',
+        'loss',
         'entry_datetime',
-        'balance',
         'flag',
-       
     ];
 }

@@ -108,7 +108,7 @@
                                                         December
                                                     @endif
                                                 </td>
-                                                <td>{{ $item->user_name }}</td>
+                                                <td>{{ $item->flat_name }}</td>
                                                 <td>{{ $item->charge }}</td>
                                                 <td>{{ $item->amount }}</td>
                                                 {{-- @if (!$previousMonthData)

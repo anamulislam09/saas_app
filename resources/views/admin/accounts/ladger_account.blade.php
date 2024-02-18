@@ -15,7 +15,7 @@
                                         <h3 class="card-title">Ladger Account</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('expense_process.store') }}"
+                                        <a href="{{ route('ledger-posting.store') }}"
                                             class="btn btn-sm btn-outline-primary">Ledger Posting</a>
                                     </div>
                                 </div>
@@ -32,14 +32,14 @@
                                             <th>SubTotal</th>
                                             <th>Total Cost</th>
                                             <th>Income</th>
-                                            <th>Blance</th>
+                                            <th>Balance</th>
                                     </thead>
                                     @php
 
                                         $month = Carbon\Carbon::now()->month;
                                         $year = Carbon\Carbon::now()->year;
 
-                                        $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)
+                                        $total_exp = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)
                                             ->where('month', $month)
                                             ->where('year', $year)
                                             ->groupBy('month')
@@ -80,8 +80,8 @@
                                     @endphp
                                     <tbody>
                                         <tr>
-                                            <td colspan="6" class="text-center"> <strong>Opening
-                                                    Blance</strong></td>
+                                            <td colspan="6" class=""> <strong>Opening
+                                                    Balance</strong></td>
                                             @if ($month == 1)
                                                 @if (!$lastYopeningBlance)
                                                     <td><strong>000</strong></td>
@@ -166,43 +166,43 @@
                                             </tr>
                                         @endif
                                         <tr>
-                                            <td colspan="5" class="text-center"><strong>Total cost of this month
+                                            <td colspan="5"><strong>Total cost of this month
                                                 </strong></td>
-                                            <td><strong>{{ $total }}</strong></td>
+                                            <td><strong>{{ $total_exp }}</strong></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="6" class="text-center"><strong>Total income of this
+                                            <td colspan="6" ><strong>Total income of this
                                                     month</strong></td>
                                             <td><strong>{{ $income }}</strong></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="7" class="text-center"><strong>Blance of this
+                                            <td colspan="7" ><strong>Balance of this
                                                     month
                                                 </strong></td>
                                             <td>
                                                 @if (!$openingBlance && !$manualOpeningBlance)
                                                     <strong
-                                                        style="border-right:1px solid #ddd">{{ $income - $total }}</strong>
+                                                        style="border-right:1px solid #ddd">{{ $income - $total_exp }}</strong>
                                                 @elseif (!$openingBlance && $manualOpeningBlance)
                                                     {{-- <strong
                                                         style="border-right:1px solid #ddd">{{ $income - $total }}</strong> --}}
                                                     @if ($manualOpeningBlance->flag == 1)
                                                         <strong
-                                                            style="border-right:1px solid #ddd">{{ $manualOpeningBlance->profit + $income - $total }}</strong>
+                                                            style="border-right:1px solid #ddd">{{ $manualOpeningBlance->profit + $income - $total_exp }}</strong>
                                                     @else
                                                         <strong
-                                                            style="border-right:1px solid #ddd">{{ $income - $manualOpeningBlance->loss - $total }}</strong>
+                                                            style="border-right:1px solid #ddd">{{ $income - $manualOpeningBlance->loss - $total_exp }}</strong>
                                                     @endif
-                                                @else
+                                                @elseif($openingBlance)
                                                     @if ($openingBlance->flag == 1)
                                                         <strong
-                                                            style="border-right:1px solid #ddd">{{ $openingBlance->amount + $income - $total }}</strong>
+                                                            style="border-right:1px solid #ddd"> {{ ($openingBlance->amount + $income) - $total_exp }}</strong>
                                                     @else
                                                         <strong
-                                                            style="border-right:1px solid #ddd">{{ $income - $openingBlance->amount - $total }}</strong>
+                                                            style="border-right:1px solid #ddd"> {{ $income - $openingBlance->amount - $total_exp }}</strong>
                                                     @endif
                                                 @endif
                                             </td>

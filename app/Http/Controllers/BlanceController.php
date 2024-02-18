@@ -49,7 +49,7 @@ class BlanceController extends Controller
             } else {
                 $data['flag'] = 0;
             }
-            // dd($data);
+ 
              OpeningBalance::create($data);
             return redirect()->back()->with('message', 'Opening Balance Added Successfully');
         }
