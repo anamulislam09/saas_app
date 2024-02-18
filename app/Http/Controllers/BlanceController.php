@@ -10,6 +10,7 @@ use App\Models\MonthlyBlance;
 use App\Models\OpeningBalance;
 use App\Models\User;
 use App\Models\YearlyBlance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,32 +26,31 @@ class BlanceController extends Controller
     // OpeningBalanceStore
     public function OpeningBalanceStore(Request $request)
     {
+        // dd($request);
         $isExist = OpeningBalance::where('customer_id', Auth::guard('admin')->user()->id)->exists();
         if ($isExist) {
             return redirect()->back()->with('message', 'You have already created opening balance.');
         } else {
-           $balance = $request->income - $request->expense;
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+            $profit = $request->profit;
+            $loss = $request->loss;
 
             $data['customer_id'] = Auth::guard('admin')->user()->id;
             $data['auth_id'] = Auth::guard('admin')->user()->id;
-            $data['year'] = $request->year;
-            $data['month'] = $request->month;
-            $data['income'] = $request->income;
-            $data['expense'] = $request->expense;
-            if($request->income > $request->expense){
-                $data['balance']  = $request->income - $request->expense;
-            }else{
-                $data['balance'] = $request->expense - $request->income;
-            }
-
+            $data['year'] = $year;
+            $data['month'] = $month;
+            $data['profit'] = $profit;
+            $data['loss'] = $loss;
             $data['entry_datetime'] = date('Y-m-d H:i:s');
-            if ($balance >= 0) {
+
+            if ($request->profit > 0) {
                 $data['flag'] = 1;
             } else {
-
                 $data['flag'] = 0;
             }
-            $Obalance = OpeningBalance::create($data);
+            // dd($data);
+             OpeningBalance::create($data);
             return redirect()->back()->with('message', 'Opening Balance Added Successfully');
         }
     }
@@ -84,5 +84,5 @@ class BlanceController extends Controller
     //     return view('admin.report.expenses', compact('expDetails'));
     // }
 
-   
+
 }

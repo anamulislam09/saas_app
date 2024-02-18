@@ -205,6 +205,14 @@
                                     <p>Collection Voucher</p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="#"
+                                    class="nav-link">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Others Income</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     {{-- Income Management start here --}}

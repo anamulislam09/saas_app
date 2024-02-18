@@ -18,9 +18,8 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->integer('auth_id');
             $table->date('entry_datetime');
-            $table->bigInteger('income')->nullable();
-            $table->bigInteger('expense')->nullable();
-            $table->bigInteger('balance')->nullable();
+            $table->bigInteger('profit')->nullable();
+            $table->bigInteger('loss')->nullable();
             $table->integer('flag');
             $table->timestamps();
         });

@@ -55,7 +55,7 @@
                                             ->first();
 
                                         $manualOpeningBlance = DB::table('opening_balances')
-                                            ->where('month', $month - 1)
+                                            ->where('month', $month)
                                             ->where('year', $year)
                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                             ->first();
@@ -98,9 +98,9 @@
                                                 @elseif (!$openingBlance && $manualOpeningBlance)
                                                     {{-- <td><strong>000</strong></td> --}}
                                                     @if ($manualOpeningBlance->flag == 1)
-                                                        <td><strong>{{ $manualOpeningBlance->balance }}</strong></td>
+                                                        <td><strong>{{ $manualOpeningBlance->profit }}</strong></td>
                                                     @else
-                                                        <td><strong>-{{ $manualOpeningBlance->balance }}</strong></td>
+                                                        <td><strong>-{{ $manualOpeningBlance->loss }}</strong></td>
                                                     @endif
                                                 @else
                                                     @if ($openingBlance->flag == 1)
@@ -191,10 +191,10 @@
                                                         style="border-right:1px solid #ddd">{{ $income - $total }}</strong> --}}
                                                     @if ($manualOpeningBlance->flag == 1)
                                                         <strong
-                                                            style="border-right:1px solid #ddd">{{ $manualOpeningBlance->balance + $income - $total }}</strong>
+                                                            style="border-right:1px solid #ddd">{{ $manualOpeningBlance->profit + $income - $total }}</strong>
                                                     @else
                                                         <strong
-                                                            style="border-right:1px solid #ddd">{{ $income - $manualOpeningBlance->balance - $total }}</strong>
+                                                            style="border-right:1px solid #ddd">{{ $income - $manualOpeningBlance->loss - $total }}</strong>
                                                     @endif
                                                 @else
                                                     @if ($openingBlance->flag == 1)

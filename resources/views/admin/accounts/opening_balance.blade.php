@@ -28,49 +28,15 @@
                                     <div class="col-8 m-auto border p-5" style="background: #ddd">
                                         <form action="{{ route('opening.balance.store') }}" method="POST">
                                             @csrf
-                                            <div class="row">
-                                                <div class="col-lg-6 form-group">
-                                                    <label for="" class="col-form-label">Select Year</label>
-                                                    <select name="year" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Year</option>
-                                                        <option value="2023">Year 2023</option>
-                                                        <option value="2024">Year 2024</option>
-                                                        <option value="2025">Year 2025</option>
-                                                        <option value="2026">Year 2026</option>
-                                                        <option value="2027">Year 2027</option>
-                                                        <option value="2028">Year 2028</option>
-                                                        <option value="2029">Year 2029</option>
-                                                        <option value="2030">Year 2030</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-6 form-group">
-                                                    <label for="" class="col-form-label">Select Month</label>
-                                                    <select name="month" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Month </option>
-                                                        <option value="1">January</option>
-                                                        <option value="2">February</option>
-                                                        <option value="3">March</option>
-                                                        <option value="4">April</option>
-                                                        <option value="5">May</option>
-                                                        <option value="6">June</option>
-                                                        <option value="7">July</option>
-                                                        <option value="8">August</option>
-                                                        <option value="9">September</option>
-                                                        <option value="10">October</option>
-                                                        <option value="11">November</option>
-                                                        <option value="12">December</option>
-                                                    </select>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="unit" class="">Amount of opening profit :</label>
+                                                <input type="text" class="form-control" name="profit"
+                                                    placeholder="Enter Amount" >
                                             </div>
                                             <div class="form-group">
-                                                <label for="unit" class="">Amount of opening income :</label>
-                                                <input type="text" class="form-control" value="" name="income"
-                                                    placeholder="Enter Amount" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="unit" class="">Amount of opening expense :</label>
-                                                <input type="text" class="form-control" value="" name="expense"
-                                                    placeholder="Enter amount" required>
+                                                <label for="unit" class="">Amount of opening loss :</label>
+                                                <input type="text" class="form-control" name="loss"
+                                                    placeholder="Enter amount">
                                             </div>
                                             <div class="">
                                                 <button type="submit" class="btn btn-sm btn-primary"

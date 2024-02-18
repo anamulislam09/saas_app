@@ -1,77 +1,94 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
-    <div class="content-wrapper">
-        <!-- Main content -->
-        <section class="content mt-3">
-            <div class="container-fluid">
+  <style>
+    ul li {
+      list-style: none;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content mt-3">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Create New Flat</h3>
-                                    </div>
-                                    {{-- <div class="col-lg-2 col-sm-12">
-                                        <a href="{{route('flat.index')}}" class="btn btn-sm btn-outline-primary">All Flats</a>
-                                    </div> --}}
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <!-- /.card-header -->
-                               <div class="row py-4">
-                                <div class="col-10 m-auto border p-5" style="background: #ddd">
-                                    <form action="{{ route('flat.store') }}" method="POST">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class=" form-group">
-                                                    <label for="floor" class="">No of floor :</label>
-                                                    <input type="text" class="form-control" value="" name="floor"
-                                                        id="floor" placeholder="Enter Number Of Floor" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="unit" class="">Unit per floor :</label>
-                                                    <input type="text" class="form-control" value="" name="unit"
-                                                        id="unit" placeholder="Enter Number Of Unit Per Floor" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                            <div class="form-group">
-                                                <label for="unit" class="">Flat sequence :</label>
-                                                    <select name="sequence" id="" class="form-control" required>
-                                                        <option value="" selected disabled>Select Once</option>
-                                                        <option value="1">A1,A2,A3</option>
-                                                        <option value="2">A1,B1,C1</option>
-                                                        <option value="3">1A,2A,3A</option>
-                                                    </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="unit" class="">Amount of service charge :</label>
-                                                <input type="text" class="form-control" value="" name="amount" placeholder="Enter Service charge" required>
-                                            </div>
-                                            <div class="">
-                                                <button type="submit" class="btn btn-sm btn-primary"
-                                                    id="generate">Generate</button>
-                                            </div>
-                                    </form>
-                                </div>
-                               </div>
-                            </div>
-                        </div>
+                  <div class="col-lg-8 col-sm-8 ">
+                    <h3 class="card-title pt-4 pb-4">Create New Flat</h3>
+                  </div>
+                  @if (isset($flat) && !empty($flat))
+                    <div class="col-lg-4 col-sm-4" style="border: 1px solid #ddd">
+                      @php
+                        $flat = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
+                        $data = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->first();
+                        $total_income = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
+
+                      @endphp
+                      <ul>
+                        <li>No of Flat:{{$flat}} </li>
+                        <li>Service Charge: {{$data->amount}} tk</li>
+                        <li>Created date: </li>
+                      </ul>
                     </div>
+                  @endif
                 </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- /.card-header -->
+                <div class="row py-4">
+                  <div class="col-10 m-auto border p-5" style="background: #ddd">
+                    <form action="{{ route('flat.store') }}" method="POST">
+                      @csrf
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class=" form-group">
+                            <label for="floor" class="">No of floor :</label>
+                            <input type="text" class="form-control" value="" name="floor" id="floor"
+                              placeholder="Enter Number Of Floor" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="unit" class="">Unit per floor :</label>
+                            <input type="text" class="form-control" value="" name="unit" id="unit"
+                              placeholder="Enter Number Of Unit Per Floor" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="unit" class="">Flat sequence :</label>
+                        <select name="sequence" id="" class="form-control" required>
+                          <option value="" selected disabled>Select Once</option>
+                          <option value="1">A1,A2,A3</option>
+                          <option value="2">A1,B1,C1</option>
+                          <option value="3">1A,2A,3A</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="unit" class="">Amount of service charge :</label>
+                        <input type="text" class="form-control" value="" name="amount"
+                          placeholder="Enter Service charge" required>
+                      </div>
+                      <div class="">
+                        <button type="submit" class="btn btn-sm btn-primary" id="generate">Generate</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
 
-    {{-- <script>
+  {{-- <script>
          $('#generate').click(function(){
                 let flat = '';
                 let id = 0;

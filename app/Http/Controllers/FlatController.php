@@ -24,7 +24,8 @@ class FlatController extends Controller
     // create method start here 
     public function Create()
     {
-        return view('admin.flat.create');
+        $flat = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
+        return view('admin.flat.create', compact('flat'));
     }
     // create method ends here 
 

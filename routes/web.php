@@ -154,7 +154,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
     //    Report route 
     Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
-    Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
+    // Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
 });
 
 /*---------------- Customer route ends here ------------------*/
