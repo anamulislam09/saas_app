@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CustomerDetail;
 use App\Models\Exp_detail;
+use App\Models\Expense;
 // use Barryvdh\DomPDF\PDF;
 use PDF;
 
@@ -15,7 +17,8 @@ class PdfGeneratorController extends Controller
 {
     public function Voucher($id){
         
-        $exp = Exp_detail::where('id', $id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $exp = Expense::where('id', $id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $exp_name = Category::where('id', $exp->cat_id)->first();
     
         $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
@@ -23,15 +26,12 @@ class PdfGeneratorController extends Controller
         $data = [
             'date' => date('m/d/Y'),
             'exp' => $exp,
+            'exp_name' => $exp_name,
             'customer' => $customer,
             'custDetails' => $custDetails,
         ];
 
-        // dd($data);
-
         $pdf = PDF::loadView('admin.expense.voucher.index', $data);
-        // dd($pdf);
-
         return $pdf-> download('sdl.pdf');
     }
 }

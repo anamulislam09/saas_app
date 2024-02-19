@@ -18,7 +18,6 @@
                                         <a href="{{ route('expense-details.index') }}"
                                             class="btn btn-sm btn-outline-primary">See All</a>
                                     </div> --}}
-
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -122,7 +121,7 @@
                                                             data-target="#editexp"><i class="fas fa-edit"></i></a>
                                                         <a href="{{ route('expense-details.delate', $item->id) }}"
                                                             class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                                                        <a href="{{ route('expense-details.delate', $item->id) }}"
+                                                        <a href="#"
                                                             class="btn btn-sm"><span class="badge badge-primary">Voucher</span></a>
                                                     </td>
                                                 </tr>

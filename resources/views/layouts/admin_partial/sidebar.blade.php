@@ -352,7 +352,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
-                                Roles & Parmission
+                                Roles & Permission
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -360,7 +360,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('all.permission') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>All Parmission</p>
+                                    <p>All Permission</p>
                                 </a>
                             </li>
                         </ul>

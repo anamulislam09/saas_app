@@ -14,7 +14,7 @@
 
         .header-section {
             width: 100%;
-            height: 200px;
+            height: 100px;
         }
 
         .logo {
@@ -32,6 +32,7 @@
             width: 35%;
             float: right;
             text-align: end;
+            
         }
 
         .header-text h1 {
@@ -46,7 +47,7 @@
 
         .status h2 {
             padding: 10px 0px;
-            background: #ddd;
+            background: #5ac1e0;
             text-align: center;
             width: 100%;
         }
@@ -105,18 +106,19 @@
             display: flex;
             justify-content: space-between;
             display: block;
-            padding: 20px 0px;
+            padding: 15px 0px;
+            /* margin-bottom: 16px */
             width: 100%;
             /* background: #fb5200; */
         }
 
         .left-text {
-            width: 60%;
+            width: 70%;
             float: left;
         }
 
         .righrightt-text {
-            width: 40%;
+            width: 30%;
             float: left;
         }
 
@@ -147,12 +149,12 @@
         </div>
         <div class="bodyInfo">
             <div class="left-text">
-                <p>Name: </p>
-                <p>Address: </p>
+                <p>Name : </p>
+                <p>Address : </p>
             </div>
             <div class="right-text">
-                <p>Voucher No: {{ rand(999, 9999) }}</p>
-                <p>{{ $date }}</p>
+                <p>Voucher No : {{ rand(999, 9999) }}</p>
+                <p>Voucher Date :{{ $date }}</p>
             </div>
         </div>
 
@@ -163,21 +165,18 @@
                         <th>SL#</th>
                         <th colspan="2">Payment Info</th>
                         <th>Amount</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td colspan="2">{{ $exp->name }}</td>
-                        <td>{{ $exp->amount }}</td>
-                        <td>paid</td>
+                        <td colspan="2">{{ $exp_name->name }}</td>
+                        <td style="text-align: center">{{ $exp->sub_total }}</td>
                     </tr>
                     <tr>
                         <td colspan="2">Payment Method :</td>
-                        <td>Total Amount</td>
-                        <td>fghfg</td>
-                        <td>Paid</td>
+                        <td style="text-align: center">Total Amount</td>
+                        <td style="text-align: center">{{ $exp->sub_total }}</td>
                     </tr>
                 </tbody>
             </table>

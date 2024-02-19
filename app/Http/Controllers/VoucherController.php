@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exp_detail;
 use App\Models\Exp_process;
+use App\Models\Expense;
 use App\Models\Income;
 use App\Models\MonthlyBlance;
 use Carbon\Carbon;
@@ -40,12 +41,12 @@ class VoucherController extends Controller
     // show collection 
     public function ExpenseAll(Request $request)
     {
-        $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->exists();
+        $isExist = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
         } else {
-            $data = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
-            $months = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->first();
+            $data = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->get();
+            $months = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
             //    dd($month->month);
             // return view('admin.accounts.expense_voucher', compact('data', 'months'));
             return redirect()->back()->with(['data'=>$data,'months'=>$months]);
