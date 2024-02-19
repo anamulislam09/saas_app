@@ -33,7 +33,7 @@
                         <li>No of Flat:{{$no_flat}} </li>
                         <li>No of Floor:{{$no_floor}} </li>
                         <li>Service Charge: {{$data->amount}} tk</li>
-                        <li>Created date:  <span style="font-size: 16px"> ({{ date('d F , Y'), strtotime($data->review_date) }})</span></li>
+                        <li>Created date:  <span style="font-size: 16px"> ({{ date($data->create_date)}} {{$data->create_month}} {{$data->create_year}})</span></li>
                       </ul>
                     </div>
                     @else

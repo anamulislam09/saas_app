@@ -89,7 +89,7 @@ class FlatController extends Controller
                     $flat['floor_no'] = $flatmaster->floor_no;
                     $flat['charge'] = "Service Charge";
                     $flat['amount'] = $flatmaster->amount;
-                    $flat['create_date'] = date('Y-m-Y');
+                    $flat['create_date'] = date('d');
                     $flat['create_month'] = date('F');
                     $flat['create_year'] = date('Y');
 

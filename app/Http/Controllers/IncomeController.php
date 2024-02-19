@@ -200,11 +200,23 @@ class IncomeController extends Controller
         if ($paid > $data->due) {
             return redirect()->back()->with('message', 'Something went wrong!');
         } else {
-            $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->first();
+
+            $previousMonthData = Income::where('month', $month - 1)
+                ->where('year', $year)
+                ->where('flat_id', $flat_id)
+                ->where('customer_id', Auth::guard('admin')->user()->id)
+                ->first();
+                $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->first();
+                $amount = $previousMonthData->due + $data->amount;
 
             $item['paid'] = $paid;
             $item['due'] = $data->due - $paid;
-            $item['status'] = 1;
+            if($amount == $paid){
+                $item['status'] = 1;
+            }else{
+                $item['status'] = 2;
+            }
+            
 
             Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->update($item);
             return redirect()->route('income.collection')->with('message', 'Collection successful');

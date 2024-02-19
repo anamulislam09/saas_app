@@ -175,7 +175,7 @@
 
                     {{-- Income Management start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('income.create') || Request::routeIs('income.collection') || Request::routeIs('income.collection.index') || Request::routeIs('income.collection.all') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('income.create') || Request::routeIs('income.collection') || Request::routeIs('income.collection.index') || Request::routeIs('others.income.create') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -207,8 +207,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#"
-                                    class="nav-link">
+                                <a href="{{route('others.income.create')}}"
+                                    class="nav-link {{ Request::routeIs('others.income.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Others Income</p>
                                 </a>

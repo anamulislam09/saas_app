@@ -1,90 +1,154 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-    <div class="content-wrapper">
-        <!-- Main content -->
-        <section class="content mt-3">
-            <div class="container-fluid">
+  <style>
+    input:focus {
+      outline: none
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content mt-3">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Yearly Expenses</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th>Year</th>
-                                            {{-- <th>Month</th> --}}
-                                            <th class="text-center">Expense</th>
-                                            <th class="text-center">Amount</th>
-                                            <th class="text-center">Created By</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($yearly_expense as $key => $item)
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->exists();
-                                                $userName = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->first();
-
-                                                $customer = DB::table('customers')
-                                                    ->where('id', $item->customer_id)
-                                                    ->exists();
-                                                // $customerName = DB::table('customers')->where('id', $item->customer_id)->first();
-
-                                                $data = DB::table('categories')
-                                                    ->where('id', $item->cat_id)
-                                                    ->first();
-
-                                                // dd($customer);
-                                                // Total amount
-                                                // $total = App\Models\Exp_detail::where('customer_id', $item->customer_id)
-                                                // ->where('month', $item->month)
-                                                //      ->sum('amount');
-
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td> {{$item->year}}</td>
-                                                <td>{{ $data->name }}</td>
-                                                <td class="text-right">{{ $item->sub_total }}</td>
-                                                @if ($user)
-                                                    <td class="text-center">{{ $userName->name }}</td>
-                                                @elseif ($customer)
-                                                    {{-- <td>{{ $customerName->name }}</td> --}}
-                                                    <td class="text-center"><span class="badge badge-success">Admin</span>
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                            {{-- @php
-                                            // $total  = '';
-                                                $total += $total+ $item->amount
-                                            @endphp --}}
-                                            @endforeach
-                                    </tbody>
-                                    {{-- <tfoot> --}}
-                                        {{-- <tr>
-                                            <td colspan="3"><strong>Total = </strong></td>
-                                            <td>{{$total}}</td>
-                                        </tr> --}}
-                                    {{-- </tfoot> --}}
-                                </table>
-                            </div>
+                  <div class="col-lg-12" style="border: 1px solid #ddd">
+                    <form action="{{ route('expensesall.year') }}" method="post">
+                      @csrf
+                      <div class="row my-4">
+                        <div class="col-lg-3">
+                          <strong><span> Yearly Expenses</span></strong>
                         </div>
-                    </div>
+                        <div class="col-lg-3">
+                          {{-- <label for="" class="col-form-label">Select Year</label> --}}
+                          <select name="year" class="form-control" id="" required>
+                            <option value="" selected disabled>Select Year</option>
+                            <option value="2023">Year 2023
+                            </option>
+                            <option value="2024">Year 2024
+                            </option>
+                            <option value="2025">Year 2025 
+                            </option>
+                            <option value="2026">Year 2026
+                            </option>
+                            <option value="2027">Year 2027
+                            </option>
+                            <option value="2028">Year 2028
+                            </option>
+                            <option value="2029">Year 2029
+                            </option>
+                            <option value="2030">Year 2030
+                            </option>
+                          </select>
+                        </div>
+           
+                        {{-- @if (Route::current()->getName() == 'income.create') --}}
+                        <div class="col-lg-2">
+                          <label for="" class="col-form-label"></label>
+                          <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+                        {{-- @else --}}
+                        {{-- @endif --}}
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                @php
+                  $yearly_expense = Session::get('yearly_expense');
+                  $year = Session::get('year');
+                @endphp
+                @if (isset($yearly_expense) && !empty($yearly_expense))
+                  {{-- @php   
+                    @foreach ($data as $key => $item)
+                    $month = Ap\Models\Income::where('month', $item->month)->where('year', $item->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                    @endforeach
+             @endphp --}}
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-9">
+                          <strong> Total expenses year of {{$year->year}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <table id="" class="table table-bordered table-striped mt-3">
+                    <thead>
+                      <tr>
+                        <th style="width: 8%">SL</th>
+                        <th style="width: 15%">Expense Head</th>
+                        <th style="width: 15%" >Amount</th>
+                        {{-- <th style="width: 15%" class="text-center">Status</th> --}}
+                        {{-- <th style="width: 15%" class="text-center">Action</th> --}}
+                      </tr>
+                    </thead>
+                    <tbody>
+
+
+
+                      @foreach ($yearly_expense as $key => $item)
+                        @php
+                          $data = DB::table('categories')
+                              ->where('id', $item->cat_id)
+                              ->first();
+                              $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $item->month)->where('year', $item->year)->sum('sub_total');
+                        @endphp
+                        <tr>
+                          <td>{{ $key + 1 }}</td>
+                          <td>{{ $data->name }}</td>
+                          <td class="text-right">
+                              {{ $item->sub_total }}
+                          </td>
+                        
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                          <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                          <td class="text-right"><strong>{{ $total }}</strong></td>
+                      </tr>
+                  </tfoot>
+                  </table>
+                @else
+                @endif
+              </div>
             </div>
-        </section>
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+     <!-- Modal -->
+     <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+
+             <div id="modal_body">
+
+             </div>
+
+         </div>
+     </div>
+ </div>
+
+
+  <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 @endsection

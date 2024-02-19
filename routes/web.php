@@ -8,6 +8,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpProcessController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\OthersIncomeController;
 use App\Http\Controllers\PdfGeneratorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Models\Category;
+use App\Models\OthersIncome;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -141,19 +143,26 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
     /*--------------- Report route start here ------------------*/
     Route::get('/expenses/month', [ReportController::class, 'MonthlyExpense'])->name('expenses.month');
+    Route::post('/expenses-all/month', [ReportController::class, 'MonthlyAllExpense'])->name('expensesall.month');
     Route::get('/expenses/yearly', [ReportController::class, 'YearlyExpense'])->name('expenses.year');
+    Route::post('/expenses-all/year', [ReportController::class, 'YearlyAllExpense'])->name('expensesall.year');
     Route::get('/incomes/month', [ReportController::class, 'MonthlyIncome'])->name('incomes.month');
     Route::get('/incomes/yearly', [ReportController::class, 'YearlyIncome'])->name('incomes.year');
 
     /*--------------- Report route ends here ------------------*/
 
+    /*--------------- Others Income route start here ------------------*/
+    Route::get('/others-income/create', [OthersIncomeController::class, 'OthersIncomeCreate'])->name('others.income.create');
+    Route::post('/others-income/store', [OthersIncomeController::class, 'OthersIncomeStore'])->name('others.income.store');
+    /*--------------- Others Income route ends here ------------------*/
+
     //    Balance route 
-    Route::get('/balance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
-    Route::get('/balance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
+    // Route::get('/balance/month', [BlanceController::class, 'Monthly'])->name('monthly.blance.index');
+    // Route::get('/balance/year', [BlanceController::class, 'Yearly'])->name('yearly.blance.index');
 
 
     //    Report route 
-    Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
+    // Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
     // Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
 });
 

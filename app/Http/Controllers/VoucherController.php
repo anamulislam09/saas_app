@@ -20,14 +20,13 @@ class VoucherController extends Controller
 
     public function CollectionAll(Request $request)
     { // show collection 
-        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('status', 1)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
         } else {
-            $data = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-            //    dd($month->month);
-            // return view('admin.income.collection_voucher', compact('data', 'months'));
+            $data = Income::where('month', $request->month)->where('year', $request->year)->where('status', 1)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+            $months = Income::where('month', $request->month)->where('year', $request->year)->where('status', 1)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+
             return redirect()->back()->with(['data'=>$data,'months'=>$months]);
         }
     }

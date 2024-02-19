@@ -120,18 +120,30 @@
                             <div class="card-body">
                                 <div class="card">
                                     <div class="card-header">
-                                        <strong> Total collection month of @if ('1' == date('m'))January
-                                            @elseif ('2' == date('m'))February
-                                            @elseif ('3' == date('m'))March
-                                            @elseif ('4' == date('m'))April
-                                            @elseif ('5' == date('m'))May
-                                            @elseif ('6' == date('m'))June
-                                            @elseif ('7' == date('m'))July
-                                            @elseif ('8' == date('m'))August
-                                            @elseif ('9' == date('m'))September
-                                            @elseif ('10' == date('m'))October
-                                            @elseif ('11' == date('m'))November
-                                            @elseif ('12' == date('m'))December
+                                        <strong> Total collection month of @if ('1' == date('m'))
+                                                January
+                                            @elseif ('2' == date('m'))
+                                                February
+                                            @elseif ('3' == date('m'))
+                                                March
+                                            @elseif ('4' == date('m'))
+                                                April
+                                            @elseif ('5' == date('m'))
+                                                May
+                                            @elseif ('6' == date('m'))
+                                                June
+                                            @elseif ('7' == date('m'))
+                                                July
+                                            @elseif ('8' == date('m'))
+                                                August
+                                            @elseif ('9' == date('m'))
+                                                September
+                                            @elseif ('10' == date('m'))
+                                                October
+                                            @elseif ('11' == date('m'))
+                                                November
+                                            @elseif ('12' == date('m'))
+                                                December
                                             @endif </strong>
                                     </div>
                                 </div>
@@ -139,12 +151,13 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 8%">SL</th>
-                                            <th style="width: 15%">Flat Name</th>
+                                            <th style="width: 9%">Flat Name</th>
                                             <th style="width: 15%">Charge</th>
-                                            <th style="width: 15%">Current amount</th>
-                                            <th style="width: 12%">Previous due</th>
-                                            <th style="width: 10%">Payble</th>
-                                            <th style="width: 10%">Collect</th>
+                                            <th style="width: 15%">Current Amount</th>
+                                            <th style="width: 12%">Previous Due</th>
+                                            <th style="width: 10%">Payable</th>
+                                            <th style="width: 10%">Balance</th>
+                                            <th style="width: 10%">Paid</th>
                                             <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
@@ -162,6 +175,25 @@
                                                         ->where('flat_id', $item->flat_id)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->first();
+
+                                                    // total all amount start here
+                                                    $total = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->sum('amount');
+                                                    $previous_total = App\Models\Income::where('month', $item->month - 1)
+                                                        ->where('year', $item->year)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->sum('due');
+                                                    $current_total = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->sum('due');
+                                                    $collect_total = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->sum('paid');
+                                                    // total all amount ends here
                                                 @endphp
 
                                                 <form action="{{ route('income.collection.store') }}" method="POST">
@@ -177,16 +209,20 @@
                                                         @else
                                                             <td>{{ $previousMonthData->due }}</td>
                                                         @endif
+                                                        
+                                                        <td>{{ $item->amount + $previousMonthData->due }}</td>
                                                         <td>{{ $item->due }}</td>
                                                         <td><input type="text"
                                                                 style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="paid" value="{{ old('paid') }}" placeholder="000"
-                                                                required></td>
+                                                                name="paid" value="{{ old('paid') }}"
+                                                                placeholder="000" required></td>
                                                         <td>
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>
                                                                 <a href=""><span
                                                                         class="badge badge-info">Voucher</span></a>
+                                                            @elseif($item->status == 2)
+                                                            <span class="badge badge-warning">Due</span>
                                                             @else
                                                                 <input type="submit" class="btn btn-sm btn-primary"
                                                                     value="Collect">
@@ -195,10 +231,19 @@
                                                     </tr>
                                                 </form>
                                             @endforeach
-                                        @else
-                                        @endif
-                                        <tr></tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                            <td class="text-right"><strong>{{ $total }}</strong></td>
+                                            <td class="text-right"><strong>{{ $previous_total }}</strong></td>
+                                            <td class="text-right"><strong>{{ $total + $previous_total }}</strong></td>
+                                            <td class="text-right"><strong>{{ $current_total }}</strong></td>
+                                            <td class="text-right"><strong>{{ $collect_total }}</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                @else
+                                    @endif
                                 </table>
                             </div>
 

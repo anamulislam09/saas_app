@@ -1,117 +1,208 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-    <div class="content-wrapper">
-        <!-- Main content -->
-        <section class="content mt-3">
-            <div class="container-fluid">
+  <style>
+    input:focus {
+      outline: none
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content mt-3">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Monthly Expenses</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th class="d-none">Year</th>
-                                            <th>Month</th>
-                                            <th class="text-center">Expense</th>
-                                            <th class="text-center">Amount</th>
-                                            <th class="text-center">Created By</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($monthly_expense as $key => $item)
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->exists();
-                                                $userName = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->first();
-
-                                                $customer = DB::table('customers')
-                                                    ->where('id', $item->customer_id)
-                                                    ->exists();
-                                                // $customerName = DB::table('customers')->where('id', $item->customer_id)->first();
-
-                                                $data = DB::table('categories')
-                                                    ->where('id', $item->cat_id)
-                                                    ->first();
-
-                                                // dd($customer);
-                                                // Total amount
-                                                // $total = App\Models\Exp_detail::where('customer_id', $item->customer_id)
-                                                // ->where('month', $item->month)
-                                                //      ->sum('amount');
-
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td class="d-none">{{ $item->year }}</td>
-                                                <td>
-                                                    @if ($item->month == 1)
-                                                        January
-                                                    @elseif ($item->month == 2)
-                                                        February
-                                                    @elseif ($item->month == 3)
-                                                        March
-                                                    @elseif ($item->month == 4)
-                                                        April
-                                                    @elseif ($item->month == 5)
-                                                        May
-                                                    @elseif ($item->month == 6)
-                                                        June
-                                                    @elseif ($item->month == 7)
-                                                        July
-                                                    @elseif ($item->month == 8)
-                                                        August
-                                                    @elseif ($item->month == 9)
-                                                        September
-                                                    @elseif ($item->month == 10)
-                                                        October
-                                                    @elseif ($item->month == 11)
-                                                        November
-                                                    @elseif ($item->month == 12)
-                                                        December
-                                                    @endif
-                                                </td>
-                                                <td>{{ $data->name }}</td>
-                                                <td class="text-right">{{ $item->sub_total }}</td>
-                                                @if ($user)
-                                                    <td class="text-center">{{ $userName->name }}</td>
-                                                @elseif ($customer)
-                                                    {{-- <td>{{ $customerName->name }}</td> --}}
-                                                    <td class="text-center"><span class="badge badge-success">Admin</span>
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                            {{-- @php
-                                            // $total  = '';
-                                                $total += $total+ $item->amount
-                                            @endphp --}}
-                                            @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                        {{-- <tr>
-                                            <td colspan="3"><strong>Total = </strong></td>
-                                            <td>{{$total}}</td>
-                                        </tr> --}}
-                                    </tfoot>
-                                </table>
-                            </div>
+                  <div class="col-lg-12" style="border: 1px solid #ddd">
+                    <form action="{{ route('expensesall.month') }}" method="post">
+                      @csrf
+                      <div class="row my-4">
+                        <div class="col-lg-3">
+                          <strong><span> Monthly Expenses</span></strong>
                         </div>
-                    </div>
+                        <div class="col-lg-3">
+                          {{-- <label for="" class="col-form-label">Select Year</label> --}}
+                          <select name="year" class="form-control" id="" required>
+                            <option value="" selected disabled>Select Year</option>
+                            <option value="2023">Year 2023
+                            </option>
+                            <option value="2024">Year 2024
+                            </option>
+                            <option value="2025">Year 2025 
+                            </option>
+                            <option value="2026">Year 2026
+                            </option>
+                            <option value="2027">Year 2027
+                            </option>
+                            <option value="2028">Year 2028
+                            </option>
+                            <option value="2029">Year 2029
+                            </option>
+                            <option value="2030">Year 2030
+                            </option>
+                          </select>
+                        </div>
+                        {{-- 'month', date('m'))->where('year', date('Y') --}}
+                        <div class="col-lg-3">
+                          {{-- <label for="" class="col-form-label">Select Month</label> --}}
+                          <select name="month" class="form-control" id="" required>
+                            <option value="" selected disabled>Select Month </option>
+                            <option value="1">January
+                            </option>
+                            <option value="2">February
+                            </option>
+                            <option value="3">March
+                            </option>
+                            <option value="4">April
+                            </option>
+                            <option value="5">May</option>
+                            <option value="6">June
+                            </option>
+                            <option value="7">July
+                            </option>
+                            <option value="8">August
+                            </option>
+                            <option value="9">September
+                            </option>
+                            <option value="10">October
+                            </option>
+                            <option value="11">November
+                            </option>
+                            <option value="12">December
+                            </option>
+                          </select>
+                        </div>
+
+                        {{-- @if (Route::current()->getName() == 'income.create') --}}
+                        <div class="col-lg-2">
+                          <label for="" class="col-form-label"></label>
+                          <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+                        {{-- @else --}}
+                        {{-- @endif --}}
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                @php
+                  $monthly_expense = Session::get('monthly_expense');
+                  $months = Session::get('months');
+                @endphp
+                @if (isset($monthly_expense) && !empty($monthly_expense))
+                  {{-- @php   
+                    @foreach ($data as $key => $item)
+                    $month = Ap\Models\Income::where('month', $item->month)->where('year', $item->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                    @endforeach
+             @endphp --}}
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-9">
+                          <strong> Total expenses month of @if ($months->month == 1)
+                              January
+                            @elseif ($months->month == 2)
+                              February
+                            @elseif ($months->month == 3)
+                              March
+                            @elseif ($months->month == 4)
+                              April
+                            @elseif ($months->month == 5)
+                              May
+                            @elseif ($months->month == 6)
+                              June
+                            @elseif ($months->month == 7)
+                              July
+                            @elseif ($months->month == 8)
+                              August
+                            @elseif ($months->month == 9)
+                              September
+                            @elseif ($months->month == 10)
+                              October
+                            @elseif ($months->month == 11)
+                              November
+                            @elseif ($months->month == 12)
+                              December
+                            @endif </strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <table id="" class="table table-bordered table-striped mt-3">
+                    <thead>
+                      <tr>
+                        <th style="width: 8%">SL</th>
+                        <th style="width: 15%">Expense Head</th>
+                        <th style="width: 15%" >Amount</th>
+                        {{-- <th style="width: 15%" class="text-center">Status</th> --}}
+                        {{-- <th style="width: 15%" class="text-center">Action</th> --}}
+                      </tr>
+                    </thead>
+                    <tbody>
+
+
+
+                      @foreach ($monthly_expense as $key => $item)
+                        @php
+                          $data = DB::table('categories')
+                              ->where('id', $item->cat_id)
+                              ->first();
+                              $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $item->month)->where('year', $item->year)->sum('sub_total');
+                        @endphp
+                        <tr>
+                          <td>{{ $key + 1 }}</td>
+                          <td>{{ $data->name }}</td>
+                          <td class="text-right">
+                              {{ $item->sub_total }}
+                          </td>
+                        
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                          <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                          <td class="text-right"><strong>{{ $total }}</strong></td>
+                      </tr>
+                  </tfoot>
+                  </table>
+                @else
+                @endif
+              </div>
             </div>
-        </section>
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+     <!-- Modal -->
+     <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+
+             <div id="modal_body">
+
+             </div>
+
+         </div>
+     </div>
+ </div>
+
+
+  <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 @endsection

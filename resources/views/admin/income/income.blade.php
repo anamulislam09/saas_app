@@ -113,62 +113,67 @@
                                 <div class="card-body">
                                     <div class="card">
                                         <div class="card-header">
-                                            <strong> Total collection month of @if ('1' == date('m'))January
-                                                @elseif ('2' == date('m'))February
-                                                @elseif ('3' == date('m'))March
-                                                @elseif ('4' == date('m'))April
-                                                @elseif ('5' == date('m'))May
-                                                @elseif ('6' == date('m'))June
-                                                @elseif ('7' == date('m'))July
-                                                @elseif ('8' == date('m'))August
-                                                @elseif ('9' == date('m'))September
-                                                @elseif ('10' == date('m'))October
-                                                @elseif ('11' == date('m'))November
-                                                @elseif ('12' == date('m'))December
+                                            <strong> Total collection month of @if ('1' == date('m'))
+                                                    January
+                                                @elseif ('2' == date('m'))
+                                                    February
+                                                @elseif ('3' == date('m'))
+                                                    March
+                                                @elseif ('4' == date('m'))
+                                                    April
+                                                @elseif ('5' == date('m'))
+                                                    May
+                                                @elseif ('6' == date('m'))
+                                                    June
+                                                @elseif ('7' == date('m'))
+                                                    July
+                                                @elseif ('8' == date('m'))
+                                                    August
+                                                @elseif ('9' == date('m'))
+                                                    September
+                                                @elseif ('10' == date('m'))
+                                                    October
+                                                @elseif ('11' == date('m'))
+                                                    November
+                                                @elseif ('12' == date('m'))
+                                                    December
                                                 @endif </strong>
                                         </div>
                                     </div>
-                                    <table id="dataTable" class="table table-bordered table-striped mt-3">
-                                        
+                                    <table id="" class="table table-bordered table-striped mt-3">
+
                                         <thead>
                                             <tr>
                                                 <th> SL</th>
                                                 <th>Flat Name</th>
                                                 <th>Charge</th>
                                                 <th class="text-right">Amount</th>
-                                                {{-- <th>Due</th> --}}
-                                                {{-- <th style="width: 15%">Collect</th> --}}
-                                                {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {{-- @if (isset($data) && !empty($data)) --}}
                                             @foreach ($data as $key => $item)
-                                                <form action="{{ route('income.collection.store') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="user_id" value="{{ $item->user_id }}">
-                                                    <tr>
-                                                        <td>{{ $key+1 }}</td>
-                                                        <td>{{ $item->flat_name }}</td>
-                                                        <td>{{ $item->charge }}</td>
-                                                        <td class="text-right">{{ $item->amount }}</td>
-                                                        {{-- <td>{{ $item->due }}</td> --}}
-                                                        {{-- <td><input type="text"
-                                                                style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="pay" placeholder="000" required></td> --}}
-                                                        {{-- <td>
-                                                            @if ($item->status == 1)
-                                                                <span class="badge badge-success">Paid</span>
-                                                            @else
-                                                                <input type="submit" class="btn btn-sm btn-primary"
-                                                                    value="Submit">
-                                                            @endif
-                                                        </td> --}}
-                                                    </tr>
-                                                </form>
+                                                @php
+                                                    $total = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->sum('amount');
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $item->flat_name }}</td>
+                                                    <td>{{ $item->charge }}</td>
+                                                    <td class="text-right">{{ $item->amount }}</td>
+                                                </tr>
                                             @endforeach
-                                        @else
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                                <td class="text-right"><strong>{{ $total }}</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                        @else
                                     </table>
                                 </div>
                             @endif

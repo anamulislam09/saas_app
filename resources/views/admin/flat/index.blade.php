@@ -36,6 +36,7 @@
 
                                 @php
                                     $flat = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                                    $total = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->sum('amount')
                                 @endphp
 
                                 @if (!$flat)
@@ -94,6 +95,12 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                                <td class="text-right"><strong>{{$total}}</strong></td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 @endif
                             </div>
