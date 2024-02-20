@@ -105,7 +105,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
     //    Expense route 
     // Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');
-    Route::get('/expense-summary/store', [ExpenseController::class, 'Store'])->name('expense-summary.store');
+    // Route::get('/expense-summary/store', [ExpenseController::class, 'Store'])->name('expense-summary.store');
 
     //     report route start here 
     // Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
@@ -138,6 +138,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/account/expense-all', [VoucherController::class, 'ExpenseAll'])->name('account.expense.all');
     //Balance sheet
     Route::get('/account/balance', [VoucherController::class, 'BalanceSheet'])->name('account.balancesheet');
+    Route::post('/account/balance-all', [VoucherController::class, 'AllBalanceSheet'])->name('account.allbalancesheet');
     Route::get('/income-statement', [VoucherController::class, 'Incomes'])->name('income.statement');
     /*--------------- Accounts voucher route ends here ------------------*/
 
@@ -162,7 +163,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
 
     //    Report route 
-    // Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
+    Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
     // Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
 });
 

@@ -201,7 +201,7 @@
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-                                                <td>{{$amount}}</td>
+                                                <td class="text-right"><strong>{{ $total }}</strong></td>
                                                 <td class="text-right"><strong>{{ $total }}</strong></td>
                                             </tr>
                                         </tfoot>

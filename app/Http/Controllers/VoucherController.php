@@ -40,26 +40,41 @@ class VoucherController extends Controller
     // show collection 
     public function ExpenseAll(Request $request)
     {
-        $isExist = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->exists();
+        $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
         } else {
-            $data = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->get();
-            $months = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
+            $data = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
+            $months = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
             //    dd($month->month);
             // return view('admin.accounts.expense_voucher', compact('data', 'months'));
             return redirect()->back()->with(['data'=>$data,'months'=>$months]);
         }
     }
-
+    
     // BalanceSheet
     public function BalanceSheet()
     {
-        $month = Carbon::now()->month;
-        $year = Carbon::now()->year;
-        $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();
+        // $month = Carbon::now()->month;
+        // $year = Carbon::now()->year;
+        // $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();
         // $total_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('paid');
-        return view('admin.accounts.balance_sheet', compact('data'));
+        return view('admin.accounts.balance_sheet');
+    }
+
+    // show collection 
+    public function AllBalanceSheet(Request $request)
+    {
+        $isExist = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
+            $months = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
+            //    dd($month->month);
+            // return view('admin.accounts.expense_voucher', compact('data', 'months'));
+            return redirect()->back()->with(['data'=>$data,'months'=>$months]);
+        }
     }
 
      // Expense rreport 

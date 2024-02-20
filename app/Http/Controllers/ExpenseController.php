@@ -17,8 +17,7 @@ class ExpenseController extends Controller
     {
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
-        $expense = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->orderBy('id', 'DESC')->get();
-
+        $expense = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('cat_id')->get();
         return view('admin.accounts.ladger_account', compact('expense'));
     }
 
@@ -35,28 +34,28 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        $month = Carbon::now()->month;
-        $year = Carbon::now()->year;
-        $isExist = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->exists();
-        if ($isExist) {
-            return redirect()->back()->with('message', ' You have already close this month');
-        } else {
-            $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('cat_id')->get();
-            // $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('cat_id')->get();
+        // $month = Carbon::now()->month;
+        // $year = Carbon::now()->year;
+        // $isExist = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->exists();
+        // if ($isExist) {
+        //     return redirect()->back()->with('message', ' You have already close this month');
+        // } else {
+        //     $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('cat_id')->get();
+        //     // $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->groupBy('cat_id')->get();
 
-            foreach ($expenses as $expense) {
-                $data['year'] = $expense->year;
-                $data['month'] = $expense->month;
-                $data['cat_id'] = $expense->cat_id;
-                $data['sub_total'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->where('cat_id', $expense->cat_id)->SUM('amount');
-                // $data['total'] = $expense->cat_id;
-                $data['customer_id'] = $expense->customer_id;
-                $data['auth_id'] = $expense->auth_id;
-                Expense::create($data);
-            }
+        //     foreach ($expenses as $expense) {
+        //         $data['year'] = $expense->year;
+        //         $data['month'] = $expense->month;
+        //         $data['cat_id'] = $expense->cat_id;
+        //         $data['sub_total'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->where('cat_id', $expense->cat_id)->SUM('amount');
+        //         // $data['total'] = $expense->cat_id;
+        //         $data['customer_id'] = $expense->customer_id;
+        //         $data['auth_id'] = $expense->auth_id;
+        //         Expense::create($data);
+        //     }
 
-            return redirect()->back()->with('message', 'Month close successfully');
-        }
+        //     return redirect()->back()->with('message', 'Month close successfully');
+        // }
     }
 
     /**

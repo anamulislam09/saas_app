@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exp_detail;
 use App\Models\Expense;
 use App\Models\Income;
 use Illuminate\Http\Request;
@@ -19,12 +20,12 @@ class ReportController extends Controller
     // Report for Monthly Ecpense
     public function MonthlyAllExpense(Request $request)
     {
-        $isExist = Expense::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
         } else {
-            $monthly_expense = Expense::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            $months = Expense::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            $monthly_expense = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
+            $months = Exp_detail::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
   
             return redirect()->back()->with(['monthly_expense'=>$monthly_expense,'months'=>$months]);
             // return view('admin.report.monthly_expenses', compact('monthly_expense','months'));
@@ -40,15 +41,14 @@ class ReportController extends Controller
     // Report for yearly Ecpense
     public function YearlyAllExpense(Request $request)
     {
-        $isExist = Expense::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('year', $request->year)->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
         } else {
-            $yearly_expense = Expense::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            $year = Expense::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            $yearly_expense = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('year', $request->year)->groupBy('cat_id')->get();
+            $year = Exp_detail::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
   
             return redirect()->back()->with(['yearly_expense'=>$yearly_expense,'year'=>$year]);
-            // return view('admin.report.monthly_expenses', compact('monthly_expense','months'));
         }
     }
 

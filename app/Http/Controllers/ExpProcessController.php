@@ -43,11 +43,11 @@ class ExpProcessController extends Controller
         if ($isExist) {
             return redirect()->back()->with('message', 'You have already submitted');
         } else {
-            $expenses = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('month')->get();
+            $expenses = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('month')->get();
             foreach ($expenses as $expense) {
                 $data['year'] = $expense->year;
                 $data['month'] = $expense->month;
-                $data['total'] = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $expense->month)->where('year', $expense->year)->SUM('sub_total');
+                $data['total'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $expense->month)->where('year', $expense->year)->SUM('amount');
                 $data['customer_id'] = $expense->customer_id;
                 $data['auth_id'] = $expense->auth_id;
                 $exp_process = Exp_process::create($data);

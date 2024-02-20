@@ -31,7 +31,7 @@
                             </option>
                             <option value="2024">Year 2024
                             </option>
-                            <option value="2025">Year 2025 
+                            <option value="2025">Year 2025
                             </option>
                             <option value="2026">Year 2026
                             </option>
@@ -139,7 +139,7 @@
                       <tr>
                         <th style="width: 8%">SL</th>
                         <th style="width: 15%">Expense Head</th>
-                        <th style="width: 15%" >Amount</th>
+                        <th style="width: 15%">Amount</th>
                         {{-- <th style="width: 15%" class="text-center">Status</th> --}}
                         {{-- <th style="width: 15%" class="text-center">Action</th> --}}
                       </tr>
@@ -153,25 +153,34 @@
                           $data = DB::table('categories')
                               ->where('id', $item->cat_id)
                               ->first();
-                              $total = App\Models\Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $item->month)->where('year', $item->year)->sum('sub_total');
+
+                          $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                              ->where('month', $item->month)
+                              ->where('year', $item->year)
+                              ->where('cat_id', $item->cat_id)
+                              ->sum('amount');
+                          $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                              ->where('month', $item->month)
+                              ->where('year', $item->year)
+                              ->sum('amount');
                         @endphp
                         <tr>
                           <td>{{ $key + 1 }}</td>
                           <td>{{ $data->name }}</td>
                           <td class="text-right">
-                              {{ $item->sub_total }}
+                            {{ $sub_total }}
                           </td>
-                        
+
                           </td>
                         </tr>
                       @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
-                          <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-                          <td class="text-right"><strong>{{ $total }}</strong></td>
+                        <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                        <td class="text-right"><strong>{{ $total }}</strong></td>
                       </tr>
-                  </tfoot>
+                    </tfoot>
                   </table>
                 @else
                 @endif
@@ -183,25 +192,25 @@
     </section>
   </div>
 
-     <!-- Modal -->
-     <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
+  <!-- Modal -->
+  <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-             <div id="modal_body">
+        <div id="modal_body">
 
-             </div>
+        </div>
 
-         </div>
-     </div>
- </div>
+      </div>
+    </div>
+  </div>
 
 
   <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
