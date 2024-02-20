@@ -84,10 +84,8 @@
                     <thead>
                       <tr>
                         <th style="width: 8%">SL</th>
-                        <th style="width: 15%">Expense Head</th>
-                        <th style="width: 15%">Amount</th>
-                        {{-- <th style="width: 15%" class="text-center">Status</th> --}}
-                        {{-- <th style="width: 15%" class="text-center">Action</th> --}}
+                        <th>Expense Head</th>
+                        <th style="width: 20%">Amount</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -108,7 +106,7 @@
                               ->sum('amount');
                         @endphp
                         <tr>
-                          <td>{{ $key + 1 }}</td>
+                          <td class="text-center">{{ $key + 1 }}</td>
                           <td>{{ $data->name }}</td>
                           <td class="text-right">
                             {{ $sub_total }}

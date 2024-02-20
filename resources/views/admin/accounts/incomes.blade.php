@@ -47,22 +47,11 @@
                                             <th>Collection</th>
                                             <th>Payble</th>
                                             <th>Created By</th>
-                                            {{-- <th>Action</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($data as $key => $item)
-
-                                        
                                             @php
-                                                // $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
-                                                // $previousMonthData = App\Models\Income::where('month', $item->month - 1)
-                                                //     ->where('year', $previousDate[0])
-                                                //     ->where('user_id', $item->user_id)
-                                                //     ->where('customer_id', Auth::guard('admin')->user()->id)
-                                                //     ->first();
-
-                                                // get user or customer name
                                                 $user = DB::table('users')
                                                     ->where('user_id', $item->auth_id)
                                                     ->exists();
@@ -77,9 +66,14 @@
                                                 $data = DB::table('categories')
                                                     ->where('id', $item->cat_id)
                                                     ->first();
+
+                                                $total = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)
+                                                    ->sum('amount');
+                                                $collection = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)
+                                                    ->sum('paid');
                                             @endphp
                                             <tr>
-                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $key + 1 }}</td>
                                                 <td class="d-none">{{ $item->year }}</td>
                                                 <td class="d-none">
                                                     @if ($item->month == 1)
@@ -111,31 +105,35 @@
                                                 <td>{{ $item->flat_name }}</td>
                                                 <td>{{ $item->charge }}</td>
                                                 <td>{{ $item->amount }}</td>
-                                                {{-- @if (!$previousMonthData)
-                                                                <td >000</td>
-                                                                @else
-                                                                <td>{{ $previousMonthData->due }}</td>
-                                                                @endif --}}
                                                 <td>{{ $item->paid }}</td>
                                                 <td>{{ $item->due }}</td>
                                                 @if ($user)
                                                     <td>{{ $userName->name }}</td>
                                                 @elseif ($customer)
-                                                    {{-- <td>{{ $customerName->name }}</td> --}}
                                                     <td><span class="badge badge-success">Admin</span></td>
                                                 @endif
-                                                {{-- <td>
-                                                @if ($item->status == 1)
-                                                    <span class="badge badge-success">Paid</span>
-                                                @else
-                                                    <input type="submit" class="btn btn-sm btn-primary" value="Submit">
-                                                @endif
-                                            </td> --}}
+                                              
                                             </tr>
                                         @endforeach
-                                        {{-- </tr> --}}
                                     </tbody>
+                                    @if (Isset($data))
+                                    @else
+                                    <tr>
+                                        <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                        <td class="text-right"><strong>{{ $total }}</strong></td>
+                                        @if (Isset($collection))
+                                        <td class="text-right"><strong>{{ $collection }}</strong></td>
+                                        <td class="text-right"><strong>{{ $total - $collection }}</strong></td>
+                                        @else
+                                        <td class="text-right"><strong>00</strong></td>
+                                        <td class="text-right"><strong>{{ $total }}</strong></td>
+                                        @endif
+                                        <td></td>
+                                    </tr>
+                                    
+                                    @endif
                                 </table>
+                               
                             </div>
                         </div>
                     </div>

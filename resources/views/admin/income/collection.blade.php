@@ -189,8 +189,11 @@
                             @else
                               <td>{{ $previousMonthData->due }}</td>
                             @endif
-
-                            <td>{{ $item->amount + $previousMonthData->due }}</td>
+                            @if (!$previousMonthData)
+                            <td>{{ $item->amount}}</td>
+                          @else
+                          <td>{{ $item->amount + $previousMonthData->due }}</td>
+                          @endif
                             <td>{{ $item->due }}</td>
                             <td><input type="text"
                                 style="width:100%; border:none; border-radius:20px; text-align:center" name="paid"

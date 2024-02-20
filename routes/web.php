@@ -147,8 +147,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/expenses-all/month', [ReportController::class, 'MonthlyAllExpense'])->name('expensesall.month');
     Route::get('/expenses/yearly', [ReportController::class, 'YearlyExpense'])->name('expenses.year');
     Route::post('/expenses-all/year', [ReportController::class, 'YearlyAllExpense'])->name('expensesall.year');
+
     Route::get('/incomes/month', [ReportController::class, 'MonthlyIncome'])->name('incomes.month');
+    Route::post('/incomes-all/month', [ReportController::class, 'MonthlyAllIncome'])->name('incomesall.month');
     Route::get('/incomes/yearly', [ReportController::class, 'YearlyIncome'])->name('incomes.year');
+    Route::post('/incomes-all/yearly', [ReportController::class, 'YearlyAllIncome'])->name('incomesall.year');
 
     /*--------------- Report route ends here ------------------*/
 

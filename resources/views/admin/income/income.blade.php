@@ -140,7 +140,7 @@
                               ->sum('amount');
                         @endphp
                         <tr>
-                          <td>{{ $key + 1 }}</td>
+                          <td class="text-center">{{ $key + 1 }}</td>
                           <td>{{ $item->flat_name }}</td>
                           <td>{{ $item->charge }}</td>
                           <td class="text-right">{{ $item->amount }}</td>

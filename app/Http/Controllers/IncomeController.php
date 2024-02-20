@@ -30,9 +30,9 @@ class IncomeController extends Controller
             return redirect()->back()->with('message', 'Flat not found!');  // User has no exist
         } else {
             $month = Carbon::now()->month;
-            $year = Carbon::now()->year; 
+            $year = Carbon::now()->year;
             // User has exist
-            if ($request->month > $month || $request->year > $year)  {
+            if ($request->month > $month || $request->year > $year) {
                 return redirect()->back()->with('message', "OPS! It is not possible to add data for advance month. Please select the current month or year.");
             } else {
                 if (($month - 1 == $request->month) && ($year == $request->year)) {
@@ -57,123 +57,121 @@ class IncomeController extends Controller
                         }
                         return redirect()->back()->with('message', 'Service charge added successfully');
                     }
-                } elseif(($month - 1 == $request->month) || ($year != $request->year)) {
+                } elseif (($month - 1 == $request->month) || ($year != $request->year)) {
                     return redirect()->back()->with('message', "PLS, Select current year.");
-                }else{
-                     /*-------------------if previous year has data start here --------------*/
-                if (($request->month == 1)) {
-                    $month = $request->month;
-                    $year = $request->year;
-                    $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
-                    if ($data) {
-                        return redirect()->back()->with('message', 'You have already create!');
-                    } else {
-                        $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                } else {
+                    /*-------------------if previous year has data start here --------------*/
+                    if (($request->month == 1)) {
+                        $month = $request->month;
+                        $year = $request->year;
+                        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
                         if ($data) {
-                            $lastYear = date('Y') - 1;
-                            $lastmonth = 12;
+                            return redirect()->back()->with('message', 'You have already create!');
+                        } else {
+                            $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                            if ($data) {
+                                $lastYear = date('Y') - 1;
+                                $lastmonth = 12;
 
-                            $flats = Income::where('month', $lastmonth)->where('year', $lastYear)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-                            for ($i = 0; $i < count($flats); $i++) {
-                                $previousMonthData = Income::where('month', $lastmonth)->where('year', $lastYear)->where('user_id', $flats[$i]->flat_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                                $flats = Income::where('month', $lastmonth)->where('year', $lastYear)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+                                for ($i = 0; $i < count($flats); $i++) {
+                                    $previousMonthData = Income::where('month', $lastmonth)->where('year', $lastYear)->where('user_id', $flats[$i]->flat_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
 
-                                $income = Income::insert([
-                                    'month' => $month,
-                                    'year' => $year,
-                                    'flat_id' => $flats[$i]->flat_unique_id,
-                                    'customer_id' => $flats[$i]->customer_id,
-                                    'auth_id' => Auth::guard('admin')->user()->id,
-                                    'flat_name' => $flats[$i]->flat_name,
-                                    'charge' => $flats[$i]->charge,
-                                    'amount' => $flats[$i]->amount,
-                                    'due' => $flats[$i]->amount + $previousMonthData->due,
-                                ]);
-                            }
+                                    $income = Income::insert([
+                                        'month' => $month,
+                                        'year' => $year,
+                                        'flat_id' => $flats[$i]->flat_unique_id,
+                                        'customer_id' => $flats[$i]->customer_id,
+                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        'flat_name' => $flats[$i]->flat_name,
+                                        'charge' => $flats[$i]->charge,
+                                        'amount' => $flats[$i]->amount,
+                                        'due' => $flats[$i]->amount + $previousMonthData->due,
+                                    ]);
+                                }
 
-                            if ($income) {
-                                return redirect()->back()->with('message', 'Service charge added successfully');
+                                if ($income) {
+                                    return redirect()->back()->with('message', 'Service charge added successfully');
+                                } else {
+                                    return redirect()->back()->with('message', 'something went wrong');
+                                }
                             } else {
-                                return redirect()->back()->with('message', 'something went wrong');
-                            }
-                        } else {
-                            $flats = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
-                            $month = $request->month;
-                            $year = $request->year;
+                                $flats = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
+                                $month = $request->month;
+                                $year = $request->year;
 
-                            for ($i = 0; $i < count($flats); $i++) {
-                                Income::insert([
-                                    'month' => $month,
-                                    'year' => $year,
-                                    'flat_id' => $flats[$i]->flat_unique_id,
-                                    'customer_id' => $flats[$i]->customer_id,
-                                    'auth_id' => Auth::guard('admin')->user()->id,
-                                    'flat_name' => $flats[$i]->flat_name,
-                                    'charge' => $flats[$i]->charge,
-                                    'amount' => $flats[$i]->amount,
-                                    'due' => $flats[$i]->amount,
-                                ]);
+                                for ($i = 0; $i < count($flats); $i++) {
+                                    Income::insert([
+                                        'month' => $month,
+                                        'year' => $year,
+                                        'flat_id' => $flats[$i]->flat_unique_id,
+                                        'customer_id' => $flats[$i]->customer_id,
+                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        'flat_name' => $flats[$i]->flat_name,
+                                        'charge' => $flats[$i]->charge,
+                                        'amount' => $flats[$i]->amount,
+                                        'due' => $flats[$i]->amount,
+                                    ]);
+                                }
+                                return redirect()->back()->with('message', 'Service charge added successfully');
                             }
-                            return redirect()->back()->with('message', 'Service charge added successfully');
                         }
                     }
-                }
-                             /*-------------------if previous year has data ends here --------------*/ 
-                else {
-                    $month = $request->month;
-                    $year = $request->year;
-                    $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
-                    if ($data) {
-                        return redirect()->back()->with('message', 'You have already create!');
-                    } else {
-                        $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                    /*-------------------if previous year has data ends here --------------*/ else {
+                        $month = $request->month;
+                        $year = $request->year;
+                        $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
                         if ($data) {
-                            $month = $request->month;
-                            $year = $request->year;
-
-                            $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
-                            $flats = Income::where('month', $month - 1)->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
-
-                            for ($i = 0; $i < count($flats); $i++) {
-                                $previousMonthData = Income::where('month', $month - 1)->where('year', $previousDate[0])->where('flat_id', $flats[$i]->flat_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-                                Income::insert([
-                                    'month' => $month,
-                                    'year' => $year,
-                                    'flat_id' => $flats[$i]->flat_id,
-                                    'customer_id' => $flats[$i]->customer_id,
-                                    'auth_id' => Auth::guard('admin')->user()->id,
-                                    'flat_name' => $flats[$i]->flat_name,
-                                    'charge' => $flats[$i]->charge,
-                                    'amount' => $flats[$i]->amount,
-                                    'due' => $flats[$i]->amount + $previousMonthData->due,
-                                ]);
-                            }
-                            // dd($previousMonthData);
-                            return redirect()->back()->with('message', 'Service charged added successfully');
+                            return redirect()->back()->with('message', 'You have already create!');
                         } else {
-                            $flats = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
-                            $month = $request->month;
-                            $year = $request->year;
+                            $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                            if ($data) {
+                                $month = $request->month;
+                                $year = $request->year;
 
-                            for ($i = 0; $i < count($flats); $i++) {
-                                Income::insert([
-                                    'month' => $month,
-                                    'year' => $year,
-                                    'flat_id' => $flats[$i]->flat_unique_id,
-                                    'customer_id' => $flats[$i]->customer_id,
-                                    'auth_id' => Auth::guard('admin')->user()->id,
-                                    'flat_name' => $flats[$i]->flat_name,
-                                    'charge' => $flats[$i]->charge,
-                                    'amount' => $flats[$i]->amount,
-                                    'due' => $flats[$i]->amount,
-                                ]);
+                                $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . " -1 month")));
+                                $flats = Income::where('month', $month - 1)->where('year', date('Y'))->where('customer_id', Auth::guard('admin')->user()->id)->get();
+
+                                for ($i = 0; $i < count($flats); $i++) {
+                                    $previousMonthData = Income::where('month', $month - 1)->where('year', $previousDate[0])->where('flat_id', $flats[$i]->flat_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                                    Income::insert([
+                                        'month' => $month,
+                                        'year' => $year,
+                                        'flat_id' => $flats[$i]->flat_id,
+                                        'customer_id' => $flats[$i]->customer_id,
+                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        'flat_name' => $flats[$i]->flat_name,
+                                        'charge' => $flats[$i]->charge,
+                                        'amount' => $flats[$i]->amount,
+                                        'due' => $flats[$i]->amount + $previousMonthData->due,
+                                    ]);
+                                }
+                                // dd($previousMonthData);
+                                return redirect()->back()->with('message', 'Service charged added successfully');
+                            } else {
+                                $flats = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
+                                $month = $request->month;
+                                $year = $request->year;
+
+                                for ($i = 0; $i < count($flats); $i++) {
+                                    Income::insert([
+                                        'month' => $month,
+                                        'year' => $year,
+                                        'flat_id' => $flats[$i]->flat_unique_id,
+                                        'customer_id' => $flats[$i]->customer_id,
+                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        'flat_name' => $flats[$i]->flat_name,
+                                        'charge' => $flats[$i]->charge,
+                                        'amount' => $flats[$i]->amount,
+                                        'due' => $flats[$i]->amount,
+                                    ]);
+                                }
+                                return redirect()->back()->with('message', 'Service5 charge added successfully');
                             }
-                            return redirect()->back()->with('message', 'Service5 charge added successfully');
                         }
                     }
-                }
                     // return redirect()->back()->with('message', 'Pls! Select Current Year!');
                 }
-               
             }
         }
     }
@@ -206,17 +204,29 @@ class IncomeController extends Controller
                 ->where('flat_id', $flat_id)
                 ->where('customer_id', Auth::guard('admin')->user()->id)
                 ->first();
-                $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->first();
+            $data = Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->first();
+            if (isset($previousMonthData->due)) {
                 $amount = $previousMonthData->due + $data->amount;
 
-            $item['paid'] = $paid;
-            $item['due'] = $data->due - $paid;
-            if($amount == $paid){
-                $item['status'] = 1;
-            }else{
-                $item['status'] = 2;
+                $item['paid'] = $paid;
+                $item['due'] = $data->due - $paid;
+                if ($amount == $paid) {
+                    $item['status'] = 1;
+                } else {
+                    $item['status'] = 2;
+                }
+            } else {
+                $amount = $data->amount;
+
+                $item['paid'] = $paid;
+                $item['due'] = $data->due - $paid;
+                if ($amount == $paid) {
+                    $item['status'] = 1;
+                } else {
+                    $item['status'] = 2;
+                }
             }
-            
+
 
             Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->update($item);
             return redirect()->route('income.collection')->with('message', 'Collection successful');

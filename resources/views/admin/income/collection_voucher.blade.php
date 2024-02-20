@@ -79,7 +79,7 @@
                                                 {{-- @if (Route::current()->getName() == 'income.create') --}}
                                                 <div class="col-lg-2">
                                                     <label for="" class="col-form-label"></label>
-                                                    <input type="submit" class="btn btn-primary" value="Generate">
+                                                    <input type="submit" class="btn btn-primary" value="Submit">
                                                 </div>
                                                 {{-- @else --}}
                                                 {{-- @endif --}}
@@ -143,7 +143,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 8%">SL</th>
-                                                <th style="width: 15%">Flat Name</th>
+                                                <th>Flat Name</th>
                                                 <th style="width: 15%" class="text-center">Payable</th>
                                                 <th style="width: 15%" class="text-center">Paid Amount</th>
                                                 <th style="width: 15%" class="text-center">Action</th>
@@ -178,13 +178,19 @@
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->where('flat_id', $item->flat_id)
                                                         ->first();
-                                                    $amount = $previousMonthData->due + $data->amount;
+                                                    if (isset($previousMonthData->due)) {
+                                                        $amount = $previousMonthData->due + $data->amount;
+                                                    }
                                                 @endphp
 
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $item->flat_name }}</td>
-                                                    <td class="text-right"> {{ $amount }}</td>
+                                                    @if (isset($previousMonthData->due))
+                                                        <td class="text-right"> {{ $amount }}</td>
+                                                    @else
+                                                        <td class="text-right"> {{ $data->amount }}</td>
+                                                    @endif
                                                     <td class="text-right"> {{ $item->paid }}</td>
                                                     {{-- <td class="text-center">
                                                         @if ($item->status == 1)

@@ -11,10 +11,10 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">All Expense</h3>
+                                        <h3 class="card-title">Add Expense</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('category.index') }}" class="btn btn-outline-primary">Add new</a>
+                                        <a href="{{ route('category.index') }}" class="btn btn-outline-primary"> See All</a>
                                     </div>
                                 </div>
                             </div>

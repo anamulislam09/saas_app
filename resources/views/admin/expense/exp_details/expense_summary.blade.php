@@ -38,10 +38,12 @@
                       December
                     @endif </h3>
                   </div>
-                  {{-- <div class="col-lg-2 col-sm-12">
-                    <a href="{{ route('expense-summary.store') }}" class="btn btn-outline-primary">Month
-                      ended</a>
-                  </div> --}}
+                  <div class="col-lg-2 col-sm-12">
+                    <a href="" class="btn btn-sm btn-info">General Voucher</a>
+
+                      {{-- <a href="" class="btn btn-sm btn-info text-center edit" data-id="{{ $item->id }}"
+                        data-toggle="modal" data-target="#editUser">General vouchar</a> --}}
+                  </div>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -74,13 +76,12 @@
                     </div>
                 </div>
                 @else
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th class="text-center">SL</th>
                         <th class="text-center">Expense</th>
                         <th class="text-center">Amount</th>
-                        <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                       @foreach ($expSummary as $key => $item)
@@ -103,21 +104,13 @@
                           <td>{{ $key + 1 }}</td>
                           <td>{{ $data->name }}</td>
                           <td class="text-right">{{ $amount }}</td>
-                          <td class="text-center">
-                            {{-- <a href="{{ route('expense.voucher', $item->id) }}"
-                            class="btn btn-sm btn-primary">General vouchar</a> --}}
-                            <a href="" class="btn btn-sm btn-info text-center edit" data-id="{{ $item->id }}"
-                              data-toggle="modal" data-target="#editUser">General vouchar</a>
-                          </td>
                         </tr>
                       @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
                         <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-
                         <td class="text-right"><strong>{{ $total }}</strong></td>
-                        <td></td>
                       </tr>
                     </tfoot>
                 @endif

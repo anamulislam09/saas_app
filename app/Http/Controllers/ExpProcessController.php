@@ -78,12 +78,18 @@ class ExpProcessController extends Controller
                     ->where('customer_id', Auth::guard('admin')->user()->id)
                     ->first();
 
+                $others_income = DB::table('others_incomes')
+                    ->where('month', $month)
+                    ->where('year', $year)
+                    ->where('customer_id', Auth::guard('admin')->user()->id)
+                    ->sum('amount');
+
                 if (!$openingBlance && !$manualOpeningBlance) {
-                    $balance = $income - $month_exp->total;
+                    $balance = $income + $others_income - $month_exp->total;
 
                     $data['year'] = $year;
                     $data['month'] = $month;
-                    $data['total_income'] = $income;
+                    $data['total_income'] = $income + $others_income;
                     $data['total_expense'] = $month_exp->total;
                     $data['amount'] = $balance;
                     $data['customer_id'] = $month_exp->customer_id;
@@ -102,11 +108,11 @@ class ExpProcessController extends Controller
                     }
                 } elseif (!$openingBlance && $manualOpeningBlance) {
                     if ($manualOpeningBlance->flag == 1) {
-                        $balance = ($manualOpeningBlance->profit + $income) - $month_exp->total;
+                        $balance = ($manualOpeningBlance->profit + $income + $others_income) - $month_exp->total;
 
                         $data['year'] = $year;
                         $data['month'] = $month;
-                        $data['total_income'] = $manualOpeningBlance->profit + $income;
+                        $data['total_income'] = $manualOpeningBlance->profit + $income + $others_income;
                         $data['total_expense'] = $month_exp->total;
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
@@ -124,11 +130,11 @@ class ExpProcessController extends Controller
                             return redirect()->back()->with('message', 'Something went wrong!');
                         }
                     } elseif ($manualOpeningBlance->flag == 0) {
-                        $balance = ($income - $manualOpeningBlance->loss) - $month_exp->total;
+                        $balance = ($income + $others_income - $manualOpeningBlance->loss) - $month_exp->total;
 
                         $data['year'] = $year;
                         $data['month'] = $month;
-                        $data['total_income'] = $income;
+                        $data['total_income'] = $income + $others_income;
                         $data['total_expense'] = $month_exp->total + $manualOpeningBlance->loss;
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
@@ -148,11 +154,11 @@ class ExpProcessController extends Controller
                     }
                 } else {
                     if ($openingBlance->flag == 1) {
-                        $balance = ($openingBlance->amount + $income) - $month_exp->total;
+                        $balance = ($openingBlance->amount + $income + $others_income) - $month_exp->total;
 
                         $data['year'] = $year;
                         $data['month'] = $month;
-                        $data['total_income'] = $openingBlance->amount + $income;
+                        $data['total_income'] = $openingBlance->amount + $income + $others_income;
                         $data['total_expense'] = $month_exp->total;
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
@@ -170,11 +176,11 @@ class ExpProcessController extends Controller
                             return redirect()->back()->with('message', 'Something went wrong!');
                         }
                     } elseif ($openingBlance->flag == 0) {
-                        $balance = ($income - $openingBlance->amount) - $month_exp->total;
+                        $balance = ($income + $others_income - $openingBlance->amount) - $month_exp->total;
 
                         $data['year'] = $year;
                         $data['month'] = $month;
-                        $data['total_income'] = $income;
+                        $data['total_income'] = $income + $others_income;
                         $data['total_expense'] = $month_exp->total + $openingBlance->amount;
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;

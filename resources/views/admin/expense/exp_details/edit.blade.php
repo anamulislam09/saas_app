@@ -7,7 +7,7 @@
             <select name="cat_id" class="form-control" id="" required>
                 <option value="" selected disabled>Select Once</option>
                 @foreach ($exp_cat as $item)
-                    <option value="{{ $item->id }}" @if ($item->id == $data->id) selected @endif >{{ $item->name }}</option>
+                    <option value="{{ $item->id }}" @if ($item->id == $data->cat_id) selected @endif >{{ $item->name }}</option>
                 @endforeach
             </select>
         </div>

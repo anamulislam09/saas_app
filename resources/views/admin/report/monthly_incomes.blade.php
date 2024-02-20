@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin_content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
         <!-- Main content -->
         <section class="content mt-3">
@@ -10,99 +11,163 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Yearly Income</h3>
+                                    <div class="col-lg-12" style="border: 1px solid #ddd">
+                                        <form action="{{ route('incomesall.month') }}" method="post">
+                                            @csrf
+                                            <div class="row my-4">
+                                                <div class="col-lg-3">
+                                                    <strong><span>Monthly Income </span></strong>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    {{-- <label for="" class="col-form-label">Select Year</label> --}}
+                                                    <select name="year" class="form-control" id="" required>
+                                                        <option value="" selected disabled>Select Year</option>
+                                                        <option value="2023">Year 2023
+                                                        </option>
+                                                        <option value="2024">Year 2024
+                                                        </option>
+                                                        <option value="2025">Year 2025
+                                                        </option>
+                                                        <option value="2026">Year 2026
+                                                        </option>
+                                                        <option value="2027">Year 2027
+                                                        </option>
+                                                        <option value="2028">Year 2028
+                                                        </option>
+                                                        <option value="2029">Year 2029
+                                                        </option>
+                                                        <option value="2030">Year 2030
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                {{-- 'month', date('m'))->where('year', date('Y') --}}
+                                                <div class="col-lg-3">
+                                                    {{-- <label for="" class="col-form-label">Select Month</label> --}}
+                                                    <select name="month" class="form-control" id="" required>
+                                                        <option value="" selected disabled>Select Month </option>
+                                                        <option value="1">January
+                                                        </option>
+                                                        <option value="2">February
+                                                        </option>
+                                                        <option value="3">March
+                                                        </option>
+                                                        <option value="4">April
+                                                        </option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June
+                                                        </option>
+                                                        <option value="7">July
+                                                        </option>
+                                                        <option value="8">August
+                                                        </option>
+                                                        <option value="9">September
+                                                        </option>
+                                                        <option value="10">October
+                                                        </option>
+                                                        <option value="11">November
+                                                        </option>
+                                                        <option value="12">December
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                {{-- @if (Route::current()->getName() == 'income.create') --}}
+                                                <div class="col-lg-2">
+                                                    <label for="" class="col-form-label"></label>
+                                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                                </div>
+                                                {{-- @else --}}
+                                                {{-- @endif --}}
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th class="d-none">Year</th>
-                                            <th>Month</th>
-                                            <th class="text-center">Flat Name</th>
-                                            <th class="text-center">Collect</th>
-                                            {{-- <th class="text-center">Collection</th> --}}
-                                            <th class="text-center">Due</th>
-                                            <th class="text-center">Created By</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($monthly_income as $key => $item)
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->exists();
-                                                $userName = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->first();
 
-                                                $customer = DB::table('customers')
-                                                    ->where('id', $item->customer_id)
-                                                    ->exists();
-                                              
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td class="d-none"> {{$item->year}}</td>
-                                                <td> 
-                                                    @if ($item->month == 1)
+                            @php
+                                $data = Session::get('monthly_income');
+                                $months = Session::get('months');
+                                $others_income = Session::get('others_income');
+                            @endphp
+
+                            @if (isset($data) && !empty($data))
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-lg-10 col-sm-12">
+                                            <h3 class="card-title">Total Income month of
+                                                @if ($months->month == 1)
                                                     January
-                                                @elseif ($item->month == 2)
+                                                @elseif ($months->month == 2)
                                                     February
-                                                @elseif ($item->month == 3)
+                                                @elseif ($months->month == 3)
                                                     March
-                                                @elseif ($item->month == 4)
+                                                @elseif ($months->month == 4)
                                                     April
-                                                @elseif ($item->month == 5)
+                                                @elseif ($months->month == 5)
                                                     May
-                                                @elseif ($item->month == 6)
+                                                @elseif ($months->month == 6)
                                                     June
-                                                @elseif ($item->month == 7)
+                                                @elseif ($months->month == 7)
                                                     July
-                                                @elseif ($item->month == 8)
+                                                @elseif ($months->month == 8)
                                                     August
-                                                @elseif ($item->month == 9)
+                                                @elseif ($months->month == 9)
                                                     September
-                                                @elseif ($item->month == 10)
+                                                @elseif ($months->month == 10)
                                                     October
-                                                @elseif ($item->month == 11)
+                                                @elseif ($months->month == 11)
                                                     November
-                                                @elseif ($item->month == 12)
+                                                @elseif ($months->month == 12)
                                                     December
                                                 @endif
-                                                </td>
-                                                <td>{{ $item->flat_name }}</td>
-                                                <td class="text-right">
-                                                    @if ( @empty($item->paid ))
-                                                        00
-                                                    @else
-                                                    {{ $item->paid }}
-                                                    @endif
-                                                </td>
-                                                @if ($user)
-                                                <td class="text-center">{{ $userName->name }}</td>
-                                                @elseif ($customer)
-                                                {{-- <td>{{ $customerName->name }}</td> --}}
-                                                <td class="text-right">{{ $item->due }}</td>
-                                                <td class="text-center"><span class="badge badge-success">Admin</span>
-                                                    </td>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th width="8%">Sl</th>
+                                                <th>Income Head</th>
+                                                <th width="20%">Total Income</th>
+                                                {{-- <th class="text-center">Total expense</th>
+                        <th class="text-center">Balance</th>
+                        <th class="text-center">Flag</th> --}}
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">0</td>
+                                                <td class="text-left">{{ $months->charge }}</td>
+                                                <td class="text-right">{{ $data }}</td>
+                                            </tr>
+                                            @foreach ($others_income as $key => $item)
+                                            @php
+                                                $others_total = App\Models\OthersIncome::where('month', $item->month)->where('year', $item->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
+                                            @endphp
+                                                <tr>
+                                                    <td class="text-center">{{ $key + 1 }}</td>
+                                                    <td class="text-left">{{ $item->income_info }}</td>
+                                                    <td class="text-right">{{ $item->amount }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2" class="text-right"><strong>Total : </strong></td>
+                                                @if (isset($others_total))
+                                                <td colspan="2" class="text-right"><strong>{{$data + $others_total}}</strong></td>
+                                                @else
+                                                <td colspan="2" class="text-right"><strong>{{$data }}</strong></td>
+                                                    
                                                 @endif
                                             </tr>
-                                          
-                                            @endforeach
-                                    </tbody>
-                                    {{-- <tfoot> --}}
-                                        {{-- <tr>
-                                            <td colspan="3"><strong>Total = </strong></td>
-                                            <td>{{$total}}</td>
-                                        </tr> --}}
-                                    {{-- </tfoot> --}}
-                                </table>
-                            </div>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            @else
+                            @endif
                         </div>
                     </div>
                 </div>
