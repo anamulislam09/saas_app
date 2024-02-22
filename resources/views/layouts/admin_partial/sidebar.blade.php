@@ -139,7 +139,7 @@
 
                     {{-- Expense management ends here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('expense.create') || Request::routeIs('expense-summary.index') ? 'menu-open active' : '' }}">
+                        class="nav-item {{ Request::routeIs('expense.create') || Request::routeIs('expense-summary.index')|| Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>

@@ -20,14 +20,14 @@ class VoucherController extends Controller
 
     public function CollectionAll(Request $request)
     { // show collection 
-        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('status', 1)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
         if (!$isExist) {
             return redirect()->back()->with('message', 'Data Not Found');
         } else {
-            $data = Income::where('month', $request->month)->where('year', $request->year)->where('status', 1)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            $months = Income::where('month', $request->month)->where('year', $request->year)->where('status', 1)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            $data = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+            $months = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', Auth::guard('admin')->user()->id)->first();
 
-            return redirect()->back()->with(['data'=>$data,'months'=>$months]);
+            return redirect()->back()->with(['data' => $data, 'months' => $months]);
         }
     }
 
@@ -48,10 +48,10 @@ class VoucherController extends Controller
             $months = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
             //    dd($month->month);
             // return view('admin.accounts.expense_voucher', compact('data', 'months'));
-            return redirect()->back()->with(['data'=>$data,'months'=>$months]);
+            return redirect()->back()->with(['data' => $data, 'months' => $months]);
         }
     }
-    
+
     // BalanceSheet
     public function BalanceSheet()
     {
@@ -73,14 +73,14 @@ class VoucherController extends Controller
             $months = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
             //    dd($month->month);
             // return view('admin.accounts.expense_voucher', compact('data', 'months'));
-            return redirect()->back()->with(['data'=>$data,'months'=>$months]);
+            return redirect()->back()->with(['data' => $data, 'months' => $months]);
         }
     }
 
-     // Expense rreport 
-     public function Incomes()
-     {
-         $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('month', 'DESC')->get();
-         return view('admin.accounts.incomes', compact('data'));
-     }
+    // Expense rreport 
+    public function Incomes()
+    {
+        $data = Income::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('month', 'DESC')->get();
+        return view('admin.accounts.incomes', compact('data'));
+    }
 }

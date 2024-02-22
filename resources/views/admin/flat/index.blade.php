@@ -53,7 +53,7 @@
                                                                 Flat Not Found!
                                                             </h3>
                                                             <p>Pls! Flat created first</p>
-                                                            <a href="{{ route('users.index') }}" class="link_404">Create
+                                                            <a href="{{ route('users.index') }}" class="link_404 btn btn-primary">Create
                                                                 Flat</a>
                                                         </div>
                                                     </div>

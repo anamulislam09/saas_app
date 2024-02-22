@@ -227,7 +227,6 @@ class IncomeController extends Controller
                 }
             }
 
-
             Income::where('month', $month)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $flat_id)->update($item);
             return redirect()->route('income.collection')->with('message', 'Collection successful');
         }

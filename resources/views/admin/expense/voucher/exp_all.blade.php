@@ -14,7 +14,7 @@
 
     .header-section {
       width: 100%;
-      height: 100px;
+      height: 150px;
     }
 
     .logo {
@@ -107,7 +107,7 @@
       justify-content: space-between;
       display: block;
       padding: 15px 0px;
-      padding-bottom: 25px
+      padding-bottom: 25px;
       width: 100%;
       /* background: #fb5200; */
     }
@@ -146,7 +146,7 @@
       </div>
     </div>
 
-    <div class="bodyInfo">
+    {{-- <div class="bodyInfo">
       <div class="left-text">
         <p>Name : {{ $inv->name }}</p>
         <p>Phone : {{ $inv->phone }}</p>
@@ -156,7 +156,7 @@
         <p>Voucher No : {{ $inv->voucher_id }}</p>
         <p>Voucher Date :{{ $inv->date }}</p>
       </div>
-    </div>
+    </div> --}}
     <div class="body">
       <table>
         <thead>
@@ -167,15 +167,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style="text-align: center">1</td>
-            <td colspan="2">{{ $exp_name->name }}</td>
-            <td style="text-align: center">{{ $inv->amount }}</td>
-          </tr>
+            @foreach ($inv as $key => $item)
+            @php
+                $exp_name = App\Models\Category::where('id', $item->cat_id)->first();
+                $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                              ->where('month', $item->month)
+                              ->where('year', $item->year)
+                              ->where('cat_id', $item->cat_id)
+                              ->sum('amount');
+            @endphp
+            <tr>
+                <td style="text-align: center">{{$key+1}}</td>
+                <td colspan="2">{{ $exp_name->name }}</td>
+                <td style="text-align: center">{{ $amount }}</td>
+              </tr>
+            @endforeach
+         
           <tr>
             <td colspan="2">Payment Method :</td>
             <td style="text-align: center">Total Amount</td>
-            <td style="text-align: center">{{ $inv->amount }}</td>
+            <td style="text-align: center">{{ $total }}</td>
           </tr>
         </tbody>
       </table>

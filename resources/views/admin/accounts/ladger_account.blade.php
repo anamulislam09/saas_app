@@ -92,7 +92,7 @@
                                                 @endif
                                             @else
                                                 @if (!$openingBlance && !$manualOpeningBlance)
-                                                    <td><strong>00</strong></td>
+                                                    <td><strong>0</strong></td>
                                                 @elseif (!$openingBlance && $manualOpeningBlance)
                                                     {{-- <td><strong>000</strong></td> --}}
                                                     @if ($manualOpeningBlance->flag == 1)
@@ -146,7 +146,7 @@
                                             @if (count($expense) > 0)
                                                 <td><strong>{{ $total }}</strong></td>
                                             @else
-                                                <td><strong>00</strong></td>
+                                                <td><strong>0</strong></td>
                                             @endif
                                             <td></td>
                                             <td></td>

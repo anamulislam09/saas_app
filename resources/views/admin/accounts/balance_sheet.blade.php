@@ -16,7 +16,7 @@
                       @csrf
                       <div class="row my-4">
                         <div class="col-lg-3">
-                          <strong><span>Create voucher </span></strong>
+                          <strong><span>Balance Sheet </span></strong>
                         </div>
                         <div class="col-lg-3">
                           {{-- <label for="" class="col-form-label">Select Year</label> --}}

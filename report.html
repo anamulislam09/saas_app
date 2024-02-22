@@ -1,222 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <style>
-            .container {
-                width: 90%;
-                margin: auto;
-            }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-            .header-section {
-                width: 100%;
-                height: 100px;
-            }
+  <style>
+    .container {
+      width: 90%;
+      margin: auto;
+    }
 
-            .logo {
-                width: 25%;
-                float: left;
-            }
+    .header-section {
+      width: 100%;
+      height: 100px;
+    }
 
-            .header-text {
-                width: 40%;
-                float: left;
-                text-align: center;
-            }
+    .logo {
+      width: 25%;
+      float: left;
+    }
 
-            .status {
-                width: 35%;
-                float: right;
-                text-align: end;
-            }
+    .header-text {
+      width: 40%;
+      float: left;
+      text-align: center;
+    }
 
-            .header-text h1 {
-                font-family: arial;
-                margin-bottom: -6px;
-            }
+    .status {
+      width: 35%;
+      float: right;
+      text-align: end;
 
-            .header-text p {
-                margin: 0px 10px;
-            }
+    }
 
-            .status h2 {
-                padding: 10px 0px;
-                background: #ddd;
-                text-align: center;
-                width: 100%;
-            }
+    .header-text h1 {
+      font-family: arial;
+      margin-bottom: -6Px;
+    }
 
-            /* table style start here  */
-            .voucher-body,
-            td,
-            th {
-                border: 1px solid;
-            }
 
-            .voucher-body {
-                width: 100%;
-                border-collapse: collapse;
-            }
+    .header-text p {
+      margin: 0px 10px;
+    }
 
-            .left-table,tr,td{
-                border:none;
-            }
+    .status h2 {
+      padding: 10px 0px;
+      background: #5ac1e0;
+      text-align: center;
+      width: 100%;
+    }
 
-            /* table style ends here  */
+    /* table style start here  */
+    table,
+    td,
+    th {
+      border: 1px solid;
+    }
 
-            .Prepared {
-                width: 33.33%;
-                float: left;
-            }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-            .Prepared h4 {
-                border-top: 2px solid black;
-                width: 45%;
-                text-align: center;
-            }
+    /* table style ends here  */
 
-            .Approved {
-                width: 33.33%;
-                float: left;
-                text-align: -webkit-center;
-            }
+    .Prepared {
+      width: 33.33%;
+      float: left;
+    }
 
-            .Approved h4 {
-                border-top: 2px solid black;
-                width: 45%;
-                text-align: center;
-            }
+    .Prepared h4 {
+      border-top: 2px solid black;
+      width: 45%;
+      text-align: center;
+    }
 
-            .Recipient {
-                width: 33.33%;
-                float: left;
-                text-align: -webkit-right;
-            }
+    .Approved {
+      width: 33.33%;
+      float: left;
+      text-align: -webkit-center;
+    }
 
-            .Recipient h4 {
-                border-top: 2px solid black;
-                width: 70%;
-                text-align: center;
-            }
+    .Approved h4 {
+      border-top: 2px solid black;
+      width: 45%;
+      text-align: center;
+    }
 
-            /* body text start here  */
-            .bodyInfo {
-                display: flex;
-                justify-content: space-between;
-                /* display: block; */
-                padding: 20px 0px;
-                width: 100%;
-                /* background: #fb5200; */
-            }
+    .Recipient {
+      width: 33.33%;
+      float: left;
+      text-align: -webkit-right;
+    }
 
-            .left-text {
-                width: 70%;
-                float: left;
-            }
+    .Recipient h4 {
+      border-top: 2px solid black;
+      width: 70%;
+      text-align: center;
+    }
 
-            .righrightt-text {
-                width: 30%;
-                float: left;
-            }
+    /* body text start here  */
+    .bodyInfo {
+      display: flex;
+      justify-content: space-between;
+      display: block;
+      padding: 15px 0px;
+      margin-bottom: 16px;
+      width: 100%;
+      /* background: #fb5200; */
+    }
 
-            /* body text ends here  */
-        </style>
-    </head>
+    .left-text {
+      width: 70%;
+      float: left;
+    }
 
-    <body>
-        <div class="container">
-            <div class="header-section">
-                <div class="logo">
-                    <h3>{{ $customer->name }}</h3>
-                    {{-- <img src="" alt="$customer->name " /> --}}
-                </div>
-                <div class="header-text">
-                    <h1>{{ $customer->name }}</h1>
-                    <p>{{ $custDetails->address }}</p>
-                    <p>{{ $custDetails->phone }}</p>
-                    <p>{{ $customer->email }}</p>
-                </div>
+    .righrightt-text {
+      width: 30%;
+      float: left;
+    }
 
-                <div class="status">
-                    <h2>Payment Voucher</h2>
-                </div>
-            </div>
-            <div class="bodyInfo">
-                <div class="left-text">
-                    <table class="left-table">
-                        <tr>
-                            <td>Name</td>
-                            <td>:</td>
-                        </tr>
-                        <tr>
-                            <td>Phone</td>
-                            <td>:</td>
-                        </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td>:</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="right-text">
-                    <table class="left-table">
-                        <tr>
-                            <td>Voucher No</td>
-                            <td>:</td>
-                            <td>{{ rand(999, 9999) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Voucher Date</td>
-                            <td>:</td>
-                            <td>{{ $date }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+    /* body text ends here  */
+  </style>
+</head>
 
-            <div class="body">
-                <table class="voucher-body">
-                    <thead>
-                        <tr>
-                            <th>SL#</th>
-                            <th colspan="2">Payment Info</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td colspan="2">{{ $exp->name }}</td>
-                            <td>{{ $exp->amount }}</td>
-                            <td>paid</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Payment Method :</td>
-                            <td>Total Amount</td>
-                            <td>fghfg</td>
-                            <td>Paid</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="textAmount">
-                    <h3>In Word :</h3>
-                </div>
-            </div>
-            <div class="footer">
-                <div class="Prepared">
-                    <h4>Prepared by</h4>
-                </div>
-                <div class="Approved">
-                    <h4>Approved by</h4>
-                </div>
-                <div class="Recipient">
-                    <h4>Recipient Signature</h4>
-                </div>
-            </div>
-        </div>
-    </body>
+<body>
+  <div class="container">
+    <div class="header-section">
+      <div class="logo">
+        <h3>{{ $customer->name }}</h3>
+        {{-- <img src="" alt="$customer->name "> --}}
+      </div>
+
+      <div class="header-text">
+        <h1>{{ $customer->name }}</h1>
+        <p>{{ $custDetails->address }}</p>
+        <p>{{ $custDetails->phone }}</p>
+        <p>{{ $customer->email }}</p>
+      </div>
+
+      <div class="status">
+        <h2>Payment Voucher</h2>
+      </div>
+    </div>
+
+    <div class="bodyInfo">
+      <div class="left-text">
+        <p>Name : {{ $inv->name }}</p>
+        <p>Phone : {{ $inv->phone }}</p>
+        <p>Address : {{ $inv->address }}</p>
+      </div>
+      <div class="right-text">
+        <p>Voucher No : {{ $inv->voucher_id }}</p>
+        <p>Voucher Date :{{ $inv->date }}</p>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>SL#</th>
+            <th colspan="2">Payment Info</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: center">1</td>
+            <td colspan="2">{{ $exp_name->name }}</td>
+            <td style="text-align: center">{{ $inv->amount }}</td>
+          </tr>
+          <tr>
+            <td colspan="2">Payment Method :</td>
+            <td style="text-align: center">Total Amount</td>
+            <td style="text-align: center">{{ $inv->amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="textAmount">
+        <h3>In Word :</h3>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="Prepared">
+        <h4>Prepared by</h4>
+      </div>
+      <div class="Approved">
+        <h4>Approved by</h4>
+      </div>
+      <div class="Recipient">
+        <h4>Recipient Signature</h4>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>

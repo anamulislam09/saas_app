@@ -39,7 +39,7 @@
                     @endif </h3>
                   </div>
                   <div class="col-lg-2 col-sm-12">
-                    <a href="" class="btn btn-sm btn-info">General Voucher</a>
+                    <a href="{{route('expense.voucher.generateall')}}" class="btn btn-sm btn-info">General Voucher</a>
 
                       {{-- <a href="" class="btn btn-sm btn-info text-center edit" data-id="{{ $item->id }}"
                         data-toggle="modal" data-target="#editUser">General vouchar</a> --}}

@@ -19,7 +19,6 @@ class BlanceController extends Controller
     // OpeningBalance
     public function OpeningBalance()
     {
-        // $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->get();
         return view('admin.accounts.opening_balance');
     }
 
@@ -73,16 +72,7 @@ class BlanceController extends Controller
     public function BalanceSheet()
     {
         $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->get();
-        // $expense = Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
         return view('admin.report.balanceSheet', compact('data'));
     }
-
-    // Expense rreport 
-    // public function Expenses()
-    // {
-    //     $expDetails = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('id', 'DESC')->get();
-    //     return view('admin.report.expenses', compact('expDetails'));
-    // }
-
 
 }

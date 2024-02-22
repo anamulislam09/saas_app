@@ -100,8 +100,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/expense-details/delate/{id}', [ExpDetailController::class, 'Delate'])->name('expense-details.delate');
 
     Route::get('/expense-summary', [ExpDetailController::class, 'Index'])->name('expense-summary.index');
-    // generate  voucher
-    Route::get('/expense/generate-voucher/{id}', [PdfGeneratorController::class, 'Voucher'])->name('expense.voucher');
+
+                /*------------------------- expense voucher route srtart here-------------------------*/
+    Route::get('/expense/create-voucher/{id}', [PdfGeneratorController::class, 'CreateVoucher'])->name('expense.voucher.create');
+    Route::post('/expense/generate-voucher', [PdfGeneratorController::class, 'GenerateVoucher'])->name('expense.voucher.generate');
+    Route::get('/expense/generate-voucher-all', [PdfGeneratorController::class, 'GenerateVoucherAll'])->name('expense.voucher.generateall');
 
     //    Expense route 
     // Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');

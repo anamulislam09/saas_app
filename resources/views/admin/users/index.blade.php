@@ -57,7 +57,7 @@
                                         <th>User Id</th>
                                         {{-- <th width="10%">Customer_Id</th> --}}
                                         <th>User Name</th>
-                                        <th>Flat_name</th>
+                                        <th>Flat_Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>NID</th>
