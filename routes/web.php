@@ -101,11 +101,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
     Route::get('/expense-summary', [ExpDetailController::class, 'Index'])->name('expense-summary.index');
 
-                /*------------------------- expense voucher route srtart here-------------------------*/
-    Route::get('/expense/create-voucher/{id}', [PdfGeneratorController::class, 'CreateVoucher'])->name('expense.voucher.create');
-    Route::post('/expense/generate-voucher', [PdfGeneratorController::class, 'GenerateVoucher'])->name('expense.voucher.generate');
-    Route::get('/expense/generate-voucher-all', [PdfGeneratorController::class, 'GenerateVoucherAll'])->name('expense.voucher.generateall');
-
     //    Expense route 
     // Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');
     // Route::get('/expense-summary/store', [ExpenseController::class, 'Store'])->name('expense-summary.store');
@@ -131,6 +126,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/income/store', [IncomeController::class, 'Store'])->name('income.store');
     Route::get('/income/collection', [IncomeController::class, 'Collection'])->name('income.collection');
     Route::post('/income/collection/store/', [IncomeController::class, 'StoreCollection'])->name('income.collection.store');
+
+
+    /*------------------------- Expense voucher route srtart here-------------------------*/
+    // Expense Management 
+    Route::get('/expense/create-voucher/{id}', [PdfGeneratorController::class, 'CreateVoucher'])->name('expense.voucher.create');
+    Route::post('/expense/generate-voucher', [PdfGeneratorController::class, 'GenerateVoucher'])->name('expense.voucher.generate');
+    Route::get('/expense/generate-voucher-all', [PdfGeneratorController::class, 'GenerateVoucherAll'])->name('expense.voucher.generateall');
+    // Expense Accounts 
+    Route::post('/account/expense-voucher-all', [PdfGeneratorController::class, 'GenerateExpenseVoucherAll'])->name('account.expense.voucher.generateall');
+    /*------------------------- expense voucher route srtart here-------------------------*/
+
+    /*------------------------- income voucher route start here-------------------------*/
+    Route::get('/income/generate-voucher/{id}', [PdfGeneratorController::class, 'GenerateIncomeVoucher'])->name('income.voucher.generate');
+    Route::post('/income/generate-voucher-all', [PdfGeneratorController::class, 'GenerateIncomeVoucherAll'])->name('income.voucher.generateall');
+    /*------------------------- income voucher route ends here-------------------------*/
 
     /*--------------- Accounts voucher route start here ------------------*/
     // collection

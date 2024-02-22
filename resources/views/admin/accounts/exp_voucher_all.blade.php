@@ -14,7 +14,7 @@
 
         .header-section {
             width: 100%;
-            height: 100px;
+            height: 150px;
         }
 
         .logo {
@@ -107,13 +107,15 @@
             justify-content: space-between;
             display: block;
             padding: 15px 0px;
-            padding-bottom: 25px width: 100%;
+            padding-bottom: 25px;
+            width: 100%;
             /* background: #fb5200; */
         }
 
         .left-text {
             width: 70%;
             float: left;
+            line-height: 10px;
         }
 
         .righrightt-text {
@@ -141,55 +143,79 @@
             </div>
 
             <div class="status">
-                <h2>Money Receipt</h2>
-            </div>
-        </div>
-
-        <div class="bodyInfo">
-            <div class="left-text">
-                <p>Mr No : {{ rand(999, 99999) }}</p>
-                <p>name : {{ $user->name }}</p>
-                <p>Flat_name : {{ $inv->flat_name }}</p>
-            </div>
-            <div class="right-text">
-                <p>Barcode</p>
-                <p>Date :{{ date('m/d/y') }}</p>
+                <h2>Payment Voucher</h2>
             </div>
         </div>
         <div class="body">
-            <p>Amount <span style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span> in word
-                ................ of the month of <span style="border-bottom: 2px dotted #000; padding:0px 30px">
-                    @if ($inv->month == 1)
-                        January
-                    @elseif ($inv->month == 2)
-                        February
-                    @elseif ($inv->month == 3)
-                        March
-                    @elseif ($inv->month == 4)
-                        April
-                    @elseif ($inv->month == 5)
-                        May
-                    @elseif ($inv->month == 6)
-                        June
-                    @elseif ($inv->month == 7)
-                        July
-                    @elseif ($inv->month == 8)
-                        August
-                    @elseif ($inv->month == 9)
-                        September
-                    @elseif ($inv->month == 10)
-                        October
-                    @elseif ($inv->month == 11)
-                        November
-                    @elseif ($inv->month == 12)
-                        December
-                    @endif {{ $inv->year }}
-                </span>
-            </p>
+            <p>Total expense month of the <strong><span>
+                @if ($month->month == 1)
+                    January
+                @elseif ($month->month == 2)
+                    February
+                @elseif ($month->month == 3)
+                    March
+                @elseif ($month->month == 4)
+                    April
+                @elseif ($month->month == 5)
+                    May
+                @elseif ($month->month == 6)
+                    June
+                @elseif ($month->month == 7)
+                    July
+                @elseif ($month->month == 8)
+                    August
+                @elseif ($month->month == 9)
+                    September
+                @elseif ($month->month == 10)
+                    October
+                @elseif ($month->month == 11)
+                    November
+                @elseif ($month->month == 12)
+                    December
+                @endif {{ $month->year }}
+            </span> <strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>SL#</th>
+                        <th colspan="2">Payment Info</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($inv as $key => $item)
+                        @php
+                            $exp_name = App\Models\Category::where('id', $item->cat_id)->first();
+                            $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                                ->where('month', $item->month)
+                                ->where('year', $item->year)
+                                ->where('cat_id', $item->cat_id)
+                                ->sum('amount');
+                        @endphp
+                        <tr>
+                            <td style="text-align: center">{{ $key + 1 }}</td>
+                            <td colspan="2">{{ $exp_name->name }}</td>
+                            <td style="text-align: center">{{ $amount }}</td>
+                        </tr>
+                    @endforeach
+
+                    <tr>
+                        <td colspan="2">Payment Method :</td>
+                        <td style="text-align: center">Total Amount</td>
+                        <td style="text-align: center">{{ $total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="textAmount">
+                <h3>In Word :</h3>
+            </div>
         </div>
         <div class="footer">
             <div class="Prepared">
                 <h4>Prepared by</h4>
+            </div>
+            <div class="Approved">
+                <h4>Approved by</h4>
             </div>
             <div class="Recipient">
                 <h4>Recipient Signature</h4>

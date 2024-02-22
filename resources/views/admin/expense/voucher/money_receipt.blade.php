@@ -53,15 +53,8 @@
         }
 
         /* table style start here  */
-        table,
-        td,
-        th {
-            border: 1px solid;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .body {
+            padding: 10px 0px;
         }
 
         /* table style ends here  */
@@ -114,6 +107,7 @@
         .left-text {
             width: 70%;
             float: left;
+            line-height: 10px;
         }
 
         .righrightt-text {
@@ -157,8 +151,8 @@
             </div>
         </div>
         <div class="body">
-            <p>Amount <span style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span> in word
-                ................ of the month of <span style="border-bottom: 2px dotted #000; padding:0px 30px">
+            <p>Amount <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span></strong> in word
+                ................ of the month of <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">
                     @if ($inv->month == 1)
                         January
                     @elseif ($inv->month == 2)
@@ -184,7 +178,7 @@
                     @elseif ($inv->month == 12)
                         December
                     @endif {{ $inv->year }}
-                </span>
+                </span> <strong>
             </p>
         </div>
         <div class="footer">

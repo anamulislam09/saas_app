@@ -172,6 +172,9 @@
                                                     @if (!$openingBlance && !$manualOpeningBlance && !$others_income)
                                                         <strong
                                                             style="border-right:1px solid #ddd">{{ $income - $total }}</strong>
+                                                    @elseif (!$openingBlance && !$manualOpeningBlance && $others_income)
+                                                        <strong
+                                                            style="border-right:1px solid #ddd">{{ $income + $others_income - $total }}</strong>
                                                     @elseif (!$openingBlance && $manualOpeningBlance)
                                                         @if ($manualOpeningBlance->flag == 1)
                                                             <strong

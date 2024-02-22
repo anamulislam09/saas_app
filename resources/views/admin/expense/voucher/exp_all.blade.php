@@ -115,6 +115,7 @@
     .left-text {
       width: 70%;
       float: left;
+      line-height: 10px;
     }
 
     .righrightt-text {

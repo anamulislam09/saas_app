@@ -16,7 +16,7 @@ class ExpenseVoucher extends Model
         'date',
         'customer_id',
         'auth_id',
-        'exp_id',
+        'cat_id',
         'amount',
         'name',
         'phone',

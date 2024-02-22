@@ -103,7 +103,7 @@
                   <div class="card">
                     <div class="card-header">
                       <div class="row">
-                        <div class="col-9">
+                        <div class="col-10">
                           <strong> Total expenses month of @if ($months->month == 1)
                               January
                             @elseif ($months->month == 2)
@@ -130,9 +130,17 @@
                               December
                             @endif </strong>
                         </div>
-                        <div class="col-3">
-                          <a href="#" class="btn btn-info text-end">Generate all</a>
-                        </div>
+                        <div class="col-2">
+                          <form action="{{ route('account.expense.voucher.generateall') }}" method="post">
+                              @csrf
+                              <input type="hidden" name="month" value="{{ $months->month }}">
+                              <input type="hidden" name="year" value="{{ $months->year }}">
+
+                              <label for="" class="col-form-label"></label>
+                              <input type="submit" class="btn btn-info text-end"
+                                  value="Generate all">
+                          </form>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -143,7 +151,7 @@
                         <th style="width: 8%">SL</th>
                         <th >Expense</th>
                         <th style="width: 20%" class="text-right">Amount</th>
-                        <th style="width: 20%" class="text-center">Action</th>
+                        {{-- <th style="width: 20%" class="text-center">Action</th> --}}
                       </tr>
                     </thead>
                     <tbody>
@@ -168,8 +176,8 @@
                           <td class="text-right">
                             {{ $sub_total }}
                           </td>
-                          <td class="text-center"><a href="#" class="btn btn-sm btn-info">Voucher</a>
-                          </td>
+                          {{-- <td class="text-center"><a href="#" class="btn btn-sm btn-info">Voucher</a>
+                          </td> --}}
                         </tr>
                       @endforeach
                     </tbody>

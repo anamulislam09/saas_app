@@ -81,7 +81,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="text-center">0</td>
+                                                <td class="text-center">1</td>
                                                 <td class="text-left">{{ $year->charge }}</td>
                                                 <td class="text-right">{{ $data }}</td>
                                             </tr>
@@ -90,7 +90,7 @@
                                                 $others_total = App\Models\OthersIncome::where('year', $item->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
                                             @endphp
                                                 <tr>
-                                                    <td class="text-center">{{ $key + 1 }}</td>
+                                                    <td class="text-center">{{ $key + 2 }}</td>
                                                     <td class="text-left">{{ $item->income_info }}</td>
                                                     <td class="text-right">{{ $item->amount }}</td>
                                                 </tr>
