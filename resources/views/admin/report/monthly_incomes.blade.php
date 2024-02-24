@@ -87,13 +87,14 @@
                             @php
                                 $data = Session::get('monthly_income');
                                 $months = Session::get('months');
+                                $opening_balance = Session::get('opening_balance');
                                 $others_income = Session::get('others_income');
                             @endphp
 
                             @if (isset($data) && !empty($data))
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-lg-10 col-sm-12">
+                                        <div class="col-lg-8 col-sm-6">
                                             <h3 class="card-title">Total Income month of
                                                 @if ($months->month == 1)
                                                     January
@@ -122,6 +123,17 @@
                                                 @endif
                                             </h3>
                                         </div>
+
+                                        <div class="col-lg-4 col-sm-6">
+                                            @if (isset($opening_balance) && !empty($data))
+                                              @if ($opening_balance->flag == 1)
+                                                <h3 class="card-title"><strong>Opening Balance {{ $opening_balance->profit }}</strong></h3>
+                                              @else
+                                                <h3 class="card-title"><strong>Opening Loss {{ $opening_balance->loss }}</strong></h3>
+                                              @endif
+                                            @else
+                                            @endif
+                                          </div>
                                     </div>
                                 </div>
                                 <!-- /.card-header -->

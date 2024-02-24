@@ -142,7 +142,11 @@
         <div class="bodyInfo">
             <div class="left-text">
                 <p>Mr No : {{ rand(999, 99999) }}</p>
-                <p>name : {{ $user->name }}</p>
+               @isset($user->name)
+               <p>name : {{ $user->name }}</p>
+                @endisset
+               
+                <p>name : ..........</p>
                 <p>Flat_name : {{ $inv->flat_name }}</p>
             </div>
             <div class="right-text">

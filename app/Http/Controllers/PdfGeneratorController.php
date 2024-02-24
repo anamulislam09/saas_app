@@ -108,19 +108,15 @@ class PdfGeneratorController extends Controller
     }
 
     // Income Management generate all income voucher 
-    public function GenerateExpenseVoucherAll(Request $request)
+    public function GenerateIncomeVoucherAll(Request $request)
     {
-        $inv = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
-        $total = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->sum('amount');
-        $month = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
+        $inv = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->get();
         // $user = User::where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $inv->flat_id)->first();
         $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
 
         $data = [
             'inv' => $inv,
-            'total' => $total,
-            'month' => $month,
             'customer' => $customer,
             'custDetails' => $custDetails,
         ];

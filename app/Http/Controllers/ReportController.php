@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exp_detail;
 use App\Models\Expense;
 use App\Models\Income;
+use App\Models\OpeningBalance;
 use App\Models\OthersIncome;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,9 +69,10 @@ class ReportController extends Controller
         } else {
             $monthly_income = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
             $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            $opening_balance = OpeningBalance::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $others_income = OthersIncome::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            // dd($months);
-            return redirect()->back()->with(['monthly_income' => $monthly_income, 'months' => $months, 'others_income' => $others_income]);
+            dd($opening_balance);
+            return redirect()->back()->with(['monthly_income' => $monthly_income, 'months' => $months, 'others_income' => $others_income, 'opening_balance' => $opening_balance]);
         }
     }
     // Report for Monthly income
@@ -89,9 +91,10 @@ class ReportController extends Controller
         } else {
             $yearly_income = Income::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
             $year = Income::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            $opening_balance = OpeningBalance::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $others_income = OthersIncome::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
             // dd($months);
-            return redirect()->back()->with(['yearly_income' => $yearly_income, 'year' => $year, 'others_income' => $others_income]);
+            return redirect()->back()->with(['yearly_income' => $yearly_income, 'opening_balance' => $opening_balance, 'year' => $year, 'others_income' => $others_income]);
         }
     }
       // Report for yearly income
