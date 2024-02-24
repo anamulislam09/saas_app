@@ -86,7 +86,7 @@
                                 <a href="{{ route('flat.create') }}"
                                     class="nav-link {{ Request::routeIs('flat.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Create Flat</p>
+                                    <p>New Flat</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -358,7 +358,7 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('all.permission') }}" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>All Permission</p>
                                 </a>

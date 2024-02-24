@@ -43,6 +43,13 @@ Route::get('/admin/register', [AdminController::class, 'AdminRegister'])->name('
 Route::post('/admin/register/store', [AdminController::class, 'Store'])->name('admin.store');
 // admin register route ends here 
 
+// Customer Forgate password route start here 
+Route::get('/admin/forgot-password', [AdminController::class, 'Forgot'])->name('admin.forgot-password');
+Route::post('/admin/forgot-password/create', [AdminController::class, 'ForgotPassword'])->name('admin.forgot-password.create');
+Route::get('/admin/reset/{token}', [AdminController::class, 'reset']);
+Route::post('/admin/reset/{token}', [AdminController::class, 'PostReset']);
+// Customer Forgate password route ends here 
+
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
 
@@ -55,8 +62,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
 
     //    Permission route 
-    Route::get('/all-permission', [RoleController::class, 'AllPermission'])->name('all.permission');
-    Route::get('/permission/create', [UserController::class, 'Create'])->name('permission.create');
+    // Route::get('/all-permission', [RoleController::class, 'AllPermission'])->name('all.permission');
+    // Route::get('/permission/create', [RoleController::class, 'Create'])->name('permission.create');
     //   Route::post('/user/update', [UserController::class, 'Update'])->name('user.update');
     //   Route::post('/user/delete', [UserController::class, 'Destroy'])->name('user.delete');
 
@@ -185,13 +192,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
 /*---------------- Customer route ends here ------------------*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

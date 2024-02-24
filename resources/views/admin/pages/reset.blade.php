@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin | Login</title>
+    <title>Reset-Password</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -24,7 +24,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ route('login_form') }}" class="h1"><b>Admin</b>Login</a>
+                <a href="{{ route('login_form') }}" class="h1">Reset-Password</a>
             </div>
             <div class="card-body">
                 {{-- <p class="login-box-msg">Admin Login Panel</p> --}}
@@ -35,17 +35,8 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('admin.login') }}">
+                <form method="POST" action="">
                     @csrf
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" name="email" :value="old('email')" required
-                            autofocus placeholder="Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" name="password" required
                             autocomplete="current-password"placeholder="Password">
@@ -55,37 +46,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" name="confirm_password" required
+                            autocomplete="cconfirm-password"placeholder="confirm_Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <!-- /.col -->
+                    </div>
+                    <div class="row">
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">Reset</button>
                         </div>
-                        <!-- /.col -->
                     </div>
                 </form>
-<div class="row">
-    <div class="col-6 mt-4"><p>
-        @if (Route::has('password.request'))
-            <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                href="{{ route('admin.forgot-password') }}">
-                {{ __('Forgot your password?') }}
-            </a>
-        @endif
-    </p></div>
-    <div class="col-6 mt-4">
-        <a href="{{route('register_form')}}" class="float-right">Create account?</a>
-    </div>
-</div>
-        
-                <!-- /.card-body -->
+                <div class="row">
+                    <div class="col-6 mt-4">
+                        <a href="{{ route('register_form') }}" class="float-right">Create account?</a>
+                    </div>
+                </div>
             </div>
             <!-- /.card -->
         </div>
