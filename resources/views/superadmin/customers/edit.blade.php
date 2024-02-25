@@ -11,59 +11,80 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-9 col-sm-12">
-                                        <h3 class="card-title">All Permissions</h3>
+                                    <div class="col-lg-10 col-sm-12">
+                                        <h3 class="card-title">Edit Customer </h3>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12">
+                                    <div class="col-lg-2 col-sm-12">
                                         <a href="{{ route('customers.all') }}" class="btn btn-outline-primary">Cancel Edit
-                                            </a>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('customers.update') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $data->id }}">
-                                    <div class="modal-body">
-                                        <div class="mb-3 mt-3">
-                                            <label for="user_name" class="form-label"> Customer Name:</label>
-                                            <input type="text" class="form-control" value="{{ $data->name }}"
-                                                name="name">
-                                        </div>
+                                <div class="row m-auto">
+                                    <div class="col-8 m-auto" style="border: 1px solid #ddd">
+                                        <form action="{{ route('customers.update') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $data->id }}">
+                                            <div class="modal-body">
+                                                <div class="mb-3 mt-3">
+                                                    <label for="user_name" class="form-label"> Customer Name:</label>
+                                                    <input type="text" class="form-control" value="{{ $data->name }}"
+                                                        name="name">
+                                                </div>
 
-                                        @php
-                                        $details =App\Models\CustomerDetail::where('customer_id', $data->id)->first();
-                                        // dd($details);
-                                    @endphp
+                                                @php
+                                                    $details = App\Models\CustomerDetail::where('customer_id', $data->id)->first();
+                                                    // dd($details);
+                                                @endphp
 
-                                        <div class="mb-3 mt-3">
-                                            <label for="user_phone" class="form-label"> Customer phone:</label>
-                                            <input type="text" class="form-control" value="{{ $details->phone }}"
-                                                name="phone">
-                                        </div>
+                                                <div class="mb-3 mt-3">
+                                                    <label for="user_phone" class="form-label"> Customer phone:</label>
+                                                    <input type="text" class="form-control" value="{{ $details->phone }}"
+                                                        name="phone">
+                                                </div>
 
-                                        <div class="mb-3 mt-3">
-                                            <label for="user_email" class="form-label"> Customer email:</label>
-                                            <input type="email" class="form-control" value="{{ $data->email }}"
-                                                name="email">
-                                        </div>
+                                                <div class="mb-3 mt-3">
+                                                    <label for="user_email" class="form-label"> Customer email:</label>
+                                                    <input type="email" class="form-control" value="{{ $data->email }}"
+                                                        name="email">
+                                                </div>
 
-                                        <div class="mb-3 mt-3">
-                                            <label for="exampleInputEmail1"> Status </label>
-                                            <select name="status" id="" class="form-control">
-                                                    <option value="1" @if ($data->status == 1) selected @endif>Active</option>
-                                                    <option value="0" @if ($data->status == 0) selected @endif>Deactive</option>
-                                            </select>
-                                        </div>
+                                                <div class="mb-3 mt-3">
+                                                    <label for="exampleInputEmail1"> Flat Name </label>
+                                                    <select name="status" id="" class="form-control">
+                                                        <option value="1"
+                                                            @if ($flat->sequence == 1) selected @endif>
+                                                            A1,A2,A3</option>
+                                                        <option value="2"
+                                                            @if ($flat->sequence == 2) selected @endif>
+                                                            A1,B1,C1</option>
+                                                        <option value="3"
+                                                            @if ($flat->sequence == 3) selected @endif>
+                                                            1A,2A,3A</option>
+                                                    </select>
+                                                </div>
 
+                                                <div class="mb-3 mt-3">
+                                                    <label for="exampleInputEmail1"> Status </label>
+                                                    <select name="status" id="" class="form-control">
+                                                        <option value="1"
+                                                            @if ($data->status == 1) selected @endif>
+                                                            Active</option>
+                                                        <option value="0"
+                                                            @if ($data->status == 0) selected @endif>
+                                                            Deactive</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        {{-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> --}}
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
-                                </form>
-
+                                </div>
                             </div>
                         </div>
                     </div>

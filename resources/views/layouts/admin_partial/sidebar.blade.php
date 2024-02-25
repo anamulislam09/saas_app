@@ -60,16 +60,6 @@
                 @endif
 
                 @if (Auth::guard('admin')->user()->role == 1)
-                    {{-- Products start here --}}
-                    {{-- <li class="nav-item">
-                        <a href="{{ route('users.index') }}"
-                            class="nav-link {{ Request::routeIs('users.index') || Request::routeIs('users.create') || Request::routeIs('users.edit') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-circle"></i>
-                            <p>Users</p>
-                        </a>
-                    </li> --}}
-
-
 
                     {{-- flat Management ends here --}}
                     <li
@@ -100,7 +90,6 @@
                     </li>
                     {{-- flat Management ends here --}}
 
-
                     {{-- User management start here --}}
                     <li
                         class="nav-item {{ Request::routeIs('users.index') || Request::routeIs('users.create') ? 'menu-open' : '' }}">
@@ -128,15 +117,6 @@
                     </li>
                     {{-- User management ends here --}}
 
-                    {{-- Flat  start here --}}
-                    {{-- <li class="nav-item">
-                        <a href="{{ route('flat.index') }}"
-                        class="nav-link {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') || Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-circle"></i>
-                        <p>Manage flat</p>
-                    </a>
-                </li> --}}
-
                     {{-- Expense management ends here --}}
                     <li
                         class="nav-item {{ Request::routeIs('expense.create') || Request::routeIs('expense-summary.index')|| Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
@@ -162,13 +142,6 @@
                                     <p>Expense Summary</p>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('expenses.process') }}"
-                                    class="nav-link {{ Request::routeIs('expenses.process') ? 'active' : '' }}">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Process & Generete data</p>
-                                </a>
-                            </li> --}}
                         </ul>
                     </li>
                     {{-- Expenses Management start here --}}
@@ -262,21 +235,6 @@
                                     <p>Balance Sheet </p>
                                 </a>
                             </li>
-
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('monthly.blance.index') }}"
-                                    class="nav-link {{ Request::routeIs('monthly.blance.index') ? 'active' : '' }}">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Monthly Balance</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('yearly.blance.index') }}"
-                                    class="nav-link {{ Request::routeIs('yearly.blance.index') ? 'active' : '' }}">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Yearly Balance </p>
-                                </a>
-                            </li> --}}
                         </ul>
                     </li>
                     {{-- Accounts ends here --}}
@@ -348,7 +306,7 @@
                     {{-- All Setup ends here --}}
 
                     {{-- Roles & Parmission start here --}}
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -364,7 +322,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     {{-- Roles & Parmission ends here --}}
                 @endif
             </ul>

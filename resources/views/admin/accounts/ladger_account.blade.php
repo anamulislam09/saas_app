@@ -78,7 +78,7 @@
                                     @endphp
                                     <tbody>
                                         <tr>
-                                            <td colspan="4" class=""> <strong>Opening
+                                            <td colspan="5" class=""> <strong>Opening
                                                     Balance</strong></td>
                                             @if ($month == 1)
                                                 @if (!$lastYopeningBlance)
@@ -87,7 +87,7 @@
                                                     @if ($lastYopeningBlance->flag == 1)
                                                         <td><strong>{{ $lastYopeningBlance->amount }}</strong></td>
                                                     @else
-                                                        <td><strong>-{{ $lastYopeningBlance->amount }}</strong></td>
+                                                        <td><strong>({{ $lastYopeningBlance->amount }})</strong></td>
                                                     @endif
                                                 @endif
                                             @else
@@ -98,17 +98,16 @@
                                                     @if ($manualOpeningBlance->flag == 1)
                                                         <td><strong>{{ $manualOpeningBlance->profit }}</strong></td>
                                                     @else
-                                                        <td><strong>-{{ $manualOpeningBlance->loss }}</strong></td>
+                                                        <td><strong>({{ $manualOpeningBlance->loss }})</strong></td>
                                                     @endif
                                                 @else
                                                     @if ($openingBlance->flag == 1)
                                                         <td><strong>{{ $openingBlance->amount }}</strong></td>
                                                     @else
-                                                        <td><strong>-{{ $openingBlance->amount }}</strong></td>
+                                                        <td><strong>({{ $openingBlance->amount }})</strong></td>
                                                     @endif
                                                 @endif
                                             @endif
-                                            <td></td>
                                         </tr>
                                         @if (count($expense) > 0)
                                             @foreach ($expense as $key => $item)

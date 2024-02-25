@@ -11,6 +11,7 @@ class Flatmaster extends Model
     protected $fillable = [
         'customer_id',
         'flat_name',
+        'sequence',
         'floor_no',
         'amount',
         'status',

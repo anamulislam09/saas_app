@@ -142,12 +142,17 @@
         <div class="bodyInfo">
             <div class="left-text">
                 <p>Mr No : {{ rand(999, 99999) }}</p>
-               @isset($user->name)
-               <p>name : {{ $user->name }}</p>
-                @endisset
+                @if (isset($user->name) && !empty($user->name))
+                    <p>name : {{ $user->name }}</p>
+                @else
+                    <p>Flat_name : {{ $inv->flat_name }}</p>
+                @endif
+                {{-- @isset($user->name) --}}
+                {{-- <p>name : {{ $user->name }}</p> --}}
+                {{-- @endisset
                
-                <p>name : ..........</p>
-                <p>Flat_name : {{ $inv->flat_name }}</p>
+                <p>name : ..........</p> --}}
+                {{-- <p>Flat_name : {{ $inv->flat_name }}</p> --}}
             </div>
             <div class="right-text">
                 <p>Barcode</p>
@@ -155,34 +160,36 @@
             </div>
         </div>
         <div class="body">
-            <p>Amount <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span></strong> in word
+            <p>Amount <strong><span
+                        style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span></strong> in
+                word
                 ................ of the month of <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">
-                    @if ($inv->month == 1)
-                        January
-                    @elseif ($inv->month == 2)
-                        February
-                    @elseif ($inv->month == 3)
-                        March
-                    @elseif ($inv->month == 4)
-                        April
-                    @elseif ($inv->month == 5)
-                        May
-                    @elseif ($inv->month == 6)
-                        June
-                    @elseif ($inv->month == 7)
-                        July
-                    @elseif ($inv->month == 8)
-                        August
-                    @elseif ($inv->month == 9)
-                        September
-                    @elseif ($inv->month == 10)
-                        October
-                    @elseif ($inv->month == 11)
-                        November
-                    @elseif ($inv->month == 12)
-                        December
-                    @endif {{ $inv->year }}
-                </span> <strong>
+                        @if ($inv->month == 1)
+                            January
+                        @elseif ($inv->month == 2)
+                            February
+                        @elseif ($inv->month == 3)
+                            March
+                        @elseif ($inv->month == 4)
+                            April
+                        @elseif ($inv->month == 5)
+                            May
+                        @elseif ($inv->month == 6)
+                            June
+                        @elseif ($inv->month == 7)
+                            July
+                        @elseif ($inv->month == 8)
+                            August
+                        @elseif ($inv->month == 9)
+                            September
+                        @elseif ($inv->month == 10)
+                            October
+                        @elseif ($inv->month == 11)
+                            November
+                        @elseif ($inv->month == 12)
+                            December
+                        @endif {{ $inv->year }}
+                    </span> <strong>
             </p>
         </div>
         <div class="footer">

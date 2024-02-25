@@ -89,6 +89,28 @@ class PdfGeneratorController extends Controller
         return $pdf->download('sdl.pdf');
     }
 
+    // Account Expense generate all voucher 
+    public function GenerateExpenseVoucherAll(Request $request)
+    {
+        $inv = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
+        $total = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->sum('amount');
+        $month = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
+       
+
+        $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
+        $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
+
+        $data = [
+            'inv' => $inv,
+            'total' => $total,
+            'month' => $month,
+            'customer' => $customer,
+            'custDetails' => $custDetails,
+        ];
+        $pdf = PDF::loadView('admin.accounts.exp_voucher_all', $data);
+        return $pdf->download('sdl_exp.pdf');
+    }
+
     // Income Management generate income voucher 
     public function GenerateIncomeVoucher($id)
     {
@@ -110,18 +132,20 @@ class PdfGeneratorController extends Controller
     // Income Management generate all income voucher 
     public function GenerateIncomeVoucherAll(Request $request)
     {
-        $inv = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->get();
+        $inv = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->get();
+        $month = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->first();
         // $user = User::where('customer_id', Auth::guard('admin')->user()->id)->where('flat_id', $inv->flat_id)->first();
         $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
 
         $data = [
             'inv' => $inv,
+            'month' => $month,
             'customer' => $customer,
             'custDetails' => $custDetails,
         ];
         // dd($data);
-        $pdf = PDF::loadView('admin.accounts.exp_voucher_all', $data);
+        $pdf = PDF::loadView('admin.expense.voucher.money_receipt_all', $data);
         return $pdf->download('sdl_collection.pdf');
     }
     // Income Management generate all income voucher 

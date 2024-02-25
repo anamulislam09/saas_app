@@ -71,7 +71,7 @@ class ReportController extends Controller
             $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $opening_balance = OpeningBalance::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $others_income = OthersIncome::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            dd($opening_balance);
+            // dd($opening_balance);
             return redirect()->back()->with(['monthly_income' => $monthly_income, 'months' => $months, 'others_income' => $others_income, 'opening_balance' => $opening_balance]);
         }
     }

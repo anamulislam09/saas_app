@@ -192,9 +192,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
 /*---------------- Customer route ends here ------------------*/
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

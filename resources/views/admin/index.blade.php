@@ -22,7 +22,7 @@
         @php
             $user = App\Models\User::where('customer_id', Auth::guard('admin')->user()->id)->count();
             $flat = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
-            $total_exp = App\Models\Exp_process::where('customer_id', Auth::guard('admin')->user()->id)->sum('total');
+            $total_exp = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
             $total_income = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
             $manualOpeningBlance = DB::table('opening_balances')
                 ->where('customer_id', Auth::guard('admin')->user()->id)

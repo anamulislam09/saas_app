@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ForgotPasswordMail;
 use App\Models\Customer;
 use App\Models\CustomerDetail;
+use App\Models\Flat;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -32,12 +33,17 @@ class AdminController extends Controller
     public function Login(Request $request)
     {
         $check = $request->all();
-        if (Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])) {
-            return redirect()->route('admin.dashboard')->with('message', 'Login Successfully');
+        $datas = Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password'], 'status' => 1]);
+        if (!$datas) {
+            return back()->with('message', 'Something Went Wrong! ');
         } else {
-            return back()->with('message', 'Invalid Email or Password! ');
+            $check = $request->all();
+            if (Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])) {
+                return redirect()->route('admin.dashboard')->with('message', 'Login Successfully');
+            } else {
+                return back()->with('message', 'Invalid Email or Password! ');
+            }
         }
-        //end method
     }
     // login method ends here 
 
@@ -80,8 +86,6 @@ class AdminController extends Controller
             CustomerDetail::create($data);
         }
         return redirect()->route('login_form')->with('message', 'Admin register Successfully');
-        //end method
-        // }
     }
 
     // register method ends here
@@ -113,7 +117,8 @@ class AdminController extends Controller
     {
         if (Auth::guard('admin')->user()->role == 0) {
             $data = Customer::findOrFail($id);
-            return view('superadmin.customers.edit', compact('data'));
+            $flat = Flat::where('customer_id', $data->id)->first();
+            return view('superadmin.customers.edit', compact('data', 'flat'));
         } else {
             $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
             return redirect()->back()->with($notification);
@@ -126,11 +131,7 @@ class AdminController extends Controller
         if (Auth::guard('admin')->user()->role == 0) {
             $data = array();
             $data['status'] = $request->status;
-            $customer = DB::table('customers')->where('id', $request->id)->update($data);
-
-            //    if($customer){
-
-            //    }
+            DB::table('customers')->where('id', $request->id)->update($data);
 
             $notification = array('message' => 'Customer status update successfully.', 'alert_type' => 'warning');
             return redirect()->route('customers.all')->with($notification);
@@ -150,12 +151,11 @@ class AdminController extends Controller
     // receive the email 
     public function ForgotPassword(Request $request)
     {
-
         $customer = Customer::where('email', '=', $request->email)->first();
         if (!empty($customer)) {
             $customer->remember_token = Str::random(40);
             $customer->save();
-            Mail::to($customer->email)->send(New ForgotPasswordMail($customer));
+            Mail::to($customer->email)->send(new ForgotPasswordMail($customer));
             $notification = array('message' => 'Please check your email and forgot your password.', 'alert_type' => 'warning');
             return redirect()->back()->with($notification);
         } else {
@@ -166,12 +166,11 @@ class AdminController extends Controller
 
     public function reset($token)
     {
-
         $customer = Customer::where('remember_token', '=', $token)->first();
-        if(!empty($customer)){
+        if (!empty($customer)) {
             $data['customer'] = $customer;
             return view('admin.pages.reset');
-        }else{
+        } else {
             abort(404);
         }
     }
@@ -179,17 +178,16 @@ class AdminController extends Controller
     public function PostReset($token, Request $request)
     {
         $customer = Customer::where('remember_token', '=', $token)->first();
-        if($request->password == $request->confirm_password){
+        if ($request->password == $request->confirm_password) {
             $customer->password = Hash::make($request->password);
-            if(empty($customer->email_verified_at)){
+            if (empty($customer->email_verified_at)) {
                 $customer->email_verified_at = date('Y-m-d H:i:s');
             }
             $customer->remember_token = Str::random(40);
             $customer->save();
-
             $notification = array('message' => 'Password reset successfully.', 'alert_type' => 'warning');
             return redirect()->route('login_form')->with($notification);
-        }else{
+        } else {
             $notification = array('message' => 'Password & Confirm Password does not match.', 'alert_type' => 'warning');
             return redirect()->back()->with($notification);
         }

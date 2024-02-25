@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->string('flat_name');
+            $table->tinyInteger('sequence')->nullable();
             $table->tinyInteger('floor_no')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->tinyInteger('status')->default(1);

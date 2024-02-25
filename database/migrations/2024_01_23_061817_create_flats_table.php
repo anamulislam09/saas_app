@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('flat_unique_id')->nullable();
             $table->integer('customer_id');
             $table->string('flat_name');
+            $table->tinyInteger('sequence')->nullable();
             $table->tinyInteger('floor_no')->nullable();
             $table->string('charge')->nullable();
             $table->bigInteger('amount')->nullable();

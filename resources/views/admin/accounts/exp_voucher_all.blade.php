@@ -146,8 +146,20 @@
                 <h2>Payment Voucher</h2>
             </div>
         </div>
+
+        {{-- <div class="bodyInfo">
+      <div class="left-text">
+        <p>Name : {{ $inv->name }}</p>
+        <p>Phone : {{ $inv->phone }}</p>
+        <p>Address : {{ $inv->address }}</p>
+      </div>
+      <div class="right-text">
+        <p>Voucher No : {{ $inv->voucher_id }}</p>
+        <p>Voucher Date :{{ $inv->date }}</p>
+      </div>
+    </div> --}}
         <div class="body">
-            <p>Total expense month of the <strong><span>
+            <p>Total Expense month of the<strong><span>
                 @if ($month->month == 1)
                     January
                 @elseif ($month->month == 2)
@@ -173,7 +185,8 @@
                 @elseif ($month->month == 12)
                     December
                 @endif {{ $month->year }}
-            </span> <strong></p>
+            </span> <strong>
+    </p>
             <table>
                 <thead>
                     <tr>
