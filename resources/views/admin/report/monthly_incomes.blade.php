@@ -126,14 +126,16 @@
 
                                         <div class="col-lg-4 col-sm-6">
                                             @if (isset($opening_balance) && !empty($data))
-                                              @if ($opening_balance->flag == 1)
-                                                <h3 class="card-title"><strong>Opening Balance {{ $opening_balance->profit }}</strong></h3>
-                                              @else
-                                                <h3 class="card-title"><strong>Opening Loss {{ $opening_balance->loss }}</strong></h3>
-                                              @endif
+                                                @if ($opening_balance->flag == 1)
+                                                    <h3 class="card-title"><strong>Opening Balance
+                                                            {{ $opening_balance->profit }}</strong></h3>
+                                                @else
+                                                    <h3 class="card-title"><strong>Opening Loss
+                                                          ({{ $opening_balance->loss }})</strong></h3>
+                                                @endif
                                             @else
                                             @endif
-                                          </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.card-header -->
@@ -155,9 +157,12 @@
                                                 <td class="text-right">{{ $data }}</td>
                                             </tr>
                                             @foreach ($others_income as $key => $item)
-                                            @php
-                                                $others_total = App\Models\OthersIncome::where('month', $item->month)->where('year', $item->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
-                                            @endphp
+                                                @php
+                                                    $others_total = App\Models\OthersIncome::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                        ->sum('amount');
+                                                @endphp
                                                 <tr>
                                                     <td class="text-center">{{ $key + 2 }}</td>
                                                     <td class="text-left">{{ $item->income_info }}</td>
@@ -167,12 +172,39 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="2" class="text-right"><strong>Total : </strong></td>
+                                                <td colspan="2" class="text-right"><strong>Total Income without O/P: </strong></td>
                                                 @if (isset($others_total))
                                                 <td colspan="2" class="text-right"><strong>{{$data + $others_total}}</strong></td>
                                                 @else
                                                 <td colspan="2" class="text-right"><strong>{{$data }}</strong></td>
                                                     
+                                                @endif
+                                            </tr>
+                                            <tr>
+
+                                                <td colspan="2" class="text-right"><strong>Total with O/P: </strong></td>
+
+                                                @if (isset($others_total) && isset($opening_balance) && !empty($data))
+                                                    @if ($opening_balance->flag == 1)
+                                                        <td colspan="2" class="text-right">
+                                                            <strong>{{ $data + $others_total + $opening_balance->profit }}</strong>
+                                                        </td>
+                                                    @else
+                                                        <td colspan="2" class="text-right">
+                                                            <strong>{{ $data + $others_total - $opening_balance->loss }}</strong>
+                                                        </td>
+                                                    @endif
+                                                @else
+                                                    @if ($opening_balance->flag == 1)
+                                                        <td colspan="2" class="text-right">
+                                                            <strong>{{ $data + $opening_balance->profit }}</strong>
+                                                        </td>
+                                                    @else
+                                                        <td colspan="2" class="text-right">
+                                                            <strong>{{ $data - $opening_balance->loss }}</strong>
+                                                        </td>
+                                                    @endif
+
                                                 @endif
                                             </tr>
                                         </tfoot>

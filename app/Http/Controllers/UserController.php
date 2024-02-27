@@ -24,7 +24,6 @@ class UserController extends Controller
     // $data = User::where('customer_id', Auth::guard('admin')->user()->id)->get();;
     return view('admin.users.index');
     //end method
-
   }
 
   //create multiple user method start here
@@ -39,7 +38,6 @@ class UserController extends Controller
       //end method
     }
   }
-
 
   public function Store(Request $request)
   {
@@ -79,85 +77,37 @@ class UserController extends Controller
       return redirect()->route('users.index')->with('message', 'User Created Successfully');
     }
   }
-
   //create multiple user method ends here
 
   //create single user method start here
   public function SingleCreate()
   {
-    $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists();
-
-
-    if (!$data) {
-      return redirect()->back()->with('message', 'Pls! Flat create first');
-    } else {
-      $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
-      return view('admin.users.create_single', compact('data'));
+      return view('admin.users.create_single');
       //end method
-    }
   }
 
   public function SingleStore(Request $request)
   {
-    $isExists = Flat::where('customer_id', Auth::guard('admin')->user()->id)->exists();
-    if (!$isExists) {
-      return redirect()->back()->with('message', 'Pls! Flat create first');
-    } else {
-      // $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('status', 0)->first();
-      $flat_unique_id = $request->flat_unique_id;
-      $customer_id = $request->customer_id;
-      $amount = $request->amount;
-      $charge = $request->charge;
-
       $name = $request->name;
+      $user_id  = $request->user_id;
       $phone = $request->phone;
       $nid_no = $request->nid_no;
       $address = $request->address;
       $email = $request->email;
 
-
       $user = User::insert([
-        'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id,
-        'customer_id' => $customer_id,
-        'flat_id' => $flat_unique_id,
-        'amount' => $amount,
-        'charge' => $charge,
+        'user_id' => $user_id,
+        'customer_id' => Auth::guard('admin')->user()->id,
         'name' => $name,
         'phone' => $phone,
         'nid_no' => $nid_no,
+        'role_id' => 1,
         'address' => $address,
         'email' => $email,
         'password' => Hash::make($phone),
       ]);
-      $status['status'] = 1;
-      DB::table('flats')->update($status);
-
-      if ($user) {
-        $name = $request->name;
-        $flat_unique_id = $request->flat_unique_id;
-        $customer_id = $request->customer_id;
-        $amount = $request->amount;
-        $charge = $request->charge;
-
-        $month = Carbon::now()->month;
-        $year = Carbon::now()->year;
-
-        Income::insert([
-          'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id,
-          'user_name' => $name,
-          'month' => $month,
-          'year' => $year,
-          'customer_id' => Auth::guard('admin')->user()->id,
-          'auth_id' => Auth::guard('admin')->user()->id,
-          'charge' => "Service Charge",
-          'amount' => $amount,
-          'due' => $amount,
-        ]);
-        return redirect()->route('users.index')->with('message', 'User Created Successfully');
-      }
-    }
+      return redirect()->route('users.index')->with('message', 'User Created Successfully');
   }
-
   //create single user method emds here
 
   // edit method 
@@ -180,5 +130,36 @@ class UserController extends Controller
     $data->save();
     return redirect()->back()->with('message', 'User update successfully');
     //end method
+  }
+
+  // User login start here 
+  public function LoginForm()
+  {
+    return view('admin.users.user_profile.login');
+  }
+
+  public function Login(Request $request)
+  {
+    $IsManager = User::where('user_id', $request->user_id)->where('phone', $request->password)->first();
+    $check = $request->all();
+    $datas = Auth::guard('web')->attempt(['user_id' => $check['user_id'], 'password' => $check['password'], 'status' => 1]);
+    if (!$datas) {
+      return back()->with('message', 'Something Went Wrong! ');
+    } else {
+      if (Auth::guard('web')->attempt(['user_id' => $check['user_id'], 'password' => $check['password']])) {
+        // if ($IsManager->role_id == 1) {
+        //   return redirect()->route('admin.dashboard')->with('message', 'Login Successfully');
+        // } else {
+          return redirect()->route('user.Profile')->with('message', 'Login Successfully');
+        // }
+      } else {
+        return back()->with('message', 'Invalid Email or Password! ');
+      }
+    }
+  }
+
+  public function Profile()
+  {
+    return view('admin.users.user_profile.index');
   }
 }

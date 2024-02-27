@@ -6,6 +6,7 @@ use App\Models\Flat;
 use App\Models\Flatid;
 use App\Models\Flatmaster;
 use App\Models\Income;
+use App\Models\User;
 use Illuminate\Http\Request;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 use Auth;
@@ -73,21 +74,20 @@ class FlatController extends Controller
 
             if ($flatmaster) {
                 $flatmasters = Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->get();
-               
+
                 foreach ($flatmasters as $flatmaster) {
                     $flatid = Flatid::where('id', $flatmaster->id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
                     $flat['flat_unique_id'] = $flatid->flat_id;
                     $flat['customer_id'] = Auth::guard('admin')->user()->id;
                     $flat['flat_name'] = $flatmaster->flat_name;
                     $flat['floor_no'] = $flatmaster->floor_no;
-                    $flat['sequence'] = $flatmaster->sequence; 
+                    $flat['sequence'] = $flatmaster->sequence;
                     $flat['charge'] = "Service Charge";
                     $flat['amount'] = $flatmaster->amount;
                     $flat['create_date'] = date('d');
                     $flat['create_month'] = date('F');
                     $flat['create_year'] = date('Y');
 
-                    // dd($flatmaster->amount);
                     Flat::create($flat);
                 }
             }
@@ -109,22 +109,41 @@ class FlatController extends Controller
     // flat SingleStore start here
     public function SingleStore(Request $request)
     {
-        $unique_id = Flat::where('customer_id', Auth::guard('admin')->user()->id)->max('flat_unique_id');
-        $flat = Flat::where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $unique_name = Flat::where('customer_id', Auth::guard('admin')->user()->id)->where('flat_name', $request->flat_name)->exists();
+        if ($unique_name) {
+            return redirect()->back()->with('message', 'Flat name already taken.');
+        } else {
+            $unique_id = Flat::where('customer_id', Auth::guard('admin')->user()->id)->max('flat_unique_id');
+            $flat = Flat::where('customer_id', Auth::guard('admin')->user()->id)->first();
 
-        $zeroo = '0';
-        $data['flat_unique_id'] = ($zeroo) . ++$unique_id;
-        $data['customer_id'] = Auth::guard('admin')->user()->id;
-        $data['flat_name'] = $request->flat_name;
-        $data['floor_no'] = $request->floor_no;
-        $data['charge'] = "Service Charge";
-        $data['amount'] = $flat->amount;
-        $flat['create_date'] = date('Y-m-Y');
-        $flat['create_month'] = date('F');
-        $flat['create_year'] = date('Y');
+            $zeroo = '0';
+            $data['flat_unique_id'] = ($zeroo) . ++$unique_id;
+            $data['customer_id'] = Auth::guard('admin')->user()->id;
+            $data['flat_name'] = $request->flat_name;
+            $data['floor_no'] = $request->floor_no;
+            $data['charge'] = "Service Charge";
+            $data['amount'] = $flat->amount;
+            $data['create_date'] = date('d');
+            $data['create_month'] = date('F');
+            $data['create_year'] = date('Y');
 
-        $flat = Flat::create($data);
-        return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
+            $flat = Flat::create($data);
+            if ($flat) {
+                $latest_flat = Flat::where('customer_id', Auth::guard('admin')->user()->id)->latest()->first();
+                $user = User::insert([
+                    'user_id' => $latest_flat->customer_id . $latest_flat->flat_unique_id,
+                    'customer_id' => $latest_flat->customer_id,
+                    'flat_id' => $latest_flat->flat_unique_id,
+                    'charge' => $latest_flat->charge,
+                    'amount' => $latest_flat->amount,
+                ]);
+                if ($user) {
+                    return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
+                } else {
+                    return redirect()->back()->with('message', 'Something Went Wrong');
+                }
+            }
+        }
     }
     // flat SingleStore ends here
 }

@@ -161,31 +161,31 @@
         <div class="body">
 
             <p>Total Expense month of the<strong><span>
-                @if ($month->month == 1)
-                    January
-                @elseif ($month->month == 2)
-                    February
-                @elseif ($month->month == 3)
-                    March
-                @elseif ($month->month == 4)
-                    April
-                @elseif ($month->month == 5)
-                    May
-                @elseif ($month->month == 6)
-                    June
-                @elseif ($month->month == 7)
-                    July
-                @elseif ($month->month == 8)
-                    August
-                @elseif ($month->month == 9)
-                    September
-                @elseif ($month->month == 10)
-                    October
-                @elseif ($month->month == 11)
-                    November
-                @elseif ($month->month == 12)
-                    December
-                @endif {{ $month->year }}
+                @if ('1' == date('m'))
+                January
+              @elseif ('2' == date('m'))
+                February
+              @elseif ('3' == date('m'))
+                March
+              @elseif ('4' == date('m'))
+                April
+              @elseif ('5' == date('m'))
+                May
+              @elseif ('6' == date('m'))
+                June
+              @elseif ('7' == date('m'))
+                July
+              @elseif ('8' == date('m'))
+                August
+              @elseif ('9' == date('m'))
+                September
+              @elseif ('10' == date('m'))
+                October
+              @elseif ('11' == date('m'))
+                November
+              @elseif ('12' == date('m'))
+                December
+              @endif
             </span> <strong>
     </p>
 

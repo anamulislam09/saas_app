@@ -68,7 +68,7 @@
                                 <tbody>
                                     @foreach ($data as $key => $item)
                                         @php
-                                            $flat = DB::table('flats')
+                                            $flat = DB::table('flats')->where('customer_id', Auth::guard('admin')->user()->id)
                                                 ->where('flat_unique_id', $item->flat_id)
                                                 ->first();
                                         @endphp

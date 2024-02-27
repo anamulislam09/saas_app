@@ -228,18 +228,25 @@
                         @endphp
                         <tr>
                             <td style="text-align: center">{{ $key + 1 }}</td>
-                            <td>{{ $item->flat_name }}</td>
-                            <td>{{ $user->name }}</td>
+                            <td >{{ $item->flat_name }}</td>
+                            <td style="text-align: center">
+                            @if (isset($user->name) && !empty($user->name))
+                                <p>name : {{ $user->name }}</p>
+                            @else
+                                <p>........</p>
+                            @endif
+                        </td>
+
                             <td>{{ $item->charge }}</td>
-                            <td>{{ $item->paid + $item->due }}</td>
-                            <td>{{ $item->paid }}</td>
+                            <td style="text-align:right">{{ $item->paid + $item->due }}</td>
+                            <td style="text-align:right">{{ $item->paid }}</td>
                         </tr>
                     @endforeach
 
                     <tr>
                         <td colspan="2">Payment Method :</td>
                         <td colspan="2" style="text-align: right">Total Amount</td>
-                        <td style="text-align: right">{{ $paid_total + $due_total}}</td>
+                        <td style="text-align: right">{{ $paid_total + $due_total }}</td>
                         <td style="text-align: right">{{ $paid_total }}</td>
                     </tr>
                 </tbody>

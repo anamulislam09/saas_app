@@ -141,7 +141,7 @@
 
         <div class="bodyInfo">
             <div class="left-text">
-                <p>Mr No : {{ rand(999, 99999) }}</p>
+                <p>MR No : {{ rand(999, 99999) }}</p>
                 @if (isset($user->name) && !empty($user->name))
                     <p>name : {{ $user->name }}</p>
                 @else

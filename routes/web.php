@@ -50,7 +50,7 @@ Route::get('/admin/reset/{token}', [AdminController::class, 'reset']);
 Route::post('/admin/reset/{token}', [AdminController::class, 'PostReset']);
 // Customer Forgate password route ends here 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+Route::group(['prefix' => 'admin'], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
 
     // Customer show 
@@ -77,9 +77,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 });
 
 /*---------------- Admin route ends here ------------------*/
-
+// , 'middleware' => ['admin']
 /*---------------- Customer route start here ------------------*/
-Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+Route::group(['prefix' => 'admin'], function () {
     //    Flat setup route 
     Route::get('/manage-flat', [FlatController::class, 'Index'])->name('flat.index');
     Route::get('/manage-flat/create', [FlatController::class, 'Create'])->name('flat.create');
@@ -191,6 +191,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 });
 
 /*---------------- Customer route ends here ------------------*/
+
+/*---------------- User route start here ------------------*/
+Route::get('/user-login', [UserController::class, 'LoginForm'])->name('user.login_form');
+Route::post('/user-login/owner', [UserController::class, 'Login'])->name('user.login');
+Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
+
+
+
+/*---------------- User route ends here ------------------*/
 
 Route::get('/', function () {
     return view('welcome');

@@ -78,7 +78,8 @@
         <div class="header">
 
             <ul>
-                <li style="float:right"><a href="{{ route('login_form') }}">Admin Login</a></li>
+                <li style="float:right"><a href="{{ route('login_form') }}">Admin Login</a></li>/
+                <li style="float:right"><a href="{{ route('user.login_form') }}">User Login</a></li>
             </ul>
         </div>
         <div class=" row body">

@@ -10,8 +10,8 @@
 
 
         /*======================
-            404 page
-        =======================*/
+                                            404 page
+                                        =======================*/
 
 
         .page_404 {
@@ -62,7 +62,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">User Entry Form</h3>
+                                        <h3 class="card-title">Add More User</h3>
                                     </div>
 
                                 </div>
@@ -71,108 +71,54 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-
-                                        @php
-                                            $data = App\Models\Flat::where('customer_id', Auth::guard('admin')->user()->id)
-                                                ->where('status', 0)
-                                                ->exists();
-                                        @endphp
-
-                                        @if (!$data)
-                                            <section class="page_404">
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-md-12 col-sm-12">
-                                                            <div class="col-sm-12 text-center">
-                                                                <div class="four_zero_four_bg">
-                                                                    <h1 class="text-center ">404</h1>
-
-
-                                                                </div>
-
-                                                                <div class="contant_box_404">
-                                                                    <h3 class="h2">
-                                                                        Flat Not Found!
-                                                                    </h3>
-
-                                                                    <p>Pls! Flat create first</p>
-
-                                                                    <a href="{{route('flat.singlecreate')}}" class="link_404"> Create Flat</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                        <div class="row">
+                                            <div class="col-10 p-5 m-auto"
+                                                style="border: 1px solid #ddd; background:#eeecec">
+                                                <h2 class="text-center"><strong>User Entry Form</strong></h2>
+                                                <form action="{{ route('user.store') }}" method="POST">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="">User Id : </label>
+                                                        <input type="text" name="user_id" class="form-control"
+                                                            placeholder="User name" required>
                                                     </div>
-                                                </div>
-                                            </section>
-                                        @else
-                                            <table id="dataTable" class="table table-bordered table-striped"
-                                                style="width: 70%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SL</th>
-                                                        <th>Flat name</th>
-                                                        <th>User name</th>
-                                                        <th>Phone</th>
-                                                        <th>NID_no</th>
-                                                        <th>Address</th>
-                                                        <th>Email</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <form action="{{ route('user.store') }}" method="POST">
-                                                        @csrf
-                                                        @foreach ($data as $key => $item)
-                                                            {{-- <td><input type="hidden" name="customer_id" value="{{ $item->id }}"></td>
-                                                <td><input type="hidden" name="customer_id" value="{{ $item->flat_name }}"></td> --}}
-                                                            <tr>
-                                                                <input type="hidden" name="flat_unique_id"
-                                                                    value="{{ $item->flat_unique_id }}">
-                                                                <input type="hidden" name="amount"
-                                                                    value="{{ $item->amount }}">
-                                                                <input type="hidden" name="charge"
-                                                                    value="{{ $item->charge }}">
-                                                                <input type="hidden" name="customer_id"
-                                                                    value="{{ $item->customer_id }}">
-                                                                <td>{{ $key + 1 }}</td>
-                                                                <td><input type="text" name="flat_name"
-                                                                        style="width: 50px; border:none" disabled
-                                                                        value="{{ $item->flat_name }}"></td>
-                                                                <td><input type="text" name="name"
-                                                                        style="width: 140px; border:none"
-                                                                        placeholder="User name" required>
-                                                                </td>
-                                                                <td><input type="text" name="phone"
-                                                                        style="width: 140px ; border:none"
-                                                                        placeholder="User phone" required>
-                                                                </td>
-                                                                <td><input type="text" name="nid_no"
-                                                                        style="width: 140px ; border:none"
-                                                                        placeholder="User NID No">
-                                                                </td>
-                                                                <td>
-                                                                    <textarea name="address" class="" style="width: 140px ; border:none" id="" cols="" rows="1"
-                                                                        placeholder="User Address"></textarea>
-                                                                </td>
-                                                                <td><input type="email" name="email"
-                                                                        style="width: 140px ; border:none"
-                                                                        placeholder="User email" required>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td><input type="submit" class="btn btn-primary"
-                                                                    value="Submit"></td>
-                                                        </tr>
-                                                    </form>
-                                                </tbody>
-                                            </table>
-                                        @endif
+                                                    <div class="form-group">
+                                                        <label for="">User Name : </label>
+                                                        <input type="text" name="name" class="form-control"
+                                                            placeholder="User name" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">NID Number : </label>
+                                                        <input type="text" name="nid_no"class="form-control"
+                                                            placeholder="User NID No">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="">User Address</label>
+                                                        <textarea name="address" class="form-control"" id="" cols="" rows="1" placeholder="User Address"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Phone : </label>
+                                                        <input type="text" name="phone"class="form-control"
+                                                            placeholder="User phone" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">User Email</label>
+                                                        <input type="email" name="email"class="form-control"
+                                                            placeholder="User email">
+                                                    </div>
+                                                    {{-- <div class="form-group">
+                                                        <label for="">User Role :</label>
+                                                        <select name="role_id" class="form-control" id="">
+                                                            <option value="" selected disabled>Select Once</option>
+                                                            <option value="0">User</option>
+                                                            <option value="1">Manager</option>
+                                                        </select>
+                                                    </div> --}}
+                                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
