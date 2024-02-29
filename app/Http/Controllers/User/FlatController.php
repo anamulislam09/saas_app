@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Flat;
 use App\Models\Flatid;
 use App\Models\Flatmaster;
-use App\Models\Income;
-use App\Models\User;
 use Illuminate\Http\Request;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
-use Auth;
-use Carbon\Carbon;
 
 class FlatController extends Controller
 {
     // Index method start here 
     public function Index()
     {
-
+        
         $data = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
         return view('admin.flat.index', compact('data'));
     }
@@ -89,19 +86,7 @@ class FlatController extends Controller
                     $flat['create_month'] = date('F');
                     $flat['create_year'] = date('Y');
 
-                    $all_flat = Flat::create($flat);
-                }
-                if ($all_flat) {
-                    $flats = Flat::where('customer_id', Auth::guard('admin')->user()->id)->get();
-                    foreach ($flats as $flat_item) {
-                        User::insert([
-                            'user_id' => $flat_item->customer_id . $flat_item->flat_unique_id,
-                            'customer_id' => $flat_item->customer_id,
-                            'flat_id' => $flat_item->flat_unique_id,
-                            'charge' => $flat_item->charge,
-                            'amount' => $flat_item->amount,
-                        ]);
-                    }
+                    Flat::create($flat);
                 }
             }
             Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->delete();

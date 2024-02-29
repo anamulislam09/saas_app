@@ -34,7 +34,11 @@ class VoucherController extends Controller
     //show voucher page
     public function ExpenseIndex()
     {
-        return view('admin.accounts.expense_voucher');
+        $months = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $exp = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->groupBy('cat_id')->get();
+        $month = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->first();
+        return view('admin.accounts.expense_voucher', compact('exp', 'month'));
     }
 
     // show collection 

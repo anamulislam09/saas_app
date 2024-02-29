@@ -53,17 +53,28 @@
 
                                                 <div class="mb-3 mt-3">
                                                     <label for="exampleInputEmail1"> Flat Name </label>
-                                                    <select name="status" id="" class="form-control">
-                                                        <option value="1"
-                                                            @if ($flat->sequence == 1) selected @endif>
-                                                            A1,A2,A3</option>
-                                                        <option value="2"
-                                                            @if ($flat->sequence == 2) selected @endif>
-                                                            A1,B1,C1</option>
-                                                        <option value="3"
-                                                            @if ($flat->sequence == 3) selected @endif>
-                                                            1A,2A,3A</option>
-                                                    </select>
+                                                    @if (isset($sequence) && !empty($sequence))
+                                                        <select name="status" id="" class="form-control">
+                                                            <option value="1"
+                                                                @if ($flat->sequence == 1) selected @endif>
+                                                                A1,A2,A3</option>
+                                                            <option value="2"
+                                                                @if ($flat->sequence == 2) selected @endif>
+                                                                A1,B1,C1</option>
+                                                            <option value="3"
+                                                                @if ($flat->sequence == 3) selected @endif>
+                                                                1A,2A,3A</option>
+                                                        </select>
+                                                    @else
+                                                        <select name="status" id="" class="form-control">
+                                                            <option value="1">
+                                                                A1,A2,A3</option>
+                                                            <option value="2">
+                                                                A1,B1,C1</option>
+                                                            <option value="3">
+                                                                1A,2A,3A</option>
+                                                        </select>
+                                                    @endif
                                                 </div>
 
                                                 <div class="mb-3 mt-3">

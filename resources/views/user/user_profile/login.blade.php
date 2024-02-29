@@ -74,7 +74,7 @@
     <div class="col-6 mt-4"><p>
         @if (Route::has('password.request'))
             <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                href="{{ route('admin.forgot-password') }}">
+                href="#">
                 {{ __('Forgot your password?') }}
             </a>
         @endif

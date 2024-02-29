@@ -19,18 +19,6 @@ use App\Models\Category;
 use App\Models\OthersIncome;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 /*---------------- Admin route start here ------------------*/
 // admin login route start here 
 
@@ -77,7 +65,6 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 /*---------------- Admin route ends here ------------------*/
-// , 'middleware' => ['admin']
 /*---------------- Customer route start here ------------------*/
 Route::group(['prefix' => 'admin'], function () {
     //    Flat setup route 
@@ -197,8 +184,10 @@ Route::get('/user-login', [UserController::class, 'LoginForm'])->name('user.logi
 Route::post('/user-login/owner', [UserController::class, 'Login'])->name('user.login');
 Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
 
+/*---------------- Manager route start here ------------------*/
 
 
+/*---------------- Manager route start here ------------------*/
 /*---------------- User route ends here ------------------*/
 
 Route::get('/', function () {

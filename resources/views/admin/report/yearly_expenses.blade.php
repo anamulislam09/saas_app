@@ -124,6 +124,60 @@
                     </tfoot>
                   </table>
                 @else
+
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-9">
+                        <strong> Total expenses year of {{ $years->year }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <table id="" class="table table-bordered table-striped mt-3">
+                  <thead>
+                    <tr>
+                      <th style="width: 8%">SL</th>
+                      <th>Expense Head</th>
+                      <th style="width: 20%">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+
+                    @foreach ($yearly_exp as $key => $yearly_item)
+                      @php
+                        $data = DB::table('categories')
+                            ->where('id', $yearly_item->cat_id)
+                            ->first();
+                        $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                            ->where('year', $yearly_item->year)
+                            ->where('cat_id', $yearly_item->cat_id)
+                            ->sum('amount');
+                        $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                            ->where('year', $yearly_item->year)
+                            ->sum('amount');
+                      @endphp
+                      <tr>
+                        <td class="text-center">{{ $key + 1 }}</td>
+                        <td>{{ $data->name }}</td>
+                        <td class="text-right">
+                          {{ $sub_total }}
+                        </td>
+
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                      <td class="text-right"><strong>{{ $total }}</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
                 @endif
               </div>
             </div>

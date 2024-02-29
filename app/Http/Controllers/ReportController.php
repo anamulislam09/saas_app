@@ -7,6 +7,7 @@ use App\Models\Expense;
 use App\Models\Income;
 use App\Models\OpeningBalance;
 use App\Models\OthersIncome;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,11 @@ class ReportController extends Controller
     // Report for Monthly Ecpense
     public function MonthlyExpense(Request $request)
     {
-        return view('admin.report.monthly_expenses');
+        $months = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $monthly_exp = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->groupBy('cat_id')->get();
+        $month = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->first();
+        return view('admin.report.monthly_expenses', compact('monthly_exp', 'month'));
     }
 
     // Report for Monthly Ecpense
@@ -37,7 +42,10 @@ class ReportController extends Controller
     // Report for yearly Ecpense
     public function YearlyExpense()
     {
-        return view('admin.report.yearly_expenses');
+        $year = Carbon::now()->year;
+        $yearly_exp = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('year', $year)->groupBy('cat_id')->get();
+        $years = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('year', $year)->first();
+        return view('admin.report.yearly_expenses', compact('yearly_exp', 'years'));
     }
 
     // Report for yearly Ecpense
@@ -97,5 +105,5 @@ class ReportController extends Controller
             return redirect()->back()->with(['yearly_income' => $yearly_income, 'opening_balance' => $opening_balance, 'year' => $year, 'others_income' => $others_income]);
         }
     }
-      // Report for yearly income
+    // Report for yearly income
 }

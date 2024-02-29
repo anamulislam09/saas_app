@@ -82,31 +82,31 @@ class UserController extends Controller
   //create single user method start here
   public function SingleCreate()
   {
-      return view('admin.users.create_single');
-      //end method
+    return view('admin.users.create_single');
+    //end method
   }
 
   public function SingleStore(Request $request)
   {
-      $name = $request->name;
-      $user_id  = $request->user_id;
-      $phone = $request->phone;
-      $nid_no = $request->nid_no;
-      $address = $request->address;
-      $email = $request->email;
+    $name = $request->name;
+    $user_id  = $request->user_id;
+    $phone = $request->phone;
+    $nid_no = $request->nid_no;
+    $address = $request->address;
+    $email = $request->email;
 
-      $user = User::insert([
-        'user_id' => $user_id,
-        'customer_id' => Auth::guard('admin')->user()->id,
-        'name' => $name,
-        'phone' => $phone,
-        'nid_no' => $nid_no,
-        'role_id' => 1,
-        'address' => $address,
-        'email' => $email,
-        'password' => Hash::make($phone),
-      ]);
-      return redirect()->route('users.index')->with('message', 'User Created Successfully');
+    $user = User::insert([
+      'user_id' => $user_id,
+      'customer_id' => Auth::guard('admin')->user()->id,
+      'name' => $name,
+      'phone' => $phone,
+      'nid_no' => $nid_no,
+      'role_id' => 1,
+      'address' => $address,
+      'email' => $email,
+      'password' => Hash::make($phone),
+    ]);
+    return redirect()->route('users.index')->with('message', 'User Created Successfully');
   }
   //create single user method emds here
 
@@ -132,10 +132,10 @@ class UserController extends Controller
     //end method
   }
 
-  // User login start here 
+  /*-----------------User login start here-------------------*/
   public function LoginForm()
   {
-    return view('admin.users.user_profile.login');
+    return view('user.user_profile.login');
   }
 
   public function Login(Request $request)
@@ -147,11 +147,11 @@ class UserController extends Controller
       return back()->with('message', 'Something Went Wrong! ');
     } else {
       if (Auth::guard('web')->attempt(['user_id' => $check['user_id'], 'password' => $check['password']])) {
-        // if ($IsManager->role_id == 1) {
-        //   return redirect()->route('admin.dashboard')->with('message', 'Login Successfully');
-        // } else {
-          return redirect()->route('user.Profile')->with('message', 'Login Successfully');
-        // }
+        if ($IsManager->role_id == 1) {
+          return redirect()->route('user.Profile')->with('message', 'Manager Login Successfully');
+        } else {
+          return redirect()->route('user.Profile')->with('message', 'User Login Successfully');
+        }
       } else {
         return back()->with('message', 'Invalid Email or Password! ');
       }
@@ -160,6 +160,6 @@ class UserController extends Controller
 
   public function Profile()
   {
-    return view('admin.users.user_profile.index');
+    return view('user.user_profile.index');
   }
 }

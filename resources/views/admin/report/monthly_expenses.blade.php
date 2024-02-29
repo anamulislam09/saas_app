@@ -183,6 +183,89 @@
                     </tfoot>
                   </table>
                 @else
+
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-9">
+                        <strong> Total expenses month of @if ($month->month == 1)
+                            January
+                          @elseif ($month->month == 2)
+                            February
+                          @elseif ($month->month == 3)
+                            March
+                          @elseif ($month->month == 4)
+                            April
+                          @elseif ($month->month == 5)
+                            May
+                          @elseif ($month->month == 6)
+                            June
+                          @elseif ($month->month == 7)
+                            July
+                          @elseif ($month->month == 8)
+                            August
+                          @elseif ($month->month == 9)
+                            September
+                          @elseif ($month->month == 10)
+                            October
+                          @elseif ($month->month == 11)
+                            November
+                          @elseif ($month->month == 12)
+                            December
+                          @endif </strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <table id="" class="table table-bordered table-striped mt-3">
+                  <thead>
+                    <tr>
+                      <th style="width: 8%">SL</th>
+                      <th >Expense Head</th>
+                      <th style="width: 20%">Amount</th>
+                      {{-- <th style="width: 15%" class="text-center">Status</th> --}}
+                      {{-- <th style="width: 15%" class="text-center">Action</th> --}}
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+
+                    @foreach ($monthly_exp as $key => $exp_item)
+                      @php
+                        $data = DB::table('categories')
+                            ->where('id', $exp_item->cat_id)
+                            ->first();
+
+                        $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                            ->where('month', $exp_item->month)
+                            ->where('year', $exp_item->year)
+                            ->where('cat_id', $exp_item->cat_id)
+                            ->sum('amount');
+                        $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                            ->where('month', $exp_item->month)
+                            ->where('year', $exp_item->year)
+                            ->sum('amount');
+                      @endphp
+                      <tr>
+                        <td class="text-center">{{ $key + 1 }}</td>
+                        <td>{{ $data->name }}</td>
+                        <td class="text-right">
+                          {{ $sub_total }}
+                        </td>
+
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                      <td class="text-right"><strong>{{ $total }}</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
                 @endif
               </div>
             </div>
