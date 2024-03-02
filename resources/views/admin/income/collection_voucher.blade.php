@@ -160,6 +160,7 @@
 
                                             @foreach ($data as $key => $item)
                                                 @php
+
                                                     $total = App\Models\Income::where('month', $item->month)
                                                         ->where('year', $item->year)
                                                         ->where('status', '!=', 0)
@@ -174,28 +175,32 @@
 
                                                     $month = Carbon\Carbon::now()->month;
                                                     $year = Carbon\Carbon::now()->year;
-                                                    $previousMonthData = App\Models\Income::where('month', $month - 1)
-                                                        ->where('year', $year)
+                                                    $previousMonthData = App\Models\Income::where('month', $item->month - 1)
+                                                        ->where('year', $item->year)
                                                         ->where('flat_id', $item->flat_id)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->first();
 
-                                                    $data = App\Models\Income::where('month', $month)
-                                                        ->where('year', $year)
+                                                    $data = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->where('flat_id', $item->flat_id)
                                                         ->first();
                                                     if (isset($previousMonthData->due)) {
                                                         $amount = $previousMonthData->due + $data->amount;
                                                     }
+
                                                 @endphp
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $item->flat_name }}</td>
-                                                    @if (isset($previousMonthData->due))
+                                                    @if (isset($previousMonthData->due) && !empty($previousMonthData->due))
                                                         <td class="text-right"> {{ $amount }}</td>
                                                     @else
-                                                        <td class="text-right"> {{ $data->amount }}</td>
+                                                        @if (isset($data->amount) && !empty($data->amount))
+                                                            <td class="text-right"> {{ $data->amount }}</td>
+                                                        @else
+                                                        @endif
                                                     @endif
                                                     <td class="text-right"> {{ $item->paid }}</td>
                                                     <td class="text-center"><a

@@ -73,13 +73,6 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('flat.create') }}"
-                                    class="nav-link {{ Request::routeIs('flat.create') ? 'active' : '' }}">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>New Flat</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('flat.index') }}"
                                     class="nav-link {{ Request::routeIs('flat.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
@@ -101,12 +94,12 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('users.create') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Create User</p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
@@ -119,7 +112,7 @@
 
                     {{-- Expense management ends here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('expense.create') || Request::routeIs('expense-summary.index')|| Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.expense.create') || Request::routeIs('manager.expense-summary.index')|| Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -129,15 +122,15 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('expense.create') }}"
-                                    class="nav-link {{ Request::routeIs('expense.create') ? 'active' : '' }}">
+                                <a href="{{ route('manager.expense.create') }}"
+                                    class="nav-link {{ Request::routeIs('manager.expense.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense Entry</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('expense-summary.index') }}"
-                                    class="nav-link {{ Request::routeIs('expense-summary.index') ? 'active' : '' }}">
+                                <a href="{{ route('manager.expense-summary.index') }}"
+                                    class="nav-link {{ Request::routeIs('manager.expense-summary.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense Summary</p>
                                 </a>
@@ -148,7 +141,7 @@
 
                     {{-- Income Management start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('income.create') || Request::routeIs('income.collection') || Request::routeIs('income.collection.index') || Request::routeIs('others.income.create') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.income.create') || Request::routeIs('manager.income.collection') || Request::routeIs('manager.income.collection.index') || Request::routeIs('others.income.create') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -158,58 +151,58 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('income.create') }}"
-                                    class="nav-link {{ Request::routeIs('income.create') ? 'active' : '' }}">
+                                <a href="{{ route('manager.income.create') }}"
+                                    class="nav-link {{ Request::routeIs('manager.income.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Generate Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('income.collection') }}"
-                                    class="nav-link {{ Request::routeIs('income.collection') ? 'active' : '' }}">
+                                <a href="{{ route('manager.income.collection') }}"
+                                    class="nav-link {{ Request::routeIs('manager.income.collection') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Collection </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('income.collection.index')}}"
-                                    class="nav-link {{ Request::routeIs('income.collection.index') ? 'active' : '' }}">
+                                <a href="{{route('manager.income.collection.index')}}"
+                                    class="nav-link {{ Request::routeIs('manager.income.collection.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Collection Voucher</p>
                                 </a>
                             </li>
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{route('others.income.create')}}"
                                     class="nav-link {{ Request::routeIs('others.income.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Others Income</p>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     {{-- Income Management start here --}}
 
                     {{-- Accounts  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('account.expense.all') || Request::routeIs('ledgerPosting.index') || Request::routeIs('account.expense.index') || Request::routeIs('account.balancesheet') || Request::routeIs('opening.balance.create') || Request::routeIs('income.statement') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('account.expense.all') || Request::routeIs('manager.ledgerPosting.index') || Request::routeIs('account.expense.index') || Request::routeIs('account.balancesheet') || Request::routeIs('opening.balance.create') || Request::routeIs('income.statement') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Accounts<i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('opening.balance.create') }}"
                                     class="nav-link {{ Request::routeIs('opening.balance.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Opening Balance Entry</p>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-item">
-                                <a href="{{ route('ledgerPosting.index') }}"
-                                    class="nav-link {{ Request::routeIs('ledgerPosting.index') ? 'active' : '' }}">
+                                <a href="{{ route('manager.ledgerPosting.index') }}"
+                                    class="nav-link {{ Request::routeIs('manager.ledgerPosting.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Ledger Posting </p>
                                 </a>

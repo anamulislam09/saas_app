@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('user.user_layouts.user')
 
-@section('admin_content')
+@section('user_content')
     <style>
         input:focus {
             outline: none

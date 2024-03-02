@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('user.user_layouts.user')
 
-@section('admin_content')
+@section('user_content')
     <style>
         input:focus {
             outline: none
@@ -17,7 +17,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
-                                        <form action="{{ route('account.expense.all') }}" method="post">
+                                        <form action="{{ route('manager.income.collection.all') }}" method="post">
                                             @csrf
                                             <div class="row my-4">
                                                 <div class="col-lg-3">
@@ -105,7 +105,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <strong> Total expenses month of @if ($months->month == 1)
+                                                    <strong> Total collection month of @if ($months->month == 1)
                                                             January
                                                         @elseif ($months->month == 2)
                                                             February
@@ -132,7 +132,7 @@
                                                         @endif </strong>
                                                 </div>
                                                 <div class="col-2">
-                                                    <form action="{{ route('account.expense.voucher.generateall') }}"
+                                                    <form action="{{ route('manager.income.voucher.generateall') }}"
                                                         method="post">
                                                         @csrf
                                                         <input type="hidden" name="month" value="{{ $months->month }}">
@@ -151,144 +151,77 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 8%">SL</th>
-                                                <th>Expense</th>
-                                                <th style="width: 20%" class="text-right">Amount</th>
-                                                {{-- <th style="width: 20%" class="text-center">Action</th> --}}
+                                                <th>Flat Name</th>
+                                                <th style="width: 15%" class="text-center">Payable</th>
+                                                <th style="width: 15%" class="text-center">Paid Amount</th>
+                                                <th style="width: 15%" class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             @foreach ($data as $key => $item)
                                                 @php
-                                                    $data = DB::table('categories')
-                                                        ->where('id', $item->cat_id)
+                                                    $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
+                                                    $total = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('status', '!=', 0)
+                                                        ->where('customer_id', $user->customer_id)
+                                                        ->sum('paid');
+
+                                                    $due = App\Models\Income::where('month', $item->month)
+                                                        ->where('year', $item->year)
+                                                        ->where('status', '!=', 0)
+                                                        ->where('customer_id', $user->customer_id)
+                                                        ->sum('due');
+
+                                                    $month = Carbon\Carbon::now()->month;
+                                                    $year = Carbon\Carbon::now()->year;
+                                                    $previousMonthData = App\Models\Income::where(
+                                                        'month',
+                                                        $item->month - 1,
+                                                    )
+                                                        ->where('year', $item->year)
+                                                        ->where('flat_id', $item->flat_id)
+                                                        ->where('customer_id', $user->customer_id)
                                                         ->first();
-                                                    $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->where('month', $item->month)
+
+                                                    $data = App\Models\Income::where('month', $item->month)
                                                         ->where('year', $item->year)
-                                                        ->where('cat_id', $item->cat_id)
-                                                        ->sum('amount');
-                                                    $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->where('month', $item->month)
-                                                        ->where('year', $item->year)
-                                                        ->sum('amount');
+                                                        ->where('customer_id', $user->customer_id)
+                                                        ->where('flat_id', $item->flat_id)
+                                                        ->first();
+                                                    if (isset($previousMonthData->due)) {
+                                                        $amount = $previousMonthData->due + $data->amount;
+                                                    }
+
                                                 @endphp
                                                 <tr>
-                                                    <td class="text-center">{{ $key + 1 }}</td>
-                                                    <td>{{ $data->name }}</td>
-                                                    <td class="text-right">
-                                                        {{ $sub_total }}
-                                                    </td>
-                                                    {{-- <td class="text-center"><a href="#" class="btn btn-sm btn-info">Voucher</a>
-                          </td> --}}
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $item->flat_name }}</td>
+                                                    @if (isset($previousMonthData->due) && !empty($previousMonthData->due))
+                                                        <td class="text-right"> {{ $amount }}</td>
+                                                    @else
+                                                        @if (isset($data->amount) && !empty($data->amount))
+                                                            <td class="text-right"> {{ $data->amount }}</td>
+                                                        @else
+                                                        @endif
+                                                    @endif
+                                                    <td class="text-right"> {{ $item->paid }}</td>
+                                                    <td class="text-center"><a
+                                                            href="{{ route('manager.income.voucher.generate', $item->id) }}"
+                                                            class="btn btn-sm btn-info">Voucher</a></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                                                <td class="text-right"><strong>{{ $total + $due }}</strong></td>
                                                 <td class="text-right"><strong>{{ $total }}</strong></td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 @else
-                                    {{-- @php
-                                        $month = Carbon\Carbon::now()->month;
-                                        $year = Carbon\Carbon::now()->year;
-                                    @endphp --}}
-                                    @if (isset($month->month) && !empty($month->month))
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row">
-                                                <div class="col-10">
-                                                    <strong> Total expenses month of @if ($month->month == 1)
-                                                            January
-                                                        @elseif ($month->month == 2)
-                                                            February
-                                                        @elseif ($month->month == 3)
-                                                            March
-                                                        @elseif ($month->month == 4)
-                                                            April
-                                                        @elseif ($month->month == 5)
-                                                            May
-                                                        @elseif ($month->month == 6)
-                                                            June
-                                                        @elseif ($month->month == 7)
-                                                            July
-                                                        @elseif ($month->month == 8)
-                                                            August
-                                                        @elseif ($month->month == 9)
-                                                            September
-                                                        @elseif ($month->month == 10)
-                                                            October
-                                                        @elseif ($month->month == 11)
-                                                            November
-                                                        @elseif ($month->month == 12)
-                                                            December
-                                                        @endif </strong>
-                                                </div>
-                                                <div class="col-2">
-                                                    <form action="{{ route('account.expense.voucher.generateall') }}"
-                                                        method="post">
-                                                        @csrf
-                                                        <input type="hidden" name="month" value="{{ $month->month }}">
-                                                        <input type="hidden" name="year" value="{{ $month->year }}">
-
-                                                        <label for="" class="col-form-label"></label>
-                                                        <input type="submit" class="btn btn-info text-end"
-                                                            value="Generate all">
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <table id="dataTable" class="table table-bordered table-striped mt-3">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 8%">SL</th>
-                                                <th>Expense</th>
-                                                <th style="width: 20%" class="text-right">Amount</th>
-                                                {{-- <th style="width: 20%" class="text-center">Action</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($exp as $key => $exp_item)
-                                                @php
-                                                    $data = DB::table('categories')
-                                                        ->where('id', $exp_item->cat_id)
-                                                        ->first();
-                                                    $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->where('month', $exp_item->month)
-                                                        ->where('year', $exp_item->year)
-                                                        ->where('cat_id', $exp_item->cat_id)
-                                                        ->sum('amount');
-                                                    $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->where('month', $exp_item->month)
-                                                        ->where('year', $exp_item->year)
-                                                        ->sum('amount');
-                                                @endphp
-                                                <tr>
-                                                    <td class="text-center">{{ $key + 1 }}</td>
-                                                    <td>{{ $data->name }}</td>
-                                                    <td class="text-right">
-                                                        {{ $sub_total }}
-                                                    </td>
-                                                    {{-- <td class="text-center"><a href="#" class="btn btn-sm btn-info">Voucher</a>
-                        </td> --}}
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-                                                <td class="text-right"><strong>{{ $total }}</strong></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    @else
-                                        
-                                    <h3 class="text-center">No Data Found of this Month</h3>
-                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -297,27 +230,6 @@
             </div>
         </section>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div id="modal_body">
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 
     <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 @endsection

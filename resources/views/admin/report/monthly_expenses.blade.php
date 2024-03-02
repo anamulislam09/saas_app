@@ -184,6 +184,7 @@
                   </table>
                 @else
 
+                @if (isset($month->month) && !empty($month->month))
                 <div class="card">
                   <div class="card-header">
                     <div class="row">
@@ -266,6 +267,10 @@
                     </tr>
                   </tfoot>
                 </table>
+                @else
+                                        
+                <h3 class="text-center">No Data Found of this Month</h3>
+                @endif
                 @endif
               </div>
             </div>

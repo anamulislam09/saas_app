@@ -13,6 +13,9 @@ use App\Http\Controllers\PdfGeneratorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\User\AccountController;
+use App\Http\Controllers\User\ExpenseController as UserExpenseController;
+use App\Http\Controllers\User\IncomeController as UserIncomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Models\Category;
@@ -185,9 +188,42 @@ Route::post('/user-login/owner', [UserController::class, 'Login'])->name('user.l
 Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
 
 /*---------------- Manager route start here ------------------*/
+//    Expense-details route 
+Route::get('/expense/create', [UserExpenseController::class, 'Create'])->name('manager.expense.create');
+Route::post('/expense/store', [UserExpenseController::class, 'Store'])->name('manager.expense.store');
+Route::get('/expense-details/edit/{id}', [UserExpenseController::class, 'Edit']);
+Route::post('/expense-details/update', [UserExpenseController::class, 'Update'])->name('manager.expense-details.update');
+Route::get('/expense-details/delate/{id}', [UserExpenseController::class, 'Delate'])->name('manager.expense-details.delate');
+
+Route::get('/expense-summary', [UserExpenseController::class, 'Index'])->name('manager.expense-summary.index');
+Route::get('/expenses/month', [UserExpenseController::class, 'MonthlyExpense'])->name('manager.expenses.month');
+
+// Expense Management 
+Route::get('/expense/create-/voucher/{id}', [UserExpenseController::class, 'CreateVoucher'])->name('manager.expense.voucher.create');
+Route::post('/expense/generate/voucher', [UserExpenseController::class, 'GenerateVoucher'])->name('manager.expense.voucher.generate');
+Route::get('/expense/generate-/voucher-all', [UserExpenseController::class, 'GenerateVoucherAll'])->name('manager.expense.voucher.generateall');
+
+//    income route  
+Route::get('/income', [UserIncomeController::class, 'Create'])->name('manager.income.create');
+Route::post('/income/store', [UserIncomeController::class, 'Store'])->name('manager.income.store');
+Route::get('/income/collection', [UserIncomeController::class, 'Collection'])->name('manager.income.collection');
+Route::post('/income/collection/store/', [UserIncomeController::class, 'StoreCollection'])->name('manager.income.collection.store');
+
+Route::get('/income/collection-voucher', [UserIncomeController::class, 'Index'])->name('manager.income.collection.index');
+Route::post('/income/collection-all', [UserIncomeController::class, 'CollectionAll'])->name('manager.income.collection.all');
+
+/*------------------------- income voucher route start here-------------------------*/
+Route::get('/income/generate-voucher/{id}', [UserIncomeController::class, 'GenerateIncomeVoucher'])->name('manager.income.voucher.generate');
+Route::post('/income/generate-voucher-all', [UserIncomeController::class, 'GenerateIncomeVoucherAll'])->name('manager.income.voucher.generateall');
+/*------------------------- income voucher route ends here-------------------------*/
+
+// account route start here 
+Route::get('/ledger-posting', [AccountController::class, 'Index'])->name('manager.ledgerPosting.index');
+Route::get('/ledger-posting/store', [AccountController::class, 'Store'])->name('manager.ledger-posting.store');
 
 
 /*---------------- Manager route start here ------------------*/
+
 /*---------------- User route ends here ------------------*/
 
 Route::get('/', function () {

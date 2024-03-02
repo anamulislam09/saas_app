@@ -209,20 +209,21 @@
                             //     ->where('year', $item->year)
                             //     ->where('cat_id', $item->cat_id)
                             //     ->sum('amount');
+                            $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
 
-                            $paid_total = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)
+                            $paid_total = App\Models\Income::where('customer_id', $user->customer_id)
                                 ->where('month', $item->month)
                                 ->where('year', $item->year)
                                 ->where('status', '!=', 0)
                                 ->SUM('paid');
 
-                            $due_total = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)
+                            $due_total = App\Models\Income::where('customer_id', $user->customer_id)
                                 ->where('month', $item->month)
                                 ->where('year', $item->year)
                                 ->where('status', '!=', 0)
                                 ->SUM('due');
 
-                            $user = App\Models\User::where('customer_id', Auth::guard('admin')->user()->id)
+                            $user = App\Models\User::where('customer_id', $user->customer_id)
                                 ->where('flat_id', $item->flat_id)
                                 ->first();
                         @endphp

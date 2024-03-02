@@ -109,44 +109,69 @@
                         </tr>
                       @endforeach
                     </tbody>
-                    <tfoot>
-                      <tr>
-                          <td colspan="2" class="text-right"><strong>Total Income without O/P: </strong></td>
-                          @if (isset($others_total))
-                          <td colspan="2" class="text-right"><strong>{{$data + $others_total}}</strong></td>
-                          @else
-                          <td colspan="2" class="text-right"><strong>{{$data }}</strong></td>
-                              
-                          @endif
-                      </tr>
-                      <tr>
+                  <tfoot>
+                    <tr>
+                        @if (isset($opening_balance))
+                            <td colspan="2" class="text-right"><strong>Total Income without O/P:
+                                </strong></td>
+                            @if (isset($others_total))
+                                <td colspan="2" class="text-right">
+                                    <strong>{{ $data + $others_total }}</strong>
+                                </td>
+                            @else
+                                <td colspan="2" class="text-right">
+                                    <strong>{{ $data }}</strong>
+                                </td>
+                            @endif
+                        @else
+                            <td colspan="2" class="text-right"><strong>Total Income :
+                                </strong></td>
+                            @if (isset($others_total))
+                                <td colspan="2" class="text-right">
+                                    <strong>{{ $data + $others_total }}</strong>
+                                </td>
+                            @else
+                                <td colspan="2" class="text-right">
+                                    <strong>{{ $data }}</strong>
+                                </td>
+                            @endif
+                        @endif
+                    </tr>
+                    <tr>
+                        @if (isset($opening_balance))
+                            <td colspan="2" class="text-right"><strong>Total with O/P: </strong>
+                            </td>
 
-                          <td colspan="2" class="text-right"><strong>Total with O/P: </strong></td>
+                            @if (isset($others_total) && isset($opening_balance) && !empty($data))
+                                @if ($opening_balance->flag == 1)
+                                    <td colspan="2" class="text-right">
+                                        <strong>{{ $data + $others_total + $opening_balance->profit }}</strong>
+                                    </td>
+                                @else
+                                    <td colspan="2" class="text-right">
+                                        <strong>{{ $data + $others_total - $opening_balance->loss }}</strong>
+                                    </td>
+                                @endif
+                            @elseif(isset($others_total) && !isset($opening_balance) && !empty($data))
+                                <td colspan="2" class="text-right">
+                                    <strong>{{ $data + $others_total }}</strong>
+                                </td>
+                            @elseif(!isset($others_total) && isset($opening_balance) && !empty($data))
+                                @if ($opening_balance->flag == 1)
+                                    <td colspan="2" class="text-right">
+                                        <strong>{{ $data + $opening_balance->profit }}</strong>
+                                    </td>
+                                @else
+                                    <td colspan="2" class="text-right">
+                                        <strong>{{ $data - $opening_balance->loss }}</strong>
+                                    </td>
+                                @endif
+                            @endif
+                        @else
+                        @endif
 
-                          @if (isset($others_total) && isset($opening_balance) && !empty($data))
-                              @if ($opening_balance->flag == 1)
-                                  <td colspan="2" class="text-right">
-                                      <strong>{{ $data + $others_total + $opening_balance->profit }}</strong>
-                                  </td>
-                              @else
-                                  <td colspan="2" class="text-right">
-                                      <strong>{{ $data + $others_total - $opening_balance->loss }}</strong>
-                                  </td>
-                              @endif
-                          @else
-                              @if ($opening_balance->flag == 1)
-                                  <td colspan="2" class="text-right">
-                                      <strong>{{ $data + $opening_balance->profit }}</strong>
-                                  </td>
-                              @else
-                                  <td colspan="2" class="text-right">
-                                      <strong>{{ $data - $opening_balance->loss }}</strong>
-                                  </td>
-                              @endif
-
-                          @endif
-                      </tr>
-                  </tfoot>
+                    </tr>
+                </tfoot>
                   </table>
                 </div>
               @else
