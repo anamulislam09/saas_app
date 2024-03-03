@@ -67,9 +67,10 @@
                                                     ->where('id', $item->cat_id)
                                                     ->first();
 
-                                                $total = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)
+                                                    $id = App\Models\User::where('user_id', Auth::user()->user_id)->first();
+                                                $total = App\Models\Income::where('customer_id', $id->customer_id)
                                                     ->sum('amount');
-                                                $collection = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)
+                                                $collection = App\Models\Income::where('customer_id', $id->customer_id)
                                                     ->sum('paid');
                                             @endphp
                                             <tr>

@@ -132,7 +132,7 @@
                                                         @endif </strong>
                                                 </div>
                                                 <div class="col-2">
-                                                    <form action="{{ route('account.expense.voucher.generateall') }}"
+                                                    <form action="{{ route('manager.account.expense.voucher.generateall') }}"
                                                         method="post">
                                                         @csrf
                                                         <input type="hidden" name="month" value="{{ $months->month }}">

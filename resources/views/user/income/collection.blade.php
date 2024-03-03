@@ -166,7 +166,7 @@
                                         <tbody>
                                             @foreach ($data as $key => $item)
                                                 @php
-                                                $user = User::where('user_id', Auth::user()->user_id)->first();
+                                                $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
                                                     // $month = Carbon::now()->month;
                                                     // $year = Carbon::now()->year;
                                                     $previousDate = explode(
@@ -206,7 +206,7 @@
                                                     // total all amount ends here
                                                 @endphp
 
-                                                <form action="{{ route('income.collection.store') }}" method="POST">
+                                                <form action="{{ route('manager.income.collection.store') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="flat_id" value="{{ $item->flat_id }}">
                                                     <tr>
@@ -233,12 +233,12 @@
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>
                                                                 <a
-                                                                    href="{{ route('income.voucher.generate', $item->id) }}"><span
+                                                                    href="{{ route('manager.income.voucher.generate', $item->id) }}"><span
                                                                         class="badge badge-info">Voucher</span></a>
                                                             @elseif($item->status == 2)
                                                                 <span class="badge badge-warning">Due</span>
                                                                 <a
-                                                                    href="{{ route('income.voucher.generate', $item->id) }}"><span
+                                                                    href="{{ route('manager.income.voucher.generate', $item->id) }}"><span
                                                                         class="badge badge-info">Voucher</span></a>
                                                             @else
                                                                 <input type="submit" class="btn btn-sm btn-primary"

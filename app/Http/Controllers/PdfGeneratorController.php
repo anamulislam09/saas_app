@@ -61,7 +61,7 @@ class PdfGeneratorController extends Controller
             ];
             // dd($data);
             $pdf = PDF::loadView('admin.expense.voucher.index', $data);
-            return $pdf->download('sdl.pdf');
+            return $pdf->stream('sdl.pdf');
             // return redirect()->back('expense.create')->$pdf->download('sdl.pdf');
         }
     }
@@ -86,7 +86,7 @@ class PdfGeneratorController extends Controller
             'custDetails' => $custDetails,
         ];
         $pdf = PDF::loadView('admin.expense.voucher.exp_all', $data);
-        return $pdf->download('sdl.pdf');
+        return $pdf->stream('sdl.pdf');
     }
 
     // Account Expense generate all voucher 
@@ -108,7 +108,7 @@ class PdfGeneratorController extends Controller
             'custDetails' => $custDetails,
         ];
         $pdf = PDF::loadView('admin.accounts.exp_voucher_all', $data);
-        return $pdf->download('sdl_exp.pdf');
+        return $pdf->stream('sdl_exp.pdf');
     }
 
     // Income Management generate income voucher 
@@ -126,7 +126,7 @@ class PdfGeneratorController extends Controller
             'custDetails' => $custDetails,
         ];
         $pdf = PDF::loadView('admin.expense.voucher.money_receipt', $data);
-        return $pdf->download('sdl_collection.pdf');
+        return $pdf->stream('sdl_collection.pdf');
     }
 
     // Income Management generate all income voucher 
@@ -146,7 +146,7 @@ class PdfGeneratorController extends Controller
         ];
         // dd($data);
         $pdf = PDF::loadView('admin.expense.voucher.money_receipt_all', $data);
-        return $pdf->download('sdl_collection.pdf');
+        return $pdf->stream('sdl_collection.pdf');
     }
     // Income Management generate all income voucher 
 }

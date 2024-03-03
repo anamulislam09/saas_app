@@ -15,7 +15,9 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\ExpenseController as UserExpenseController;
+use App\Http\Controllers\User\FlatController as UserFlatController;
 use App\Http\Controllers\User\IncomeController as UserIncomeController;
+use App\Http\Controllers\User\ReportController as UserReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Models\Category;
@@ -185,9 +187,25 @@ Route::group(['prefix' => 'admin'], function () {
 /*---------------- User route start here ------------------*/
 Route::get('/user-login', [UserController::class, 'LoginForm'])->name('user.login_form');
 Route::post('/user-login/owner', [UserController::class, 'Login'])->name('user.login');
-Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
 
+Route::middleware('auth')->group(function () {
+Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
+// admin login route start here 
+Route::post('/user/logout', [AccountController::class, 'AdminLogout'])->name('manager.logout');
 /*---------------- Manager route start here ------------------*/
+// Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
+
+// flat route start here 
+Route::get('/manage-flat', [UserFlatController::class, 'Index'])->name('manager.flat.index');
+Route::get('/manage-flat/single-create', [UserFlatController::class, 'SingleCreate'])->name('manager.flat.singlecreate');
+Route::post('/manage-flat/single-store', [UserFlatController::class, 'SingleStore'])->name('manager.flat.singlestore');
+// flat route start here 
+
+//    users route 
+Route::get('/users', [UserFlatController::class, 'UserIndex'])->name('manager.users.index');
+Route::get('/users/edit/{id}', [UserFlatController::class, 'Edit']);
+Route::post('/users/update', [UserFlatController::class, 'Update'])->name('manager.users.update');
+
 //    Expense-details route 
 Route::get('/expense/create', [UserExpenseController::class, 'Create'])->name('manager.expense.create');
 Route::post('/expense/store', [UserExpenseController::class, 'Store'])->name('manager.expense.store');
@@ -236,9 +254,25 @@ Route::get('/income-statement', [AccountController::class, 'Incomes'])->name('ma
 
 /*--------------- Accounts voucher route ends here ------------------*/
 
+/*--------------- Report route start here ------------------*/
+Route::get('/expenses/month', [UserReportController::class, 'MonthlyExpense'])->name('manager.expenses.month');
+Route::post('/expenses-all/month', [UserReportController::class, 'MonthlyAllExpense'])->name('manager.expensesall.month');
+Route::get('/expenses/yearly', [UserReportController::class, 'YearlyExpense'])->name('manager.expenses.year');
+Route::post('/expenses-all/year', [UserReportController::class, 'YearlyAllExpense'])->name('manager.expensesall.year');
+
+Route::get('/incomes/month', [UserReportController::class, 'MonthlyIncome'])->name('manager.incomes.month');
+Route::post('/incomes-all/month', [UserReportController::class, 'MonthlyAllIncome'])->name('manager.incomesall.month');
+Route::get('/incomes/yearly', [UserReportController::class, 'YearlyIncome'])->name('manager.incomes.year');
+Route::post('/incomes-all/yearly', [UserReportController::class, 'YearlyAllIncome'])->name('manager.incomesall.year');
+
+Route::get('/balance-sheet', [UserReportController::class, 'BalanceSheet'])->name('manager.blance.index');
+/*--------------- Report route ends here ------------------*/
+
 /*---------------- Manager route start here ------------------*/
 
 /*---------------- User route ends here ------------------*/
+
+});
 
 Route::get('/', function () {
     return view('welcome');

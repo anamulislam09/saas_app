@@ -24,7 +24,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ route('login_form') }}" class="h1">Forgot-Password</a>
+                <a href="{{ route('login_form') }}" class="h1">Forgot Password</a>
             </div>
             <div class="card-body">
                 {{-- <p class="login-box-msg">Admin Login Panel</p> --}}

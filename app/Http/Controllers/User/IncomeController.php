@@ -280,7 +280,8 @@ class IncomeController extends Controller
             'custDetails' => $custDetails,
         ];
         $pdf = PDF::loadView('user.voucher.money_receipt', $data);
-        return $pdf->download('sdl_collection.pdf');
+        return $pdf->stream('sdl_collection.pdf');
+        // return $pdf->download('sdl_collection.pdf');
     }
 
     // Income Management generate all income voucher 
@@ -302,7 +303,8 @@ class IncomeController extends Controller
         ];
         // dd($data);
         $pdf = PDF::loadView('user.voucher.money_receipt_all', $data);
-        return $pdf->download('sdl_collection.pdf');
+        return $pdf->stream('sdl_collection.pdf');
+        // return $pdf->download('sdl_collection.pdf');
     }
     // Income Management generate all income voucher 
 

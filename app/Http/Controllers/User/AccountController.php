@@ -297,7 +297,16 @@ class AccountController extends Controller
              'custDetails' => $custDetails,
          ];
          $pdf = PDF::loadView('user.accounts.exp_voucher_all', $data);
-         return $pdf->download('sdl_exp.pdf');
+         return $pdf->stream('sdl_exp.pdf');
      }
+
+
+      // Logout method ends here
+    public function AdminLogout()
+    {
+        Auth::logout();
+        return redirect()->route('user.login_form')->with('message', 'Manager Logout Successfully');
+        //end method
+    }
 
 }

@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4 p-0">
     <!-- Brand Logo -->
-    <a href="{{ route('admin.dashboard') }}" class="brand-link">
+    <a href="{{ route('user.Profile') }}" class="brand-link">
         <img src="{{ asset('admin//dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
         @if (Auth::user()->role_id == 0)
@@ -19,7 +19,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('admin.dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('user.Profile') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -63,7 +63,7 @@
 
                     {{-- flat Management ends here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') ? 'menu-open active' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.flat.index') ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -73,8 +73,8 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('flat.index') }}"
-                                    class="nav-link {{ Request::routeIs('flat.index') ? 'active' : '' }}">
+                                <a href="{{ route('manager.flat.index') }}"
+                                    class="nav-link {{ Request::routeIs('manager.flat.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>All Flat</p>
                                 </a>
@@ -85,7 +85,7 @@
 
                     {{-- User management start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('users.index') || Request::routeIs('users.create') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.users.index') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -101,7 +101,7 @@
                                 </a>
                             </li> --}}
                             <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">
+                                <a href="{{ route('manager.users.index') }}" class="nav-link {{Request::routeIs('manager.users.index') ? 'active' : ''}}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>All Users</p>
                                 </a>
@@ -112,7 +112,7 @@
 
                     {{-- Expense management ends here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('manager.expense.create') || Request::routeIs('manager.expense-summary.index')|| Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.expense.create') || Request::routeIs('manager.expense-summary.index')|| Request::routeIs('expense.voucher.create') || Request::routeIs('manager.expense.voucher.create') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -234,7 +234,7 @@
 
                     {{-- Report  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('expenses.month') || Request::routeIs('expenses.year') || Request::routeIs('incomes.month') || Request::routeIs('incomes.year') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.expenses.month') || Request::routeIs('manager.expenses.year') || Request::routeIs('manager.incomes.month') || Request::routeIs('manager.incomes.year') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Report<i class="right fas fa-angle-left"></i>
@@ -242,28 +242,28 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('expenses.month') }}"
-                                    class="nav-link {{ Request::routeIs('expenses.month') ? 'active' : '' }}">
+                                <a href="{{ route('manager.expenses.month') }}"
+                                    class="nav-link {{ Request::routeIs('manager.expenses.month') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Monthly Expense</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('expenses.year')}}"
-                                    class="nav-link {{ Request::routeIs('expenses.year') ? 'active' : '' }}">
+                                <a href="{{route('manager.expenses.year')}}"
+                                    class="nav-link {{ Request::routeIs('manager.expenses.year') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Yearly Expense</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('incomes.month')}}" class="nav-link {{ Request::routeIs('incomes.month') ? 'active' : '' }}">
+                                <a href="{{route('manager.incomes.month')}}" class="nav-link {{ Request::routeIs('manager.incomes.month') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Monthly Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('incomes.year')}}"
-                                    class="nav-link {{ Request::routeIs('incomes.year') ? 'active' : '' }}">
+                                <a href="{{route('manager.incomes.year')}}"
+                                    class="nav-link {{ Request::routeIs('manager.incomes.year') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Yearly Income</p>
                                 </a>
@@ -274,7 +274,7 @@
 
                     {{-- All Setup  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('flat.singlecreate') || Request::routeIs('user.create') || Request::routeIs('income.all') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.flat.singlecreate') || Request::routeIs('manager.user.create') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Setup<i class="right fas fa-angle-left"></i>
@@ -282,18 +282,18 @@
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('flat.singlecreate') }}"
-                                    class="nav-link {{ Request::routeIs('flat.singlecreate') ? 'active' : '' }}">
+                                <a href="{{ route('manager.flat.singlecreate') }}"
+                                    class="nav-link {{ Request::routeIs('manager.flat.singlecreate') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Add More Flat</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('user.create') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Add More User</p>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     {{-- All Setup ends here --}}
