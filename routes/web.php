@@ -221,6 +221,20 @@ Route::post('/income/generate-voucher-all', [UserIncomeController::class, 'Gener
 Route::get('/ledger-posting', [AccountController::class, 'Index'])->name('manager.ledgerPosting.index');
 Route::get('/ledger-posting/store', [AccountController::class, 'Store'])->name('manager.ledger-posting.store');
 
+/*--------------- Accounts voucher route start here ------------------*/
+// collection
+Route::get('/income/collection-voucher', [AccountController::class, 'IndexCollection'])->name('manager.income.collection.index');
+Route::post('/income/collection-all', [AccountController::class, 'CollectionAll'])->name('manager.income.collection.all');
+//expense
+Route::get('/account/expense-voucher', [AccountController::class, 'ExpenseIndex'])->name('manager.account.expense.index');
+Route::post('/account/expense-all', [AccountController::class, 'ExpenseAll'])->name('manager.account.expense.all');
+Route::post('/account/expense-voucher-all', [AccountController::class, 'GenerateExpenseVoucherAll'])->name('manager.account.expense.voucher.generateall');
+//Balance sheet
+Route::get('/account/balance', [AccountController::class, 'BalanceSheet'])->name('manager.account.balancesheet');
+Route::post('/account/balance-all', [AccountController::class, 'AllBalanceSheet'])->name('manager.account.allbalancesheet');
+Route::get('/income-statement', [AccountController::class, 'Incomes'])->name('manager.income.statement');
+
+/*--------------- Accounts voucher route ends here ------------------*/
 
 /*---------------- Manager route start here ------------------*/
 

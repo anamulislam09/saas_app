@@ -185,7 +185,7 @@
 
                     {{-- Accounts  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('account.expense.all') || Request::routeIs('manager.ledgerPosting.index') || Request::routeIs('account.expense.index') || Request::routeIs('account.balancesheet') || Request::routeIs('opening.balance.create') || Request::routeIs('income.statement') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.account.expense.all') || Request::routeIs('manager.ledgerPosting.index') || Request::routeIs('manager.account.expense.index') || Request::routeIs('manager.account.balancesheet') || Request::routeIs('manager.opening.balance.create') || Request::routeIs('manager.income.statement') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Accounts<i class="right fas fa-angle-left"></i>
@@ -208,22 +208,22 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('account.expense.index')}}"
-                                    class="nav-link {{ Request::routeIs('account.expense.index') || Request::routeIs('account.expense.all') ? 'active' : '' }}">
+                                <a href="{{route('manager.account.expense.index')}}"
+                                    class="nav-link {{ Request::routeIs('manager.account.expense.index') || Request::routeIs('manager.account.expense.all') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense Voucher </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('income.statement')}}"
-                                    class="nav-link {{ Request::routeIs('income.statement') ? 'active' : '' }}">
+                                <a href="{{route('manager.income.statement')}}"
+                                    class="nav-link {{ Request::routeIs('manager.income.statement') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Income Statement </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('account.balancesheet')}}"
-                                    class="nav-link {{ Request::routeIs('account.balancesheet') ? 'active' : '' }}">
+                                <a href="{{route('manager.account.balancesheet')}}"
+                                    class="nav-link {{ Request::routeIs('manager.account.balancesheet') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Balance Sheet </p>
                                 </a>

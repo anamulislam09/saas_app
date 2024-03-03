@@ -12,7 +12,7 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-lg-12" style="border: 1px solid #ddd">
-                    <form action="{{ route('account.allbalancesheet') }}" method="post">
+                    <form action="{{ route('manager.account.allbalancesheet') }}" method="post">
                       @csrf
                       <div class="row my-4">
                         <div class="col-lg-3">

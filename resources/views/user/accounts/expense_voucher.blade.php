@@ -17,7 +17,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
-                                        <form action="{{ route('account.expense.all') }}" method="post">
+                                        <form action="{{ route('manager.account.expense.all') }}" method="post">
                                             @csrf
                                             <div class="row my-4">
                                                 <div class="col-lg-3">
@@ -162,12 +162,13 @@
                                                     $data = DB::table('categories')
                                                         ->where('id', $item->cat_id)
                                                         ->first();
-                                                    $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                                                        $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();    
+                                                    $sub_total = App\Models\Exp_detail::where('customer_id', $user->customer_id)
                                                         ->where('month', $item->month)
                                                         ->where('year', $item->year)
                                                         ->where('cat_id', $item->cat_id)
                                                         ->sum('amount');
-                                                    $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                                                    $total = App\Models\Exp_detail::where('customer_id', $user->customer_id)
                                                         ->where('month', $item->month)
                                                         ->where('year', $item->year)
                                                         ->sum('amount');
@@ -227,7 +228,7 @@
                                                         @endif </strong>
                                                 </div>
                                                 <div class="col-2">
-                                                    <form action="{{ route('account.expense.voucher.generateall') }}"
+                                                    <form action="{{ route('manager.account.expense.voucher.generateall') }}"
                                                         method="post">
                                                         @csrf
                                                         <input type="hidden" name="month" value="{{ $month->month }}">
@@ -257,12 +258,13 @@
                                                     $data = DB::table('categories')
                                                         ->where('id', $exp_item->cat_id)
                                                         ->first();
-                                                    $sub_total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                                                        $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
+                                                    $sub_total = App\Models\Exp_detail::where('customer_id', $user->customer_id)
                                                         ->where('month', $exp_item->month)
                                                         ->where('year', $exp_item->year)
                                                         ->where('cat_id', $exp_item->cat_id)
                                                         ->sum('amount');
-                                                    $total = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
+                                                    $total = App\Models\Exp_detail::where('customer_id', $user->customer_id)
                                                         ->where('month', $exp_item->month)
                                                         ->where('year', $exp_item->year)
                                                         ->sum('amount');
@@ -286,7 +288,6 @@
                                         </tfoot>
                                     </table>
                                     @else
-                                        
                                     <h3 class="text-center">No Data Found of this Month</h3>
                                     @endif
                                 @endif

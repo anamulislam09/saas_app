@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\CustomerDetail;
 use App\Models\Exp_detail;
 use App\Models\Exp_process;
+use App\Models\Income;
 use App\Models\MonthlyBlance;
 use App\Models\User;
+use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -192,4 +196,108 @@ class AccountController extends Controller
             }
         }
     }
+
+    public function IndexCollection()
+    {   //show voucher page
+        return view('user.income.collection_voucher');
+    }
+
+    public function CollectionAll(Request $request)
+    { // show collection 
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+
+        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', $user->customer_id)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', $user->customer_id)->get();
+            $months = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', $user->customer_id)->first();
+
+            return redirect()->back()->with(['data' => $data, 'months' => $months]);
+        }
+    }
+
+     //show voucher page
+     public function ExpenseIndex()
+     {
+         $months = Carbon::now()->month;
+         $year = Carbon::now()->year;
+         $user = User::where('user_id', Auth::user()->user_id)->first();
+         $exp = Exp_detail::where('customer_id', $user->customer_id)->where('month', $months)->where('year', $year)->groupBy('cat_id')->get();
+         $month = Exp_detail::where('customer_id', $user->customer_id)->where('month', $months)->where('year', $year)->first();
+         return view('user.accounts.expense_voucher', compact('exp', 'month'));
+     }
+
+     // show collection 
+    public function ExpenseAll(Request $request)
+    {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $isExist = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
+            $months = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
+            //    dd($month->month);
+            // return view('admin.accounts.expense_voucher', compact('data', 'months'));
+            return redirect()->back()->with(['data' => $data, 'months' => $months]);
+        }
+    }
+
+     // BalanceSheet
+     public function BalanceSheet()
+     {
+         // $month = Carbon::now()->month;
+         // $year = Carbon::now()->year;
+         // $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();
+         // $total_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('paid');
+         return view('user.accounts.balance_sheet');
+     }
+
+      // show collection 
+    public function AllBalanceSheet(Request $request)
+    {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $isExist = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
+            $months = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
+            //    dd($month->month);
+            // return view('admin.accounts.expense_voucher', compact('data', 'months'));
+            return redirect()->back()->with(['data' => $data, 'months' => $months]);
+        }
+    }
+
+    public function Incomes()
+    {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $data = Income::where('customer_id', $user->customer_id)->orderBy('month', 'DESC')->get();
+        return view('user.accounts.incomes', compact('data'));
+    }
+
+     // Account Expense generate all voucher 
+     public function GenerateExpenseVoucherAll(Request $request)
+     {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+         $inv = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
+         $total = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->sum('amount');
+         $month = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
+        
+ 
+         $customer = Customer::where('id', $user->customer_id)->first();
+         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
+ 
+         $data = [
+             'inv' => $inv,
+             'total' => $total,
+             'month' => $month,
+             'customer' => $customer,
+             'custDetails' => $custDetails,
+         ];
+         $pdf = PDF::loadView('user.accounts.exp_voucher_all', $data);
+         return $pdf->download('sdl_exp.pdf');
+     }
+
 }
