@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reset-Password</title>
 
+    <style>
+        .login-box {
+            width: 500px !important;
+            background: #999 !important
+        }
+
+        .login-page {
+            background-image: url(../login.png);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            opacity: .8;
+        }
+    </style>
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -39,17 +55,17 @@
                     @csrf
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" name="password" required
-                            autocomplete="current-password"placeholder="Password">
-                        <div class="input-group-append">
+                            autocomplete="current-password"placeholder="Enter New Password">
+                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter New Password">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-lock" ></span>
                             </div>
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" name="confirm_password" required
                             autocomplete="cconfirm-password"placeholder="confirm_Password">
-                        <div class="input-group-append">
+                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Password Confirmation">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
@@ -61,11 +77,6 @@
                         </div>
                     </div>
                 </form>
-                <div class="row">
-                    <div class="col-6 mt-4">
-                        <a href="{{ route('register_form') }}" class="float-right">Create account?</a>
-                    </div>
-                </div>
             </div>
             <!-- /.card -->
         </div>

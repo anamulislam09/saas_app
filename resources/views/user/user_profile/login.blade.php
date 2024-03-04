@@ -9,6 +9,16 @@
   <style>
     .login-box {
       width: 500px !important;
+      background: #999 !important
+    }
+    .login-page{
+      background-image: url(./login.png);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width:100%;
+      opacity: .8;
+      
     }
   </style>
 
@@ -44,18 +54,19 @@
           @csrf
           <div class="input-group mb-4">
             <input type="text" class="form-control" name="user_id" :value="old('user_id')" required autofocus
-              placeholder="Enter user_id">
-            <div class="input-group-append">
+              placeholder="Enter User_Id">
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter your ID">
               <div class="input-group-text">
+                <span class="fas fa-user" ></span>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
             <input type="password" class="form-control" name="password" required
               autocomplete="current-password"placeholder="Password">
-            <div class="input-group-append">
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Phone Number">
               <div class="input-group-text">
-                <span class="fas fa-lock"></span>
+                <span class="fas fa-lock" ></span>
               </div>
             </div>
           </div>
@@ -76,7 +87,7 @@
           </div>
         </form>
         <div class="row py-4">
-          <div class="col-6 mt-4">
+          {{-- <div class="col-6 mt-4">
             <p>
               @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="#">
@@ -84,7 +95,7 @@
                 </a>
               @endif
             </p>
-          </div>
+          </div> --}}
 
         </div>
 

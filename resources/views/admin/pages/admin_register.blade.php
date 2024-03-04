@@ -5,11 +5,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin | Register</title>
-  <style>
-    .register-box {
+<style>
+  .register-box {
       width: 500px !important;
-    }
-  </style>
+      background: #999 !important
+  }
+
+  .register-page {
+      background-image: url(../login.png);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 100%;
+      opacity: .8;
+  }
+</style>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -27,7 +37,7 @@
   <div class="register-box">
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
-        <a href="{{ route('register_form') }}" class="h1"><b>Admin</b> Register(Flat)</a>
+        <a href="{{ route('register_form') }}" class="h1"><b>Admin</b> Registration (Flat)</a>
       </div>
       <div class="card-body">
         {{-- <p class="login-box-msg">Register a new membership</p> --}}
@@ -41,40 +51,40 @@
         <form action="{{ route('admin.store') }}" method="post">
           @csrf
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="name" placeholder="Full name" required>
-            <div class="input-group-append">
+            <input type="text" class="form-control" name="name" placeholder="Enter FullName" required>
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Full Name">
               <div class="input-group-text">
-                <span class="fas fa-user"></span>
+                <span class="fas fa-user" ></span>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="phone" placeholder="Enter a valid number " required>
-            <div class="input-group-append">
+            <input type="text" class="form-control" name="phone" placeholder="Enter a Valid Phone Number " required>
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Phone Number">
               <div class="input-group-text">
-                <span class="fas fa-phone"></span>
+                <span class="fas fa-phone" ></span>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <textarea name="address" id="" cols="" class="form-control" rows="" placeholder="Enter your Address" required></textarea>
-            <div class="input-group-append">
+            <textarea name="address" id="" cols="" class="form-control" rows="" placeholder="Enter Address" required></textarea>
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter your Address">
               <div class="input-group-text">
                 <span class="fas fa-house-user"></span>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="nid_no" placeholder="Enter NID Number" required>
-            <div class="input-group-append">
+            <input type="text" class="form-control" name="nid_no" placeholder="Enter NID / NOC Number" required>
+            <div class="input-group-append" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Enter yor NID / NOC Number">
               <div class="input-group-text">
-                <span class="fas fa-user"></span>
+                <i class="fa fa-id-card" ></i>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" name="email" placeholder="Email" required>
-            <div class="input-group-append">
+            <input type="email" class="form-control" name="email" placeholder="Enter Valid Email" required>
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Your Valid Email">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
@@ -82,8 +92,8 @@
           </div>
 
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password" required>
-            <div class="input-group-append">
+            <input type="password" class="form-control" name="password" placeholder="Enter a Password" required>
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter a Password">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
@@ -92,9 +102,9 @@
           <div class="input-group mb-3">
             <input type="password" class="form-control" name="password_confirmation" placeholder="Retype password"
               required>
-            <div class="input-group-append">
+            <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Password Confirmation">
               <div class="input-group-text">
-                <span class="fas fa-lock"></span>
+                <span class="fas fa-lock" ></span>
               </div>
             </div>
           </div>

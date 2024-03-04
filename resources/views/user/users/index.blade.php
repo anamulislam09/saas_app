@@ -6,6 +6,10 @@
             pointer-events: none;
             cursor: default;
         }
+
+        .modal-dialog {
+            max-width: 650px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
@@ -68,8 +72,9 @@
                                 <tbody>
                                     @foreach ($data as $key => $item)
                                         @php
-                                         $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
-                                            $flat = DB::table('flats')->where('customer_id', $user->customer_id)
+                                            $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
+                                            $flat = DB::table('flats')
+                                                ->where('customer_id', $user->customer_id)
                                                 ->where('flat_unique_id', $item->flat_id)
                                                 ->first();
                                         @endphp
@@ -77,9 +82,9 @@
                                             <td>{{ $item->user_id }}</td>
                                             <td>{{ $item->name }}</td>
                                             @if (!empty($flat))
-                                            <td>{{ $flat->flat_name }}</td>
+                                                <td>{{ $flat->flat_name }}</td>
                                             @else
-                                            <td>Undefine</td>
+                                                <td>Undefine</td>
                                             @endif
                                             <td>{{ $item->phone }}</td>
                                             <td>{{ $item->email }}</td>

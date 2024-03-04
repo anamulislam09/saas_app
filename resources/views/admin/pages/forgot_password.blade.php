@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Forgot-Password</title>
 
+    <style>
+        .login-box {
+            width: 500px !important;
+            background: #999 !important
+        }
+
+        .login-page {
+            background-image: url(../login.png);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            opacity: .8;
+        }
+    </style>
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -39,8 +55,8 @@
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" name="email" :value="old('email')" required
-                            autofocus placeholder="Email">
-                        <div class="input-group-append">
+                            autofocus placeholder="Enter Email">
+                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Your Email">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
@@ -80,9 +96,9 @@
             </a>
         @endif
     </p></div> --}}
-    <div class="col-6 mt-4">
+    {{-- <div class="col-6 mt-4">
         <a href="{{route('register_form')}}" class="float-right">Create account?</a>
-    </div>
+    </div> --}}
 </div>
         
                 <!-- /.card-body -->

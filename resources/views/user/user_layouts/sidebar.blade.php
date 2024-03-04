@@ -29,20 +29,27 @@
                 data-accordion="false">
                 @if (Auth::user()->role_id == 0)
                     <li
-                        class="nav-item {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('singleUser.paid') || Request::routeIs('singleUser.due') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
-                                Customers
+                                Transactions
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
                             <li class="nav-item">
-                                <a href="{{ route('customers.all') }}"
-                                    class="nav-link {{ Request::routeIs('customers.all') || Request::routeIs('customers.create') || Request::routeIs('customers.edit') ? 'active' : '' }}">
+                                <a href="{{ route('singleUser.paid') }}"
+                                    class="nav-link {{ Request::routeIs('singleUser.paid') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Customers</p>
+                                    <p>Total paid</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('singleUser.due') }}"
+                                    class="nav-link {{ Request::routeIs('singleUser.due') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Total due</p>
                                 </a>
                             </li>
 
@@ -50,10 +57,10 @@
                     </li>
                     {{-- expense category start here --}}
                     <li class="nav-item">
-                        <a href="{{ route('category.index') }}"
-                            class="nav-link {{ Request::routeIs('category.index') || Request::routeIs('category.create') ? 'active' : '' }}">
+                        <a href="{{ route('user.password.reset') }}"
+                            class="nav-link {{ Request::routeIs('user.password.reset') || Request::routeIs('user.password.reset.store') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
-                            <p>Expense Category</p>
+                            <p>Reset Password</p>
                         </a>
                     </li>
                     {{-- expense category ends here --}}

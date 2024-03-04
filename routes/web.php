@@ -43,7 +43,7 @@ Route::get('/admin/reset/{token}', [AdminController::class, 'reset']);
 Route::post('/admin/reset/{token}', [AdminController::class, 'PostReset']);
 // Customer Forgate password route ends here 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['Admin']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
 
     // Customer show 
@@ -71,7 +71,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['Admin']], function () {
 
 /*---------------- Admin route ends here ------------------*/
 /*---------------- Customer route start here ------------------*/
-Route::group(['prefix' => 'admin', 'middleware' => ['Admin']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //    Flat setup route 
     Route::get('/manage-flat', [FlatController::class, 'Index'])->name('flat.index');
     Route::get('/manage-flat/create', [FlatController::class, 'Create'])->name('flat.create');
@@ -268,10 +268,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/balance-sheet', [UserReportController::class, 'BalanceSheet'])->name('manager.blance.index');
     /*--------------- Report route ends here ------------------*/
 
-    /*---------------- Manager route start here ------------------*/
+    /*---------------- Manager route ends here ------------------*/
+
+    /*---------------- user route start here ------------------*/
+    Route::get('/single-user/paid', [UserIncomeController::class, 'SingleUserPaid'])->name('singleUser.paid');
+    Route::get('/single-user/due', [UserIncomeController::class, 'SingleUserDue'])->name('singleUser.due');
+    Route::get('/user/reset-password', [UserIncomeController::class, 'PasswordReset'])->name('user.password.reset');
+    Route::Post('/user/reset-password', [UserIncomeController::class, 'PasswordResetStore'])->name('user.password.reset.store');
+    /*---------------- user route ends here ------------------*/
 
     /*---------------- User route ends here ------------------*/
 });
+
+
 
 Route::get('/', function () {
     return view('welcome');

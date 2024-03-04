@@ -98,6 +98,9 @@ class FlatController extends Controller
     $data = User::where('customer_id', $user->customer_id)->where('id', $id)->first();
     $data['name'] = $request->name;
     $data['email'] = $request->email;
+    $data['phone'] = $request->phone;
+    $data['nid_no'] = $request->nid_no;
+    $data['address'] = $request->address;
     $data['status'] = $request->status ? 1 : 0;
     $data->save();
     return redirect()->back()->with('message', 'User update successfully');

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class IncomeController extends Controller
 {
@@ -310,4 +311,62 @@ class IncomeController extends Controller
 
 
     /*-------------------Collection voucher ends here--------------*/
+
+    /*-------------------single user start here--------------*/
+
+    public function SingleUserPaid()
+    {   //show voucher page
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $isExist = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->get();
+            $months = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->first();
+
+            return view('user.normal_user.total_paid', compact('data', 'months'));
+        }
+    }
+
+    public function SingleUserDue()
+    { // show collection 
+
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $isExist = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->exists();
+        if (!$isExist) {
+            return redirect()->back()->with('message', 'Data Not Found');
+        } else {
+            $data = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->get();
+            $months = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->first();
+
+            // dd($data);
+            return view('user.normal_user.total_paid', compact('data', 'months'));
+        }
+    }
+
+    // Password reset 
+
+    public function PasswordReset()
+    {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $data = User::where('customer_id', $user->customer_id)->where('user_id', $user->user_id)->first();
+
+        return view('user.user_profile.reset_password', compact('data'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function PasswordResetStore(Request $request)
+    {
+        $user_id = $request->user_id;
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $data = User::where('user_id', $user_id)->where('customer_id', $user->customer_id)->first();
+        $data['phone'] = $request->password;
+        $data['password'] = Hash::make($request->password);
+        $data->save();
+        return redirect()->back()->with('message', 'Password Reset Successfully.');
+    }
+
+    /*------------------- single user ends here--------------*/
 }

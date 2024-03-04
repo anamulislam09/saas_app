@@ -55,7 +55,8 @@
             font-weight: bold;
             font-size: 85px;
             font-family: cursive;
-            color: #9cb12c;
+            /* color: #9cb12c; */
+            color: #83df30de;
             transform: translateX(8px);
 
             text-transform: uppercase
@@ -78,6 +79,7 @@
         <div class="header">
 
             <ul>
+                <li style="float:right"><a href="{{ route('register_form') }}">Admin Registration</a></li>
                 <li style="float:right"><a href="{{ route('login_form') }}">Admin Login</a></li>/
                 <li style="float:right"><a href="{{ route('user.login_form') }}">User Login</a></li>
             </ul>
