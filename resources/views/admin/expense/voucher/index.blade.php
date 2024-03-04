@@ -302,7 +302,7 @@
           return '';
       }
 
-      $word = numberToWord($total);
+      $word = numberToWord($inv->amount);
      
   @endphp
 
@@ -312,12 +312,15 @@
     </div>
     <div class="footer">
       <div class="Prepared">
+        <p style="padding-bottom: -10px; margin-bottom:-20px; padding-left:25px">{{ Auth::guard('admin')->user()->name }}</p>
         <h4>Prepared by</h4>
       </div>
       <div class="Approved">
+        <p></p>
         <h4>Approved by</h4>
       </div>
       <div class="Recipient">
+        <p></p>
         <h4>Recipient Signature</h4>
       </div>
     </div>

@@ -71,37 +71,25 @@
         /* table style ends here  */
 
         .Prepared {
-            width: 33.33%;
+            width: 70%;
             float: left;
         }
 
         .Prepared h4 {
             border-top: 2px solid black;
-            width: 45%;
-            text-align: center;
-        }
-
-        .Approved {
-            width: 33.33%;
-            float: left;
-            text-align: -webkit-center;
-        }
-
-        .Approved h4 {
-            border-top: 2px solid black;
-            width: 45%;
+            width: 25%;
             text-align: center;
         }
 
         .Recipient {
-            width: 33.33%;
+            width: 30%;
             float: left;
             text-align: -webkit-right;
         }
 
         .Recipient h4 {
             border-top: 2px solid black;
-            width: 70%;
+            width: 90%;
             text-align: center;
         }
 
@@ -121,7 +109,7 @@
             line-height: 10px;
         }
 
-        .righrightt-text {
+        .right-text {
             width: 30%;
             float: left;
         }
@@ -389,6 +377,7 @@
                 <h4>Prepared by</h4>
             </div>
             <div class="Recipient">
+                <p></p>
                 <h4>Recipient Signature</h4>
             </div>
         </div>

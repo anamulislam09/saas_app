@@ -356,9 +356,11 @@
                 <h4>Prepared by</h4>
             </div>
             <div class="Approved">
+                <p></p>
                 <h4>Approved by</h4>
             </div>
             <div class="Recipient">
+                <p></p>
                 <h4>Recipient Signature</h4>
             </div>
         </div>

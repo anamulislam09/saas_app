@@ -60,37 +60,25 @@
         /* table style ends here  */
 
         .Prepared {
-            width: 33.33%;
+            width: 70%;
             float: left;
         }
 
         .Prepared h4 {
             border-top: 2px solid black;
-            width: 45%;
-            text-align: center;
-        }
-
-        .Approved {
-            width: 33.33%;
-            float: left;
-            text-align: -webkit-center;
-        }
-
-        .Approved h4 {
-            border-top: 2px solid black;
-            width: 45%;
+            width: 25%;
             text-align: center;
         }
 
         .Recipient {
-            width: 33.33%;
+            width: 30%;
             float: left;
             text-align: -webkit-right;
         }
 
         .Recipient h4 {
             border-top: 2px solid black;
-            width: 70%;
+            width: 90%;
             text-align: center;
         }
 
@@ -100,7 +88,9 @@
             justify-content: space-between;
             display: block;
             padding: 15px 0px;
-            padding-bottom: 25px width: 100%;
+            padding-bottom: 25px;
+             width: 100%;
+            height:60px;
             /* background: #fb5200; */
         }
 
@@ -110,7 +100,7 @@
             line-height: 10px;
         }
 
-        .righrightt-text {
+        .right-text {
             width: 30%;
             float: left;
         }
@@ -155,15 +145,137 @@
                 {{-- <p>Flat_name : {{ $inv->flat_name }}</p> --}}
             </div>
             <div class="right-text">
-                <p>Barcode</p>
+                <p  style="margin-top: 0px">{!! DNS1D::getBarcodeHTML("$inv->paid", 'C128') !!}</p>
                 <p>Date :{{ date('m/d/y') }}</p>
             </div>
         </div>
+        @php
+        // Function which returns number to words
+        function numberToWord($num = '')
+        {
+            $num = (string) ((int) $num);
+
+            if ((int) $num && ctype_digit($num)) {
+                $words = [];
+
+                $num = str_replace([',', ' '], '', trim($num));
+
+                $list1 = [
+                    '',
+                    'one',
+                    'two',
+                    'three',
+                    'four',
+                    'five',
+                    'six',
+                    'seven',
+                    'eight',
+                    'nine',
+                    'ten',
+                    'eleven',
+                    'twelve',
+                    'thirteen',
+                    'fourteen',
+                    'fifteen',
+                    'sixteen',
+                    'seventeen',
+                    'eighteen',
+                    'nineteen',
+                ];
+
+                $list2 = [
+                    '',
+                    'ten',
+                    'twenty',
+                    'thirty',
+                    'forty',
+                    'fifty',
+                    'sixty',
+                    'seventy',
+                    'eighty',
+                    'ninety',
+                    'hundred',
+                ];
+
+                $list3 = [
+                    '',
+                    'thousand',
+                    'million',
+                    'billion',
+                    'trillion',
+                    'quadrillion',
+                    'quintillion',
+                    'sextillion',
+                    'septillion',
+                    'octillion',
+                    'nonillion',
+                    'decillion',
+                    'undecillion',
+                    'duodecillion',
+                    'tredecillion',
+                    'quattuordecillion',
+                    'quindecillion',
+                    'sexdecillion',
+                    'septendecillion',
+                    'octodecillion',
+                    'novemdecillion',
+                    'vigintillion',
+                ];
+
+                $num_length = strlen($num);
+                $levels = (int) (($num_length + 2) / 3);
+                $max_length = $levels * 3;
+                $num = substr('00' . $num, -$max_length);
+                $num_levels = str_split($num, 3);
+
+                foreach ($num_levels as $num_part) {
+                    $levels--;
+                    $hundreds = (int) ($num_part / 100);
+                    $hundreds = $hundreds
+                        ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' '
+                        : '';
+                    $tens = (int) ($num_part % 100);
+                    $singles = '';
+
+                    if ($tens < 20) {
+                        $tens = $tens ? ' ' . $list1[$tens] . ' ' : '';
+                    } else {
+                        $tens = (int) ($tens / 10);
+                        $tens = ' ' . $list2[$tens] . ' ';
+                        $singles = (int) ($num_part % 10);
+                        $singles = ' ' . $list1[$singles] . ' ';
+                    }
+                    $words[] =
+                        $hundreds .
+                        $tens .
+                        $singles .
+                        ($levels && (int) $num_part ? ' ' . $list3[$levels] . ' ' : '');
+                }
+                $commas = count($words);
+                if ($commas > 1) {
+                    $commas = $commas - 1;
+                }
+
+                $words = implode(', ', $words);
+
+                $words = trim(str_replace(' ,', ',', ucwords($words)), ', ');
+                if ($commas) {
+                    $words = str_replace(',', ' and', $words);
+                }
+
+                return $words;
+            } elseif (!((int) $num)) {
+                return 'Zero';
+            }
+            return '';
+        }
+
+        $word = numberToWord($inv->paid);
+    @endphp
+
         <div class="body">
-            <p>Amount <strong><span
-                        style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span></strong> in
-                word
-                ................ of the month of <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">
+            <p>Amount <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $inv->paid }}</span></strong> in
+                word <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">{{ $word }}</span></strong> of the month of <strong><span style="border-bottom: 2px dotted #000; padding:0px 30px">
                         @if ($inv->month == 1)
                             January
                         @elseif ($inv->month == 2)
@@ -194,9 +306,11 @@
         </div>
         <div class="footer">
             <div class="Prepared">
+                <p style="padding-bottom: -10px; margin-bottom:-20px; padding-left:25px">{{ Auth::guard('admin')->user()->name }}</p>
                 <h4>Prepared by</h4>
             </div>
             <div class="Recipient">
+                <p></p>
                 <h4>Recipient Signature</h4>
             </div>
         </div>

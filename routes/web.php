@@ -43,7 +43,7 @@ Route::get('/admin/reset/{token}', [AdminController::class, 'reset']);
 Route::post('/admin/reset/{token}', [AdminController::class, 'PostReset']);
 // Customer Forgate password route ends here 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['Admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
 
     // Customer show 
@@ -71,7 +71,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 /*---------------- Admin route ends here ------------------*/
 /*---------------- Customer route start here ------------------*/
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['Admin']], function () {
     //    Flat setup route 
     Route::get('/manage-flat', [FlatController::class, 'Index'])->name('flat.index');
     Route::get('/manage-flat/create', [FlatController::class, 'Create'])->name('flat.create');
@@ -189,89 +189,88 @@ Route::get('/user-login', [UserController::class, 'LoginForm'])->name('user.logi
 Route::post('/user-login/owner', [UserController::class, 'Login'])->name('user.login');
 
 Route::middleware('auth')->group(function () {
-Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
-// admin login route start here 
-Route::post('/user/logout', [AccountController::class, 'AdminLogout'])->name('manager.logout');
-/*---------------- Manager route start here ------------------*/
-// Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
+    Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
+    // admin login route start here 
+    Route::post('/user/logout', [AccountController::class, 'AdminLogout'])->name('manager.logout');
+    /*---------------- Manager route start here ------------------*/
+    // Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
 
-// flat route start here 
-Route::get('/manage-flat', [UserFlatController::class, 'Index'])->name('manager.flat.index');
-Route::get('/manage-flat/single-create', [UserFlatController::class, 'SingleCreate'])->name('manager.flat.singlecreate');
-Route::post('/manage-flat/single-store', [UserFlatController::class, 'SingleStore'])->name('manager.flat.singlestore');
-// flat route start here 
+    // flat route start here 
+    Route::get('/manage-flat', [UserFlatController::class, 'Index'])->name('manager.flat.index');
+    Route::get('/manage-flat/single-create', [UserFlatController::class, 'SingleCreate'])->name('manager.flat.singlecreate');
+    Route::post('/manage-flat/single-store', [UserFlatController::class, 'SingleStore'])->name('manager.flat.singlestore');
+    // flat route start here 
 
-//    users route 
-Route::get('/users', [UserFlatController::class, 'UserIndex'])->name('manager.users.index');
-Route::get('/users/edit/{id}', [UserFlatController::class, 'Edit']);
-Route::post('/users/update', [UserFlatController::class, 'Update'])->name('manager.users.update');
+    //    users route 
+    Route::get('/users', [UserFlatController::class, 'UserIndex'])->name('manager.users.index');
+    Route::get('/users/edit/{id}', [UserFlatController::class, 'Edit']);
+    Route::post('/users/update', [UserFlatController::class, 'Update'])->name('manager.users.update');
 
-//    Expense-details route 
-Route::get('/expense/create', [UserExpenseController::class, 'Create'])->name('manager.expense.create');
-Route::post('/expense/store', [UserExpenseController::class, 'Store'])->name('manager.expense.store');
-Route::get('/expense-details/edit/{id}', [UserExpenseController::class, 'Edit']);
-Route::post('/expense-details/update', [UserExpenseController::class, 'Update'])->name('manager.expense-details.update');
-Route::get('/expense-details/delate/{id}', [UserExpenseController::class, 'Delate'])->name('manager.expense-details.delate');
+    //    Expense-details route 
+    Route::get('/expense/create', [UserExpenseController::class, 'Create'])->name('manager.expense.create');
+    Route::post('/expense/store', [UserExpenseController::class, 'Store'])->name('manager.expense.store');
+    Route::get('/expense-details/edit/{id}', [UserExpenseController::class, 'Edit']);
+    Route::post('/expense-details/update', [UserExpenseController::class, 'Update'])->name('manager.expense-details.update');
+    Route::get('/expense-details/delate/{id}', [UserExpenseController::class, 'Delate'])->name('manager.expense-details.delate');
 
-Route::get('/expense-summary', [UserExpenseController::class, 'Index'])->name('manager.expense-summary.index');
-Route::get('/expenses/month', [UserExpenseController::class, 'MonthlyExpense'])->name('manager.expenses.month');
+    Route::get('/expense-summary', [UserExpenseController::class, 'Index'])->name('manager.expense-summary.index');
+    Route::get('/expenses/month', [UserExpenseController::class, 'MonthlyExpense'])->name('manager.expenses.month');
 
-// Expense Management 
-Route::get('/expense/create-/voucher/{id}', [UserExpenseController::class, 'CreateVoucher'])->name('manager.expense.voucher.create');
-Route::post('/expense/generate/voucher', [UserExpenseController::class, 'GenerateVoucher'])->name('manager.expense.voucher.generate');
-Route::get('/expense/generate-/voucher-all', [UserExpenseController::class, 'GenerateVoucherAll'])->name('manager.expense.voucher.generateall');
+    // Expense Management 
+    Route::get('/expense/create-/voucher/{id}', [UserExpenseController::class, 'CreateVoucher'])->name('manager.expense.voucher.create');
+    Route::post('/expense/generate/voucher', [UserExpenseController::class, 'GenerateVoucher'])->name('manager.expense.voucher.generate');
+    Route::get('/expense/generate-/voucher-all', [UserExpenseController::class, 'GenerateVoucherAll'])->name('manager.expense.voucher.generateall');
 
-//    income route  
-Route::get('/income', [UserIncomeController::class, 'Create'])->name('manager.income.create');
-Route::post('/income/store', [UserIncomeController::class, 'Store'])->name('manager.income.store');
-Route::get('/income/collection', [UserIncomeController::class, 'Collection'])->name('manager.income.collection');
-Route::post('/income/collection/store/', [UserIncomeController::class, 'StoreCollection'])->name('manager.income.collection.store');
+    //    income route  
+    Route::get('/income', [UserIncomeController::class, 'Create'])->name('manager.income.create');
+    Route::post('/income/store', [UserIncomeController::class, 'Store'])->name('manager.income.store');
+    Route::get('/income/collection', [UserIncomeController::class, 'Collection'])->name('manager.income.collection');
+    Route::post('/income/collection/store/', [UserIncomeController::class, 'StoreCollection'])->name('manager.income.collection.store');
 
-Route::get('/income/collection-voucher', [UserIncomeController::class, 'Index'])->name('manager.income.collection.index');
-Route::post('/income/collection-all', [UserIncomeController::class, 'CollectionAll'])->name('manager.income.collection.all');
+    Route::get('/income/collection-voucher', [UserIncomeController::class, 'Index'])->name('manager.income.collection.index');
+    Route::post('/income/collection-all', [UserIncomeController::class, 'CollectionAll'])->name('manager.income.collection.all');
 
-/*------------------------- income voucher route start here-------------------------*/
-Route::get('/income/generate-voucher/{id}', [UserIncomeController::class, 'GenerateIncomeVoucher'])->name('manager.income.voucher.generate');
-Route::post('/income/generate-voucher-all', [UserIncomeController::class, 'GenerateIncomeVoucherAll'])->name('manager.income.voucher.generateall');
-/*------------------------- income voucher route ends here-------------------------*/
+    /*------------------------- income voucher route start here-------------------------*/
+    Route::get('/income/generate-voucher/{id}', [UserIncomeController::class, 'GenerateIncomeVoucher'])->name('manager.income.voucher.generate');
+    Route::post('/income/generate-voucher-all', [UserIncomeController::class, 'GenerateIncomeVoucherAll'])->name('manager.income.voucher.generateall');
+    /*------------------------- income voucher route ends here-------------------------*/
 
-// account route start here 
-Route::get('/ledger-posting', [AccountController::class, 'Index'])->name('manager.ledgerPosting.index');
-Route::get('/ledger-posting/store', [AccountController::class, 'Store'])->name('manager.ledger-posting.store');
+    // account route start here 
+    Route::get('/ledger-posting', [AccountController::class, 'Index'])->name('manager.ledgerPosting.index');
+    Route::get('/ledger-posting/store', [AccountController::class, 'Store'])->name('manager.ledger-posting.store');
 
-/*--------------- Accounts voucher route start here ------------------*/
-// collection
-Route::get('/income/collection-voucher', [AccountController::class, 'IndexCollection'])->name('manager.income.collection.index');
-Route::post('/income/collection-all', [AccountController::class, 'CollectionAll'])->name('manager.income.collection.all');
-//expense
-Route::get('/account/expense-voucher', [AccountController::class, 'ExpenseIndex'])->name('manager.account.expense.index');
-Route::post('/account/expense-all', [AccountController::class, 'ExpenseAll'])->name('manager.account.expense.all');
-Route::post('/account/expense-voucher-all', [AccountController::class, 'GenerateExpenseVoucherAll'])->name('manager.account.expense.voucher.generateall');
-//Balance sheet
-Route::get('/account/balance', [AccountController::class, 'BalanceSheet'])->name('manager.account.balancesheet');
-Route::post('/account/balance-all', [AccountController::class, 'AllBalanceSheet'])->name('manager.account.allbalancesheet');
-Route::get('/income-statement', [AccountController::class, 'Incomes'])->name('manager.income.statement');
+    /*--------------- Accounts voucher route start here ------------------*/
+    // collection
+    Route::get('/income/collection-voucher', [AccountController::class, 'IndexCollection'])->name('manager.income.collection.index');
+    Route::post('/income/collection-all', [AccountController::class, 'CollectionAll'])->name('manager.income.collection.all');
+    //expense
+    Route::get('/account/expense-voucher', [AccountController::class, 'ExpenseIndex'])->name('manager.account.expense.index');
+    Route::post('/account/expense-all', [AccountController::class, 'ExpenseAll'])->name('manager.account.expense.all');
+    Route::post('/account/expense-voucher-all', [AccountController::class, 'GenerateExpenseVoucherAll'])->name('manager.account.expense.voucher.generateall');
+    //Balance sheet
+    Route::get('/account/balance', [AccountController::class, 'BalanceSheet'])->name('manager.account.balancesheet');
+    Route::post('/account/balance-all', [AccountController::class, 'AllBalanceSheet'])->name('manager.account.allbalancesheet');
+    Route::get('/income-statement', [AccountController::class, 'Incomes'])->name('manager.income.statement');
 
-/*--------------- Accounts voucher route ends here ------------------*/
+    /*--------------- Accounts voucher route ends here ------------------*/
 
-/*--------------- Report route start here ------------------*/
-Route::get('/expenses/month', [UserReportController::class, 'MonthlyExpense'])->name('manager.expenses.month');
-Route::post('/expenses-all/month', [UserReportController::class, 'MonthlyAllExpense'])->name('manager.expensesall.month');
-Route::get('/expenses/yearly', [UserReportController::class, 'YearlyExpense'])->name('manager.expenses.year');
-Route::post('/expenses-all/year', [UserReportController::class, 'YearlyAllExpense'])->name('manager.expensesall.year');
+    /*--------------- Report route start here ------------------*/
+    Route::get('/expenses/month', [UserReportController::class, 'MonthlyExpense'])->name('manager.expenses.month');
+    Route::post('/expenses-all/month', [UserReportController::class, 'MonthlyAllExpense'])->name('manager.expensesall.month');
+    Route::get('/expenses/yearly', [UserReportController::class, 'YearlyExpense'])->name('manager.expenses.year');
+    Route::post('/expenses-all/year', [UserReportController::class, 'YearlyAllExpense'])->name('manager.expensesall.year');
 
-Route::get('/incomes/month', [UserReportController::class, 'MonthlyIncome'])->name('manager.incomes.month');
-Route::post('/incomes-all/month', [UserReportController::class, 'MonthlyAllIncome'])->name('manager.incomesall.month');
-Route::get('/incomes/yearly', [UserReportController::class, 'YearlyIncome'])->name('manager.incomes.year');
-Route::post('/incomes-all/yearly', [UserReportController::class, 'YearlyAllIncome'])->name('manager.incomesall.year');
+    Route::get('/incomes/month', [UserReportController::class, 'MonthlyIncome'])->name('manager.incomes.month');
+    Route::post('/incomes-all/month', [UserReportController::class, 'MonthlyAllIncome'])->name('manager.incomesall.month');
+    Route::get('/incomes/yearly', [UserReportController::class, 'YearlyIncome'])->name('manager.incomes.year');
+    Route::post('/incomes-all/yearly', [UserReportController::class, 'YearlyAllIncome'])->name('manager.incomesall.year');
 
-Route::get('/balance-sheet', [UserReportController::class, 'BalanceSheet'])->name('manager.blance.index');
-/*--------------- Report route ends here ------------------*/
+    Route::get('/balance-sheet', [UserReportController::class, 'BalanceSheet'])->name('manager.blance.index');
+    /*--------------- Report route ends here ------------------*/
 
-/*---------------- Manager route start here ------------------*/
+    /*---------------- Manager route start here ------------------*/
 
-/*---------------- User route ends here ------------------*/
-
+    /*---------------- User route ends here ------------------*/
 });
 
 Route::get('/', function () {
