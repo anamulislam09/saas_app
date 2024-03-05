@@ -38,12 +38,14 @@
                       December
                     @endif </h3>
                   </div>
+                 
+                  @if (count($expSummary) < 1)
+                  @else
                   <div class="col-lg-2 col-sm-12">
-                    <a href="{{route('expense.voucher.generateall')}}" class="btn btn-sm btn-info">General Voucher</a>
-
-                      {{-- <a href="" class="btn btn-sm btn-info text-center edit" data-id="{{ $item->id }}"
-                        data-toggle="modal" data-target="#editUser">General vouchar</a> --}}
+                    <a href="{{route('manager.expense.voucher.generateall')}}" class="btn btn-sm btn-info">General Voucher</a>
                   </div>
+                  @endif
+
                 </div>
               </div>
               <!-- /.card-header -->

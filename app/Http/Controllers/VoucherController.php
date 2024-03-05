@@ -15,7 +15,11 @@ class VoucherController extends Controller
 {
     public function Index()
     {   //show voucher page
-        return view('admin.income.collection_voucher');
+        $months = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->where('status', '!=', 0)->get();
+        $month = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->where('status', '!=', 0)->first();
+        return view('admin.income.collection_voucher' , compact('income', 'month'));
     }
 
     public function CollectionAll(Request $request)

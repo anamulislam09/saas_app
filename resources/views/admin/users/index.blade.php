@@ -6,6 +6,10 @@
             pointer-events: none;
             cursor: default;
         }
+
+        .modal-dialog {
+            max-width: 650px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
@@ -68,7 +72,8 @@
                                 <tbody>
                                     @foreach ($data as $key => $item)
                                         @php
-                                            $flat = DB::table('flats')->where('customer_id', Auth::guard('admin')->user()->id)
+                                            $flat = DB::table('flats')
+                                                ->where('customer_id', Auth::guard('admin')->user()->id)
                                                 ->where('flat_unique_id', $item->flat_id)
                                                 ->first();
                                         @endphp
@@ -76,9 +81,9 @@
                                             <td>{{ $item->user_id }}</td>
                                             <td>{{ $item->name }}</td>
                                             @if (!empty($flat))
-                                            <td>{{ $flat->flat_name }}</td>
+                                                <td>{{ $flat->flat_name }}</td>
                                             @else
-                                            <td>Undefine</td>
+                                                <td class="text-center">-----</td>
                                             @endif
                                             <td>{{ $item->phone }}</td>
                                             <td>{{ $item->email }}</td>
@@ -116,7 +121,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">User Edit Form</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

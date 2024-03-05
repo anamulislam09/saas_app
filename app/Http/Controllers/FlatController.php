@@ -45,6 +45,8 @@ class FlatController extends Controller
             $flatChar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
             //  $flats = $floor;
 
+            $k = 1;
+
             for ($i = 0; $i < $floor; $i++) {
                 for ($j = 0; $j < $unit; $j++) {
                     if ($sequence == 1) {
@@ -65,8 +67,17 @@ class FlatController extends Controller
                     // dd($flatmaster);
 
                     if ($flatmaster) {
-                        $Fid = UniqueIdGenerator::generate(['table' => 'flatids', 'length' => 3]);
-                        $flatid['flat_id'] = $Fid;
+                        // $Fid = UniqueIdGenerator::generate(['table' => 'flatids', 'length' => 3]);
+                        // $start_at = 001;
+
+                        // if ($start_at) {
+                        //     $customer = Customer::find($start_at);
+                        //     if (!$customer) {
+                        //         $data['id'] = $start_at;
+                        //     }
+                        // }
+                
+                        $flatid['flat_id'] = $this->formatSrl($k++);
                         $flatid['customer_id'] = Auth::guard('admin')->user()->id;
                         Flatid::create($flatid);
                     }
@@ -105,11 +116,30 @@ class FlatController extends Controller
                 }
             }
             Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->delete();
-            Flatid::where('customer_id', Auth::guard('admin')->user()->id)->delete();
+            // Flatid::where('customer_id', Auth::guard('admin')->user()->id)->delete();
 
             return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
         }
     }
+
+    // unique id serial function
+
+    public function formatSrl($srl)
+    {
+        switch(strlen($srl)){
+            case 1:
+                $zeros = '00';
+                break;
+            case 2:
+                $zeros = '0';
+                break;
+            default:
+                $zeros = '0';
+            break;
+        }
+        return $zeros . $srl;
+    }
+
     // store method ends here 
 
     // flat single create start here

@@ -166,7 +166,10 @@
                                         <tbody>
                                             @foreach ($data as $key => $item)
                                                 @php
-                                                $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
+                                                    $user = App\Models\User::where(
+                                                        'user_id',
+                                                        Auth::user()->user_id,
+                                                    )->first();
                                                     // $month = Carbon::now()->month;
                                                     // $year = Carbon::now()->year;
                                                     $previousDate = explode(
@@ -206,7 +209,8 @@
                                                     // total all amount ends here
                                                 @endphp
 
-                                                <form action="{{ route('manager.income.collection.store') }}" method="POST">
+                                                <form action="{{ route('manager.income.collection.store') }}"
+                                                    method="POST">
                                                     @csrf
                                                     <input type="hidden" name="flat_id" value="{{ $item->flat_id }}">
                                                     <tr>
@@ -261,7 +265,7 @@
                                         </tfoot>
                                     </table>
                                 @else
-                                    <h4 class="text-center">No Data Found</h4>
+                                    <h5 class="text-center py-3">No Data Found</h5>
                                 @endif
                             </div>
 

@@ -194,7 +194,7 @@
                                             </tfoot>
                                         </table>
                                     @else
-                                        <h3 class="text-center">No Data Found of this Year</h3>
+                                    <h5 class="text-center py-3">No Data Found</h5>
                                     @endif
 
                                 @endif

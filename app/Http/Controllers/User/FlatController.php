@@ -7,6 +7,7 @@ use App\Models\Flat;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class FlatController extends Controller
 {
@@ -101,6 +102,7 @@ class FlatController extends Controller
     $data['phone'] = $request->phone;
     $data['nid_no'] = $request->nid_no;
     $data['address'] = $request->address;
+    $data['password'] = Hash::make($request->phone);
     $data['status'] = $request->status ? 1 : 0;
     $data->save();
     return redirect()->back()->with('message', 'User update successfully');

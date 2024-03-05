@@ -192,6 +192,7 @@
                                     </table>
                                 </div>
                             @else
+                                <h5 class="text-center py-3">No Data Found</h5>
                             @endif
                         </div>
                     </div>

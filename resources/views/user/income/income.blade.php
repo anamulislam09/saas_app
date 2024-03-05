@@ -170,7 +170,10 @@
                                             {{-- @if (isset($data) && !empty($data)) --}}
                                             @foreach ($data as $key => $item)
                                                 @php
-                                                $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
+                                                    $user = App\Models\User::where(
+                                                        'user_id',
+                                                        Auth::user()->user_id,
+                                                    )->first();
                                                     $total = App\Models\Income::where('month', $item->month)
                                                         ->where('year', $item->year)
                                                         ->where('customer_id', $user->customer_id)
@@ -193,6 +196,7 @@
                                     </table>
                                 </div>
                             @else
+                                <h5 class="text-center py-3">No Data Found</h5>
                             @endif
                         </div>
                     </div>

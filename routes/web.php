@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 // admin login route start here 
 
 Route::get('/admin/login', [AdminController::class, 'Index'])->name('login_form');
-
 Route::post('/admin/login/owner', [AdminController::class, 'Login'])->name('admin.login');
 
 // admin register route start here 

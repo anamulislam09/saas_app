@@ -108,7 +108,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">
+                                <a href="{{ route('users.index') }}" class="nav-link {{Request::routeIs('users.index') ? 'active' : '' }} ">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>All Users</p>
                                 </a>

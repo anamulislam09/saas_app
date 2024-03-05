@@ -168,9 +168,15 @@
                                                 @php
                                                     // $month = Carbon::now()->month;
                                                     // $year = Carbon::now()->year;
-                                                    $previousDate = explode('-', date('Y-m', strtotime(date('Y-m') . ' -1 month')));
+                                                    $previousDate = explode(
+                                                        '-',
+                                                        date('Y-m', strtotime(date('Y-m') . ' -1 month')),
+                                                    );
 
-                                                    $previousMonthData = App\Models\Income::where('month', $item->month - 1)
+                                                    $previousMonthData = App\Models\Income::where(
+                                                        'month',
+                                                        $item->month - 1,
+                                                    )
                                                         ->where('year', $previousDate[0])
                                                         ->where('flat_id', $item->flat_id)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
@@ -181,7 +187,10 @@
                                                         ->where('year', $item->year)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->sum('amount');
-                                                    $previous_total = App\Models\Income::where('month', $item->month - 1)
+                                                    $previous_total = App\Models\Income::where(
+                                                        'month',
+                                                        $item->month - 1,
+                                                    )
                                                         ->where('year', $item->year)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->sum('due');
@@ -222,11 +231,13 @@
                                                         <td>
                                                             @if ($item->status == 1)
                                                                 <span class="badge badge-success">Paid</span>
-                                                                <a href="{{ route('income.voucher.generate', $item->id) }}"><span
+                                                                <a
+                                                                    href="{{ route('income.voucher.generate', $item->id) }}"><span
                                                                         class="badge badge-info">Voucher</span></a>
                                                             @elseif($item->status == 2)
                                                                 <span class="badge badge-warning">Due</span>
-                                                                <a href="{{ route('income.voucher.generate', $item->id) }}"><span
+                                                                <a
+                                                                    href="{{ route('income.voucher.generate', $item->id) }}"><span
                                                                         class="badge badge-info">Voucher</span></a>
                                                             @else
                                                                 <input type="submit" class="btn btn-sm btn-primary"
@@ -249,6 +260,7 @@
                                         </tfoot>
                                     </table>
                                 @else
+                                    <h5 class="text-center py-3">No Data Found</h5>
                                 @endif
                             </div>
 

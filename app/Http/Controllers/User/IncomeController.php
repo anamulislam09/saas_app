@@ -317,31 +317,31 @@ class IncomeController extends Controller
     public function SingleUserPaid()
     {   //show voucher page
         $user = User::where('user_id', Auth::user()->user_id)->first();
-        $isExist = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->exists();
-        if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
-        } else {
+        // $isExist = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->exists();
+        // if (!$isExist) {
+        //     return redirect()->back()->with('message', 'Data Not Found');
+        // } else {
             $data = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->get();
             $months = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->first();
 
             return view('user.normal_user.total_paid', compact('data', 'months'));
-        }
+        // }
     }
 
     public function SingleUserDue()
     { // show collection 
 
         $user = User::where('user_id', Auth::user()->user_id)->first();
-        $isExist = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->exists();
-        if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
-        } else {
+        // $isExist = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->exists();
+        // if (!$isExist) {
+        //     return redirect()->back()->with('message', 'Data Not Found');
+        // } else {
             $data = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->get();
             $months = Income::where('customer_id', $user->customer_id)->where('flat_id', $user->flat_id)->first();
 
             // dd($data);
             return view('user.normal_user.total_paid', compact('data', 'months'));
-        }
+        // }
     }
 
     // Password reset 

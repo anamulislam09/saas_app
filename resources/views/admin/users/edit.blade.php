@@ -14,6 +14,20 @@
             <label for="user_email" class="form-label"> User email:</label>
             <input type="text" class="form-control" value="{{ $data->email }}" name="email">
         </div>
+        <div class="mb-3 mt-3">
+            <label for="user_phone" class="form-label"> User Phone:</label>
+            <input type="text" class="form-control" value="{{ $data->phone }}" name="phone">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label for="nid_no" class="form-label"> User NID/NOC:</label>
+            <input type="text" class="form-control" value="{{ $data->nid_no }}" name="nid_no">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label for="address" class="form-label"> Address:</label>
+            <input type="text" class="form-control" value="{{ $data->address }}" name="address">
+        </div>
 
         <div class="mb-3 mt-3">
             <h6> Status</h6>

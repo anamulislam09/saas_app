@@ -33,7 +33,7 @@ class UserController extends Controller
     if (!$data) {
       return redirect()->back()->with('message', 'Pls! Flat create first');
     } else {
-      $data = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
+      $data = User::where('customer_id', Auth::guard('admin')->user()->id)->where('role_id', 0)->where('status', 0)->get();
       return view('admin.users.create', compact('data'));
       //end method
     }
@@ -46,35 +46,21 @@ class UserController extends Controller
       return redirect()->back()->with('message', 'Pls! Flat create first');
     } else {
 
-      $flat_unique_id = $request->flat_unique_id;
-      $customer_id = $request->customer_id;
-      $amount = $request->amount;
-      $charge = $request->charge;
+        $flat_id = $request->flat_id;
+        $user_id = $request->user_id;
+        for ($i = 0; $i < count($user_id); $i++) {
+           User::where("user_id", $user_id)->update([
+            'name' => $request->name[$i],
+            'phone' => $request->phone[$i],
+            'nid_no' => $request->nid_no[$i],
+            'address' => $request->address[$i],
+            'email' => $request->email[$i],
+            'password' => Hash::make($request->phone[$i]),
+            ]);
+            return redirect()->route('users.index')->with('message', 'User Updated Successfully');
+        }
 
-      $name = $request->name;
-      $phone = $request->phone;
-      $nid_no = $request->nid_no;
-      $address = $request->address;
-      $email = $request->email;
-      for ($i = 0; $i < count($flat_unique_id); $i++) {
-        $user = User::insert([
-          'user_id' => Auth::guard('admin')->user()->id . $flat_unique_id[$i],
-          'customer_id' => $customer_id[$i],
-          'flat_id' => $flat_unique_id[$i],
-          'amount' => $amount[$i],
-          'charge' => $charge[$i],
-          'name' => $name[$i],
-          'phone' => $phone[$i],
-          'nid_no' => $nid_no[$i],
-          'address' => $address[$i],
-          'email' => $email[$i],
-          'password' => Hash::make($phone[$i]),
-        ]);
-        $status['status'] = 1;
-        DB::table('flats')->update($status);
-      }
-
-      return redirect()->route('users.index')->with('message', 'User Created Successfully');
+      // }
     }
   }
   //create multiple user method ends here
@@ -126,6 +112,10 @@ class UserController extends Controller
     $data = User::where('customer_id', Auth::guard('admin')->user()->id)->where('id', $id)->first();
     $data['name'] = $request->name;
     $data['email'] = $request->email;
+    $data['phone'] = $request->phone;
+    $data['nid_no'] = $request->nid_no;
+    $data['address'] = $request->address;
+    $data['password'] = Hash::make($request->phone);
     $data['status'] = $request->status ? 1 : 0;
     $data->save();
     return redirect()->back()->with('message', 'User update successfully');

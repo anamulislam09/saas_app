@@ -175,7 +175,10 @@
 
                                                     $month = Carbon\Carbon::now()->month;
                                                     $year = Carbon\Carbon::now()->year;
-                                                    $previousMonthData = App\Models\Income::where('month', $item->month - 1)
+                                                    $previousMonthData = App\Models\Income::where(
+                                                        'month',
+                                                        $item->month - 1,
+                                                    )
                                                         ->where('year', $item->year)
                                                         ->where('flat_id', $item->flat_id)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
@@ -218,6 +221,132 @@
                                         </tfoot>
                                     </table>
                                 @else
+                                    @if (isset($month) && !empty($month))
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <strong> Total collection month of @if ($month->month == 1)
+                                                                January
+                                                            @elseif ($month->month == 2)
+                                                                February
+                                                            @elseif ($month->month == 3)
+                                                                March
+                                                            @elseif ($month->month == 4)
+                                                                April
+                                                            @elseif ($month->month == 5)
+                                                                May
+                                                            @elseif ($month->month == 6)
+                                                                June
+                                                            @elseif ($month->month == 7)
+                                                                July
+                                                            @elseif ($month->month == 8)
+                                                                August
+                                                            @elseif ($month->month == 9)
+                                                                September
+                                                            @elseif ($month->month == 10)
+                                                                October
+                                                            @elseif ($month->month == 11)
+                                                                November
+                                                            @elseif ($month->month == 12)
+                                                                December
+                                                            @endif </strong>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <form action="{{ route('income.voucher.generateall') }}"
+                                                            method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="month"
+                                                                value="{{ $month->month }}">
+                                                            <input type="hidden" name="year"
+                                                                value="{{ $month->year }}">
+
+                                                            <label for="" class="col-form-label"></label>
+                                                            <input type="submit" class="btn btn-info text-end"
+                                                                value="Generate all">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <table id="dataTable" class="table table-bordered table-striped mt-3">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%">SL</th>
+                                                    <th>Flat Name</th>
+                                                    <th style="width: 15%" class="text-center">Payable</th>
+                                                    <th style="width: 15%" class="text-center">Paid Amount</th>
+                                                    <th style="width: 15%" class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach ($income as $key => $item)
+                                                    @php
+
+                                                        $total = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('status', '!=', 0)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->sum('paid');
+
+                                                        $due = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('status', '!=', 0)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->sum('due');
+
+                                                        $month = Carbon\Carbon::now()->month;
+                                                        $year = Carbon\Carbon::now()->year;
+                                                        $previousMonthData = App\Models\Income::where(
+                                                            'month',
+                                                            $item->month - 1,
+                                                        )
+                                                            ->where('year', $item->year)
+                                                            ->where('flat_id', $item->flat_id)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->first();
+
+                                                        $data = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->where('flat_id', $item->flat_id)
+                                                            ->first();
+                                                        if (isset($previousMonthData->due)) {
+                                                            $amount = $previousMonthData->due + $data->amount;
+                                                        }
+
+                                                    @endphp
+                                                    <tr>
+                                                        <td>{{ $key + 1 }}</td>
+                                                        <td>{{ $item->flat_name }}</td>
+                                                        @if (isset($previousMonthData->due) && !empty($previousMonthData->due))
+                                                            <td class="text-right"> {{ $amount }}</td>
+                                                        @else
+                                                            @if (isset($data->amount) && !empty($data->amount))
+                                                                <td class="text-right"> {{ $data->amount }}</td>
+                                                            @else
+                                                            @endif
+                                                        @endif
+                                                        <td class="text-right"> {{ $item->paid }}</td>
+                                                        <td class="text-center"><a
+                                                                href="{{ route('income.voucher.generate', $item->id) }}"
+                                                                class="btn btn-sm btn-info">Voucher</a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                                                    <td class="text-right"><strong>{{ $total + $due }}</strong></td>
+                                                    <td class="text-right"><strong>{{ $total }}</strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    @else
+                                        <h5 class="text-center py-3">No Data Found</h5>
+                                    @endif
                                 @endif
                             </div>
                         </div>
