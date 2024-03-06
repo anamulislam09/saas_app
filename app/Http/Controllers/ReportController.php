@@ -65,8 +65,14 @@ class ReportController extends Controller
     // Report for Monthly income
     public function MonthlyIncome()
     {
-        // $monthly_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->orderBy('month', 'DESC')->get();
-        return view('admin.report.monthly_incomes');
+        $months = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $monthly_income = Income::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
+        $month = Income::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $opening_balance = OpeningBalance::where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $others_income = OthersIncome::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+        // dd($others_income);
+        return view('admin.report.monthly_incomes', compact('monthly_income','month','opening_balance', 'others_income'));
     }
 
     public function MonthlyAllIncome(Request $request)
@@ -79,7 +85,7 @@ class ReportController extends Controller
             $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $opening_balance = OpeningBalance::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $others_income = OthersIncome::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            // dd($opening_balance);
+            // dd($others_income);
             return redirect()->back()->with(['monthly_income' => $monthly_income, 'months' => $months, 'others_income' => $others_income, 'opening_balance' => $opening_balance]);
         }
     }

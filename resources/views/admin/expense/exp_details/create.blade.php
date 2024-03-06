@@ -39,7 +39,7 @@
                           </select>
                         </div>
                         <div class=" col-lg-5 form-group">
-                          <label for="unit" class="">Expense amount:</label>
+                          <label for="unit" class="">Expense Amount:</label>
                           <input type="text" name="amount" class="form-control" placeholder="Enter Expense Amount"
                             required>
                         </div>

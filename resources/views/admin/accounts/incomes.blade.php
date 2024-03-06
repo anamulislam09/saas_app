@@ -43,7 +43,7 @@
                                             <th class="d-none">Month</th>
                                             <th>Flat_Name</th>
                                             <th>Charge</th>
-                                            <th>amount</th>
+                                            <th>Amount</th>
                                             <th>Collection</th>
                                             <th>Payble</th>
                                             <th>Created By</th>

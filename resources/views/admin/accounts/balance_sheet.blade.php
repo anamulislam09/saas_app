@@ -130,7 +130,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Total Income</th>
-                                                <th class="text-center">Total expense</th>
+                                                <th class="text-center">Total Expense</th>
                                                 <th class="text-center">Balance</th>
                                                 <th class="text-center">Flag</th>
                                         </thead>

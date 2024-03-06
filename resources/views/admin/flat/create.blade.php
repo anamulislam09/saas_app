@@ -17,7 +17,12 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-lg-8 col-sm-8 ">
+                    {{-- {{$data}} --}}
+                    @if (isset($flat) && !empty($flat))
+                    <p class="mt-3 py-2 text-white text-center" style="background: #11d331;width:500px;border-radius:20px">Welcome, You have already created flat.</p>
+                    @else
                     <h3 class="card-title pt-4 pb-4">Create New Flat</h3>
+                    @endif
                   </div>
 
                   

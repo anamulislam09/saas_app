@@ -11,7 +11,7 @@
         </div>
 
         <div class="mb-3 mt-3">
-            <label for="user_email" class="form-label"> User email:</label>
+            <label for="user_email" class="form-label"> User Email:</label>
             <input type="text" class="form-control" value="{{ $data->email }}" name="email">
         </div>
         <div class="mb-3 mt-3">

@@ -246,7 +246,13 @@ class IncomeController extends Controller
 
     public function Index()
     {   //show voucher page
-        return view('user.income.collection_voucher');
+        $months = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $income = Income::where('customer_id', $user->customer_id)->where('month', $months)->where('year', $year)->where('status', '!=', 0)->get();
+        $current_month = Income::where('customer_id', $user->customer_id)->where('month', $months)->where('year', $year)->where('status', '!=', 0)->first();
+        // dd($income);
+        return view('user.income.collection_voucher', compact('income', 'current_month'));
     }
 
     public function CollectionAll(Request $request)

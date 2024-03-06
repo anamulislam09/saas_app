@@ -130,7 +130,7 @@
                                         </tfoot>
                                     </table>
                                 @else
-                                    @if (isset($month->year) && !empty($month->year))
+                                    @if (isset($years->year) && !empty($years->year))
                                         <div class="card">
                                             <div class="card-header">
                                                 <div class="row">

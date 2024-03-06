@@ -143,10 +143,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>SL</th>
-                                                        <th>Flat name</th>
-                                                        <th>User name</th>
+                                                        <th>Flat Name</th>
+                                                        <th>User Name</th>
                                                         <th>Phone</th>
-                                                        <th>NID_no</th>
+                                                        <th>NID_No</th>
                                                         <th>Address</th>
                                                         <th>Email</th>
                                                     </tr>

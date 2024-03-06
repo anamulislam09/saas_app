@@ -19,7 +19,7 @@ class VoucherController extends Controller
         $year = Carbon::now()->year;
         $income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->where('status', '!=', 0)->get();
         $month = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $months)->where('year', $year)->where('status', '!=', 0)->first();
-        return view('admin.income.collection_voucher' , compact('income', 'month'));
+        return view('admin.income.collection_voucher', compact('income', 'month'));
     }
 
     public function CollectionAll(Request $request)

@@ -123,7 +123,6 @@ class FlatController extends Controller
     }
 
     // unique id serial function
-
     public function formatSrl($srl)
     {
         switch(strlen($srl)){

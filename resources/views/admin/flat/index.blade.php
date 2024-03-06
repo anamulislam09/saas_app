@@ -68,7 +68,7 @@
                                                 <th class="text-center">SL</th>
                                                 <th class="text-center">Customer ID</th>
                                                 <th class="text-center">Flat Name</th>
-                                                <th class="text-center">Service charge</th>
+                                                <th class="text-center">Service Charge</th>
                                                 <th class="text-center">Status</th>
                                                 {{-- <th>Action</th> --}}
                                             </tr>

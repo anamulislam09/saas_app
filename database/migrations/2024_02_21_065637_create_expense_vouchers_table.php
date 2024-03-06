@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('expense_vouchers', function (Blueprint $table) {
 
-            $table->string('id');
+            $table->id();
             $table->string('voucher_id');
             $table->string('month');
             $table->integer('year');

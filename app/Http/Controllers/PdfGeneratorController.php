@@ -32,8 +32,40 @@ class PdfGeneratorController extends Controller
         // $INV_id = UniqueIdGenerator::generate(['table' => 'expense_vouchers', 'length' => 4]);
         $id = UniqueIdGenerator::generate(['table' => 'expense_vouchers', 'length' => 10, 'prefix' => 'INV-']);
         // dd($id);
-        $data['id'] = $id;
-        $data['voucher_id'] = $id;
+        // $start_at = 0000001;
+
+        // if ($start_at) {
+            $isExist = ExpenseVoucher::where('customer_id', Auth::guard('admin')->user()->id)->Exists();
+            if (!$isExist) {
+                // dd($start_at);
+                $data['voucher_id'] = $id;
+            // }else{
+            //     // dd($start_at);
+            //     $voucher_id = ExpenseVoucher::where('customer_id', Auth::guard('admin')->user()->id)->max('voucher_id');
+            //     $data['voucher_id'] = $voucher_id ++;
+            // }
+        }else{
+            $data['voucher_id'] = $id;
+        }
+
+ // unique id serial function
+//  public function formatSrl($srl)
+//  {
+//      switch(strlen($srl)){
+//          case 1:
+//              $zeros = '00';
+//              break;
+//          case 2:
+//              $zeros = '0';
+//              break;
+//          default:
+//              $zeros = '0';
+//          break;
+//      }
+//      return $zeros . $srl;
+//  }
+
+        // $data['voucher_id'] = $id;
         $data['month'] = $exp->month;
         $data['year'] = $exp->year;
         $data['date'] = date('m/d/y');
@@ -65,6 +97,8 @@ class PdfGeneratorController extends Controller
             // return redirect()->back('expense.create')->$pdf->download('sdl.pdf');
         }
     }
+
+
 
     // Expense Management generate all voucher 
     public function GenerateVoucherAll()
