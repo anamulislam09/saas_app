@@ -33,7 +33,8 @@ class UserController extends Controller
     if (!$data) {
       return redirect()->back()->with('message', 'Pls! Flat create first');
     } else {
-      $data = User::where('customer_id', Auth::guard('admin')->user()->id)->where('role_id', 0)->where('status', 0)->get();
+      $data = User::where('customer_id', Auth::guard('admin')->user()->id)->get();
+      // $data = User::where('customer_id', Auth::guard('admin')->user()->id)->where('role_id', 0)->where('status', 0)->get();
       return view('admin.users.create', compact('data'));
       //end method
     }
