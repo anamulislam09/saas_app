@@ -94,10 +94,7 @@
                                                             <div class="col-sm-12 text-center">
                                                                 <div class="four_zero_four_bg">
                                                                     <h1 class="text-center ">404</h1>
-
-
                                                                 </div>
-
                                                                 <div class="contant_box_404">
                                                                     <h3 class="h2">
                                                                         Flat Not Found!
@@ -121,15 +118,11 @@
                                                         <div class="col-sm-12 text-center">
                                                             <div class="four_zero_four_bg">
                                                                 <h1 class="text-center ">WELCOME</h1>
-
-
                                                             </div>
-
                                                             <div class="contant_box_404">
                                                                 <h3 class="h2">
                                                                     You Have Already Creaded!
                                                                 </h3>
-
                                                                 <a href="{{route('users.index')}}" class="link_404">See Users</a>
                                                             </div>
                                                         </div>
@@ -137,8 +130,6 @@
                                                 </div>
                                             </div>
                                         </section>
-                                      
-                                           
                                         @endif
                                     </div>
                                 </div>

@@ -3,6 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Customer;
+use App\Models\Exp_detail;
+use App\Models\Exp_process;
+use App\Models\ExpenseVoucher;
+use App\Models\Flat;
+use App\Models\Income;
+use App\Models\MonthlyBlance;
+use App\Models\OpeningBalance;
+use App\Models\OthersIncome;
+use App\Models\User;
+use App\Models\YearlyBlance;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -14,12 +25,12 @@ class CategoryController extends Controller
     public function Index()
     {
         if (Auth::guard('admin')->user()->role == 0) {
-        $data = Category::all();
-        return view('superadmin.exp_category.index', compact('data'));
-    } else {
-        $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
-        return redirect()->back()->with($notification);
-    }
+            $data = Category::all();
+            return view('superadmin.exp_category.index', compact('data'));
+        } else {
+            $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+            return redirect()->back()->with($notification);
+        }
     }
 
     /**
@@ -28,11 +39,11 @@ class CategoryController extends Controller
     public function Create()
     {
         if (Auth::guard('admin')->user()->role == 0) {
-        return view('superadmin.exp_category.create');
-    } else {
-        $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
-        return redirect()->back()->with($notification);
-    }
+            return view('superadmin.exp_category.create');
+        } else {
+            $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+            return redirect()->back()->with($notification);
+        }
     }
 
     /**
@@ -77,6 +88,63 @@ class CategoryController extends Controller
     {
         $data = Category::findOrFail($id);
         $data->delete();
-        return redirect()->route('category.index')->with('message' , 'Category deleted successfully.');
+        return redirect()->route('category.index')->with('message', 'Category deleted successfully.');
     }
+
+    // delete all data from customers 
+
+    public function CustomerAll()
+    {
+        if (Auth::guard('admin')->user()->role == 0) {
+            $data = Customer::where('role', 1)->get();
+            return view('superadmin.customers.customerAll', compact('data'));
+        } else {
+            $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+            return redirect()->back()->with($notification);
+        }
+    }
+    //end method
+
+    public function CustomerDataDelete(Request $request)
+    {
+        // dd($request->id);
+        if (Auth::guard('admin')->user()->role == 0) {
+            $exp_details = Exp_detail::where('customer_id', $request->id)->delete();
+            if ($exp_details) {
+                $exp_voucher = ExpenseVoucher::where('customer_id', $request->id)->delete();
+                if ($exp_voucher) {
+                    $exp_process = Exp_process::where('customer_id', $request->id)->delete();
+                    if ($exp_process) {
+                        $data = YearlyBlance::where('customer_id', $request->id)->delete();
+                        if ($data) {
+                            $income = Income::where('customer_id', $request->id)->delete();
+                            if ($income) {
+                                $monthlyBalance = MonthlyBlance::where('customer_id', $request->id)->delete();
+                                if ($monthlyBalance) {
+                                    $openingBalance = OpeningBalance::where('customer_id', $request->id)->delete();
+                                    if ($openingBalance) {
+                                        $othersIncome = OthersIncome::where('customer_id', $request->id)->delete();
+                                        if ($othersIncome) {
+                                            $user = User::where('customer_id', $request->id)->delete();
+                                            if ($user) {
+                                                $flat = Flat::where('customer_id', $request->id)->delete();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+           
+            return redirect()->back()->with('message', 'All data deleted successfully.');
+        } else {
+            $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+            return redirect()->back()->with($notification);
+        }
+    }
+    //end method
+
+
 }

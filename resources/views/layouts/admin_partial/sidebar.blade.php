@@ -56,6 +56,14 @@
                             <p>Expense Category</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('customer.index') }}"
+                            class="nav-link {{ Request::routeIs('customer.index') || Request::routeIs('customer.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Delete Customer Data</p>
+                        </a>
+                    </li>
                     {{-- expense category ends here --}}
                 @endif
 
