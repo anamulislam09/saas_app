@@ -8,121 +8,128 @@
 
     <style>
         .container {
-            width: 90%;
-            margin: auto;
-        }
-
-        .header-section {
-            width: 100%;
-            height: 150px;
-        }
-
-        .logo {
-            width: 25%;
-            float: left;
-        }
-
-        .header-text {
-            width: 40%;
-            float: left;
-            text-align: center;
-        }
-
-        .status {
-            width: 35%;
-            float: right;
-            text-align: end;
-
-        }
-
-        .header-text h1 {
-            font-family: arial;
-            margin-bottom: -6Px;
-        }
-
-
-        .header-text p {
-            margin: 0px 10px;
-        }
-
-        .status h2 {
-            padding: 10px 0px;
-            background: #5ac1e0;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* table style start here  */
-        table,
-        td,
-        th {
-            border: 1px solid;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* table style ends here  */
-
-        .Prepared {
-            width: 33.33%;
-            float: left;
-        }
-
-        .Prepared h4 {
-            border-top: 2px solid black;
-            width: 45%;
-            text-align: center;
-        }
-
-        .Approved {
-            width: 33.33%;
-            float: left;
-            text-align: -webkit-center;
-        }
-
-        .Approved h4 {
-            border-top: 2px solid black;
-            width: 45%;
-            text-align: center;
-        }
-
-        .Recipient {
-            width: 33.33%;
-            float: left;
-            text-align: -webkit-right;
-        }
-
-        .Recipient h4 {
-            border-top: 2px solid black;
-            width: 70%;
-            text-align: center;
-        }
-
-        /* body text start here  */
-        .bodyInfo {
-            display: flex;
-            justify-content: space-between;
-            display: block;
-            padding: 15px 0px;
-            padding-bottom: 25px;
-            width: 100%;
-            /* background: #fb5200; */
-        }
-
-        .left-text {
-            width: 70%;
-            float: left;
-            line-height: 10px;
-        }
-
-        .righrightt-text {
-            width: 30%;
-            float: left;
-        }
-
+       width: 90%;
+       margin: auto;
+     }
+ 
+     .header-section {
+       width: 100%;
+       height: 150px;
+     }
+ 
+     .logo {
+       width: 20%;
+       float: left;
+     }
+ 
+     .header-text {
+       width: 55%;
+       float: left;
+       text-align: center;
+     }
+ 
+     .status {
+       width: 25%;
+       float: right;
+       text-align: end;
+ 
+     }
+ 
+     .header-text h1 {
+       font-family: arial;
+       margin-bottom: -6Px;
+     }
+ 
+ 
+     .header-text p {
+       margin: 0px 10px;
+     }
+ 
+     .status h3 {
+       padding: 8px 0px;
+       background: #5ac1e0;
+       text-align: center;
+       width: 100%;
+     }
+ 
+     /* table style start here  */
+     table,
+     td,
+     th {
+       border: 1px solid;
+     }
+ 
+     table {
+       width: 100%;
+       border-collapse: collapse;
+     }
+ 
+     /* table style ends here  */
+ 
+     .Prepared {
+       width: 33.33%;
+       float: left;
+     }
+ 
+     .Prepared h4 {
+       border-top: 2px solid black;
+       width: 60%;
+       text-align: center;
+     }
+ 
+     .Approved {
+       width: 33.33%;
+       float: left;
+       text-align: -webkit-center;
+     }
+ 
+     .Approved h4 {
+       border-top: 2px solid black;
+       width: 45%;
+       text-align: center;
+     }
+ 
+     .Recipient {
+       width: 33.33%;
+       float: left;
+       text-align: -webkit-right;
+     }
+ 
+     .Recipient h4 {
+       border-top: 2px solid black;
+       width: 70%;
+       text-align: center;
+     }
+ 
+     /* body text start here  */
+ 
+     .body{
+         margin-bottom: 50px;
+     }
+     .bodyInfo {
+       display: flex;
+       justify-content: space-between;
+       display: block;
+       padding: 15px 0px;
+       padding-bottom: 25px
+       width: 100%;
+       /* background: #fb5200; */
+     }
+ 
+     .left-text {
+       width: 70%;
+       float: left;
+       line-height: 10px;
+     }
+ 
+     .righrightt-text {
+       width: 30%;
+       float: left;
+     }
+ 
+     .textAmount h3{
+       margin-top: -0px;
+     }
         /* body text ends here  */
     </style>
 </head>
@@ -143,7 +150,7 @@
             </div>
 
             <div class="status">
-                <h2>Payment Voucher</h2>
+                <h3>Payment Voucher</h3>
             </div>
         </div>
 
@@ -159,7 +166,7 @@
       </div>
     </div> --}}
         <div class="body">
-            <p>Total Expense month of the<strong><span>
+            <p>Total Expense for the month of <strong><span>
                 @if ($month->month == 1)
                     January
                 @elseif ($month->month == 2)
@@ -184,8 +191,8 @@
                     November
                 @elseif ($month->month == 12)
                     December
-                @endif {{ $month->year }}
-            </span> <strong>
+                @endif  - {{ $month->year }}
+            </span> 
     </p>
             <table>
                 <thead>
@@ -351,7 +358,7 @@
         </div>
         <div class="footer">
             <div class="Prepared">
-                <p style="padding-bottom: -10px; margin-bottom:-20px; padding-left:25px">{{ Auth::guard('admin')->user()->name }}</p>
+                <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:60%">{{ Auth::guard('admin')->user()->name }}</p>
                 <h4>Prepared by</h4>
             </div>
             <div class="Approved">

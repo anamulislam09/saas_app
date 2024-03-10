@@ -223,7 +223,7 @@
                           @elseif (!$openingBlance && $manualOpeningBlance)
                             @if ($manualOpeningBlance->flag == 1)
                               <strong
-                                style="border-right:1px solid #ddd">{{ $manualOpeningBlance->profit + $income + $others_income + $others_income }}</strong>
+                                style="border-right:1px solid #ddd">{{ $manualOpeningBlance->profit + $income + $others_income }}</strong>
                             @else
                               <strong
                                 style="border-right:1px solid #ddd">{{ $income + $others_income - $manualOpeningBlance->loss }}</strong>

@@ -36,7 +36,7 @@
                                             @csrf
                                             <div class="row my-4">
                                                 <div class="col-lg-3">
-                                                    <strong><span>Collection of Service charge</span></strong>
+                                                    <strong><span>Collection of Service Charge</span></strong>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     {{-- <label for="" class="col-form-label">Select Year</label> --}}
@@ -121,7 +121,7 @@
                                 @if (count($data) > 1)
                                     <div class="card">
                                         <div class="card-header">
-                                            <strong> Total collection month of @if ('1' == date('m'))
+                                            <strong> Total collection for the month of @if ('1' == date('m'))
                                                     January
                                                 @elseif ('2' == date('m'))
                                                     February
@@ -145,7 +145,7 @@
                                                     November
                                                 @elseif ('12' == date('m'))
                                                     December
-                                                @endif </strong>
+                                                @endif - {{date('Y')}}</strong>
                                         </div>
                                     </div>
                                     <table id="dataTable" class="table table-bordered table-striped mt-3">

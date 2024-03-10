@@ -15,6 +15,7 @@
 
         .table tr td {
             text-align: center;
+            
         }
 
         .table tr th {
