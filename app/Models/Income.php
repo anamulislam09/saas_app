@@ -14,6 +14,7 @@ class Income extends Model
         'year',
         'customer_id',
         'auth_id',
+        'invoice_id',
         'user_id',
         'user_name',
         'charge',

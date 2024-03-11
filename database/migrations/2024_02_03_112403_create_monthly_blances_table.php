@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('monthly_blances', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id')->nullable();
-            $table->integer('auth_id')->nullable();
+            $table->string('auth_id')->nullable();
             $table->integer('year');
             $table->string('month');
             $table->bigInteger('total_income');

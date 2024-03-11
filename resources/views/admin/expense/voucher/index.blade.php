@@ -159,7 +159,7 @@
             </div>
             <div class="right-text">
                 <p>Voucher No : {{ $inv->voucher_id }}</p>
-                <p>Voucher Date :{{ $inv->date }}</p>
+                <p>Date :{{ $inv->date }}</p>
             </div>
         </div>
         <div class="body">

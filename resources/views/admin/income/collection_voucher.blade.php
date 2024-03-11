@@ -300,11 +300,8 @@
 
                                                         $month = Carbon\Carbon::now()->month;
                                                         $year = Carbon\Carbon::now()->year;
-                                                        $previousMonthData = App\Models\Income::where(
-                                                            'month',
-                                                            $item->month - 1,
-                                                        )
-                                                            ->where('year', $item->year)
+                                                        $previousMonthData = App\Models\Income::where( 'month', $item->month - 1,
+                                                        )->where('year', $item->year)
                                                             ->where('flat_id', $item->flat_id)
                                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                                             ->first();

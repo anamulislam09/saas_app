@@ -17,7 +17,7 @@ use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class ExpenseController extends Controller
 {
-    
+
     public function Index()
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
@@ -46,7 +46,7 @@ class ExpenseController extends Controller
      */
     public function Store(Request $request)
     {
-         $user = User::where('user_id', Auth::user()->user_id)->first();
+        $user = User::where('user_id', Auth::user()->user_id)->first();
 
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
@@ -96,7 +96,7 @@ class ExpenseController extends Controller
     }
 
     // Expense Management generate all voucher 
-    
+
     public function CreateVoucher($id)
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
@@ -107,11 +107,16 @@ class ExpenseController extends Controller
     public function GenerateVoucher(Request $request)
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
-
         $exp = Exp_detail::where('id', $request->exp_id)->where('customer_id', $user->customer_id)->first();
-        $id = UniqueIdGenerator::generate(['table' => 'expense_vouchers', 'length' => 10, 'prefix' => 'INV-']);
-        $data['id'] = $id;
-        $data['voucher_id'] = $id;
+
+        $v_id = 1;
+        $isExist = ExpenseVoucher::where('customer_id', $user->customer_id)->exists();
+        if ($isExist) {
+            $voucher_id = ExpenseVoucher::where('customer_id', $user->customer_id)->max('voucher_id');
+            $data['voucher_id'] = $this->formatSrl(++$voucher_id);
+        } else {
+            $data['voucher_id'] = $this->formatSrl($v_id);
+        }
         $data['month'] = $exp->month;
         $data['year'] = $exp->year;
         $data['date'] = date('m/d/y');
@@ -125,9 +130,7 @@ class ExpenseController extends Controller
         $voucher = ExpenseVoucher::create($data);
         if ($voucher) {
             $inv = ExpenseVoucher::where('customer_id', $user->customer_id)->latest()->first();
-            // dd($inv->cat_id);
             $exp_name = Category::where('id', $inv->cat_id)->first();
-            // dd($exp_name);
             $customer = Customer::where('id', $user->customer_id)->first();
             $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
 
@@ -137,11 +140,32 @@ class ExpenseController extends Controller
                 'customer' => $customer,
                 'custDetails' => $custDetails,
             ];
-            // dd($data);
             $pdf = PDF::loadView('user.voucher.index', $data);
             return $pdf->stream('sdl.pdf');
-            // return redirect()->back('expense.create')->$pdf->download('sdl.pdf');
         }
+    }
+
+    // unique id serial function
+    public function formatSrl($srl)
+    {
+        switch (strlen($srl)) {
+            case 1:
+                $zeros = '00000';
+                break;
+            case 2:
+                $zeros = '0000';
+                break;
+            case 3:
+                $zeros = '000';
+                break;
+            case 4:
+                $zeros = '00';
+                break;
+            default:
+                $zeros = '0';
+                break;
+        }
+        return $zeros . $srl;
     }
 
     // Expense Management generate all voucher 
@@ -177,7 +201,7 @@ class ExpenseController extends Controller
         $inv = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
         $total = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->sum('amount');
         $month = Exp_detail::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
-       
+
 
         $customer = Customer::where('id', $user->customer_id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
@@ -192,5 +216,4 @@ class ExpenseController extends Controller
         $pdf = PDF::loadView('user.voucher.exp_voucher_all', $data);
         return $pdf->stream('sdl_exp.pdf');
     }
-
 }

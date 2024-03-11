@@ -219,6 +219,17 @@ class IncomeController extends Controller
 
                 $item['paid'] = $paid;
                 $item['due'] = $data->due - $paid;
+                $item['auth_id'] = Auth::user()->user_id;
+
+                $isExist = Income::where('customer_id', $user->customer_id)->exists();
+                $inv_id = 1;
+                if ($isExist) {
+                    $invoice_id = Income::where('customer_id', $user->customer_id)->max('invoice_id');
+                    $item['invoice_id'] = $this->formatSrl(++$invoice_id);
+                } else {
+                    $item['invoice_id'] = $this->formatSrl($inv_id);
+                }
+
                 if ($amount == $paid) {
                     $item['status'] = 1;
                 } else {
@@ -229,6 +240,18 @@ class IncomeController extends Controller
 
                 $item['paid'] = $paid;
                 $item['due'] = $data->due - $paid;
+
+                $item['auth_id'] = Auth::user()->user_id;
+
+                $isExist = Income::where('customer_id', $user->customer_id)->exists();
+                $inv_id = 1;
+                if ($isExist) {
+                    $invoice_id = Income::where('customer_id', )->max('invoice_id');
+                    $item['invoice_id'] = $this->formatSrl(++$invoice_id);
+                } else {
+                    $item['invoice_id'] = $this->formatSrl($inv_id);
+                }
+
                 if ($amount == $paid) {
                     $item['status'] = 1;
                 } else {
@@ -239,6 +262,28 @@ class IncomeController extends Controller
             Income::where('month', $month)->where('year', $year)->where('customer_id', $user->customer_id)->where('flat_id', $flat_id)->update($item);
             return redirect()->route('manager.income.collection')->with('message', 'Collection successful');
         }
+    }
+
+    public function formatSrl($srl)
+    {
+        switch (strlen($srl)) {
+            case 1:
+                $zeros = '00000';
+                break;
+            case 2:
+                $zeros = '0000';
+                break;
+            case 3:
+                $zeros = '000';
+                break;
+            case 4:
+                $zeros = '00';
+                break;
+            default:
+                $zeros = '0';
+                break;
+        }
+        return $zeros . $srl;
     }
     /*-------------------Collection ends here--------------*/
 
@@ -265,7 +310,6 @@ class IncomeController extends Controller
         } else {
             $data = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', $user->customer_id)->get();
             $months = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', $user->customer_id)->first();
-
             return redirect()->back()->with(['data' => $data, 'months' => $months]);
         }
     }
@@ -309,8 +353,11 @@ class IncomeController extends Controller
             'custDetails' => $custDetails,
         ];
         // dd($data);
-        $pdf = PDF::loadView('user.voucher.money_receipt_all', $data);
-        return $pdf->stream('sdl_collection.pdf');
+        // for($i=0; $i< count($inv); $i++){
+
+            $pdf = PDF::loadView('user.voucher.money_receipt_all', $data);
+            return $pdf->stream('sdl_collection.pdf');
+        // }
         // return $pdf->download('sdl_collection.pdf');
     }
     // Income Management generate all income voucher 

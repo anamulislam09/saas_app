@@ -93,7 +93,7 @@
             padding-left: 10%;
             margin-top: -12px;
             /* text-align: center; */
-             /* line-height: 10px; */
+            /* line-height: 10px; */
         }
 
         .middle-text p {
@@ -136,32 +136,22 @@
             </div>
 
             {{-- <div class="status" style="text-align: center"> --}}
-                {{-- <h3>Money Receipt</h3> --}}
-                {{-- <p>{{ $custDetails->address }}</p> --}}
+            {{-- <h3>Money Receipt</h3> --}}
+            {{-- <p>{{ $custDetails->address }}</p> --}}
             {{-- </div> --}}
         </div>
 
         <div class="bodyInfo">
             <div class="left-text">
-                <p>MR No : {{ rand(999, 99999) }}</p>
-                {{-- @if (isset($user->name) && !empty($user->name))
-                    <p>Name : {{ $user->name }}</p>
-                @else
-                    <p>Flat_Name : {{ $inv->flat_name }}</p>
-                @endif --}}
-                {{-- @isset($user->name) --}}
-                {{-- <p>name : {{ $user->name }}</p> --}}
-                {{-- @endisset
-               
-                <p>name : ..........</p> --}}
-                {{-- <p>Flat_name : {{ $inv->flat_name }}</p> --}}
+                <p>MR No : {{ $inv->invoice_id }}</p>
+
             </div>
             <div class="middle-text">
                 <p>Money Receipt</p>
             </div>
 
             <div class="right-text">
-                <p style="margin-top: 0px">{!! DNS1D::getBarcodeHTML("$inv->paid", 'C128') !!}</p>
+                <p style="margin-top: 0px">{!! DNS1D::getBarcodeHTML("$inv->invoice_id", 'C128') !!}</p>
                 <p>Date :{{ date('m/d/y') }}</p>
             </div>
         </div>
@@ -333,8 +323,18 @@
         </div>
         <div class="footer">
             <div class="Prepared">
-                <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:40%">
-                    {{ Auth::user()->name }}</p>
+                @php
+                    $customer = App\Models\Customer::where('id', $inv->auth_id)->first();
+                    $user = App\Models\User::where('user_id', $inv->auth_id)->first();
+                @endphp
+                @if ($inv->auth_id == Auth::user()->user_id)
+                    <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:40%">
+                        {{ $user->name }}</p>
+                @else
+                    <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:40%">
+                        {{ $customer->name }}</p>
+                @endif
+
                 <h4>Prepared by</h4>
             </div>
             <div class="Recipient">

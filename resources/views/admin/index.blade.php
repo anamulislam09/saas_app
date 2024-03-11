@@ -179,10 +179,9 @@
                                             <h3>{{ $manualOpeningBlance->loss }}<sup style="font-size: 20px">TK</sup></h3>
                                         @endif
                                     @else
-                                            <p>Opening Balance </p>
-                                            <h3>0<sup style="font-size: 20px">TK</sup>
-                                            </h3>
-                                        
+                                        <p>Opening Balance </p>
+                                        <h3>0<sup style="font-size: 20px">TK</sup>
+                                        </h3>
                                     @endif
                                 </div>
                                 <div class="icon">
@@ -195,6 +194,33 @@
                         <!-- /.col -->
 
                         <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box" style="background: #FB5200">
+                                <div class="inner">
+                                    <p>Total collection</p>
+
+                                    @if (isset($manualOpeningBlance))
+                                        @if ($manualOpeningBlance->flag == 1)
+                                            <h3>{{ $total_income + $others_income + $manualOpeningBlance->profit }} <sup
+                                                    style="font-size: 20px">TK</sup></h3>
+                                        @else
+                                            <h3>{{ $total_income + $others_income - $manualOpeningBlance->loss }} <sup
+                                                    style="font-size: 20px">TK</sup></h3>
+                                        @endif
+                                    @else
+                                        <h3>{{ $total_income + $others_income }} <sup style="font-size: 20px">TK</sup></h3>
+                                    @endif
+
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
                         <div class="col-lg-3 col-6">
                             <!-- small box -->
                             <div class="small-box bg-danger">

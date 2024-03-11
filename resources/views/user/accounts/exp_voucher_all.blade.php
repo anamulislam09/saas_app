@@ -177,7 +177,7 @@
 
            <div class="dateTime">
             <div class="month">
-              <p>Total Expense month of the<strong><span>
+              <p>Total Expense for the month of<strong><span>
                           @if ('1' == date('m'))
                               January
                           @elseif ('2' == date('m'))
@@ -202,7 +202,7 @@
                               November
                           @elseif ('12' == date('m'))
                               December
-                          @endif
+                          @endif -{{date('Y')}}
                       </span> <strong>
               </p>
           </div>

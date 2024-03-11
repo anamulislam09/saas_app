@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('sub_total');
             $table->integer('total');
             $table->integer('customer_id');
-            $table->bigInteger('auth_id');
+            $table->string('auth_id');
             $table->timestamps();
         });
     }

@@ -29,9 +29,16 @@ class PdfGeneratorController extends Controller
     public function GenerateVoucher(Request $request)
     {
         $exp = Exp_detail::where('id', $request->exp_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-        $id = UniqueIdGenerator::generate(['table' => 'expense_vouchers', 'length' => 10, 'prefix' => 'INV-']);
-        $data['id'] = $id;
-        $data['voucher_id'] = $id;
+        
+        $v_id = 1;
+        $isExist = ExpenseVoucher::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        if ($isExist) {
+            $voucher_id = ExpenseVoucher::where('customer_id', Auth::guard('admin')->user()->id)->max('voucher_id');
+            $data['voucher_id'] = $this->formatSrl(++$voucher_id);
+        } else {
+            $data['voucher_id'] = $this->formatSrl($v_id);
+        }
+
 
         $data['month'] = $exp->month;
         $data['year'] = $exp->year;
@@ -70,16 +77,16 @@ class PdfGeneratorController extends Controller
     {
         switch (strlen($srl)) {
             case 1:
-                $zeros = '0000';
+                $zeros = '00000';
                 break;
             case 2:
-                $zeros = '000';
+                $zeros = '0000';
                 break;
             case 3:
-                $zeros = '00';
+                $zeros = '000';
                 break;
             case 4:
-                $zeros = '0';
+                $zeros = '00';
                 break;
             default:
                 $zeros = '0';

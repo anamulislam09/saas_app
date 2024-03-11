@@ -48,7 +48,7 @@ class IncomeController extends Controller
                                 'year' => $request->year,
                                 'flat_id' => $flats[$i]->flat_unique_id,
                                 'customer_id' => $flats[$i]->customer_id,
-                                'auth_id' => Auth::guard('admin')->user()->id,
+                                // 'auth_id' => Auth::guard('admin')->user()->id,
                                 'flat_name' => $flats[$i]->flat_name,
                                 'charge' => $flats[$i]->charge,
                                 'amount' => $flats[$i]->amount,
@@ -82,7 +82,7 @@ class IncomeController extends Controller
                                         'year' => $year,
                                         'flat_id' => $flats[$i]->flat_unique_id,
                                         'customer_id' => $flats[$i]->customer_id,
-                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        // 'auth_id' => Auth::guard('admin')->user()->id,
                                         'flat_name' => $flats[$i]->flat_name,
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
@@ -106,7 +106,7 @@ class IncomeController extends Controller
                                         'year' => $year,
                                         'flat_id' => $flats[$i]->flat_unique_id,
                                         'customer_id' => $flats[$i]->customer_id,
-                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        // 'auth_id' => Auth::guard('admin')->user()->id,
                                         'flat_name' => $flats[$i]->flat_name,
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
@@ -139,7 +139,7 @@ class IncomeController extends Controller
                                         'year' => $year,
                                         'flat_id' => $flats[$i]->flat_id,
                                         'customer_id' => $flats[$i]->customer_id,
-                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        // 'auth_id' => Auth::guard('admin')->user()->id,
                                         'flat_name' => $flats[$i]->flat_name,
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
@@ -159,7 +159,7 @@ class IncomeController extends Controller
                                         'year' => $year,
                                         'flat_id' => $flats[$i]->flat_unique_id,
                                         'customer_id' => $flats[$i]->customer_id,
-                                        'auth_id' => Auth::guard('admin')->user()->id,
+                                        // 'auth_id' => Auth::guard('admin')->user()->id,
                                         'flat_name' => $flats[$i]->flat_name,
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
@@ -210,6 +210,18 @@ class IncomeController extends Controller
 
                 $item['paid'] = $paid;
                 $item['due'] = $data->due - $paid;
+                $item['auth_id'] = Auth::guard('admin')->user()->id;
+
+                $isExist = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                $inv_id = 1;
+                if ($isExist) {
+                    $invoice_id = Income::where('customer_id', Auth::guard('admin')->user()->id)->max('invoice_id');
+                    $item['invoice_id'] = $this->formatSrl(++$invoice_id);
+                } else {
+                    $item['invoice_id'] =$this->formatSrl($inv_id);
+                }
+
+
                 if ($amount == $paid) {
                     $item['status'] = 1;
                 } else {
@@ -220,6 +232,17 @@ class IncomeController extends Controller
 
                 $item['paid'] = $paid;
                 $item['due'] = $data->due - $paid;
+                $item['auth_id'] = Auth::guard('admin')->user()->id;
+
+                $isExist = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
+                $inv_id = 1;
+                if ($isExist) {
+                    $invoice_id = Income::where('customer_id', Auth::guard('admin')->user()->id)->max('invoice_id');
+                    $item['invoice_id'] = $this->formatSrl(++$invoice_id);
+                } else {
+                    $item['invoice_id'] = $this->formatSrl($inv_id);
+                }
+
                 if ($amount == $paid) {
                     $item['status'] = 1;
                 } else {
@@ -232,4 +255,26 @@ class IncomeController extends Controller
         }
     }
     /*-------------------Collection ends here--------------*/
+
+    public function formatSrl($srl)
+    {
+        switch (strlen($srl)) {
+            case 1:
+                $zeros = '00000';
+                break;
+            case 2:
+                $zeros = '0000';
+                break;
+            case 3:
+                $zeros = '000';
+                break;
+            case 4:
+                $zeros = '00';
+                break;
+            default:
+                $zeros = '0';
+                break;
+        }
+        return $zeros . $srl;
+    }
 }

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('month');
             $table->integer('year');
             $table->string('date');
-            $table->integer('customer_id');
-            $table->integer('auth_id');
-            $table->string('income_info');
+            $table->integer('customer_id')->nullable();
+            $table->string('auth_id')->nullable();
+            $table->string('invoice_id')->nullable();
+            $table->string('income_info')->nullable();
             $table->bigInteger('amount');
             $table->timestamps();
         });

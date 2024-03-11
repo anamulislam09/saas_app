@@ -176,8 +176,7 @@
                                                     $previousMonthData = App\Models\Income::where(
                                                         'month',
                                                         $item->month - 1,
-                                                    )
-                                                        ->where('year', $previousDate[0])
+                                                    )->where('year', $previousDate[0])
                                                         ->where('flat_id', $item->flat_id)
                                                         ->where('customer_id', Auth::guard('admin')->user()->id)
                                                         ->first();

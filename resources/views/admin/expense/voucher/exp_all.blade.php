@@ -177,7 +177,7 @@
 
            <div class="dateTime">
             <div class="month">
-              <p>Total Expense month of the<strong><span>
+              <p>Total Expense for the month of<strong><span>
                           @if ('1' == date('m'))
                               January
                           @elseif ('2' == date('m'))
@@ -202,7 +202,7 @@
                               November
                           @elseif ('12' == date('m'))
                               December
-                          @endif
+                          @endif -{{date('Y')}}
                       </span> <strong>
               </p>
           </div>
@@ -223,8 +223,8 @@
                     @foreach ($inv as $key => $item)
                         @php
                             $exp_name = App\Models\Category::where('id', $item->cat_id)->first();
-                            $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
-                            $amount = App\Models\Exp_detail::where('customer_id', $user->customer_id)
+                            // $user = App\Models\User::where('user_id', Auth::guard('admin')->user()->user_id)->first();
+                            $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->user_id)
                                 ->where('month', $item->month)
                                 ->where('year', $item->year)
                                 ->where('cat_id', $item->cat_id)
@@ -376,7 +376,7 @@
         <div class="footer">
             <div class="Prepared">
                 <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:60%">
-                    {{ Auth::user()->name }}</p>
+                    {{ Auth::guard('admin')->user()->name }}</p>
                 <h4>Prepared by</h4>
             </div>
             <div class="Approved">

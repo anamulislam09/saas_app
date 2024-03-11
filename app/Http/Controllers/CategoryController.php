@@ -109,34 +109,17 @@ class CategoryController extends Controller
     {
         // dd($request->id);
         if (Auth::guard('admin')->user()->role == 0) {
-            $exp_details = Exp_detail::where('customer_id', $request->id)->delete();
-            if ($exp_details) {
-                $exp_voucher = ExpenseVoucher::where('customer_id', $request->id)->delete();
-                if ($exp_voucher) {
-                    $exp_process = Exp_process::where('customer_id', $request->id)->delete();
-                    if ($exp_process) {
-                        $data = YearlyBlance::where('customer_id', $request->id)->delete();
-                        if ($data) {
-                            $income = Income::where('customer_id', $request->id)->delete();
-                            if ($income) {
-                                $monthlyBalance = MonthlyBlance::where('customer_id', $request->id)->delete();
-                                if ($monthlyBalance) {
-                                    $openingBalance = OpeningBalance::where('customer_id', $request->id)->delete();
-                                    if ($openingBalance) {
-                                        $othersIncome = OthersIncome::where('customer_id', $request->id)->delete();
-                                        if ($othersIncome) {
-                                            $user = User::where('customer_id', $request->id)->delete();
-                                            if ($user) {
-                                                $flat = Flat::where('customer_id', $request->id)->delete();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            Exp_detail::where('customer_id', $request->id)->delete();
+            ExpenseVoucher::where('customer_id', $request->id)->delete();
+            Exp_process::where('customer_id', $request->id)->delete();
+            YearlyBlance::where('customer_id', $request->id)->delete();
+            Income::where('customer_id', $request->id)->delete();
+            MonthlyBlance::where('customer_id', $request->id)->delete();
+            OpeningBalance::where('customer_id', $request->id)->delete();
+            OthersIncome::where('customer_id', $request->id)->delete();
+            User::where('customer_id', $request->id)->delete();
+            Flat::where('customer_id', $request->id)->delete();
+          
            
             return redirect()->back()->with('message', 'All data deleted successfully.');
         } else {

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('year');
             $table->string('date');
             $table->integer('customer_id');
-            $table->integer('auth_id');
+            $table->string('auth_id');
             $table->integer('cat_id')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->string('name')->nullable();

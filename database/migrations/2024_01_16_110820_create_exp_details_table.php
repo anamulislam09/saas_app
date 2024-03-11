@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('cat_id');
             $table->integer('amount');
             $table->integer('customer_id');
-            $table->bigInteger('auth_id');
+            $table->string('auth_id');
             $table->timestamps();
         });
     }

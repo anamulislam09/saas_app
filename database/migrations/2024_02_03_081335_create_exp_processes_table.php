@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('month');
             $table->bigInteger('total');
             $table->integer('customer_id');
-            $table->integer('auth_id');
+            $table->string('auth_id');
             $table->timestamps();
         });
     }

@@ -13,8 +13,9 @@ class OthersIncome extends Model
         'month',
         'year',
         'date',
-        'auth_id',
         'customer_id',
+        'auth_id',
+        'invoice_id',
         'income_info',
         'amount',
     ];

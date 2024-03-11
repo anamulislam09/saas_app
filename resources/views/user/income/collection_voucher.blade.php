@@ -210,7 +210,14 @@
                     <tfoot>
                       <tr>
                         <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+
+                        {{-- @if (isset($previousMonthData) && !empty($previousMonthData))
+                        <td class="text-right"> {{ $total + $due + $previousMonthData->due }}</td>
+                        @else --}}
                         <td class="text-right"><strong>{{ $total + $due }}</strong></td>
+                      {{-- @endif --}}
+
+                        {{-- <td class="text-right"><strong>{{ $total + $due }}</strong></td> --}}
                         <td class="text-right"><strong>{{ $total }}</strong></td>
                       </tr>
                     </tfoot>
@@ -327,11 +334,11 @@
                         <tr>
                           <td colspan="2" class="text-right"> <strong>Total :</strong></td>
 
-                          @if (isset($previousMonthData->due) && !empty($previousMonthData->due))
+                          {{-- @if (isset($previousMonthData) && !empty($previousMonthData))
                             <td class="text-right"> {{ $total + $due + $previousMonthData->due }}</td>
-                            @else
+                            @else --}}
                             <td class="text-right"><strong>{{ $total + $due }}</strong></td>
-                          @endif
+                          {{-- @endif --}}
                           <td class="text-right"><strong>{{ $total }}</strong></td>
                         </tr>
                       </tfoot>

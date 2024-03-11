@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('cat_id');
             $table->integer('exp_id');
             $table->integer('amount');
-            $table->tinyInteger('auth_id');
+            $table->string('auth_id');
             $table->string('updated_date')->nullable();
             $table->timestamps();
         });
