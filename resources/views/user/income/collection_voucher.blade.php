@@ -105,7 +105,7 @@
                     <div class="card-header">
                       <div class="row">
                         <div class="col-10">
-                          <strong> Total collection month of @if ($months->month == 1)
+                          <strong> Total collection for the month of @if ($months->month == 1)
                               January
                             @elseif ($months->month == 2)
                               February
@@ -129,7 +129,7 @@
                               November
                             @elseif ($months->month == 12)
                               December
-                            @endif </strong>
+                            @endif - {{ $months->year }}</strong>
                         </div>
                         <div class="col-2">
                           <form action="{{ route('manager.income.voucher.generateall') }}" method="post">
@@ -221,7 +221,7 @@
                       <div class="card-header">
                         <div class="row">
                           <div class="col-10">
-                            <strong> Total collection month of @if ($current_month->month == 1)
+                            <strong> Total collection for the month of @if ($current_month->month == 1)
                                 January
                               @elseif ($current_month->month == 2)
                                 February
@@ -245,7 +245,7 @@
                                 November
                               @elseif ($current_month->month == 12)
                                 December
-                              @endif </strong>
+                              @endif - {{ $current_month->year }}</strong>
                           </div>
                           <div class="col-2">
                             <form action="{{ route('manager.income.voucher.generateall') }}" method="post">
@@ -326,7 +326,12 @@
                       <tfoot>
                         <tr>
                           <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-                          <td class="text-right"><strong>{{ $total + $due }}</strong></td>
+
+                          @if (isset($previousMonthData->due) && !empty($previousMonthData->due))
+                            <td class="text-right"> {{ $total + $due + $previousMonthData->due }}</td>
+                            @else
+                            <td class="text-right"><strong>{{ $total + $due }}</strong></td>
+                          @endif
                           <td class="text-right"><strong>{{ $total }}</strong></td>
                         </tr>
                       </tfoot>

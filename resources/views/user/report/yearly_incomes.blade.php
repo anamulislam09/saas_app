@@ -64,7 +64,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-8 col-sm-6">
-                                            <h3 class="card-title">Total Income Year of {{ $year->year }}</h3>
+                                            <h3 class="card-title">Total Income for the Year of {{ $year->year }}</h3>
                                         </div>
                                         <div class="col-lg-4 col-sm-6">
                                             @if (isset($opening_balance) && !empty($data))

@@ -115,7 +115,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-lg-8 col-sm-6">
-                                                    <strong> Total Service Charge month of @if ('1' == date('m'))
+                                                    <strong> Total Service Charge for the month of @if ('1' == date('m'))
                                                             January
                                                         @elseif ('2' == date('m'))
                                                             February
@@ -139,7 +139,7 @@
                                                             November
                                                         @elseif ('12' == date('m'))
                                                             December
-                                                        @endif </strong>
+                                                        @endif - {{date('Y')}}</strong>
                                                 </div>
                                                 <div class="col-lg-8 col-sm-6">
                                                     @if (isset($opening_balance) && !empty($data))

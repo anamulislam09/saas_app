@@ -104,7 +104,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-9">
-                                                    <strong> Total expenses month of @if ($months->month == 1)
+                                                    <strong> Total expenses for the month of @if ($months->month == 1)
                                                             January
                                                         @elseif ($months->month == 2)
                                                             February
@@ -128,7 +128,7 @@
                                                             November
                                                         @elseif ($months->month == 12)
                                                             December
-                                                        @endif </strong>
+                                                        @endif -{{$months->year}}</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -198,7 +198,7 @@
                                             <div class="card-header">
                                                 <div class="row">
                                                     <div class="col-9">
-                                                        <strong> Total expenses month of @if ($month->month == 1)
+                                                        <strong> Total expenses for the month of @if ($month->month == 1)
                                                                 January
                                                             @elseif ($month->month == 2)
                                                                 February
@@ -222,7 +222,7 @@
                                                                 November
                                                             @elseif ($month->month == 12)
                                                                 December
-                                                            @endif </strong>
+                                                            @endif -{{$month->year}}</strong>
                                                     </div>
                                                 </div>
                                             </div>

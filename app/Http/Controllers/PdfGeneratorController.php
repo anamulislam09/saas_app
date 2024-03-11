@@ -29,28 +29,10 @@ class PdfGeneratorController extends Controller
     public function GenerateVoucher(Request $request)
     {
         $exp = Exp_detail::where('id', $request->exp_id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-        // $INV_id = UniqueIdGenerator::generate(['table' => 'expense_vouchers', 'length' => 4]);
         $id = UniqueIdGenerator::generate(['table' => 'expense_vouchers', 'length' => 10, 'prefix' => 'INV-']);
-        // dd($id);
-        // $start_at = 0000001;
-        // if ($start_at) {
-            // $Vid = 1;
-            // $isExist = ExpenseVoucher::where('customer_id', Auth::guard('admin')->user()->id)->Exists();
-            // if (!$isExist) {
-            //     // dd($start_at);
-            //     $data['voucher_id'] = $this->formatSrl($Vid);
-            // }else{
-            //     // dd($start_at);
-            //     $voucher_id = ExpenseVoucher::where('customer_id', Auth::guard('admin')->user()->id)->max('voucher_id');
-            //     // dd(++$voucher_id);
-            //     $data['voucher_id'] = $this->formatSrl(++$voucher_id);
-            // }
-        
-
-
-
+        $data['id'] = $id;
         $data['voucher_id'] = $id;
-        $data['voucher_id'] = $id;
+
         $data['month'] = $exp->month;
         $data['year'] = $exp->year;
         $data['date'] = date('m/d/y');
@@ -83,28 +65,28 @@ class PdfGeneratorController extends Controller
         }
     }
 
- // unique id serial function
- public function formatSrl($srl)
- {
-     switch(strlen($srl)){
-         case 1:
-             $zeros = '0000';
-             break;
-         case 2:
-             $zeros = '000';
-             break;
-         case 3:
-             $zeros = '00';
-             break;
-         case 4:
-             $zeros = '0';
-             break;
-         default:
-             $zeros = '0';
-         break;
-     }
-     return $zeros . $srl;
- }
+    // unique id serial function
+    public function formatSrl($srl)
+    {
+        switch (strlen($srl)) {
+            case 1:
+                $zeros = '0000';
+                break;
+            case 2:
+                $zeros = '000';
+                break;
+            case 3:
+                $zeros = '00';
+                break;
+            case 4:
+                $zeros = '0';
+                break;
+            default:
+                $zeros = '0';
+                break;
+        }
+        return $zeros . $srl;
+    }
 
     // Expense Management generate all voucher 
     public function GenerateVoucherAll()
@@ -115,7 +97,6 @@ class PdfGeneratorController extends Controller
         $inv = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->groupBy('cat_id')->get();
         $total = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('amount');
         // $total = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month) ->where('year', $year)->sum('amount');
-
         $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
 
@@ -135,7 +116,6 @@ class PdfGeneratorController extends Controller
         $inv = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
         $total = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->sum('amount');
         $month = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->first();
-       
 
         $customer = Customer::where('id', Auth::guard('admin')->user()->id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();

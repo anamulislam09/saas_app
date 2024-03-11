@@ -10,6 +10,7 @@ class ExpenseVoucher extends Model
     use HasFactory;
     protected $fillable = [
      
+        'id',
         'voucher_id',
         'month',
         'year',

@@ -95,7 +95,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-8 col-sm-6">
-                                            <h3 class="card-title">Total Income month of
+                                            <h3 class="card-title">Total Income for the month of
                                                 @if ($months->month == 1)
                                                     January
                                                 @elseif ($months->month == 2)
@@ -120,7 +120,7 @@
                                                     November
                                                 @elseif ($months->month == 12)
                                                     December
-                                                @endif
+                                                @endif -{{$months->year}}
                                             </h3>
                                         </div>
 

@@ -12,7 +12,7 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-lg-10 col-sm-12">
-                    <h3 class="card-title">Expense Summary Month of the  @if ('1' == date('m'))
+                    <h3 class="card-title">Expense Summary for the Month of @if ('1' == date('m'))
                       January
                     @elseif ('2' == date('m'))
                       February
@@ -36,7 +36,7 @@
                       November
                     @elseif ('12' == date('m'))
                       December
-                    @endif </h3>
+                    @endif - {{date('Y')}}</h3>
                   </div>
                   @if (count($expSummary) < 1)
                   @else

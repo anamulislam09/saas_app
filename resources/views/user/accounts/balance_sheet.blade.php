@@ -94,7 +94,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-10 col-sm-12">
-                                            <h3 class="card-title">Balance Sheet month of
+                                            <h3 class="card-title">Balance Sheet for the month of
                                                 @if (date('m') == 1)
                                                     January
                                                 @elseif (date('m') == 2)
@@ -119,7 +119,7 @@
                                                     November
                                                 @elseif (date('m') == 12)
                                                     December
-                                                @endif
+                                                @endif -{{$months->year}}
                                             </h3>
                                         </div>
                                     </div>

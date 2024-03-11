@@ -105,7 +105,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <strong> Total expenses month of @if ($months->month == 1)
+                                                    <strong> Total expenses for the month of @if ($months->month == 1)
                                                             January
                                                         @elseif ($months->month == 2)
                                                             February
@@ -129,7 +129,7 @@
                                                             November
                                                         @elseif ($months->month == 12)
                                                             December
-                                                        @endif </strong>
+                                                        @endif - {{$months->year}}</strong>
                                                 </div>
                                                 <div class="col-2">
                                                     <form action="{{ route('manager.account.expense.voucher.generateall') }}"
@@ -201,7 +201,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <strong> Total expenses month of @if ($month->month == 1)
+                                                    <strong> Total expenses for the month of @if ($month->month == 1)
                                                             January
                                                         @elseif ($month->month == 2)
                                                             February
@@ -225,7 +225,7 @@
                                                             November
                                                         @elseif ($month->month == 12)
                                                             December
-                                                        @endif </strong>
+                                                        @endif - {{$month->year}}</strong>
                                                 </div>
                                                 <div class="col-2">
                                                     <form action="{{ route('manager.account.expense.voucher.generateall') }}"
