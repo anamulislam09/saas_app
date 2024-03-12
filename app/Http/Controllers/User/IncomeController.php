@@ -317,11 +317,11 @@ class IncomeController extends Controller
     // Income Management generate income voucher 
     public function GenerateIncomeVoucher($id)
     {
-        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $users = User::where('user_id', Auth::user()->user_id)->first();
 
-        $inv = Income::where('customer_id', $user->customer_id)->where('id', $id)->first();
-        $user = User::where('customer_id', $user->customer_id)->where('flat_id', $inv->flat_id)->first();
-        $customer = Customer::where('id', $user->customer_id)->first();
+        $inv = Income::where('customer_id', $users->customer_id)->where('id', $id)->first();
+        $user = User::where('customer_id', $users->customer_id)->where('flat_id', $inv->flat_id)->first();
+        $customer = Customer::where('id', $users->customer_id)->first();
         $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
 
         $data = [

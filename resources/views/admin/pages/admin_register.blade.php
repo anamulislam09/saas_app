@@ -11,14 +11,14 @@
       background: #999 !important
   }
 
-  .register-page {
+  /* .register-page {
       background-image: url(../login.png);
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
       width: 100%;
       opacity: .8;
-  }
+  } */
 </style>
 
   <!-- Google Font: Source Sans Pro -->

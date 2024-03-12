@@ -224,7 +224,7 @@
                         @php
                             $exp_name = App\Models\Category::where('id', $item->cat_id)->first();
                             // $user = App\Models\User::where('user_id', Auth::guard('admin')->user()->user_id)->first();
-                            $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->user_id)
+                            $amount = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)
                                 ->where('month', $item->month)
                                 ->where('year', $item->year)
                                 ->where('cat_id', $item->cat_id)

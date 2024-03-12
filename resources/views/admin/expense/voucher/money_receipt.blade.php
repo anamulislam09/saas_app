@@ -161,7 +161,7 @@
             </div>
 
             <div class="right-text">
-                <p style="margin-top: 0px">{!! DNS1D::getBarcodeHTML("$inv->invoice_id", 'C128') !!}</p>
+                <p style="margin-top: 0px">{!! DNS1D::getBarcodeHTML("$inv->invoice_id", 'C128', 1.5,25) !!}</p>
                 <p>Date :{{ date('m/d/y') }}</p>
             </div>
         </div>
