@@ -71,7 +71,7 @@
             justify-content: space-between;
             display: block;
             margin-top: 10px;
-            padding-bottom: 8px;
+            /* padding-bottom: 8px; */
             width: 95%;
             height: 50px;
         }
@@ -116,107 +116,7 @@
 </head>
 
 <body>
-    @foreach ($inv as $voucher)
     @php
-    $customer = App\Models\Customer::where('id', $voucher->customer_id)->first();
-    $custDetails = App\Models\CustomerDetail::where('customer_id', $customer->id)->first();
-@endphp
-        <div class="container">
-            <div class="border">
-                <div class="header-text">
-                    <h1>{{ $customer->name }}</h1>
-                    <p>{{ $custDetails->address }}</p>
-                    <p>{{ $custDetails->phone }}, {{ $customer->email }}</p>
-                </div>
-
-                <div class="bodyInfo">
-                    <div class="left-text">
-                        <p>MR No : {{ $voucher->invoice_id}}</p>
-
-                    </div>
-                    <div class="middle-text">
-                        <p>Money Receipt</p>
-                    </div>
-
-                    <div class="right-text">
-                        <p style="margin-top: -15px; width:10px;">{!! DNS1D::getBarcodeHTML("$voucher->invoice_id", 'C128' ,1.5,23) !!}</p>
-                        <p>Date :{{ date('m/d/y') }}</p>
-                    </div>
-                </div>
-
-                <div class="body">
-                    <p>Received with thanks from mr./ms <strong><span
-                                style="border-bottom: 2px dotted #000; padding:0px 70px">
-                                @if (isset($user->name) && !empty($user->name))
-                                    {{ $user->name }}@else{{ $voucher->flat_name }}
-                                @endif
-                            </span></strong> The
-                        sum of tk. (in words)
-                        <strong><span style="border-bottom: 2px dotted #000; padding:0px 70px"></span></strong>
-                        Month of <strong><span style="border-bottom: 2px dotted #000; padding:0px 70px">
-                                @if ($voucher->month == 1)
-                                    January
-                                @elseif ($voucher->month == 2)
-                                    February
-                                @elseif ($voucher->month == 3)
-                                    March
-                                @elseif ($voucher->month == 4)
-                                    April
-                                @elseif ($voucher->month == 5)
-                                    May
-                                @elseif ($voucher->month == 6)
-                                    June
-                                @elseif ($voucher->month == 7)
-                                    July
-                                @elseif ($voucher->month == 8)
-                                    August
-                                @elseif ($voucher->month == 9)
-                                    September
-                                @elseif ($voucher->month == 10)
-                                    October
-                                @elseif ($voucher->month == 11)
-                                    November
-                                @elseif ($voucher->month == 12)
-                                    December
-                                @endif {{ $voucher->year }}
-                            </span> </strong>. In Cash <strong><span
-                                style="border-bottom: 2px dotted #000; padding:0px 30px">
-                                {{ $voucher->paid }}</span></strong>.
-                        Service Charge of Flat No <strong><span
-                                style="border-bottom: 2px dotted #000; padding:0px 30px; width:50%">{{ $voucher->flat_name }}</span></strong>.
-                    </p>
-
-                </div>
-                <div class="footer" style="padding-bottom:40px">
-                    <div class="Prepared">
-                        @php
-                            $customer = App\Models\Customer::where('id', $voucher->auth_id)->first();
-                            $user = App\Models\User::where('user_id', $voucher->auth_id)->first();
-                        @endphp
-                        @if ($voucher->auth_id == Auth::guard('admin')->user()->id)
-                            <p style=" margin-bottom:-0px; text-align:center; width:40%">
-                                
-                                {{ $customer->name }}</p>
-                        @else
-                            <p style="margin-bottom:-0px; text-align:center; width:40%">
-                                {{ $user->name }}</p>
-                        @endif
-                        <h4>Prepared by</h4>
-                    </div>
-                    <div class="Recipient">
-                        <p></p>
-                        <h4>Recipient Signature</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-</body>
-
-</html>
-
-
-@php
     // Function which returns number to words
     function numberToWord($num = '')
     {
@@ -332,5 +232,104 @@
         return '';
     }
 
+    @endphp
+    @foreach ($inv as $voucher)
+    @php
     $word = numberToWord($voucher->paid);
+    $customer = App\Models\Customer::where('id', $voucher->customer_id)->first();
+    $custDetails = App\Models\CustomerDetail::where('customer_id', $customer->id)->first();
 @endphp
+        <div class="container">
+            <div class="border">
+                <div class="header-text">
+                    <h1>{{ $customer->name }}</h1>
+                    <p>{{ $custDetails->address }}</p>
+                    <p>{{ $custDetails->phone }}, {{ $customer->email }}</p>
+                </div>
+
+                <div class="bodyInfo">
+                    <div class="left-text">
+                        <p>MR No : {{ $voucher->invoice_id}}</p>
+
+                    </div>
+                    <div class="middle-text">
+                        <p>Money Receipt</p>
+                    </div>
+
+                    <div class="right-text">
+                        <p style="margin-top: -15px; width:10px;">{!! DNS1D::getBarcodeHTML("$voucher->invoice_id", 'C128' ,1.5,23) !!}</p>
+                        <p>Date :{{ date('m/d/y') }}</p>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <p>Received with thanks from mr./ms <strong><span
+                                style="border-bottom: 2px dotted #000; padding:0px 10px">
+                                @if (isset($user->name) && !empty($user->name))
+                                    {{ $user->name }}@else{{ $voucher->flat_name }}
+                                @endif
+                            </span></strong> The
+                        sum of tk. (in words)
+                        <strong><span style="border-bottom: 2px dotted #000; padding:0px 10px">{{$word}}</span></strong>
+                        Month of <strong><span style="border-bottom: 2px dotted #000; padding:0px 10px">
+                                @if ($voucher->month == 1)
+                                    January
+                                @elseif ($voucher->month == 2)
+                                    February
+                                @elseif ($voucher->month == 3)
+                                    March
+                                @elseif ($voucher->month == 4)
+                                    April
+                                @elseif ($voucher->month == 5)
+                                    May
+                                @elseif ($voucher->month == 6)
+                                    June
+                                @elseif ($voucher->month == 7)
+                                    July
+                                @elseif ($voucher->month == 8)
+                                    August
+                                @elseif ($voucher->month == 9)
+                                    September
+                                @elseif ($voucher->month == 10)
+                                    October
+                                @elseif ($voucher->month == 11)
+                                    November
+                                @elseif ($voucher->month == 12)
+                                    December
+                                @endif {{ $voucher->year }}
+                            </span> </strong>. In Cash <strong><span
+                                style="border-bottom: 2px dotted #000; padding:0px 10px">
+                                {{ $voucher->paid }}</span></strong>.
+                        Service Charge of Flat No <strong><span
+                                style="border-bottom: 2px dotted #000; padding:0px 10px; width:50%">{{ $voucher->flat_name }}</span></strong>.
+                    </p>
+
+                </div>
+                <div class="footer" style="padding-bottom:40px">
+                    <div class="Prepared">
+                        @php
+                            $customer = App\Models\Customer::where('id', $voucher->auth_id)->first();
+                            $user = App\Models\User::where('user_id', $voucher->auth_id)->first();
+                        @endphp
+                        @if ($voucher->auth_id == Auth::guard('admin')->user()->id)
+                            <p style=" margin-bottom:-0px; text-align:center; width:40%">
+                                
+                                {{ $customer->name }}</p>
+                        @else
+                            <p style="margin-bottom:-0px; text-align:center; width:40%">
+                                {{ $user->name }}</p>
+                        @endif
+                        <h4>Prepared by</h4>
+                    </div>
+                    <div class="Recipient">
+                        <p></p>
+                        <h4>Recipient Signature</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</body>
+
+</html>
+
