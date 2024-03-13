@@ -14,28 +14,29 @@
 
         .header-section {
             width: 100%;
-            height: 150px;
+            height: 120px;
+            margin-top: -30px;
         }
 
         .logo {
-            width: 25%;
+            width: 20%;
             float: left;
         }
 
         .header-text {
-            width: 40%;
+            width: 55%;
             float: left;
             text-align: center;
         }
 
         .status {
-            width: 35%;
+            width: 25%;
             float: right;
             text-align: end;
 
         }
 
-        .header-text h1 {
+        .header-text h2 {
             font-family: arial;
             margin-bottom: -6Px;
         }
@@ -43,10 +44,11 @@
 
         .header-text p {
             margin: 0px 10px;
+            font-size: 14px;
         }
 
-        .status h2 {
-            padding: 10px 0px;
+        .status h4 {
+            padding: 8px 0px;
             background: #5ac1e0;
             text-align: center;
             width: 100%;
@@ -57,6 +59,7 @@
         td,
         th {
             border: 1px solid;
+            font-size: 14px;
         }
 
         table {
@@ -69,6 +72,7 @@
         .Prepared {
             width: 33.33%;
             float: left;
+            font-size: 14px;
         }
 
         .Prepared h4 {
@@ -81,6 +85,7 @@
             width: 33.33%;
             float: left;
             text-align: -webkit-center;
+            font-size: 14px;
         }
 
         .Approved h4 {
@@ -93,6 +98,7 @@
             width: 33.33%;
             float: left;
             text-align: -webkit-right;
+            font-size: 14px;
         }
 
         .Recipient h4 {
@@ -123,6 +129,22 @@
             float: left;
         }
 
+        .textAmount h3 {
+            margin-top: 4px;
+        }
+
+        .dateTime{
+          margin-bottom: -10px;
+        }
+        .month{
+          width: 50%;
+          float: left;
+        }
+      
+        .date p{
+         text-align: center;
+         font-size:14px;
+        }
         /* body text ends here  */
     </style>
 </head>
@@ -131,19 +153,19 @@
     <div class="container">
         <div class="header-section">
             <div class="logo">
-                <h3>{{ $customer->name }}</h3>
+                <h4>{{ $customer->name }}</h4>
                 {{-- <img src="" alt="$customer->name "> --}}
             </div>
 
             <div class="header-text">
-                <h1>{{ $customer->name }}</h1>
+                <h2>{{ $customer->name }}</h2>
                 <p>{{ $custDetails->address }}</p>
-                <p>{{ $custDetails->phone }}</p>
-                <p>{{ $customer->email }}</p>
+                <p>{{ $custDetails->phone }}, {{ $customer->email }}</p>
+                {{-- <p>{{ $customer->email }}</p> --}}
             </div>
 
             <div class="status">
-                <h2>Payment Voucher</h2>
+                <h4>Payment Voucher</h4>
             </div>
         </div>
 
@@ -160,34 +182,42 @@
     </div> --}}
         <div class="body">
 
-            <p>Total Expense for the month of<strong><span>
-                @if ('1' == date('m'))
-                January
-              @elseif ('2' == date('m'))
-                February
-              @elseif ('3' == date('m'))
-                March
-              @elseif ('4' == date('m'))
-                April
-              @elseif ('5' == date('m'))
-                May
-              @elseif ('6' == date('m'))
-                June
-              @elseif ('7' == date('m'))
-                July
-              @elseif ('8' == date('m'))
-                August
-              @elseif ('9' == date('m'))
-                September
-              @elseif ('10' == date('m'))
-                October
-              @elseif ('11' == date('m'))
-                November
-              @elseif ('12' == date('m'))
-                December
-              @endif -{{date('Y')}}
-            </span> <strong>
-    </p>
+            <div class="dateTime">
+                <div class="month">
+                  <p style="font-size: 14px;">Total Expense for the month of<strong><span>
+                              @if ('1' == date('m'))
+                                  January
+                              @elseif ('2' == date('m'))
+                                  February
+                              @elseif ('3' == date('m'))
+                                  March
+                              @elseif ('4' == date('m'))
+                                  April
+                              @elseif ('5' == date('m'))
+                                  May
+                              @elseif ('6' == date('m'))
+                                  June
+                              @elseif ('7' == date('m'))
+                                  July
+                              @elseif ('8' == date('m'))
+                                  August
+                              @elseif ('9' == date('m'))
+                                  September
+                              @elseif ('10' == date('m'))
+                                  October
+                              @elseif ('11' == date('m'))
+                                  November
+                              @elseif ('12' == date('m'))
+                                  December
+                              @endif -{{date('Y')}}
+                          </span> <strong>
+                  </p>
+              </div>
+              <div class="date">
+                  <p>Date: {{date("Y/m/d")}}</p>
+              </div>
+    
+               </div>
 
             <table>
                 <thead>
@@ -349,7 +379,7 @@
         @endphp
 
             <div class="textAmount">
-                <h3>In Word : {{$word}}</h3>
+                <h3 style="font-size:15px;">In Word : {{$word}}</h3>
             </div>
         </div>
         <div class="footer">

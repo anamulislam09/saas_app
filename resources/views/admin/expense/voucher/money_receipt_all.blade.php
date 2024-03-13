@@ -10,14 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        .container {
-            width: 90%;
-            margin: auto;
-            /* border: 1px solid #ddd; */
-        }
 
         .header-text {
-            width: 95%;
+            width: 100%;
             text-align: center;
             margin-top: -15px height: 100px;
         }
@@ -263,10 +258,10 @@
                 </div>
 
                 <div class="body">
-                    <p>Received with thanks from mr./ms <strong><span
+                    <p>Received with thanks from <strong><span
                                 style="border-bottom: 2px dotted #000; padding:0px 10px">
                                 @if (isset($user->name) && !empty($user->name))
-                                    {{ $user->name }}@else{{ $voucher->flat_name }}
+                                {{ $user->name }}@else{{ $voucher->flat_name }}
                                 @endif
                             </span></strong> The
                         sum of tk. (in words)

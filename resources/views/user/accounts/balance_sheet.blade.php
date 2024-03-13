@@ -9,15 +9,15 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2">Expense Voucher</h3>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
                                         <form action="{{ route('manager.account.allbalancesheet') }}" method="post">
                                             @csrf
                                             <div class="row my-4">
-                                                <div class="col-lg-3">
-                                                    <strong><span>Balance Sheet </span></strong>
-                                                </div>
                                                 <div class="col-lg-3">
                                                     {{-- <label for="" class="col-form-label">Select Year</label> --}}
                                                     <select name="year" class="form-control" id="" required>

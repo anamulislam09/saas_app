@@ -10,8 +10,8 @@
 
 
         /*======================
-                                            404 page
-                                        =======================*/
+                                                404 page
+                                            =======================*/
 
 
         .page_404 {
@@ -59,6 +59,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2">New User Entry</h3>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
@@ -74,36 +77,36 @@
                                         <div class="row">
                                             <div class="col-10 p-5 m-auto"
                                                 style="border: 1px solid #ddd; background:#eeecec">
-                                                <h2 class="text-center"><strong>User Entry Form</strong></h2>
+                                                {{-- <h2 class="text-center"><strong>User Entry Form</strong></h2> --}}
                                                 <form action="{{ route('user.store') }}" method="POST">
                                                     @csrf
                                                     <div class="form-group">
-                                                        <label for="">User Id : </label>
+                                                        <label for="">ID  </label>
                                                         <input type="text" name="user_id" class="form-control"
-                                                            placeholder="User name" required>
+                                                            placeholder="User ID" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">User Name : </label>
+                                                        <label for="">Name  </label>
                                                         <input type="text" name="name" class="form-control"
                                                             placeholder="User name" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">NID Number : </label>
+                                                        <label for="">NID/NRC Number  </label>
                                                         <input type="text" name="nid_no"class="form-control"
-                                                            placeholder="User NID No">
+                                                            placeholder="User NID or NRC No">
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="">User Address</label>
+                                                        <label for="">Address</label>
                                                         <textarea name="address" class="form-control"" id="" cols="" rows="1" placeholder="User Address"></textarea>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Phone : </label>
+                                                        <label for="">Phone/Passport </label>
                                                         <input type="text" name="phone"class="form-control"
                                                             placeholder="User phone" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">User Email</label>
+                                                        <label for="">Email</label>
                                                         <input type="email" name="email"class="form-control"
                                                             placeholder="User email">
                                                     </div>

@@ -42,7 +42,7 @@
                                             <th>SL </th>
                                             <th class="d-none">Year</th>
                                             <th class="d-none">Month</th>
-                                            <th>Flat_Name</th>
+                                            <th>Flat Name</th>
                                             <th>Charge</th>
                                             <th>Amount</th>
                                             <th>Collection</th>
@@ -109,8 +109,8 @@
                                                 <td>{{ $item->paid }}</td>
                                                 <td>{{ $item->due }}</td>
                                                 @if ($user)
-                                                    <td>{{ $userName->name }}</td>
-                                                @elseif ($customer)
+                                                    <td><span class="badge badge-info">{{ $userName->name }}</span></td>
+                                                    @elseif ($customer)
                                                     <td><span class="badge badge-success">Admin</span></td>
                                                 @endif
                                               

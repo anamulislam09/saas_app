@@ -398,7 +398,6 @@ class IncomeController extends Controller
     }
 
     // Password reset 
-
     public function PasswordReset()
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();

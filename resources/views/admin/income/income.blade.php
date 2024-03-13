@@ -14,15 +14,22 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-primary">
+                                <div class="row ">
+                                    <div class="col-lg-10 col-sm-12 pt-2">
+                                        <h3 class="card-title">Service charge</h3>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
                                         <form action="{{ route('income.store') }}" method="post">
                                             @csrf
                                             <div class="row my-4">
-                                                <div class="col-lg-3">
+                                                {{-- <div class="col-lg-3">
                                                     <strong><span>Service charge</span></strong>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-lg-3">
                                                     {{-- <label for="" class="col-form-label">Select Year</label> --}}
                                                     <select name="year" class="form-control" id="">
@@ -115,7 +122,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-lg-8 col-sm-6">
-                                                    <strong> Total service charge for the month of @if ('1' == date('m'))
+                                                    Service charge for the month of <strong> @if ('1' == date('m'))
                                                             January
                                                         @elseif ('2' == date('m'))
                                                             February
@@ -162,7 +169,7 @@
                                             <tr>
                                                 <th> SL</th>
                                                 <th>Flat Name</th>
-                                                <th>Charge</th>
+                                                {{-- <th>Charge</th> --}}
                                                 <th class="text-right">Amount</th>
                                             </tr>
                                         </thead>
@@ -178,14 +185,14 @@
                                                 <tr>
                                                     <td class="text-center">{{ $key + 1 }}</td>
                                                     <td>{{ $item->flat_name }}</td>
-                                                    <td>{{ $item->charge }}</td>
+                                                    {{-- <td>{{ $item->charge }}</td> --}}
                                                     <td class="text-right">{{ $item->amount }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                                <td colspan="2" class="text-right"> <strong>Total :</strong></td>
                                                 <td class="text-right"><strong>{{ $total }}</strong></td>
                                             </tr>
                                         </tfoot>

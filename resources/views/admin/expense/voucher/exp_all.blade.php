@@ -36,7 +36,7 @@
 
         }
 
-        .header-text h1 {
+        .header-text h2 {
             font-family: arial;
             margin-bottom: -6Px;
         }
@@ -44,9 +44,10 @@
 
         .header-text p {
             margin: 0px 10px;
+            font-size: 14px;
         }
 
-        .status h3 {
+        .status h4 {
             padding: 8px 0px;
             background: #5ac1e0;
             text-align: center;
@@ -58,6 +59,7 @@
         td,
         th {
             border: 1px solid;
+            font-size: 14px;
         }
 
         table {
@@ -70,6 +72,7 @@
         .Prepared {
             width: 33.33%;
             float: left;
+            font-size:14px;
         }
 
         .Prepared h4 {
@@ -82,6 +85,7 @@
             width: 33.33%;
             float: left;
             text-align: -webkit-center;
+            font-size:14px;
         }
 
         .Approved h4 {
@@ -94,6 +98,7 @@
             width: 33.33%;
             float: left;
             text-align: -webkit-right;
+            font-size:14px;
         }
 
         .Recipient h4 {
@@ -124,7 +129,7 @@
         }
 
         .textAmount h3 {
-            margin-top: -0px;
+            margin-top: 4px;
         }
 
         .dateTime{
@@ -136,7 +141,8 @@
         }
       
         .date p{
-         text-align: center
+         text-align: center;
+         font-size:14px;
         }
         /* body text ends here  */
     </style>
@@ -146,19 +152,19 @@
     <div class="container">
         <div class="header-section">
             <div class="logo">
-                <h3>{{ $customer->name }}</h3>
+                <h4>{{ $customer->name }}</h4>
                 {{-- <img src="" alt="$customer->name "> --}}
             </div>
 
             <div class="header-text">
-                <h1>{{ $customer->name }}</h1>
+                <h2>{{ $customer->name }}</h2>
                 <p>{{ $custDetails->address }}</p>
-                <p>{{ $custDetails->phone }}</p>
-                <p>{{ $customer->email }}</p>
+                <p>{{ $custDetails->phone }}, {{ $customer->email }}</p>
+                {{-- <p>{{ $customer->email }}</p> --}}
             </div>
 
             <div class="status">
-                <h3>Payment Voucher</h3>
+                <h4>Payment Voucher</h4>
             </div>
         </div>
 
@@ -177,7 +183,7 @@
 
            <div class="dateTime">
             <div class="month">
-              <p>Total Expense for the month of<strong><span>
+              <p style="font-size: 14px;">Total Expense for the month of<strong><span>
                           @if ('1' == date('m'))
                               January
                           @elseif ('2' == date('m'))
@@ -370,12 +376,12 @@
             @endphp
 
             <div class="textAmount">
-                <h3>In Word: {{ $word }}</h3>
+                <h3 style="font-size:15px;">In Word: {{ $word }}.</h3>
             </div>
         </div>
         <div class="footer">
             <div class="Prepared">
-                <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:60%">
+                <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:60%;">
                     {{ Auth::guard('admin')->user()->name }}</p>
                 <h4>Prepared by</h4>
             </div>

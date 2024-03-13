@@ -9,17 +9,9 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <div class="row">
-                  <div class="col-lg-10 col-sm-12">
-                    <h3 class="card-title">Create Expense</h3>
-                  </div>
-                  {{-- <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('expense-details.index') }}"
-                                            class="btn btn-sm btn-outline-primary">See All</a>
-                                    </div> --}}
-                </div>
-              </div>
+              <div class="card-header bg-primary text-center">
+                <h3 class="card-title pt-2">Expense Entry</h3>
+            </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <!-- /.card-header -->
@@ -29,7 +21,7 @@
                       @csrf
                       <div class="row">
                         <div class=" col-lg-5 form-group">
-                          <label for="unit" class="">Expense Category :</label>
+                          <label for="unit" class="">Expense Category </label>
                           <select name="cat_id" class="form-control" id="" required>
                             <option value="" selected disabled>Select Once</option>
                             @foreach ($exp_cat as $item)
@@ -39,7 +31,7 @@
                           </select>
                         </div>
                         <div class=" col-lg-5 form-group">
-                          <label for="unit" class="">Expense Amount:</label>
+                          <label for="unit" class="">Expense Amount</label>
                           <input type="text" name="amount" class="form-control" placeholder="Enter Expense Amount"
                             required>
                         </div>

@@ -38,7 +38,7 @@
                         <li>No of Flat:{{$no_flat}} </li>
                         <li>No of Floor:{{$no_floor}} </li>
                         <li>Service Charge: {{$data->amount}} tk</li>
-                        <li>Created date:  <span style="font-size: 16px"> ({{ date($data->create_date)}} {{$data->create_month}} {{$data->create_year}})</span></li>
+                        <li>Created Date:  <span style="font-size: 16px"> ({{ date($data->create_date)}} {{$data->create_month}} {{$data->create_year}})</span></li>
                       </ul>
                     </div>
                     @else
@@ -55,21 +55,21 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class=" form-group">
-                            <label for="floor" class="">No of floor :</label>
+                            <label for="floor" class="">No of Floor :</label>
                             <input type="text" class="form-control" value="" name="floor" id="floor"
                               placeholder="Enter Number Of Floor" required>
                           </div>
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
-                            <label for="unit" class="">Unit per floor :</label>
+                            <label for="unit" class="">Unit Per Floor :</label>
                             <input type="text" class="form-control" value="" name="unit" id="unit"
                               placeholder="Enter Number Of Unit Per Floor" required>
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="unit" class="">Flat sequence :</label>
+                        <label for="unit" class="">Flat Sequence :</label>
                         <select name="sequence" id="" class="form-control" required>
                           <option value="" selected disabled>Select Once</option>
                           <option value="1">A1,A2,A3</option>
@@ -78,9 +78,9 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="unit" class="">Amount of service charge :</label>
+                        <label for="unit" class="">Amount of Service Charge :</label>
                         <input type="text" class="form-control" value="" name="amount"
-                          placeholder="Enter Service charge" required>
+                          placeholder="Enter Service Charge" required>
                       </div>
                       <div class="">
                         <button type="submit" class="btn btn-sm btn-primary" id="generate">Generate</button>

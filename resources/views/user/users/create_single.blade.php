@@ -78,17 +78,17 @@
                                                 <form action="{{ route('user.store') }}" method="POST">
                                                     @csrf
                                                     <div class="form-group">
-                                                        <label for="">User Id : </label>
+                                                        <label for="">User Id  </label>
                                                         <input type="text" name="user_id" class="form-control"
                                                             placeholder="User name" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">User Name : </label>
+                                                        <label for="">User Name  </label>
                                                         <input type="text" name="name" class="form-control"
                                                             placeholder="User name" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">NID Number : </label>
+                                                        <label for="">NID Number  </label>
                                                         <input type="text" name="nid_no"class="form-control"
                                                             placeholder="User NID No">
                                                     </div>
@@ -98,7 +98,7 @@
                                                         <textarea name="address" class="form-control"" id="" cols="" rows="1" placeholder="User Address"></textarea>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Phone : </label>
+                                                        <label for="">Phone/Passport </label>
                                                         <input type="text" name="phone"class="form-control"
                                                             placeholder="User phone" required>
                                                     </div>

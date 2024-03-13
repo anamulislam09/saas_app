@@ -9,10 +9,10 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header bg-primary">
                 <div class="row">
                   <div class="col-lg-10 col-sm-12">
-                    <h3 class="card-title">Expense Summary for the Month of  @if ('1' == date('m'))
+                    <h3 class="card-title">Expense Summary for the Month of <strong> @if ('1' == date('m'))
                       January
                     @elseif ('2' == date('m'))
                       February
@@ -36,13 +36,13 @@
                       November
                     @elseif ('12' == date('m'))
                       December
-                    @endif - {{date("Y")}}</h3>
+                    @endif - {{date("Y")}}</h3></strong>
                   </div>
                  
                   @if (count($expSummary) < 1)
                   @else
                   <div class="col-lg-2 col-sm-12">
-                    <a href="{{route('expense.voucher.generateall')}}" class="btn btn-sm btn-info">General Voucher</a>
+                    <a href="{{route('expense.voucher.generateall')}}" class="btn btn-light">General Voucher</a>
                   </div>
                   @endif
 

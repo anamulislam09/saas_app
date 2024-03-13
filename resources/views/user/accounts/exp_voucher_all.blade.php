@@ -36,7 +36,7 @@
 
         }
 
-        .header-text h1 {
+        .header-text h2 {
             font-family: arial;
             margin-bottom: -6Px;
         }
@@ -44,9 +44,10 @@
 
         .header-text p {
             margin: 0px 10px;
+            font-size: 14px;
         }
 
-        .status h3 {
+        .status h4 {
             padding: 8px 0px;
             background: #5ac1e0;
             text-align: center;
@@ -58,6 +59,7 @@
         td,
         th {
             border: 1px solid;
+            font-size: 14px;
         }
 
         table {
@@ -70,11 +72,12 @@
         .Prepared {
             width: 33.33%;
             float: left;
+            font-size: 14px;
         }
 
         .Prepared h4 {
             border-top: 2px solid black;
-            width: 60%;
+            width: 45%;
             text-align: center;
         }
 
@@ -82,6 +85,7 @@
             width: 33.33%;
             float: left;
             text-align: -webkit-center;
+            font-size: 14px;
         }
 
         .Approved h4 {
@@ -94,6 +98,7 @@
             width: 33.33%;
             float: left;
             text-align: -webkit-right;
+            font-size: 14px;
         }
 
         .Recipient h4 {
@@ -108,7 +113,8 @@
             justify-content: space-between;
             display: block;
             padding: 15px 0px;
-            padding-bottom: 25px width: 100%;
+            padding-bottom: 25px;
+            width: 100%;
             /* background: #fb5200; */
         }
 
@@ -124,7 +130,7 @@
         }
 
         .textAmount h3 {
-            margin-top: -0px;
+            margin-top: 4px;
         }
 
         .dateTime{
@@ -136,7 +142,8 @@
         }
       
         .date p{
-         text-align: center
+         text-align: center;
+         font-size:14px;
         }
         /* body text ends here  */
     </style>
@@ -146,19 +153,19 @@
     <div class="container">
         <div class="header-section">
             <div class="logo">
-                <h3>{{ $customer->name }}</h3>
+                <h4>{{ $customer->name }}</h4>
                 {{-- <img src="" alt="$customer->name "> --}}
             </div>
 
             <div class="header-text">
-                <h1>{{ $customer->name }}</h1>
+                <h2>{{ $customer->name }}</h2>
                 <p>{{ $custDetails->address }}</p>
-                <p>{{ $custDetails->phone }}</p>
-                <p>{{ $customer->email }}</p>
+                <p>{{ $custDetails->phone }}, {{ $customer->email }}</p>
+                {{-- <p>{{ $customer->email }}</p> --}}
             </div>
 
             <div class="status">
-                <h3>Payment Voucher</h3>
+                <h4>Payment Voucher</h4>
             </div>
         </div>
 
@@ -175,42 +182,43 @@
     </div> --}}
         <div class="body">
 
-           <div class="dateTime">
-            <div class="month">
-              <p>Total Expense for the month of<strong><span>
-                          @if ('1' == date('m'))
-                              January
-                          @elseif ('2' == date('m'))
-                              February
-                          @elseif ('3' == date('m'))
-                              March
-                          @elseif ('4' == date('m'))
-                              April
-                          @elseif ('5' == date('m'))
-                              May
-                          @elseif ('6' == date('m'))
-                              June
-                          @elseif ('7' == date('m'))
-                              July
-                          @elseif ('8' == date('m'))
-                              August
-                          @elseif ('9' == date('m'))
-                              September
-                          @elseif ('10' == date('m'))
-                              October
-                          @elseif ('11' == date('m'))
-                              November
-                          @elseif ('12' == date('m'))
-                              December
-                          @endif -{{date('Y')}}
-                      </span> <strong>
-              </p>
-          </div>
-          <div class="date">
-              <p>Date: {{date("Y/m/d")}}</p>
-          </div>
+            <div class="dateTime">
+                <div class="month">
+                  <p style="font-size: 14px;">Total Expense for the month of<strong><span>
+                              @if ('1' == date('m'))
+                                  January
+                              @elseif ('2' == date('m'))
+                                  February
+                              @elseif ('3' == date('m'))
+                                  March
+                              @elseif ('4' == date('m'))
+                                  April
+                              @elseif ('5' == date('m'))
+                                  May
+                              @elseif ('6' == date('m'))
+                                  June
+                              @elseif ('7' == date('m'))
+                                  July
+                              @elseif ('8' == date('m'))
+                                  August
+                              @elseif ('9' == date('m'))
+                                  September
+                              @elseif ('10' == date('m'))
+                                  October
+                              @elseif ('11' == date('m'))
+                                  November
+                              @elseif ('12' == date('m'))
+                                  December
+                              @endif -{{date('Y')}}
+                          </span> <strong>
+                  </p>
+              </div>
+              <div class="date">
+                  <p>Date: {{date("Y/m/d")}}</p>
+              </div>
+    
+               </div>
 
-           </div>
             <table>
                 <thead>
                     <tr>
@@ -222,9 +230,9 @@
                 <tbody>
                     @foreach ($inv as $key => $item)
                         @php
+                        $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
                             $exp_name = App\Models\Category::where('id', $item->cat_id)->first();
-                            $user = App\Models\User::where('user_id', Auth::user()->user_id)->first();
-                            $amount = App\Models\Exp_detail::where('customer_id',$user->customer_id)
+                            $amount = App\Models\Exp_detail::where('customer_id', $user->customer_id)
                                 ->where('month', $item->month)
                                 ->where('year', $item->year)
                                 ->where('cat_id', $item->cat_id)
@@ -246,137 +254,137 @@
             </table>
 
             @php
-                // Function which returns number to words
-                function numberToWord($num = '')
-                {
-                    $num = (string) ((int) $num);
+            // Function which returns number to words
+            function numberToWord($num = '')
+            {
+                $num = (string) ((int) $num);
 
-                    if ((int) $num && ctype_digit($num)) {
-                        $words = [];
+                if ((int) $num && ctype_digit($num)) {
+                    $words = [];
 
-                        $num = str_replace([',', ' '], '', trim($num));
+                    $num = str_replace([',', ' '], '', trim($num));
 
-                        $list1 = [
-                            '',
-                            'one',
-                            'two',
-                            'three',
-                            'four',
-                            'five',
-                            'six',
-                            'seven',
-                            'eight',
-                            'nine',
-                            'ten',
-                            'eleven',
-                            'twelve',
-                            'thirteen',
-                            'fourteen',
-                            'fifteen',
-                            'sixteen',
-                            'seventeen',
-                            'eighteen',
-                            'nineteen',
-                        ];
+                    $list1 = [
+                        '',
+                        'one',
+                        'two',
+                        'three',
+                        'four',
+                        'five',
+                        'six',
+                        'seven',
+                        'eight',
+                        'nine',
+                        'ten',
+                        'eleven',
+                        'twelve',
+                        'thirteen',
+                        'fourteen',
+                        'fifteen',
+                        'sixteen',
+                        'seventeen',
+                        'eighteen',
+                        'nineteen',
+                    ];
 
-                        $list2 = [
-                            '',
-                            'ten',
-                            'twenty',
-                            'thirty',
-                            'forty',
-                            'fifty',
-                            'sixty',
-                            'seventy',
-                            'eighty',
-                            'ninety',
-                            'hundred',
-                        ];
+                    $list2 = [
+                        '',
+                        'ten',
+                        'twenty',
+                        'thirty',
+                        'forty',
+                        'fifty',
+                        'sixty',
+                        'seventy',
+                        'eighty',
+                        'ninety',
+                        'hundred',
+                    ];
 
-                        $list3 = [
-                            '',
-                            'thousand',
-                            'million',
-                            'billion',
-                            'trillion',
-                            'quadrillion',
-                            'quintillion',
-                            'sextillion',
-                            'septillion',
-                            'octillion',
-                            'nonillion',
-                            'decillion',
-                            'undecillion',
-                            'duodecillion',
-                            'tredecillion',
-                            'quattuordecillion',
-                            'quindecillion',
-                            'sexdecillion',
-                            'septendecillion',
-                            'octodecillion',
-                            'novemdecillion',
-                            'vigintillion',
-                        ];
+                    $list3 = [
+                        '',
+                        'thousand',
+                        'million',
+                        'billion',
+                        'trillion',
+                        'quadrillion',
+                        'quintillion',
+                        'sextillion',
+                        'septillion',
+                        'octillion',
+                        'nonillion',
+                        'decillion',
+                        'undecillion',
+                        'duodecillion',
+                        'tredecillion',
+                        'quattuordecillion',
+                        'quindecillion',
+                        'sexdecillion',
+                        'septendecillion',
+                        'octodecillion',
+                        'novemdecillion',
+                        'vigintillion',
+                    ];
 
-                        $num_length = strlen($num);
-                        $levels = (int) (($num_length + 2) / 3);
-                        $max_length = $levels * 3;
-                        $num = substr('00' . $num, -$max_length);
-                        $num_levels = str_split($num, 3);
+                    $num_length = strlen($num);
+                    $levels = (int) (($num_length + 2) / 3);
+                    $max_length = $levels * 3;
+                    $num = substr('00' . $num, -$max_length);
+                    $num_levels = str_split($num, 3);
 
-                        foreach ($num_levels as $num_part) {
-                            $levels--;
-                            $hundreds = (int) ($num_part / 100);
-                            $hundreds = $hundreds
-                                ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' '
-                                : '';
-                            $tens = (int) ($num_part % 100);
-                            $singles = '';
+                    foreach ($num_levels as $num_part) {
+                        $levels--;
+                        $hundreds = (int) ($num_part / 100);
+                        $hundreds = $hundreds
+                            ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' '
+                            : '';
+                        $tens = (int) ($num_part % 100);
+                        $singles = '';
 
-                            if ($tens < 20) {
-                                $tens = $tens ? ' ' . $list1[$tens] . ' ' : '';
-                            } else {
-                                $tens = (int) ($tens / 10);
-                                $tens = ' ' . $list2[$tens] . ' ';
-                                $singles = (int) ($num_part % 10);
-                                $singles = ' ' . $list1[$singles] . ' ';
-                            }
-                            $words[] =
-                                $hundreds .
-                                $tens .
-                                $singles .
-                                ($levels && (int) $num_part ? ' ' . $list3[$levels] . ' ' : '');
+                        if ($tens < 20) {
+                            $tens = $tens ? ' ' . $list1[$tens] . ' ' : '';
+                        } else {
+                            $tens = (int) ($tens / 10);
+                            $tens = ' ' . $list2[$tens] . ' ';
+                            $singles = (int) ($num_part % 10);
+                            $singles = ' ' . $list1[$singles] . ' ';
                         }
-                        $commas = count($words);
-                        if ($commas > 1) {
-                            $commas = $commas - 1;
-                        }
-
-                        $words = implode(', ', $words);
-
-                        $words = trim(str_replace(' ,', ',', ucwords($words)), ', ');
-                        if ($commas) {
-                            $words = str_replace(',', ' and', $words);
-                        }
-
-                        return $words;
-                    } elseif (!((int) $num)) {
-                        return 'Zero';
+                        $words[] =
+                            $hundreds .
+                            $tens .
+                            $singles .
+                            ($levels && (int) $num_part ? ' ' . $list3[$levels] . ' ' : '');
                     }
-                    return '';
-                }
+                    $commas = count($words);
+                    if ($commas > 1) {
+                        $commas = $commas - 1;
+                    }
 
-                $word = numberToWord($total);
-            @endphp
+                    $words = implode(', ', $words);
+
+                    $words = trim(str_replace(' ,', ',', ucwords($words)), ', ');
+                    if ($commas) {
+                        $words = str_replace(',', ' and', $words);
+                    }
+
+                    return $words;
+                } elseif (!((int) $num)) {
+                    return 'Zero';
+                }
+                return '';
+            }
+
+            $word = numberToWord($total);
+           
+        @endphp
 
             <div class="textAmount">
-                <h3>In Word: {{ $word }}</h3>
+                <h3 style="font-size:15px;">In Word : {{$word}}</h3>
             </div>
         </div>
         <div class="footer">
             <div class="Prepared">
-                <p style="padding-bottom: -10px; margin-bottom:-20px; text-align:center; width:60%">
-                    {{ Auth::user()->name }}</p>
+                <p style="padding-bottom: -10px; margin-bottom:-20px; padding-left:25px">{{ Auth::user()->name }}</p>
                 <h4>Prepared by</h4>
             </div>
             <div class="Approved">

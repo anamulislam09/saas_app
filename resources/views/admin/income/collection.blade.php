@@ -29,15 +29,22 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-primary">
+                                <div class="row ">
+                                    <div class="col-lg-10 col-sm-12 pt-2">
+                                        <h3 class="card-title">Collection Entry</h3>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
                                         <form action="{{ route('income.store') }}" method="post">
                                             @csrf
                                             <div class="row my-4">
-                                                <div class="col-lg-3">
+                                                {{-- <div class="col-lg-3">
                                                     <strong><span>Collection of Service Charge</span></strong>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-lg-3">
                                                     {{-- <label for="" class="col-form-label">Select Year</label> --}}
                                                     <select name="year" class="form-control" id="">
@@ -152,8 +159,8 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 8%">SL</th>
-                                                <th style="width: 9%">Flat Name</th>
-                                                <th style="width: 15%">Charge</th>
+                                                <th style="width: 10%">Flat Name</th>
+                                                {{-- <th style="width: 15%">Charge</th> --}}
                                                 <th style="width: 15%">Current Amount</th>
                                                 <th style="width: 12%">Previous Due</th>
                                                 <th style="width: 10%">Payable</th>
@@ -210,7 +217,7 @@
                                                     <tr>
                                                         <td>{{ $key + 1 }}</td>
                                                         <td>{{ $item->flat_name }}</td>
-                                                        <td>{{ $item->charge }}</td>
+                                                        {{-- <td>{{ $item->charge }}</td> --}}
                                                         <td>{{ $item->amount }}</td>
                                                         @if (!$previousMonthData)
                                                             <td>000</td>
@@ -249,7 +256,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                                <td colspan="2" class="text-right"> <strong>Total :</strong></td>
                                                 <td class="text-right"><strong>{{ $total }}</strong></td>
                                                 <td class="text-right"><strong>{{ $previous_total }}</strong></td>
                                                 <td class="text-right"><strong>{{ $total + $previous_total }}</strong></td>

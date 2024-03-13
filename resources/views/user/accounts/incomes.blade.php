@@ -41,7 +41,7 @@
                                             <th>SL </th>
                                             <th class="d-none">Year</th>
                                             <th class="d-none">Month</th>
-                                            <th>Flat_Name</th>
+                                            <th>Flat Name</th>
                                             <th>Charge</th>
                                             <th>amount</th>
                                             <th>Collection</th>

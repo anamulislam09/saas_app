@@ -9,17 +9,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Opening Entry Form</h3>
-                                    </div>
-                                    {{-- <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('flat.index') }}" class="btn btn-sm btn-outline-primary">All
-                                            Flats</a>
-                                    </div> --}}
-
-                                </div>
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2">Opening Balance Entry</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -42,6 +33,7 @@
                                                 <button type="submit" class="btn btn-sm btn-primary"
                                                     id="generate">Submit</button>
                                             </div>
+                                            <span>Note: Please input only one option. Either Profit or loss.</span>
                                         </form>
                                     </div>
                                 </div>
