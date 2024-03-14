@@ -10,8 +10,8 @@
 
 
         /*======================
-                                                404 page
-                                            =======================*/
+                                                    404 page
+                                                =======================*/
 
 
         .page_404 {
@@ -81,17 +81,17 @@
                                                 <form action="{{ route('user.store') }}" method="POST">
                                                     @csrf
                                                     <div class="form-group">
-                                                        <label for="">ID  </label>
+                                                        <label for="">ID </label>
                                                         <input type="text" name="user_id" class="form-control"
                                                             placeholder="User ID" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Name  </label>
+                                                        <label for="">Name </label>
                                                         <input type="text" name="name" class="form-control"
                                                             placeholder="User name" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">NID/NRC Number  </label>
+                                                        <label for="">NID/NRC Number </label>
                                                         <input type="text" name="nid_no"class="form-control"
                                                             placeholder="User NID or NRC No">
                                                     </div>
@@ -109,15 +109,9 @@
                                                         <label for="">Email</label>
                                                         <input type="email" name="email"class="form-control"
                                                             placeholder="User email">
+                                                        <span style="font-size: 14px">Note: Please, create id for manual
+                                                            user.</span>
                                                     </div>
-                                                    {{-- <div class="form-group">
-                                                        <label for="">User Role :</label>
-                                                        <select name="role_id" class="form-control" id="">
-                                                            <option value="" selected disabled>Select Once</option>
-                                                            <option value="0">User</option>
-                                                            <option value="1">Manager</option>
-                                                        </select>
-                                                    </div> --}}
                                                     <input type="submit" class="btn btn-primary" value="Submit">
                                                 </form>
                                             </div>

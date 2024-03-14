@@ -35,6 +35,10 @@ class BlanceController extends Controller
             $profit = $request->profit;
             $loss = $request->loss;
 
+        //    if($request->has('profit') && $request->has('loss')){
+        //     return redirect()->back()->with('message', 'Something went wrong.');
+        //    }else{
+        //     dd("done");
             $data['customer_id'] = Auth::guard('admin')->user()->id;
             $data['auth_id'] = Auth::guard('admin')->user()->id;
             $data['year'] = $year;
@@ -51,6 +55,7 @@ class BlanceController extends Controller
  
              OpeningBalance::create($data);
             return redirect()->back()->with('message', 'Opening Balance Added Successfully');
+        //    }
         }
     }
 

@@ -151,8 +151,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/account/expense-voucher', [VoucherController::class, 'ExpenseIndex'])->name('account.expense.index');
     Route::post('/account/expense-all', [VoucherController::class, 'ExpenseAll'])->name('account.expense.all');
     //Balance sheet
-    Route::get('/account/balance', [VoucherController::class, 'BalanceSheet'])->name('account.balancesheet');
-    Route::post('/account/balance-all', [VoucherController::class, 'AllBalanceSheet'])->name('account.allbalancesheet');
+    Route::get('/account/balance', [VoucherController::class, 'balanceSheetIndex'])->name('account.balancesheet');
+
+    Route::get('/account/balance-sheet/{year}/{month}', [VoucherController::class, 'balanceSheet'])->name('account.allbalancesheet');
+
     Route::get('/income-statement', [VoucherController::class, 'Incomes'])->name('income.statement');
     /*--------------- Accounts voucher route ends here ------------------*/
 
