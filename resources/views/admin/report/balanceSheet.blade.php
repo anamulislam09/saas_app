@@ -9,12 +9,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Balance Statement</h3>
-                                    </div>
-                                </div>
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Balance Statement </h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -62,14 +58,14 @@
                                                     @endif
                                                 </td>
 
-                                                <td>{{ $item->total_expense}}</td>
-                                                <td>{{ $item->total_income}}</td>
-                                                <td>{{ $item->amount}}</td>
+                                                <td>{{ $item->total_expense }}</td>
+                                                <td>{{ $item->total_income }}</td>
+                                                <td>{{ $item->amount }}</td>
                                                 <td>
                                                     @if ($item->flag == 1)
-                                                    <span class="badge badge-success">Profit</span>
+                                                        <span class="badge badge-success">Profit</span>
                                                     @elseif ($item->flag == 0)
-                                                    <span class="badge badge-danger">Loss</span>
+                                                        <span class="badge badge-danger">Loss</span>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -84,4 +80,3 @@
         </section>
     </div>
 @endsection
-

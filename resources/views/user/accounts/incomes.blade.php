@@ -33,6 +33,9 @@
                                     <h3 class="card-title">Income Statement</h3>
                                 </div>
                             </div>
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Income Statement </h3>
+                            </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-striped">

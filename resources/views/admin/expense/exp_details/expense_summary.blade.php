@@ -59,12 +59,9 @@
                                 <div class="row">
                                     <div class="col-md-12 col-md-12 col-sm-12">
                                         <div class="col-sm-12 text-center">
-                                            <div class="four_zero_four_bg">
-                                                <h1 class="text-center ">404</h1>
-                                            </div>
                                             <div class="contant_box_404">
                                                 <h3 class="h2">
-                                                    Data Not Found!
+                                                  Expense Not Found!
                                                 </h3>
                                                 <p>Pls! Expense Create First</p>
                                                 <a href="{{ route('expense.create') }}" class="link_404 btn btn-primary">Create Expense

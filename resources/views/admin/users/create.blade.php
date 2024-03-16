@@ -59,16 +59,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Users Entry form</h3>
-                                    </div>
-                                    {{-- <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('users.index') }}" class="btn btn-outline-primary">See Users
-                                        </a>
-                                    </div> --}}
-                                </div>
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">User Entry 
+                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

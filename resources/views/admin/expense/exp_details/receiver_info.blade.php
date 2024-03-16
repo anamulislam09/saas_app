@@ -14,13 +14,9 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <div class="row">
-                  <div class="col-lg-8 col-sm-8 ">
-                    <h3 class="card-title pt-4 pb-4">Receiver info entry form</h3>
-                  </div>
-                </div>
-              </div>
+              <div class="card-header bg-primary text-center">
+                <h3 class="card-title pt-2" style="width:100%; text-align:center">Receiver Info Entry</h3>
+            </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <!-- /.card-header -->

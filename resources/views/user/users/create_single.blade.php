@@ -10,8 +10,8 @@
 
 
         /*======================
-                                            404 page
-                                        =======================*/
+                                                404 page
+                                            =======================*/
 
 
         .page_404 {
@@ -59,13 +59,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Add More User</h3>
-                                    </div>
-
-                                </div>
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Add More User </h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -78,17 +73,17 @@
                                                 <form action="{{ route('user.store') }}" method="POST">
                                                     @csrf
                                                     <div class="form-group">
-                                                        <label for="">User Id  </label>
+                                                        <label for="">User Id </label>
                                                         <input type="text" name="user_id" class="form-control"
                                                             placeholder="User name" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">User Name  </label>
+                                                        <label for="">User Name </label>
                                                         <input type="text" name="name" class="form-control"
                                                             placeholder="User name" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">NID Number  </label>
+                                                        <label for="">NID Number </label>
                                                         <input type="text" name="nid_no"class="form-control"
                                                             placeholder="User NID No">
                                                     </div>
@@ -107,14 +102,6 @@
                                                         <input type="email" name="email"class="form-control"
                                                             placeholder="User email">
                                                     </div>
-                                                    {{-- <div class="form-group">
-                                                        <label for="">User Role :</label>
-                                                        <select name="role_id" class="form-control" id="">
-                                                            <option value="" selected disabled>Select Once</option>
-                                                            <option value="0">User</option>
-                                                            <option value="1">Manager</option>
-                                                        </select>
-                                                    </div> --}}
                                                     <input type="submit" class="btn btn-primary" value="Submit">
                                                 </form>
                                             </div>

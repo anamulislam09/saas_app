@@ -29,11 +29,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="col-lg-12">
-                                    <h3 class="card-title">Income Statement</h3>
+                            <div class="card">
+                                <div class="card-header bg-primary text-center">
+                                    <h3 class="card-title pt-2" style="width:100%; text-align:center">Income Statement </h3>
                                 </div>
-                            </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-striped">

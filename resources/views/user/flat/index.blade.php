@@ -9,27 +9,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-lg-8 col-sm-12">
-                                        <h3 class="card-title">All Flat</h3>
-                                    </div>
-                                    {{-- @php
-                                        $isExist = DB::table('flats')
-                                            ->where('customer_id', Auth::guard('admin')->user()->id)
-                                            ->first();
-                                    @endphp
-                                    @if ($isExist)
-                                        <div class="col-lg-2 col-sm-6">
-                                            <a href="{{route('flat.singlecreate')}}" class="btn btn-sm btn-outline-primary">Add New</a>
-                                        </div>
-                                    @endif
-                                    <div class="col-lg-2 col-sm-6">
-                                        <a href="{{ !$isExist ? route('flat.create') : 'javascript:void(0)' }}"
-                                            class="btn btn-sm btn-outline-primary">Flat Manage</a>
-                                    </div> --}}
-
-                                </div>
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">All Flats </h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

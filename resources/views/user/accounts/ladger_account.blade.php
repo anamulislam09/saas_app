@@ -9,6 +9,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Ledger Account </h3>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
@@ -143,7 +146,7 @@
                                             </tr>
                                         @endif
                                         <tr>
-                                            <td colspan="3"><strong>Total cost of this month
+                                            <td colspan="3"><strong>Total Cost of ThisMmonth
                                                 </strong></td>
                                             @if (count($expense) > 0)
                                                 <td><strong>{{ $total }}</strong></td>
@@ -154,20 +157,20 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"><strong>Total income of this
-                                                    month</strong></td>
+                                            <td colspan="4"><strong>Total Income of This
+                                                    Month</strong></td>
                                             <td><strong>{{ $income }}</strong></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"><strong>Other income of this
-                                                    month</strong></td>
+                                            <td colspan="4"><strong>Other Income of This
+                                                    Month</strong></td>
                                             <td><strong>{{ $others_income }}</strong></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5"><strong>Balance of this
-                                                    month
+                                            <td colspan="5"><strong>Balance of This
+                                                    Month
                                                 </strong></td>
                                             <td>
                                                 @if (count($expense) > 0)

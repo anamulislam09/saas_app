@@ -14,6 +14,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Create Voucher  </h3>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
@@ -21,68 +25,23 @@
                                             @csrf
                                             <div class="row my-4">
                                                 <div class="col-lg-3">
-                                                    <strong><span>Create voucher </span></strong>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    {{-- <label for="" class="col-form-label">Select Year</label> --}}
-                                                    <select name="year" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Year</option>
-                                                        <option value="2023">Year 2023
-                                                        </option>
-                                                        <option value="2024">Year 2024
-                                                        </option>
-                                                        <option value="2025">Year 2025
-                                                        </option>
-                                                        <option value="2026">Year 2026
-                                                        </option>
-                                                        <option value="2027">Year 2027
-                                                        </option>
-                                                        <option value="2028">Year 2028
-                                                        </option>
-                                                        <option value="2029">Year 2029
-                                                        </option>
-                                                        <option value="2030">Year 2030
-                                                        </option>
+                                                    <select name="year" class="form-control" id="year" required>
+                                                        @foreach (range( date("Y"),2010) as $year)
+                                                            <option value="{{ $year }}">{{ $year }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
-                                                {{-- 'month', date('m'))->where('year', date('Y') --}}
                                                 <div class="col-lg-3">
-                                                    {{-- <label for="" class="col-form-label">Select Month</label> --}}
-                                                    <select name="month" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Month </option>
-                                                        <option value="1">January
-                                                        </option>
-                                                        <option value="2">February
-                                                        </option>
-                                                        <option value="3">March
-                                                        </option>
-                                                        <option value="4">April
-                                                        </option>
-                                                        <option value="5">May</option>
-                                                        <option value="6">June
-                                                        </option>
-                                                        <option value="7">July
-                                                        </option>
-                                                        <option value="8">August
-                                                        </option>
-                                                        <option value="9">September
-                                                        </option>
-                                                        <option value="10">October
-                                                        </option>
-                                                        <option value="11">November
-                                                        </option>
-                                                        <option value="12">December
-                                                        </option>
+                                                    <select name="month" class="form-control" id="month" required>
+                                                        @for ($i = 1 ; $i <= 12; $i++)
+                                                                <option value="{{ $i }}" @if($i==date('m')) selected @endif>{{ date("F",strtotime(date("Y")."-".$i."-01")) }}</option>
+                                                        @endfor
                                                     </select>
                                                 </div>
-
-                                                {{-- @if (Route::current()->getName() == 'income.create') --}}
                                                 <div class="col-lg-2">
                                                     <label for="" class="col-form-label"></label>
                                                     <input type="submit" class="btn btn-primary" value="Submit">
                                                 </div>
-                                                {{-- @else --}}
-                                                {{-- @endif --}}
                                             </div>
                                         </form>
                                     </div>
@@ -129,7 +88,7 @@
                                                             November
                                                         @elseif ($months->month == 12)
                                                             December
-                                                        @endif - {{$months->year}}</strong>
+                                                        @endif - {{ $months->year }}</strong>
                                                 </div>
                                                 <div class="col-2">
                                                     <form action="{{ route('income.voucher.generateall') }}" method="post">
@@ -222,7 +181,6 @@
                                     </table>
                                 @else
                                     @if (isset($month) && !empty($month))
-                                    
                                         <div class="card">
                                             <div class="card-header">
                                                 <div class="row">
@@ -251,7 +209,7 @@
                                                                 November
                                                             @elseif ($month->month == 12)
                                                                 December
-                                                            @endif - {{$month->year}}</strong>
+                                                            @endif - {{ $month->year }}</strong>
                                                     </div>
                                                     <div class="col-2">
                                                         <form action="{{ route('income.voucher.generateall') }}"
@@ -300,8 +258,11 @@
 
                                                         $month = Carbon\Carbon::now()->month;
                                                         $year = Carbon\Carbon::now()->year;
-                                                        $previousMonthData = App\Models\Income::where( 'month', $item->month - 1,
-                                                        )->where('year', $item->year)
+                                                        $previousMonthData = App\Models\Income::where(
+                                                            'month',
+                                                            $item->month - 1,
+                                                        )
+                                                            ->where('year', $item->year)
                                                             ->where('flat_id', $item->flat_id)
                                                             ->where('customer_id', Auth::guard('admin')->user()->id)
                                                             ->first();

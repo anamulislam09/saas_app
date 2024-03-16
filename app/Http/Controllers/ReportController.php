@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exp_detail;
 use App\Models\Expense;
 use App\Models\Income;
+use App\Models\MonthlyBlance;
 use App\Models\OpeningBalance;
 use App\Models\OthersIncome;
 use Carbon\Carbon;
@@ -29,7 +30,7 @@ class ReportController extends Controller
     {
         $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->exists();
         if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
+            return redirect()->back()->with('message', 'No Expense Available of This Month');
         } else {
             $monthly_expense = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->groupBy('cat_id')->get();
             $months = Exp_detail::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
@@ -53,7 +54,7 @@ class ReportController extends Controller
     {
         $isExist = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('year', $request->year)->exists();
         if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
+            return redirect()->back()->with('message', 'No Expense Available of This year');
         } else {
             $yearly_expense = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('year', $request->year)->groupBy('cat_id')->get();
             $year = Exp_detail::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
@@ -67,25 +68,25 @@ class ReportController extends Controller
     {
         $months = Carbon::now()->month;
         $year = Carbon::now()->year;
-        $monthly_income = Income::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
+        $m_income = Income::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
         $month = Income::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-        $opening_balance = OpeningBalance::where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-        $others_income = OthersIncome::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-        // dd($others_income);
-        return view('admin.report.monthly_incomes', compact('monthly_income','month','opening_balance', 'others_income'));
+        $m_opening_balance = OpeningBalance::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $m_other_income = OthersIncome::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+        // dd($opening_balance);
+
+        return view('admin.report.monthly_incomes', compact('m_income', 'month', 'm_opening_balance', 'm_other_income'));
     }
 
     public function MonthlyAllIncome(Request $request)
     {
-        $isExist = Income::where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
+        $isExist = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $request->month)->where('year', $request->year)->where('status', '!=', 0 )->exists();
         if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
+            return redirect()->back()->with('message', 'No Income Available of This Month');
         } else {
             $monthly_income = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
             $months = Income::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
-            $opening_balance = OpeningBalance::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+            $opening_balance = OpeningBalance::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
             $others_income = OthersIncome::where('month', $request->month)->where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-            // dd($others_income);
             return redirect()->back()->with(['monthly_income' => $monthly_income, 'months' => $months, 'others_income' => $others_income, 'opening_balance' => $opening_balance]);
         }
     }
@@ -94,14 +95,22 @@ class ReportController extends Controller
     // Report for yearly income
     public function YearlyIncome()
     {
-        return view('admin.report.yearly_incomes');
+
+        $months = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $y_income = Income::where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
+        $years = Income::where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $y_opening_balance = OpeningBalance::where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+        $y_other_income = OthersIncome::where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
+
+        return view('admin.report.yearly_incomes', compact('y_income', 'years', 'y_opening_balance', 'y_other_income'));
     }
 
     public function YearlyAllIncome(Request $request)
     {
         $isExist = Income::where('year', $request->year)->where('status', '!=', 0)->where('customer_id', Auth::guard('admin')->user()->id)->exists();
         if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
+            return redirect()->back()->with('message', 'No Income Available of This Year');
         } else {
             $yearly_income = Income::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
             $year = Income::where('year', $request->year)->where('customer_id', Auth::guard('admin')->user()->id)->first();

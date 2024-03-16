@@ -75,8 +75,8 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="nid_no" placeholder="Enter NID / NOC Number" required>
-            <div class="input-group-append" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Enter yor NID / NOC Number">
+            <input type="text" class="form-control" name="nid_no" placeholder="Enter NID / NRC Number" required>
+            <div class="input-group-append" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Enter yor NID / NRC Number">
               <div class="input-group-text">
                 <i class="fa fa-id-card" ></i>
               </div>
@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password_confirmation" placeholder="Retype password"
+            <input type="password" class="form-control" name="password_confirmation" placeholder="Retype Password"
               required>
             <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Password Confirmation">
               <div class="input-group-text">

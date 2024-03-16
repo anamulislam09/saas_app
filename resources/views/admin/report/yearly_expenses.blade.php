@@ -14,6 +14,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-primary text-center">
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Yearly Expenses </h3>
+                            </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
@@ -21,38 +24,16 @@
                                             @csrf
                                             <div class="row my-4">
                                                 <div class="col-lg-3">
-                                                    <strong><span> Yearly Expenses</span></strong>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    {{-- <label for="" class="col-form-label">Select Year</label> --}}
-                                                    <select name="year" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Year</option>
-                                                        <option value="2023">Year 2023
-                                                        </option>
-                                                        <option value="2024">Year 2024
-                                                        </option>
-                                                        <option value="2025">Year 2025
-                                                        </option>
-                                                        <option value="2026">Year 2026
-                                                        </option>
-                                                        <option value="2027">Year 2027
-                                                        </option>
-                                                        <option value="2028">Year 2028
-                                                        </option>
-                                                        <option value="2029">Year 2029
-                                                        </option>
-                                                        <option value="2030">Year 2030
-                                                        </option>
+                                                    <select name="year" class="form-control" id="year" required>
+                                                        @foreach (range( date("Y"),2010) as $year)
+                                                            <option value="{{ $year }}">{{ $year }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
-
-                                                {{-- @if (Route::current()->getName() == 'income.create') --}}
                                                 <div class="col-lg-2">
                                                     <label for="" class="col-form-label"></label>
                                                     <input type="submit" class="btn btn-primary" value="Submit">
                                                 </div>
-                                                {{-- @else --}}
-                                                {{-- @endif --}}
                                             </div>
                                         </form>
                                     </div>

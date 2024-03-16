@@ -109,12 +109,12 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview ml-3">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('users.create') }}" class="nav-link">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Create User</p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('users.index') }}" class="nav-link {{Request::routeIs('users.index') ? 'active' : '' }} ">
                                     <i class="far fa-dot-circle nav-icon"></i>

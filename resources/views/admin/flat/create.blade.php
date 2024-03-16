@@ -14,6 +14,10 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
+              
+              <div class="card-header bg-primary text-center">
+                <h3 class="card-title pt-2" style="width:100%; text-align:center">Flat Manage </h3>
+            </div>
               <div class="card-header">
                 <div class="row">
                   <div class="col-lg-8 col-sm-8 ">

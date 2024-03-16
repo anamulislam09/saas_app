@@ -10,7 +10,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-primary text-center">
-                                <h3 class="card-title pt-2">Balance Sheet</h3>
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Balance Sheet</h3>
                             </div>
                             <div class="card-header">
                                 <div class="row">

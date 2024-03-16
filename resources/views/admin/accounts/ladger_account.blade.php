@@ -9,6 +9,9 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
+              <div class="card-header bg-primary text-center">
+                <h3 class="card-title pt-2" style="width:100%; text-align:center">Ledger Account </h3>
+            </div>
               <div class="card-header">
                 <div class="row">
                   <div class="col-lg-10 col-sm-12">
@@ -16,31 +19,10 @@
                       $month = Carbon\Carbon::now()->month;
                       $year = Carbon\Carbon::now()->year;
                     @endphp
-                    <h3 class="card-title">Ladger Account month of <strong>@if ($month == 1)
-                        January
-                    @elseif ($month == 2)
-                        February
-                    @elseif ($month == 3)
-                        March
-                    @elseif ($month == 4)
-                        April
-                    @elseif ($month == 5)
-                        May
-                    @elseif ($month == 6)
-                        June
-                    @elseif ($month == 7)
-                        July
-                    @elseif ($month == 8)
-                        August
-                    @elseif ($month == 9)
-                        September
-                    @elseif ($month == 10)
-                        October
-                    @elseif ($month == 11)
-                        November
-                    @elseif ($month == 12)
-                        December
-                    @endif </strong>
+                    <h3 class="card-title">Account for the month of 
+                        <strong>{{ date("F",strtotime(date("Y"))) }} -{{date('Y')}}</strong>
+                     
+                  </strong>
                     </h3>
                   </div>
                   <div class="col-lg-2 col-sm-12">
@@ -168,7 +150,7 @@
                       </tr>
                     @endif
                     <tr>
-                      <td colspan="3"><strong>Total cost of this month
+                      <td colspan="3"><strong>Total Cost of This Month
                         </strong></td>
                       @if (count($expense) > 0)
                         <td><strong>{{ $total }}</strong></td>
@@ -179,20 +161,19 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <td colspan="4"><strong>Total income of this
-                          month</strong></td>
+                      <td colspan="4"><strong>Total Income of This
+                          Month</strong></td>
                       <td><strong>{{ $income }}</strong></td>
                       <td></td>
                     </tr>
                     <tr>
-                      <td colspan="4"><strong>Other income of this
-                          month</strong></td>
+                      <td colspan="4"><strong>Other Income of This
+                          Month</strong></td>
                       <td><strong>{{ $others_income }}</strong></td>
                       <td></td>
                     </tr>
                     <tr>
-                      <td colspan="5"><strong>Balance of this
-                          month
+                      <td colspan="5"><strong>Balance of This Month
                         </strong></td>
                       <td>
                         @if (count($expense) > 0)

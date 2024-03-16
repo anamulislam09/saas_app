@@ -12,7 +12,7 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-12 bg-primary py-3">
-                    <h3 class="card-title">Delete Customer Data </h3>
+                    <h3 class="card-title" style="width:100%; text-align:center">Delete Customer Data </h3>
                   </div>
 
                 </div>
