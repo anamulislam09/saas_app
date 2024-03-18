@@ -10,117 +10,44 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-primary text-center">
-                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Expense Voucher</h3>
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Balance Sheet</h3>
                             </div>
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-12" style="border: 1px solid #ddd">
-                                        <form action="{{ route('manager.account.allbalancesheet') }}" method="post">
+                                        <form action="#" method="post">
                                             @csrf
                                             <div class="row my-4">
+                                                {{-- <div class="col-lg-3">
+                                                    <strong><span>Balance Sheet </span></strong>
+                                                </div> --}}
                                                 <div class="col-lg-3">
-                                                    {{-- <label for="" class="col-form-label">Select Year</label> --}}
-                                                    <select name="year" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Year</option>
-                                                        <option value="2023">Year 2023
-                                                        </option>
-                                                        <option value="2024">Year 2024
-                                                        </option>
-                                                        <option value="2025">Year 2025
-                                                        </option>
-                                                        <option value="2026">Year 2026
-                                                        </option>
-                                                        <option value="2027">Year 2027
-                                                        </option>
-                                                        <option value="2028">Year 2028
-                                                        </option>
-                                                        <option value="2029">Year 2029
-                                                        </option>
-                                                        <option value="2030">Year 2030
-                                                        </option>
+                                                    <select name="year" class="form-control" id="year" required>
+                                                        @foreach (range( date("Y"),2010) as $year)
+                                                            <option value="{{ $year }}">{{ $year }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
-                                                {{-- 'month', date('m'))->where('year', date('Y') --}}
                                                 <div class="col-lg-3">
-                                                    {{-- <label for="" class="col-form-label">Select Month</label> --}}
-                                                    <select name="month" class="form-control" id="" required>
-                                                        <option value="" selected disabled>Select Month </option>
-                                                        <option value="1">January
-                                                        </option>
-                                                        <option value="2">February
-                                                        </option>
-                                                        <option value="3">March
-                                                        </option>
-                                                        <option value="4">April
-                                                        </option>
-                                                        <option value="5">May</option>
-                                                        <option value="6">June
-                                                        </option>
-                                                        <option value="7">July
-                                                        </option>
-                                                        <option value="8">August
-                                                        </option>
-                                                        <option value="9">September
-                                                        </option>
-                                                        <option value="10">October
-                                                        </option>
-                                                        <option value="11">November
-                                                        </option>
-                                                        <option value="12">December
-                                                        </option>
+                                                    <select name="month" class="form-control" id="month" required>
+                                                        @for ($i = 1 ; $i <= 12; $i++)
+                                                                <option value="{{ $i }}" @if($i==date('m')) selected @endif>{{ date("F",strtotime(date("Y")."-".$i."-01")) }}</option>
+                                                        @endfor
                                                     </select>
                                                 </div>
-
-                                                {{-- @if (Route::current()->getName() == 'income.create') --}}
-                                                <div class="col-lg-2">
+                                                {{-- <div class="col-lg-2">
                                                     <label for="" class="col-form-label"></label>
                                                     <input type="submit" class="btn btn-primary" value="Generate">
-                                                </div>
-                                                {{-- @else --}}
-                                                {{-- @endif --}}
+                                                </div> --}}
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-
-                            @php
-                                $data = Session::get('data');
-                                $months = Session::get('months');
-                            @endphp
-
-                            @if (isset($data) && !empty($data))
-
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-10 col-sm-12">
-                                            <h3 class="card-title">Balance Sheet for the month of
-                                                @if (date('m') == 1)
-                                                    January
-                                                @elseif (date('m') == 2)
-                                                    February
-                                                @elseif (date('m') == 3)
-                                                    March
-                                                @elseif (date('m') == 4)
-                                                    April
-                                                @elseif (date('m') == 5)
-                                                    May
-                                                @elseif (date('m') == 6)
-                                                    June
-                                                @elseif (date('m') == 7)
-                                                    July
-                                                @elseif (date('m') == 8)
-                                                    August
-                                                @elseif (date('m') == 9)
-                                                    September
-                                                @elseif (date('m') == 10)
-                                                    October
-                                                @elseif (date('m') == 11)
-                                                    November
-                                                @elseif (date('m') == 12)
-                                                    December
-                                                @endif -{{$months->year}}
-                                            </h3>
+                                            <h3 class="card-title">Balance Sheet month of <span id="result_month"></span></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -130,36 +57,53 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Total Income</th>
-                                                <th class="text-center">Total expense</th>
+                                                <th class="text-center">Total Expense</th>
                                                 <th class="text-center">Balance</th>
                                                 <th class="text-center">Flag</th>
                                         </thead>
-                                        <tbody>
-                                            @if ($data)
-                                                <tr>
-                                                    <td class="text-right">{{ $data->total_income }}</td>
-                                                    <td class="text-right">{{ $data->total_expense }}</td>
-                                                    <td class="text-right">{{ $data->amount }}</td>
-                                                    <td class="text-center">
-                                                        @if ($data->flag == 1)
-                                                            <span class="badge badge-primary">Profit</span>
-                                                        @else
-                                                            <span class="badge badge-danger">Loss</span>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @else
-                                            @endif
+                                        <tbody id="table-body">
+                                            <tr>
+                                                <td class="text-right" id="income"></td>
+                                                <td class="text-right" id="expense"></td>
+                                                <td class="text-right" id="balance"></td>
+                                                <td class="text-center"><span  id="flag" class="badge badge-light text-bold"></span></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            @else
-                                <h5 class="text-center py-3">No Data Found</h5>
-                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    balanceSheeat();
+    $('#year, #month').on('change', function() {
+        balanceSheeat();
+    });
+});
+
+function balanceSheeat(){
+    let year = $("#year").val();
+    let month = $("#month").val();
+    $("#result_month").html($("#month option:selected").text());
+    $.ajax({
+        url: "{{ url('account/balance-sheet') }}/" + year +'/'+ month,
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            $('#income').html(res.income);
+            $('#expense').html(res.expense);
+            $('#balance').html(res.balance);
+            $('#flag').html(res.flag );
+        }
+    });
+}
+
+
+</script>
+
 @endsection

@@ -9,6 +9,8 @@ use App\Models\Exp_detail;
 use App\Models\Exp_process;
 use App\Models\Income;
 use App\Models\MonthlyBlance;
+use App\Models\OpeningBalance;
+use App\Models\OthersIncome;
 use App\Models\User;
 use PDF;
 use Carbon\Carbon;
@@ -245,30 +247,47 @@ class AccountController extends Controller
     }
 
      // BalanceSheet
-     public function BalanceSheet()
+     public function balanceSheetIndex()
      {
-         // $month = Carbon::now()->month;
-         // $year = Carbon::now()->year;
-         // $data = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();
-         // $total_income = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->sum('paid');
          return view('user.accounts.balance_sheet');
      }
 
-      // show collection 
-    public function AllBalanceSheet(Request $request)
-    {
-        $user = User::where('user_id', Auth::user()->user_id)->first();
-        $isExist = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->exists();
-        if (!$isExist) {
-            return redirect()->back()->with('message', 'Data Not Found');
-        } else {
-            $data = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
-            $months = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $request->month)->where('year', $request->year)->first();
-            //    dd($month->month);
-            // return view('admin.accounts.expense_voucher', compact('data', 'months'));
-            return redirect()->back()->with(['data' => $data, 'months' => $months]);
-        }
-    }
+     public function balanceSheet($year, $month)
+     {
+         $month = $month;
+         $year = $year;
+         $user = User::where('user_id', Auth::user()->user_id)->first();
+         if ($month == date('m') && $year == date('Y')) {
+             $expense = Exp_detail::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->sum('amount');
+             $income = Income::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->sum('paid');
+             $others_income = OthersIncome::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->sum('amount');
+ 
+             // $previousDate = explode('-', date('Y-m', strtotime($year . '-' . 01 . " -1 month")));
+             // $year = $previousDate[0];
+             // $month = $previousDate[1];
+ 
+             $monthlyOB = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $month-1)->where('year', $year)->first();
+ 
+             if ($monthlyOB) {
+                 $income += $monthlyOB->amount;
+             } else {
+                 $manualOpeningBalance = OpeningBalance::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->first();
+                 $income += ($manualOpeningBalance->flag == 1 ? $manualOpeningBalance->profit : -$manualOpeningBalance->loss);
+             }
+             $income += $others_income;
+         } else {
+             // dd($month);
+             $data = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->first();
+             $income = isset($data) ? $data->total_income : 0;
+             $expense = isset($data) ? $data->total_expense : 0;
+         }
+ 
+         $data['income'] = $income;
+         $data['expense'] = $expense; 
+         $data['balance'] = $data['income'] - $data['expense'];
+         $data['flag'] = $data['balance'] >= 0 ? 'Profit' : 'Loss';
+         return response()->json($data, 200);
+     }
 
     public function Incomes()
     {

@@ -152,7 +152,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/account/expense-all', [VoucherController::class, 'ExpenseAll'])->name('account.expense.all');
     //Balance sheet
     Route::get('/account/balance', [VoucherController::class, 'balanceSheetIndex'])->name('account.balancesheet');
-
     Route::get('/account/balance-sheet/{year}/{month}', [VoucherController::class, 'balanceSheet'])->name('account.allbalancesheet');
 
     Route::get('/income-statement', [VoucherController::class, 'Incomes'])->name('income.statement');
@@ -252,8 +251,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/account/expense-all', [AccountController::class, 'ExpenseAll'])->name('manager.account.expense.all');
     Route::post('/account/expense-voucher-all', [AccountController::class, 'GenerateExpenseVoucherAll'])->name('manager.account.expense.voucher.generateall');
     //Balance sheet
-    Route::get('/account/balance', [AccountController::class, 'BalanceSheet'])->name('manager.account.balancesheet');
-    Route::post('/account/balance-all', [AccountController::class, 'AllBalanceSheet'])->name('manager.account.allbalancesheet');
+    // Route::get('/account/balance', [AccountController::class, 'BalanceSheet'])->name('manager.account.balancesheet');
+    // Route::post('/account/balance-all', [AccountController::class, 'AllBalanceSheet'])->name('manager.account.allbalancesheet');
+      //Balance sheet
+      Route::get('/account/balance', [AccountController::class, 'balanceSheetIndex'])->name('manager.account.balancesheet');
+      Route::get('/account/balance-sheet/{year}/{month}', [AccountController::class, 'balanceSheet'])->name('manager.account.allbalancesheet');
+  
+    
     Route::get('/income-statement', [AccountController::class, 'Incomes'])->name('manager.income.statement');
 
     /*--------------- Accounts voucher route ends here ------------------*/

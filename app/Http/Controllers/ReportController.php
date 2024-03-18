@@ -72,7 +72,6 @@ class ReportController extends Controller
         $month = Income::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
         $m_opening_balance = OpeningBalance::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->first();
         $m_other_income = OthersIncome::where('month', $months)->where('year', $year)->where('customer_id', Auth::guard('admin')->user()->id)->get();
-        // dd($opening_balance);
 
         return view('admin.report.monthly_incomes', compact('m_income', 'month', 'm_opening_balance', 'm_other_income'));
     }
