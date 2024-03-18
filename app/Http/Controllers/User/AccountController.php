@@ -267,14 +267,16 @@ class AccountController extends Controller
              // $month = $previousDate[1];
  
              $monthlyOB = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $month-1)->where('year', $year)->first();
- 
              if ($monthlyOB) {
                  $income += $monthlyOB->amount;
              } else {
                  $manualOpeningBalance = OpeningBalance::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->first();
-                 $income += ($manualOpeningBalance->flag == 1 ? $manualOpeningBalance->profit : -$manualOpeningBalance->loss);
-             }
-             $income += $others_income;
+                 if($manualOpeningBalance){
+                     $income += ($manualOpeningBalance->flag == 1 ? $manualOpeningBalance->profit : -$manualOpeningBalance->loss);
+                 }
+
+                }
+                $income += $others_income;
          } else {
              // dd($month);
              $data = MonthlyBlance::where('customer_id', $user->customer_id)->where('month', $month)->where('year', $year)->first();

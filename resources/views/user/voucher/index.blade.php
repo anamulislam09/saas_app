@@ -134,10 +134,10 @@
 <body>
     <div class="container">
         <div class="header-section">
-            <div class="logo">
+            {{-- <div class="logo">
                 <h3>{{ $customer->name }}</h3>
-                {{-- <img src="" alt="logo"> --}}
-            </div>
+                <img src="" alt="logo">
+            </div> --}}
 
             <div class="header-text">
                 <h1>{{ $customer->name }}</h1>
@@ -153,9 +153,9 @@
 
         <div class="bodyInfo">
             <div class="left-text">
-                <p>Name : {{ $inv->name }}</p>
-                <p>Phone : {{ $inv->phone }}</p>
-                <p>Address : {{ $inv->address }}</p>
+                <p>Name : {{ $receiver->name }}</p>
+                <p>Phone : {{ $receiver->phone }}</p>
+                <p>Address : {{ $receiver->address }}</p>
             </div>
             <div class="right-text">
                 <p>Voucher No : {{ $inv->voucher_id }}</p>

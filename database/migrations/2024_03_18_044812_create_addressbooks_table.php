@@ -9,20 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
     {
-        Schema::create('expense_vouchers', function (Blueprint $table) {
-
+        Schema::create('addressbooks', function (Blueprint $table) {
             $table->id();
-            $table->string('voucher_id');
-            $table->string('month');
-            $table->integer('year');
             $table->string('date');
-            $table->integer('customer_id');
+            $table->string('customer_id');
             $table->string('auth_id');
-            $table->integer('cat_id')->nullable();
-            $table->bigInteger('amount')->nullable();
-            $table->string('receiver_id')->nullable();
+            $table->string('name');
+            $table->string('phone');
+            $table->string('address');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expense_vouchers');
+        Schema::dropIfExists('addressbooks');
     }
 };

@@ -87,7 +87,10 @@ class VoucherController extends Controller
                 $income += $monthlyOB->amount;
             } else {
                 $manualOpeningBalance = OpeningBalance::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $month)->where('year', $year)->first();
-                $income += ($manualOpeningBalance->flag == 1 ? $manualOpeningBalance->profit : -$manualOpeningBalance->loss);
+                // dd($manualOpeningBalance);
+                if($manualOpeningBalance){
+                    $income += ($manualOpeningBalance->flag == 1 ? $manualOpeningBalance->profit : -$manualOpeningBalance->loss);
+                }
             }
             $income += $others_income;
         } else {

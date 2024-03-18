@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Addressbook;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CustomerDetail;
@@ -104,6 +105,21 @@ class ExpenseController extends Controller
         $exp = Exp_detail::where('id', $id)->where('customer_id', $user->customer_id)->first();
         return view('user.expenses.receiver_info', compact('exp'));
     }
+
+    public function CreateVoucherStore(Request $request)
+    {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $data['date'] = date('m/d/y');
+        $data['customer_id'] = $user->customer_id;
+        $data['auth_id'] = $user->user_id;
+        $data['name'] = $request->name;
+        $data['phone'] = $request->phone;
+        $data['address'] = $request->address;
+        Addressbook::create($data);
+        return redirect()->back()->with('message', 'Successfully added');
+
+    }
+
     public function GenerateVoucher(Request $request)
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
@@ -117,6 +133,7 @@ class ExpenseController extends Controller
         } else {
             $data['voucher_id'] = $this->formatSrl($v_id);
         }
+
         $data['month'] = $exp->month;
         $data['year'] = $exp->year;
         $data['date'] = date('m/d/y');
@@ -124,19 +141,19 @@ class ExpenseController extends Controller
         $data['auth_id'] = $user->user_id;
         $data['cat_id'] = $exp->cat_id;
         $data['amount'] = $request->amount;
-        $data['name'] = $request->name;
-        $data['phone'] = $request->phone;
-        $data['address'] = $request->address;
+        $data['receiver_id'] = $request->receiver_id;
         $voucher = ExpenseVoucher::create($data);
         if ($voucher) {
             $inv = ExpenseVoucher::where('customer_id', $user->customer_id)->latest()->first();
             $exp_name = Category::where('id', $inv->cat_id)->first();
+            $receiver = Addressbook::where('customer_id', $exp->customer_id)->where('id', $inv->receiver_id)->first();
             $customer = Customer::where('id', $user->customer_id)->first();
             $custDetails = CustomerDetail::where('customer_id', $customer->id)->first();
 
             $data = [
                 'inv' => $inv,
                 'exp_name' => $exp_name,
+                'receiver' => $receiver,
                 'customer' => $customer,
                 'custDetails' => $custDetails,
             ];

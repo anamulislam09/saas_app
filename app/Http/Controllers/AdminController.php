@@ -5,7 +5,16 @@ namespace App\Http\Controllers;
 use App\Mail\ForgotPasswordMail;
 use App\Models\Customer;
 use App\Models\CustomerDetail;
+use App\Models\Exp_detail;
+use App\Models\Exp_process;
+use App\Models\ExpenseVoucher;
 use App\Models\Flat;
+use App\Models\Income;
+use App\Models\MonthlyBlance;
+use App\Models\OpeningBalance;
+use App\Models\OthersIncome;
+use App\Models\User;
+use App\Models\YearlyBlance;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -193,4 +202,45 @@ class AdminController extends Controller
         }
     }
     /*-------------------Customers password method ends here--------------*/
+
+    /*--------------------customer data deleted method start here -----------------*/
+
+      // delete all data from customers 
+      public function CustomerAll()
+      {
+          if (Auth::guard('admin')->user()->role == 0) {
+              $data = Customer::where('role', 1)->get();
+              return view('superadmin.customers.customerAll', compact('data'));
+          } else {
+              $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+              return redirect()->back()->with($notification);
+          }
+      }
+      //end method
+  
+      public function CustomerDataDelete(Request $request)
+      {
+          // dd($request->id);
+          if (Auth::guard('admin')->user()->role == 0) {
+              Exp_detail::where('customer_id', $request->id)->delete();
+              ExpenseVoucher::where('customer_id', $request->id)->delete();
+              Exp_process::where('customer_id', $request->id)->delete();
+              YearlyBlance::where('customer_id', $request->id)->delete();
+              Income::where('customer_id', $request->id)->delete();
+              MonthlyBlance::where('customer_id', $request->id)->delete();
+              OpeningBalance::where('customer_id', $request->id)->delete();
+              OthersIncome::where('customer_id', $request->id)->delete();
+              User::where('customer_id', $request->id)->delete();
+              Flat::where('customer_id', $request->id)->delete();
+            
+             
+              return redirect()->back()->with('message', 'All data deleted successfully.');
+          } else {
+              $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+              return redirect()->back()->with($notification);
+          }
+      }
+      //end method
+
+    /*--------------------customer data deleted method ends here -----------------*/
 }

@@ -396,7 +396,7 @@
 
                                     </div>
                                 @else
-                                    <p>Data Not Found</p>
+                                <h5 class="text-center py-3">No Data Found</h5>
                             @endif
                         </div>
                     </div>

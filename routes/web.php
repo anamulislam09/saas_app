@@ -67,8 +67,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/category/update', [CategoryController::class, 'Update'])->name('category.update');
     Route::get('/category/delete/{id}', [CategoryController::class, 'Destroy'])->name('category.delete');
 
-    Route::get('/customers/all', [CategoryController::class, 'CustomerAll'])->name('customer.index');
-    Route::post('/customers/delete', [CategoryController::class, 'CustomerDataDelete'])->name('customer.data.delete');
+    Route::get('/customers/all', [AdminController::class, 'CustomerAll'])->name('customer.index');
+    Route::post('/customers/delete', [AdminController::class, 'CustomerDataDelete'])->name('customer.data.delete');
 });
 
 /*---------------- Admin route ends here ------------------*/
@@ -132,6 +132,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     /*------------------------- Expense voucher route srtart here-------------------------*/
     // Expense Management 
     Route::get('/expense/create-voucher/{id}', [PdfGeneratorController::class, 'CreateVoucher'])->name('expense.voucher.create');
+    Route::post('/expense/create-voucher/store', [PdfGeneratorController::class, 'CreateVoucherStore'])->name('expense.voucher.store');
     Route::post('/expense/generate-voucher', [PdfGeneratorController::class, 'GenerateVoucher'])->name('expense.voucher.generate');
     Route::get('/expense/generate-voucher-all', [PdfGeneratorController::class, 'GenerateVoucherAll'])->name('expense.voucher.generateall');
     // Expense Accounts 
@@ -220,7 +221,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/expenses/month', [UserExpenseController::class, 'MonthlyExpense'])->name('manager.expenses.month');
 
     // Expense Management 
-    Route::get('/expense/create-/voucher/{id}', [UserExpenseController::class, 'CreateVoucher'])->name('manager.expense.voucher.create');
+    Route::get('/expense/create-voucher/{id}', [UserExpenseController::class, 'CreateVoucher'])->name('manager.expense.voucher.create');
+    Route::post('/expense/create-voucher/store', [UserExpenseController::class, 'CreateVoucherStore'])->name('manager.expense.voucher.store');
     Route::post('/expense/generate/voucher', [UserExpenseController::class, 'GenerateVoucher'])->name('manager.expense.voucher.generate');
     Route::get('/expense/generate-voucher-all', [UserExpenseController::class, 'GenerateVoucherAll'])->name('manager.expense.voucher.generateall');
 
