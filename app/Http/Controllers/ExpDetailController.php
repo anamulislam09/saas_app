@@ -86,7 +86,7 @@ class ExpDetailController extends Controller
         $data['cat_id'] = $request->cat_id;
         $data['amount'] = $request->amount;
         $data->save();
-        return redirect()->back()->with('message', 'Expense updated successfully.');
+        return redirect()->back()->with('message', 'Expense Updated Uuccessfully.');
     }
 
     /**

@@ -47,19 +47,19 @@ class UserController extends Controller
       return redirect()->back()->with('message', 'Pls! Flat create first');
     } else {
 
-        $flat_id = $request->flat_id;
-        $user_id = $request->user_id;
-        for ($i = 0; $i < count($user_id); $i++) {
-           User::where("user_id", $user_id)->update([
-            'name' => $request->name[$i],
-            'phone' => $request->phone[$i],
-            'nid_no' => $request->nid_no[$i],
-            'address' => $request->address[$i],
-            'email' => $request->email[$i],
-            'password' => Hash::make($request->phone[$i]),
-            ]);
-            return redirect()->route('users.index')->with('message', 'User Updated Successfully');
-        }
+      $flat_id = $request->flat_id;
+      $user_id = $request->user_id;
+      for ($i = 0; $i < count($user_id); $i++) {
+        User::where("user_id", $user_id)->update([
+          'name' => $request->name[$i],
+          'phone' => $request->phone[$i],
+          'nid_no' => $request->nid_no[$i],
+          'address' => $request->address[$i],
+          'email' => $request->email[$i],
+          'password' => Hash::make($request->phone[$i]),
+        ]);
+        return redirect()->route('users.index')->with('message', 'User Updated Successfully');
+      }
 
       // }
     }
@@ -110,7 +110,7 @@ class UserController extends Controller
   {
     $id = $request->id;
     $customer_id = $request->customer_id;
-    $data = User::where('customer_id', Auth::guard('admin')->user()->id)->where('id', $id)->first();
+    $data = User::where('customer_id', $customer_id)->where('id', $id)->first();
     $data['name'] = $request->name;
     $data['email'] = $request->email;
     $data['phone'] = $request->phone;
@@ -119,7 +119,7 @@ class UserController extends Controller
     $data['password'] = Hash::make($request->phone);
     $data['status'] = $request->status ? 1 : 0;
     $data->save();
-    return redirect()->back()->with('message', 'User update successfully');
+    return redirect()->back()->with('message', 'User Update Successfully');
     //end method
   }
 

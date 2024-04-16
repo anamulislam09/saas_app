@@ -289,7 +289,7 @@
 
                     {{-- All Setup  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('flat.singlecreate') || Request::routeIs('user.create') || Request::routeIs('income.all') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('flat.singlecreate') || Request::routeIs('user.create') || Request::routeIs('expense.setup') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Setup<i class="right fas fa-angle-left"></i>
@@ -304,9 +304,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('user.create') }}" class="nav-link">
+                                <a href="{{ route('user.create') }}" class="nav-link {{ Request::routeIs('user.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Add More User</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('expense.setup') }}" class="nav-link {{ Request::routeIs('expense.setup') ? 'active' : '' }}">
+                                    <i class="far fa-dot-circle nav-icon"></i>
+                                    <p>Schedule Setup</p>
                                 </a>
                             </li>
                         </ul>

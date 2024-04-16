@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpDetailController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpProcessController;
+use App\Http\Controllers\ExpSetupController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\OthersIncomeController;
@@ -74,14 +75,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 /*---------------- Admin route ends here ------------------*/
 /*---------------- Customer route start here ------------------*/
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
-    //    Flat setup route 
+    // Flat setup route 
     Route::get('/manage-flat', [FlatController::class, 'Index'])->name('flat.index');
     Route::get('/manage-flat/create', [FlatController::class, 'Create'])->name('flat.create');
     Route::post('/manage-flat/store', [FlatController::class, 'Store'])->name('flat.store');
     Route::get('/manage-flat/single-create', [FlatController::class, 'SingleCreate'])->name('flat.singlecreate');
     Route::post('/manage-flat/single-store', [FlatController::class, 'SingleStore'])->name('flat.singlestore');
 
-    //    users route 
+    // users route 
     Route::get('/users', [UserController::class, 'Index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'Create'])->name('users.create');
     Route::post('/users/store', [UserController::class, 'Store'])->name('users.store');
@@ -93,7 +94,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/user/create', [UserController::class, 'SingleCreate'])->name('user.create');
     Route::post('/user/store', [UserController::class, 'SingleStore'])->name('user.store');
 
-    //    Expense-details route 
+    // Expense-details route 
     Route::get('/expense/create', [ExpDetailController::class, 'Create'])->name('expense.create');
     Route::post('/expense/store', [ExpDetailController::class, 'Store'])->name('expense.store');
     Route::get('/expense-details/edit/{id}', [ExpDetailController::class, 'Edit']);
@@ -102,11 +103,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
     Route::get('/expense-summary', [ExpDetailController::class, 'Index'])->name('expense-summary.index');
 
-    //    Expense route 
-    // Route::get('/expenses', [ExpenseController::class, 'Index'])->name('expenses.index');
-    // Route::get('/expense-summary/store', [ExpenseController::class, 'Store'])->name('expense-summary.store');
+    // Expense route 
+    Route::get('/expense-setup', [ExpSetupController::class, 'ExpenseSetupIndex'])->name('expense.setup');
+    Route::post('/expense-setup/create', [ExpSetupController::class, 'ExpenseSetupCreate'])->name('expense.setup.create');
 
-    //     report route start here 
+    // report route start here 
     // Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
     Route::get('/expenses/month', [ExpDetailController::class, 'MonthlyExpense'])->name('expenses.month');
 

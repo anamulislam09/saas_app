@@ -274,7 +274,6 @@ class AccountController extends Controller
                  if($manualOpeningBalance){
                      $income += ($manualOpeningBalance->flag == 1 ? $manualOpeningBalance->profit : -$manualOpeningBalance->loss);
                  }
-
                 }
                 $income += $others_income;
          } else {
