@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Auth;
 use Carbon\Carbon;
+use DateTime;
 
 class ExpSetupController extends Controller
 {
@@ -26,20 +27,15 @@ class ExpSetupController extends Controller
      */
     public function ExpenseSetupCreate(Request $request)
     {
-        // $data = $request->all();
+        $date=Carbon::today();
+
         $data['customer_id'] = Auth::guard('admin')->user()->id;
         $data['auth_id'] = Auth::guard('admin')->user()->id;
         $data['exp_id'] = $request->exp_id;
         $data['start_date'] = date('Y-m-d');
         $data['interval_days'] = $request->days;
-        // $data['end_date'] = $request->exp_id;
-        // dd($data);
+        $data['end_date'] = $date->addDays($request->days)->toDateString();
         ExpSetup::create($data);
-        // $date = Carbon::createFromFormat('Y.m.d', $request->days);
-        // $daysToAdd = 50;
-        // $date = $date->addDays($daysToAdd);
-        // dd($date);
-
         return Response::json(true, 200);
     }
 
@@ -61,17 +57,27 @@ class ExpSetupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ExpSetup $expSetup)
+    public function ExpenseSetupEdit( $id)
     {
-        //
+        $expenses = Category::get();
+        $exp = ExpSetup::where('customer_id', Auth::guard('admin')->user()->id)->where('id',$id)->first();
+        return view('admin.expense.expense-setup.edit', compact('expenses','exp'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ExpSetup $expSetup)
+    public function ExpenseSetupUpdate(Request $request)
     {
-        //
+        $id = $request->id;
+        $date=Carbon::today();
+        $exp = ExpSetup::where('customer_id', Auth::guard('admin')->user()->id)->where('id',$id)->first();
+
+        $exp['start_date'] = date('Y-m-d');
+        $exp['interval_days'] = $request->days;
+        $exp['end_date'] = $date->addDays($request->days)->toDateString();
+        $exp->save();
+        return redirect()->route('expense.setup')->with('message', 'Schedule Setup Updated successfully');
     }
 
     /**

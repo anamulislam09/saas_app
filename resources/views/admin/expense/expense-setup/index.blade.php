@@ -14,9 +14,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-
                             <div class="card-header bg-primary text-center">
-                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Expense Setup</h3>
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Schedule Setup</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -48,7 +47,8 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
-                                                        <button type="submit" id="submitBtn" class="btn btn-sm btn-primary" style="margin-top: 35px">Submit</button>
+                                                        <button type="submit" id="submitBtn" class="btn btn-sm btn-primary"
+                                                            style="margin-top: 35px">Submit</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,7 +59,8 @@
                             <div class="card-body">
                                 <div class="col-lg-12">
                                     <div class="card">
-                                        <strong class="d-flex justify-content-center mb-2"><span id="user"></span>&nbsp; Expense Setup</strong>
+                                        <strong class="d-flex justify-content-center mb-2"><span
+                                                id="user"></span>&nbsp; Expense Setup</strong>
                                         <hr>
                                         <div class="card-body table-responsive">
                                             <table id="dataTable" class="table table-bordered table-striped">
@@ -67,35 +68,53 @@
                                                     <tr style="border-top: 1px solid #ddd">
                                                         <th width="10%">SL</th>
                                                         <th width="15%">Exp Name</th>
-                                                        <th width="20%">Interval Days</th>
-                                                        <th width="20%">Start Date</th>
+                                                        <th width="15%">Interval Days</th>
+                                                        <th width="15%">Start Date</th>
                                                         <th width="15%">End Date</th>
                                                         <th width="15%">Status </th>
+                                                        <th width="15%">Action </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="item-table">
                                                     @foreach ($data as $key => $item)
-                                                    @php
-                                                        $category = App\Models\Category::where('id', $item->exp_id)->first();
-                                                    @endphp
-                                                    <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td>{{ $category->name}}</td>
-                                                        <td>{{ $item->interval_days}}</td>
-                                                        <td>{{ $item->start_date}}</td>
-                                                        <td>{{ $item->end_date}}</td>
-                                                        <td>
-                                                            <span class="badge badge-primary">Done</span>
-                                                            {{-- @if ($expense->start_date - )
-                                                                <span class="badge badge-primary"></span>
-                                                                @elseif ($expense->status == 1)
-                                                                <span class="badge badge-primary"></span>
-                                                                
-                                                            @endif --}}
-                                                        
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                                        @php
+                                                            $category = App\Models\Category::where(
+                                                                'id',
+                                                                $item->exp_id,
+                                                            )->first();
+                                                        @endphp
+                                                        <tr>
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $category->name }}</td>
+                                                            <td>{{ $item->interval_days }}</td>
+                                                            <td>{{ $item->start_date }}</td>
+                                                            <td>{{ $item->end_date }}</td>
+                                                            <td>
+                                                                @php
+                                                                    $today = Carbon\Carbon::today()->toDateString();
+                                                                    $datetime1 = new DateTime($item->start_date);
+                                                                    $datetime2 = new DateTime($today);
+                                                                    $difference = $datetime1->diff($datetime2);
+                                                                @endphp
+
+                                                                @if ($difference->days < 31)
+                                                                    <span
+                                                                        class="badge badge-primary">{{ $difference->days }}</span>
+                                                                @elseif ($difference->days > 31 && $difference->days < $item->interval_days)
+                                                                    <span
+                                                                        class="badge badge-warning">{{ $difference->days }}</span>
+                                                                @else
+                                                                    <span
+                                                                        class="badge badge-danger">{{ $difference->days }}</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ route('expense.setup.edit', $item->id) }}"
+                                                                    class="btn btn-sm btn-primary"><i
+                                                                        class="fas fa-edit"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -110,14 +129,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // var searchRequest = null;
-        // $(function() {
-        //     var minlength = 4;
-        //     $("#customer_id").change(function() {
-        //         customerLeader($(this).val());
-        //     });
-        // });
-
         $("#form").submit(function(e) {
             e.preventDefault();
             let exp_id = $("#exp_id").val();
@@ -130,43 +141,10 @@
                 data: form.serialize(),
                 dataType: 'JSON',
                 success: function(data) {
-                    customerLeader();
-                    $("#form")[0].reset(true);
-                    $("#item-table")[0].reset(true);
-                    // location. reload(true)
+                    $("#form")[0].reset();
+                    $("#item-table")[0].reset();
                 }
             });
         });
-
-        // function customerLeader() {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "{{ url('admin/expense-setup') }}/",
-        //         dataType: "json",
-        //         success: function(res) {
-        //             // $('#user').text(res.users.name + '`s');
-        //             // $('#user_id').val(res.users.user_id);
-        //             // $('#users_id').val(res.users.user_id);
-        //             // $('#amount').text(res.total_amount);
-        //             // $('#total_collection').text(res.total_collection);
-        //             // $('#total_due').text(res.total_due);
-
-        //             var tbody = '';
-        //             res.ledger.forEach((element, index) => {
-        //                 // url = '{{ url('admin/generate-invoice') }}/' + element.invoice_id;
-
-        //                 tbody += '<tr>'
-        //                 tbody += '<td>' + (index + 1) + '</td>'
-        //                 tbody += '<td>' + element.interval_days + '</td>'
-        //                 tbody += '<td>' + element.start_date + '</td>'
-        //                 tbody += '<td>' + element.end_date + '</td>'
-        //                 // tbody += '<td class="text-center"><a href="' + url + '" target ="_blank"><span class="fa fa-book"></span></a></td>'
-        //                 tbody += '</tr>'
-        //             });
-        //             $('#item-table').html(tbody);
-        //         }
-        //     });
-        // }
     </script>
-
 @endsection

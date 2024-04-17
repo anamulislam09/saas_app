@@ -110,7 +110,7 @@ class UserController extends Controller
   {
     $id = $request->id;
     $customer_id = $request->customer_id;
-    $data = User::where('customer_id', $customer_id)->where('id', $id)->first();
+    $data = User::where('customer_id', $customer_id)->where('user_id', $id)->first();
     $data['name'] = $request->name;
     $data['email'] = $request->email;
     $data['phone'] = $request->phone;
@@ -118,6 +118,7 @@ class UserController extends Controller
     $data['address'] = $request->address;
     $data['password'] = Hash::make($request->phone);
     $data['status'] = $request->status ? 1 : 0;
+    // dd($data);
     $data->save();
     return redirect()->back()->with('message', 'User Update Successfully');
     //end method

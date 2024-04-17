@@ -68,7 +68,6 @@
                 @endif
 
                 @if (Auth::guard('admin')->user()->role == 1)
-
                     {{-- flat Management ends here --}}
                     <li
                         class="nav-item {{ Request::routeIs('flat.index') || Request::routeIs('flat.create') ? 'menu-open active' : '' }}">
@@ -116,7 +115,8 @@
                                 </a>
                             </li> --}}
                             <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link {{Request::routeIs('users.index') ? 'active' : '' }} ">
+                                <a href="{{ route('users.index') }}"
+                                    class="nav-link {{ Request::routeIs('users.index') ? 'active' : '' }} ">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>All Users</p>
                                 </a>
@@ -127,7 +127,7 @@
 
                     {{-- Expense management ends here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('expense.create') || Request::routeIs('expense-summary.index')|| Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
+                        class="nav-item {{ Request::routeIs('expense.create') || Request::routeIs('expense-summary.index') || Request::routeIs('expense.voucher.create') ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
@@ -180,7 +180,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('income.collection.index')}}"
+                                <a href="{{ route('income.collection.index') }}"
                                     class="nav-link {{ Request::routeIs('income.collection.index') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Collection Voucher</p>
@@ -188,7 +188,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{route('others.income.create')}}"
+                                <a href="{{ route('others.income.create') }}"
                                     class="nav-link {{ Request::routeIs('others.income.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Others Income</p>
@@ -223,21 +223,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('account.expense.index')}}"
+                                <a href="{{ route('account.expense.index') }}"
                                     class="nav-link {{ Request::routeIs('account.expense.index') || Request::routeIs('account.expense.all') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Expense Voucher </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('income.statement')}}"
+                                <a href="{{ route('income.statement') }}"
                                     class="nav-link {{ Request::routeIs('income.statement') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Income Statement </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('account.balancesheet')}}"
+                                <a href="{{ route('account.balancesheet') }}"
                                     class="nav-link {{ Request::routeIs('account.balancesheet') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Balance Sheet </p>
@@ -264,20 +264,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('expenses.year')}}"
+                                <a href="{{ route('expenses.year') }}"
                                     class="nav-link {{ Request::routeIs('expenses.year') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Yearly Expense</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('incomes.month')}}" class="nav-link {{ Request::routeIs('incomes.month') ? 'active' : '' }}">
+                                <a href="{{ route('incomes.month') }}"
+                                    class="nav-link {{ Request::routeIs('incomes.month') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Monthly Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('incomes.year')}}"
+                                <a href="{{ route('incomes.year') }}"
                                     class="nav-link {{ Request::routeIs('incomes.year') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Yearly Income</p>
@@ -304,13 +305,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('user.create') }}" class="nav-link {{ Request::routeIs('user.create') ? 'active' : '' }}">
+                                <a href="{{ route('user.create') }}"
+                                    class="nav-link {{ Request::routeIs('user.create') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Add More User</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('expense.setup') }}" class="nav-link {{ Request::routeIs('expense.setup') ? 'active' : '' }}">
+                                <a href="{{ route('expense.setup') }}"
+                                    class="nav-link {{ Request::routeIs('expense.setup') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
                                     <p>Schedule Setup</p>
                                 </a>
