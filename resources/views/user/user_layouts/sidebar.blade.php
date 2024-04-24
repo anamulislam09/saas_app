@@ -42,14 +42,14 @@
                                 <a href="{{ route('singleUser.paid') }}"
                                     class="nav-link {{ Request::routeIs('singleUser.paid') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Total paid</p>
+                                    <p>Total Paid</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('singleUser.due') }}"
                                     class="nav-link {{ Request::routeIs('singleUser.due') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Total due</p>
+                                    <p>Total Due</p>
                                 </a>
                             </li>
 

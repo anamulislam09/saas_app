@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExpSetup extends Model
+class SetupHistory extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,5 @@ class ExpSetup extends Model
         'start_date',
         'interval_days',
         'end_date',
-        'status',
     ];
 }

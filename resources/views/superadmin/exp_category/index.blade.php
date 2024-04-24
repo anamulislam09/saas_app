@@ -10,13 +10,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-primary">
-                                <div class="row">
-                                    <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">All Expense Category</h3>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-12">
-                                        <a href="{{ route('category.create') }}" class="btn btn-outline-primary">Add new</a>
-                                    </div>
+                                <div style="float: left">
+                                    <h3 class="card-title pt-2" style="width:100%; text-align:center">All Expense Category
+                                    </h3>
+                                </div>
+                                <div style="float: right">
+                                    <a href="{{ route('category.create') }}" class="btn btn-primary" style="float:right"> Add New </a>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -50,7 +49,6 @@
         </section>
     </div>
   
-     {{-- category edit model --}}
   <!-- Modal -->
   <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -61,11 +59,8 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <div id="modal_body">
-
         </div>
-       
       </div>
     </div>
   </div>

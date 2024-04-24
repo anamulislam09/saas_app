@@ -15,7 +15,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-primary text-center">
-                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Schedule Setup</h3>
+                                <h3 class="card-title pt-2" style="width:100%; text-align:center">Expense Schedule Setup</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -25,7 +25,7 @@
                                         <form action="{{ route('expense.setup.create') }}" method="POST" id="form">
                                             @csrf
                                             <div class="row">
-                                                <div class="col-lg-5">
+                                                <div class="col-lg-3">
                                                     <div class=" form-group">
                                                         <label for="floor" class="">Select Expense</label>
                                                         <select name="exp_id" id="exp_id" class="form-control">
@@ -37,7 +37,19 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-5">
+                                                <div class="col-lg-3">
+                                                    <div class=" form-group">
+                                                        <label for="floor" class="">Select Vendor</label>
+                                                        <select name="vendor_id" id="vendor_id" class="form-control">
+                                                            <option value="" selected disabled>Select Once</option>
+                                                            @foreach ($vendor as $item)
+                                                                <option value="{{ $item->id }}">{{ $item->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="unit" class="">Interval Days :</label>
                                                         <input type="text" class="form-control" value=""
@@ -99,13 +111,13 @@
 
                                                                 @if ($difference->days < 31)
                                                                     <span
-                                                                        class="badge badge-primary">{{ $difference->days }}</span>
+                                                                        class="badge badge-primary">Good</span>
                                                                 @elseif ($difference->days > 31 && $difference->days < $item->interval_days)
                                                                     <span
-                                                                        class="badge badge-warning">{{ $difference->days }}</span>
+                                                                        class="badge badge-warning">Expired Soon</span>
                                                                 @else
                                                                     <span
-                                                                        class="badge badge-danger">{{ $difference->days }}</span>
+                                                                        class="badge badge-danger">Already Expired</span>
                                                                 @endif
                                                             </td>
                                                             <td>
