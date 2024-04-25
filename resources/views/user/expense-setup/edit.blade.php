@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('user.user_layouts.user')
 
-@section('admin_content')
+@section('user_content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
     <div class="content-wrapper">
         <!-- Main content -->
@@ -16,7 +16,7 @@
                                     </h3>
                                 </div>
                                 <div style="float: right">
-                                    <a href="{{route('expense.setup')}}" class="btn btn-primary " style="float:right">Cancel Edit</a>
+                                    <a href="{{route('manager.expense.setup')}}" class="btn btn-primary " style="float:right">Cancel Edit</a>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -24,7 +24,7 @@
                                 <!-- /.card-header -->
                                 <div class="row">
                                     <div class="col-lg-12 border p-4" style="background: #f0eeee">
-                                        <form action="{{ route('expense.setup.update') }}" method="POST" id="form">
+                                        <form action="{{ route('manager.expense.setup.update') }}" method="POST" id="form">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $exp->id }}">
                                             <div class="row">

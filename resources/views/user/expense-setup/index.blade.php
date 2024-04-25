@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('user.user_layouts.user')
 
-@section('admin_content')
+@section('user_content')
     <style>
         ul li {
             list-style: none;
@@ -22,7 +22,7 @@
                                 <!-- /.card-header -->
                                 <div class="row">
                                     <div class="col-lg-12 border p-4" style="background: #f0eeee">
-                                        <form action="{{ route('expense.setup.create') }}" method="POST" id="form">
+                                        <form action="{{ route('manager.expense.setup.create') }}" method="POST" id="form">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-lg-3">
@@ -75,12 +75,11 @@
                                                 id="user"></span>&nbsp; Expense Setup</strong>
                                         <hr>
                                         <div class="card-body table-responsive">
-                                            <table id="dataTable" class="table table-bordered table-striped item-table">
+                                            <table id="dataTable" class="table table-bordered table-striped">
                                                 <thead>
                                                     <tr style="border-top: 1px solid #ddd">
                                                         <th width="10%">SL</th>
                                                         <th width="15%">Exp Name</th>
-                                                        <th width="15%">Vendor</th>
                                                         <th width="15%">Interval Days</th>
                                                         <th width="15%">Start Date</th>
                                                         <th width="15%">End Date</th>
@@ -88,13 +87,14 @@
                                                         <th width="15%">Action </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="item-table">
                                                     @foreach ($data as $key => $item)
                                                         @php
                                                             $category = App\Models\Category::where(
                                                                 'id',
                                                                 $item->exp_id,
                                                             )->first();
+
                                                             $Vendor = App\Models\Addressbook::where(
                                                                 'customer_id',
                                                                 $item->customer_id,
@@ -116,15 +116,18 @@
                                                                 @endphp
 
                                                                 @if ($difference->days < 31)
-                                                                    <span class="badge badge-primary">Good</span>
+                                                                    <span
+                                                                        class="badge badge-primary">Good</span>
                                                                 @elseif ($difference->days > 31 && $difference->days < $item->interval_days)
-                                                                    <span class="badge badge-warning">Expired Soon</span>
+                                                                    <span
+                                                                        class="badge badge-warning">Expired Soon</span>
                                                                 @else
-                                                                    <span class="badge badge-danger">Already Expired</span>
+                                                                    <span
+                                                                        class="badge badge-danger">Already Expired</span>
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                <a href="{{ route('expense.setup.edit', $item->id) }}"
+                                                                <a href="{{ route('manager.expense.setup.edit', $item->id) }}"
                                                                     class="btn btn-sm btn-primary"><i
                                                                         class="fas fa-edit"></i></a>
                                                             </td>
@@ -157,8 +160,7 @@
                 dataType: 'JSON',
                 success: function(data) {
                     $("#form")[0].reset();
-                    $(".item-table").get(0).reset();
-                    // history.go(0);
+                    $("#item-table")[0].reset();
                 }
             });
         });

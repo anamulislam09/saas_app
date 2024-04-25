@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="{{asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
+   <!-- Select2 -->
+   <link rel="stylesheet" href="{{ asset('admin/plugins/select2/css/select2.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
 </head>
 <body>
 
@@ -82,7 +86,7 @@
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{asset('admin/dist/js/demo.js')}}"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('admin/dist/js/pages/dashboard2.js')}}"></script>
+{{-- <script src="{{asset('admin/dist/js/pages/dashboard2.js')}}"></script> --}}
 
 <!-- sweetalert -->
 <script src="{{asset('admin/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
@@ -101,6 +105,10 @@
 <script src="{{asset('admin/plugins/pdfmake/vfs_fonts.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+
+{{-- sweetalert --}}
+<script src="{{ asset('admin/plugins/select2/js/select2.full.min.js')}}"></script>
+
 <script src="{{asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <!-- Summernote -->
 <script src="{{asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
@@ -108,6 +116,7 @@
   $(function () {
     // Summernote
     $('#summernote').summernote()
+    $('.select2').select2()
   })
 </script>
 

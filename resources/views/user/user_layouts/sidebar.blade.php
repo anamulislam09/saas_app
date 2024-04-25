@@ -280,7 +280,7 @@
 
                     {{-- All Setup  start here --}}
                     <li
-                        class="nav-item {{ Request::routeIs('manager.flat.singlecreate') || Request::routeIs('manager.user.create') ? 'menu-open' : '' }}">
+                        class="nav-item {{ Request::routeIs('manager.flat.singlecreate') || Request::routeIs('manager.expense.setup') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Setup<i class="right fas fa-angle-left"></i>
@@ -294,12 +294,13 @@
                                     <p>Add More Flat</p>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('user.create') }}" class="nav-link">
+                            <li class="nav-item">
+                                <a href="{{ route('manager.expense.setup') }}"
+                                    class="nav-link {{ Request::routeIs('manager.expense.setup') ? 'active' : '' }}">
                                     <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Add More User</p>
+                                    <p>Schedule Setup</p>
                                 </a>
-                            </li> --}}
+                            </li>
                         </ul>
                     </li>
                     {{-- All Setup ends here --}}

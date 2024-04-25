@@ -16,6 +16,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\ExpenseController as UserExpenseController;
+use App\Http\Controllers\User\ExpSetupController as UserExpSetupController;
 use App\Http\Controllers\User\FlatController as UserFlatController;
 use App\Http\Controllers\User\IncomeController as UserIncomeController;
 use App\Http\Controllers\User\ReportController as UserReportController;
@@ -108,6 +109,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/expense-setup/create', [ExpSetupController::class, 'ExpenseSetupCreate'])->name('expense.setup.create');
     Route::get('/expense-setup/edit/{id}', [ExpSetupController::class, 'ExpenseSetupEdit'])->name('expense.setup.edit');
     Route::post('/expense-setup/update', [ExpSetupController::class, 'ExpenseSetupUpdate'])->name('expense.setup.update');
+
+     // setup history route 
+     Route::get('/expense-setup/history', [ExpSetupController::class, 'ExpenseSetupHistory'])->name('expense.setup.history');
+     Route::get('/expense-setup/history/all/{exp_id}', [ExpSetupController::class, 'ExpenseSetupHistoryAll']);
+ 
 
     // report route start here 
     // Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
@@ -280,6 +286,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/balance-sheet', [UserReportController::class, 'BalanceSheet'])->name('manager.blance.index');
     /*--------------- Report route ends here ------------------*/
+
+    // Expense setup route 
+    Route::get('/manager/expense-setup', [UserExpSetupController::class, 'ExpenseSetupIndex'])->name('manager.expense.setup');
+    Route::post('/manager/expense-setup/create', [UserExpSetupController::class, 'ExpenseSetupCreate'])->name('manager.expense.setup.create');
+    Route::get('/manager/expense-setup/edit/{id}', [UserExpSetupController::class, 'ExpenseSetupEdit'])->name('manager.expense.setup.edit');
+    Route::post('/manager/expense-setup/update', [UserExpSetupController::class, 'ExpenseSetupUpdate'])->name('manager.expense.setup.update');
+   
+    // setup history route 
+    Route::get('/manager/expense-setup/history', [UserExpSetupController::class, 'ExpenseSetupHistory'])->name('manager.expense.setup.history');
+    Route::post('/manager/expense-setup/history/all', [UserExpSetupController::class, 'ExpenseSetupHistoryAll']);
 
     /*---------------- Manager route ends here ------------------*/
 

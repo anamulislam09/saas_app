@@ -6,6 +6,7 @@ use App\Models\Addressbook;
 use App\Models\Category;
 use App\Models\ExpSetup;
 use App\Models\SetupHistory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Auth;
@@ -43,7 +44,6 @@ class ExpSetupController extends Controller
 
         if ($setup) {
             $history = ExpSetup::where('customer_id', Auth::guard('admin')->user()->id)->latest()->first();
-            // dd($history);
             $data['customer_id'] = $history->customer_id;
             $data['auth_id'] = $history->customer_id;
             $data['exp_id'] = $history->exp_id;
@@ -115,8 +115,19 @@ class ExpSetupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ExpSetup $expSetup)
-    {
-        //
+    public function ExpenseSetupHistory(){
+        $user = User::where('user_id', Auth::guard('admin')->user()->user_id)->first();
+        $exp = Category::get();
+        return view('admin.expense.expense-setup.setup_history', compact('user', 'exp'));
+    }
+
+    public function ExpenseSetupHistoryAll($exp_id){
+        $data['history'] = SetupHistory::where('customer_id', Auth::guard('admin')->user()->id)
+            ->where('id',$exp_id)->get();
+
+        foreach ($data['history'] as $key => $history)
+            $data['exp'][$key]->name = Category::where('id',$history->exp_id)->first()->name;
+        $data['vendor'] = Addressbook::where('customer_id', Auth::guard('admin')->user()->id)->where('id',$history->vendor_id)->first();
+        return response()->json($data, 200);
     }
 }
