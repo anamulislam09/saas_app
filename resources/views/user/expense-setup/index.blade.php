@@ -160,7 +160,7 @@
                 dataType: 'JSON',
                 success: function(data) {
                     $("#form")[0].reset();
-                    $("#item-table")[0].reset();
+                    window.location.reload();
                 }
             });
         });

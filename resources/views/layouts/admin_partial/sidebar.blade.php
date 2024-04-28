@@ -322,16 +322,15 @@
                     </li>
                     {{-- All Setup ends here --}}
 
-                    {{-- All Setup  start here --}}
+                    {{-- All Setup history  start here --}}
                     <li class="nav-item ">
                         <a href="{{route('expense.setup.history')}}" class="nav-link {{ Request::routeIs('expense.setup.history') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>Setup History
                             </p>
                         </a>
-
                     </li>
-                    {{-- All Setup ends here --}}
+                    {{-- All Setup history ends here --}}
 
                     {{-- Roles & Parmission start here --}}
                     {{-- <li class="nav-item">

@@ -6,19 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin | Login</title>
     <style>
-        .login-box {
-            width: 500px !important;
-            background: #999 !important
+        @media only screen and (max-width: 600px) {
+            .login-box {
+                width: 90% !important;
+                background: #999 !important
+            }
+
+
         }
 
-        /* .login-page {
-            background-image: url(../login.png);
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
+        @media only screen and (min-width: 600px) {
+            .login-box {
+                width: 90% !important;
+                background: #999 !important
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            .login-box {
+                width: 90% !important;
+                background: #999 !important
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            .login-box {
+                width: 80% !important;
+                background: #999 !important
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .login-box {
+                width: 50% !important;
+                background: #999 !important
+            }
+        }
+
+        .login-page {
             width: 100%;
             opacity: .8;
-        } */
+        }
     </style>
 
 
@@ -56,18 +84,20 @@
                     <div class="input-group mb-4">
                         <input type="email" class="form-control" name="email" :value="old('email')" required
                             autofocus placeholder="Email">
-                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Your Email">
+                        <div class="input-group-append" data-toggle="tooltip" data-placement="top"
+                            title="Enter Your Email">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope" ></span>
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" name="password" required
                             autocomplete="current-password"placeholder="Password">
-                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Your Password">
+                        <div class="input-group-append" data-toggle="tooltip" data-placement="top"
+                            title="Enter Your Password">
                             <div class="input-group-text">
-                                <span class="fas fa-lock" ></span>
+                                <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>

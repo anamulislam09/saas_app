@@ -305,6 +305,16 @@
                     </li>
                     {{-- All Setup ends here --}}
 
+                          {{-- All Setup history  start here --}}
+                          <li class="nav-item ">
+                            <a href="{{route('manager.expense.setup.history')}}" class="nav-link {{ Request::routeIs('manager.expense.setup.history') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Setup History
+                                </p>
+                            </a>
+                        </li>
+                        {{-- All Setup history ends here --}}
+
                     {{-- Roles & Parmission start here --}}
                     {{-- <li class="nav-item">
                         <a href="#" class="nav-link">

@@ -157,8 +157,7 @@
                 dataType: 'JSON',
                 success: function(data) {
                     $("#form")[0].reset();
-                    $(".item-table").get(0).reset();
-                    // history.go(0);
+                    window.location.reload();
                 }
             });
         });

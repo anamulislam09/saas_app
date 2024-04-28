@@ -80,24 +80,35 @@ class ExpSetupController extends Controller
         $exp['end_date'] = $date->addDays($request->days)->toDateString();
         $setup = $exp->save();
         if ($setup) {
-            $history = ExpSetup::where('customer_id', $user->customer_id)->latest()->first();
+            // $history = ExpSetup::where('customer_id', $user->customer_id)->latest()->first();
             // dd($history);
-            $data['customer_id'] = $history->customer_id;
-            $data['auth_id'] = $history->auth_id;
-            $data['exp_id'] = $history->exp_id;
-            $data['vendor_id'] = $history->vendor_id;
-            $data['start_date'] = $history->start_date;
-            $data['interval_days'] = $history->interval_days;
-            $data['end_date'] = $history->end_date;
+            $data['customer_id'] = $user->customer_id;
+            $data['auth_id'] = Auth::user()->user_id;
+            $data['exp_id'] = $request->exp_id;
+            $data['vendor_id'] = $request->vendor_id;
+            $data['start_date'] = date('Y-m-d');
+            $data['interval_days'] = $request->days;
+            $data['end_date'] = $date->addDays($request->days)->toDateString();
             SetupHistory::create($data);
         }
-
         return redirect()->route('manager.expense.setup')->with('message', 'Schedule Setup Updated successfully');
     }
 
     public function ExpenseSetupHistory(){
         $user = User::where('user_id', Auth::user()->user_id)->first();
         $exp = Category::get();
-        return view('');
+        return view('user.expense-setup.setup_history', compact('user', 'exp'));
+    }
+
+    public function ExpenseSetupHistoryAll($exp_id)
+    {
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $data['history'] = SetupHistory::where('customer_id', $user->customer_id)
+            ->where('exp_id', $exp_id)->get();
+        foreach ($data['history'] as $key => $history) {
+            $data['history'][$key]->name = Category::where('id', $history->exp_id)->first()->name;
+            $data['history'][$key]->vName = Addressbook::where('customer_id', $user->customer_id)->where('id', $history->vendor_id)->first()->name;
+        }
+        return response()->json($data, 200);
     }
 }

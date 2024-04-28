@@ -7,19 +7,47 @@
     <title>Forgot-Password</title>
 
     <style>
-        .login-box {
-            width: 500px !important;
-            background: #999 !important
+        @media only screen and (max-width: 600px) {
+            .login-box {
+                width: 90% !important;
+                background: #999 !important
+            }
+
+
         }
 
-        /* .login-page {
-            background-image: url(../login.png);
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
+        @media only screen and (min-width: 600px) {
+            .login-box {
+                width: 90% !important;
+                background: #999 !important
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            .login-box {
+                width: 90% !important;
+                background: #999 !important
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            .login-box {
+                width: 80% !important;
+                background: #999 !important
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .login-box {
+                width: 50% !important;
+                background: #999 !important
+            }
+        }
+
+        .login-page {
             width: 100%;
             opacity: .8;
-        } */
+        }
     </style>
 
     <!-- Google Font: Source Sans Pro -->
@@ -56,7 +84,8 @@
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" name="email" :value="old('email')" required
                             autofocus placeholder="Enter Email">
-                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="Enter Your Email">
+                        <div class="input-group-append" data-toggle="tooltip" data-placement="top"
+                            title="Enter Your Email">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
@@ -87,8 +116,8 @@
                         <!-- /.col -->
                     </div>
                 </form>
-<div class="row">
-    {{-- <div class="col-6 mt-4"><p>
+                <div class="row">
+                    {{-- <div class="col-6 mt-4"><p>
         @if (Route::has('password.request'))
             <a class="underline text-sm text-gray-600 hover:text-gray-900"
                 href="{{ route('password.request') }}">
@@ -96,11 +125,11 @@
             </a>
         @endif
     </p></div> --}}
-    {{-- <div class="col-6 mt-4">
+                    {{-- <div class="col-6 mt-4">
         <a href="{{route('register_form')}}" class="float-right">Create account?</a>
     </div> --}}
-</div>
-        
+                </div>
+
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->

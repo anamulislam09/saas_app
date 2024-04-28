@@ -295,7 +295,7 @@ Route::middleware('auth')->group(function () {
    
     // setup history route 
     Route::get('/manager/expense-setup/history', [UserExpSetupController::class, 'ExpenseSetupHistory'])->name('manager.expense.setup.history');
-    Route::post('/manager/expense-setup/history/all', [UserExpSetupController::class, 'ExpenseSetupHistoryAll']);
+    Route::get('/manager/expense-setup/history/all/{exp_id}', [UserExpSetupController::class, 'ExpenseSetupHistoryAll']);
 
     /*---------------- Manager route ends here ------------------*/
 

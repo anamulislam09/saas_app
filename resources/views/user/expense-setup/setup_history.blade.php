@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('user.user_layouts.user')
 
-@section('admin_content')
+@section('user_content')
     <style>
         ul li {
             list-style: none;
@@ -81,10 +81,10 @@
                 // alert(exp_id);
                 $.ajax({
                     type: "GET",
-                    url: "{{ url('admin/expense-setup/history/all') }}/" + exp_id,
+                    url: "{{ url('manager/expense-setup/history/all') }}/" + exp_id,
                     dataType: "json",
                     success: function(res) {
-                        // console.log(res);
+                        console.log(res);
                      
                         var tbody = '';
                         res.history.forEach((element, index) => {
