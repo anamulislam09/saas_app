@@ -47,7 +47,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-10 col-sm-12">
-                                            <h3 class="card-title">Balance Sheet month of <span id="result_month"></span></h3>
+                                            <h3 class="card-title">Balance Sheet For the Month of <span id="result_month"></span></h3>
                                         </div>
                                     </div>
                                 </div>

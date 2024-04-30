@@ -280,7 +280,7 @@
         @endphp
 
         <div class="body">
-            <p>Received with thanks from mr./ms <strong><span style="border-bottom: 2px dotted #000; padding:0px 70px">
+            <p>Received with thanks from Mr./Ms <strong><span style="border-bottom: 2px dotted #000; padding:0px 70px">
                         @if (isset($user->name) && !empty($user->name))
                             {{ $user->name }}@else{{ $inv->flat_name }}
                         @endif

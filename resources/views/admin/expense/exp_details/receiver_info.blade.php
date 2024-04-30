@@ -34,7 +34,7 @@
                                             <input type="hidden" name="amount" value="{{ $exp->amount }}">
                                             <div class="form-group">
                                                 <select name="receiver_id" id="" class="form-control" required>
-                                                    <option value="" selected disabled>Select one</option>
+                                                    <option value="" selected disabled>Select One</option>
                                                     @foreach ($receivers as $receiver)
                                                         <option value="{{ $receiver->id }}">{{ $receiver->name }}</option>
                                                     @endforeach
@@ -90,7 +90,7 @@
                                                         <div class="form-group">
                                                             <label for="unit" class="">Address :</label>
                                                             <input type="text" class="form-control" value=""
-                                                                name="address" placeholder="Enter Service charge">
+                                                                name="address" placeholder="Enter Address">
                                                         </div>
                                                         <div class="">
                                                             <button type="submit" class="btn btn-sm btn-primary"

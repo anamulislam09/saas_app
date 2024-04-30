@@ -19,7 +19,7 @@
                       $month = Carbon\Carbon::now()->month;
                       $year = Carbon\Carbon::now()->year;
                     @endphp
-                    <h3 class="card-title">Account for the month of 
+                    <h3 class="card-title">Account for the Month of 
                         <strong>{{ date("F",strtotime(date("Y"))) }} -{{date('Y')}}</strong>
                      
                   </strong>

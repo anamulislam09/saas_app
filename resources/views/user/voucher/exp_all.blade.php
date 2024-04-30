@@ -184,7 +184,7 @@
 
             <div class="dateTime">
                 <div class="month">
-                  <p style="font-size: 14px;">Total Expense for the month of<strong><span>
+                  <p style="font-size: 14px;">Total Expense for the Month of<strong><span>
                               @if ('1' == date('m'))
                                   January
                               @elseif ('2' == date('m'))

@@ -15,7 +15,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Ladger Account</h3>
+                                        <h3 class="card-title">Ledger Account</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
                                         <a href="{{ route('manager.ledger-posting.store') }}"
@@ -146,7 +146,7 @@
                                             </tr>
                                         @endif
                                         <tr>
-                                            <td colspan="3"><strong>Total Cost of ThisMmonth
+                                            <td colspan="3"><strong>Total Cost of this Month
                                                 </strong></td>
                                             @if (count($expense) > 0)
                                                 <td><strong>{{ $total }}</strong></td>

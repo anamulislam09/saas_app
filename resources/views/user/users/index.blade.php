@@ -28,7 +28,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>User_Id</th>
+                                        <th>User Id</th>
                                         {{-- <th width="10%">Customer_Id</th> --}}
                                         <th>User Name</th>
                                         <th>Flat Name</th>

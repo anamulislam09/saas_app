@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-10 col-sm-12">
-                                        <h3 class="card-title">Total balance end of the month</h3>
+                                        <h3 class="card-title">Total Balance End of the Month</h3>
                                     </div>
                                     <div class="col-lg-2 col-sm-12">
                                         {{-- <a href="{{ route('expense_process.store')}}" class="btn btn-sm btn-outline-primary">Expense store</a> --}}
@@ -27,8 +27,8 @@
                                             <th>SL</th>
                                             {{-- <th>Year</th>
                                             <th>Month</th> --}}
-                                            <th>Total income</th>
-                                            <th>Total expense</th>
+                                            <th>Total Income</th>
+                                            <th>Total Expense</th>
                                             <th>Amount</th>
                                             <th>Flag</th>
                                     </thead>

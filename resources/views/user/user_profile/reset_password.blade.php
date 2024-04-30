@@ -29,7 +29,7 @@
                                             @csrf
                                             <input type="hidden" name="user_id" value="{{ $data->user_id}}">
                                             <div class="mb-3 mt-3">
-                                                <label for="password" class="form-label">Change password:</label>
+                                                <label for="password" class="form-label">Change Password:</label>
                                                 <input type="text" class="form-control" value=""
                                                     name="password" id="password" placeholder="Enter New Password">
                                             </div>

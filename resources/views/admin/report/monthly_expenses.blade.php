@@ -66,7 +66,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-9">
-                                                    <strong> Total expenses month of @if ($months->month == 1)
+                                                    <strong> Total Expenses For The Month of @if ($months->month == 1)
                                                             January
                                                         @elseif ($months->month == 2)
                                                             February
@@ -156,7 +156,7 @@
                                             <div class="card-header">
                                                 <div class="row">
                                                     <div class="col-9">
-                                                        <strong> Total expenses month of @if ($month->month == 1)
+                                                        <strong> Total Expenses For The Month of @if ($month->month == 1)
                                                                 January
                                                             @elseif ($month->month == 2)
                                                                 February

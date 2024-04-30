@@ -105,7 +105,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <strong> Total expenses for the month of @if ($months->month == 1)
+                                                    <strong> Total Expenses for the Month of @if ($months->month == 1)
                                                             January
                                                         @elseif ($months->month == 2)
                                                             February
@@ -201,7 +201,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <strong> Total expenses for the month of @if ($month->month == 1)
+                                                    <strong> Total Expenses for the Month of @if ($month->month == 1)
                                                             January
                                                         @elseif ($month->month == 2)
                                                             February
@@ -305,7 +305,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit USer </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit User </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

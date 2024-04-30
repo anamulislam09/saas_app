@@ -32,12 +32,12 @@
 
                 @if (Route::current()->getName() == 'singleUser.paid')
                   <div class="col-lg-12">
-                    <h3 class="card-title" style="width: 100%; text-align:center">Total Payable from <strong>{{ Auth::user()->name }}</strong>
+                    <h3 class="card-title" style="width: 100%; text-align:center">Total Payable From <strong>{{ Auth::user()->name }}</strong>
                     </h3>
                   </div>
                 @else
                   <div class="col-lg-12">
-                    <h3 class="card-title" style="width: 100%; text-align:center">Total due from <strong>{{ Auth::user()->name }}</strong></h3>
+                    <h3 class="card-title" style="width: 100%; text-align:center">Total Due From <strong>{{ Auth::user()->name }}</strong></h3>
                   </div>
                 @endif
 

@@ -54,7 +54,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-8 col-sm-6">
-                                            <h3 class="card-title">Total Income for the month of
+                                            <h3 class="card-title">Total Income for the Month of
                                                 @if ($months->month == 1)
                                                     January
                                                 @elseif ($months->month == 2)
@@ -131,7 +131,7 @@
                                             <tfoot>
                                                 <tr>
                                                     @if (isset($opening_balance))
-                                                        <td colspan="2" class="text-right"><strong>Total Income without
+                                                        <td colspan="2" class="text-right"><strong>Total Income Without
                                                                 O/P:
                                                             </strong></td>
                                                         @if (isset($others_total))
@@ -159,7 +159,7 @@
                                                 </tr>
                                                 <tr>
                                                     @if (isset($opening_balance))
-                                                        <td colspan="2" class="text-right"><strong>Total with O/P:
+                                                        <td colspan="2" class="text-right"><strong>Total Income with O/P:
                                                             </strong>
                                                         </td>
 
@@ -199,7 +199,7 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-lg-8 col-sm-6">
-                                                <h3 class="card-title">Total Income for the month of
+                                                <h3 class="card-title">Total Income for the Month of
                                                     @if ($month->month == 1)
                                                         January
                                                     @elseif ($month->month == 2)
@@ -277,8 +277,7 @@
                                                     <tr>
                                                         @if (isset($m_opening_balance))
                                                             <td colspan="2" class="text-right"><strong>Total Income
-                                                                    without
-                                                                    O/P:
+                                                                    without O/P:
                                                                 </strong></td>
                                                             @if (isset($other_total))
                                                                 <td colspan="2" class="text-right">
@@ -306,7 +305,7 @@
                                                     </tr>
                                                     <tr>
                                                         @if (isset($m_opening_balance))
-                                                            <td colspan="2" class="text-right"><strong>Total with
+                                                            <td colspan="2" class="text-right"><strong>Total Income with
                                                                     O/P:
                                                                 </strong>
                                                             </td>

@@ -26,7 +26,7 @@
                       <div class="modal-body">
                         <div class="mb-3 mt-3 form-group">
                           <label for="user_name" class="form-label"> Customer Name:</label>
-                          <select name="id" id="" class="form-control">
+                          <select name="id" id="" class="form-control" required>
                             <option value="" selected disabled>Select Once</option>
                             @foreach ($data as $item )
                                 <option value="{{$item->id}}">{{$item->name}}</option>

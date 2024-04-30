@@ -64,7 +64,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <strong> Total collection for the month of @if ($months->month == 1)
+                                                    <strong> Total Collection for the Month of @if ($months->month == 1)
                                                             January
                                                         @elseif ($months->month == 2)
                                                             February
@@ -185,7 +185,7 @@
                                             <div class="card-header">
                                                 <div class="row">
                                                     <div class="col-10">
-                                                        <strong> Total collection for the month of @if ($month->month == 1)
+                                                        <strong> Total Collection for the Month of @if ($month->month == 1)
                                                                 January
                                                             @elseif ($month->month == 2)
                                                                 February

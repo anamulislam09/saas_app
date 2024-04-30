@@ -75,7 +75,7 @@
                     <div class="card-header">
                       <div class="row">
                         <div class="col-9">
-                          <strong> Total expenses for the year of {{ $year->year }}</strong>
+                          <strong> Total Expenses for the Year of {{ $year->year }}</strong>
                         </div>
                       </div>
                     </div>
@@ -131,7 +131,7 @@
                       <div class="card-header">
                         <div class="row">
                           <div class="col-9">
-                            <strong> Total expenses for the year of {{ $years->year }}</strong>
+                            <strong> Total Expenses for the Year of {{ $years->year }}</strong>
                           </div>
                         </div>
                       </div>

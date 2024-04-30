@@ -162,7 +162,6 @@
             <button type="submit" class="btn btn-primary">Update</button>
           </div>
           </form>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         </div>
 
       </div>

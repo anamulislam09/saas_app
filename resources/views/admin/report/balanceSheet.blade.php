@@ -22,7 +22,7 @@
                                             <th class="d-none">Month</th>
                                             <th>Expense</th>
                                             <th>Income</th>
-                                            <th>Blance</th>
+                                            <th>Balance</th>
                                             <th>Flag</th>
                                     </thead>
                                     <tbody>

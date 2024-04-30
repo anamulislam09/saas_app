@@ -122,7 +122,7 @@
                                             </tr>
                                             <tr>
                                                 @if (isset($opening_balance))
-                                                    <td colspan="2" class="text-right"><strong>Total with O/P: </strong>
+                                                    <td colspan="2" class="text-right"><strong>Total Income with O/P: </strong>
                                                     </td>
 
                                                     @if (isset($others_total) && isset($opening_balance) && !empty($data))
@@ -242,7 +242,7 @@
                                                 </tr>
                                                 <tr>
                                                     @if (isset($y_opening_balance))
-                                                        <td colspan="2" class="text-right"><strong>Total with O/P:
+                                                        <td colspan="2" class="text-right"><strong>Total Income with O/P:
                                                             </strong>
                                                         </td>
 

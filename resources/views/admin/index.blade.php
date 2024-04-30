@@ -198,7 +198,7 @@
                             <!-- small box -->
                             <div class="small-box" style="background: #FB5200">
                                 <div class="inner">
-                                    <p>Total collection</p>
+                                    <p>Total Collection</p>
 
                                     @if (isset($manualOpeningBlance))
                                         @if ($manualOpeningBlance->flag == 1)

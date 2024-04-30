@@ -1,4 +1,4 @@
-<form action="{{route('expense-details.update')}}" method="POST">
+<form action="{{route('manager.expense-details.update')}}" method="POST">
     @csrf
     <input type="hidden" name="id" value="{{ $data->id }}">
     <div class="modal-body">

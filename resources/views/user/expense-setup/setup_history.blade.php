@@ -27,7 +27,7 @@
                                             <label>Select Expense</label>
                                             <select class="form-control form-control-sm select2" name="exp_id"
                                                 id="exp_id" style="width: 100%;">
-                                                <option value="" selected disabled>Select Ecpense</option>
+                                                <option value="" selected disabled>Select Expense</option>
                                                 @foreach ($exp as $row)
                                                     <option class="pb-3" value="{{ $row->id }}">
                                                         {{ $row->name }}</option>

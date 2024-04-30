@@ -128,7 +128,7 @@
                                 @if (count($data) > 1)
                                     <div class="card">
                                         <div class="card-header">
-                                            <strong> Total collection for the month of @if ('1' == date('m'))
+                                            <strong> Total Collection for the Month of @if ('1' == date('m'))
                                                     January
                                                 @elseif ('2' == date('m'))
                                                     February

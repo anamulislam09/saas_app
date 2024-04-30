@@ -277,7 +277,7 @@
                 </div>
 
                 <div class="body">
-                    <p>Received with thanks from mr./ms <strong><span
+                    <p>Received with thanks from Mr./Ms <strong><span
                                 style="border-bottom: 2px dotted #000; padding:0px 20px">
                                 @if (isset($user->name) && !empty($user->name))
                                     {{ $user->name }}@else{{ $voucher->flat_name }}

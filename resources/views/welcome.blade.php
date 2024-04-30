@@ -13,7 +13,7 @@
         }
 
         .body {
-            background: url('house2.jpg');
+            /* background: url('house2.jpg'); */
             /* height: 100%; */
             height: 827px;
             background-position: center;

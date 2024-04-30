@@ -17,7 +17,7 @@
                             <div class="card-header bg-primary">
                                 <div class="row ">
                                     <div class="col-lg-10 col-sm-12 pt-2">
-                                        <h3 class="card-title" style="width: 100%; text-align:center">Service charge</h3>
+                                        <h3 class="card-title" style="width: 100%; text-align:center">Service Charge</h3>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-lg-8 col-sm-6">
-                                                    Service charge for the month of <strong>  @if ('1' == date('m'))
+                                                    Service Charge for the Month of <strong>  @if ('1' == date('m'))
                                                             January
                                                         @elseif ('2' == date('m'))
                                                             February

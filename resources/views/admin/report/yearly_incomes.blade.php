@@ -46,7 +46,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-lg-8 col-sm-6">
-                                            <h3 class="card-title">Total Income Year of {{ $year->year }}</h3>
+                                            <h3 class="card-title">Total Income For The Year of {{ $year->year }}</h3>
                                         </div>
                                         <div class="col-lg-4 col-sm-6">
                                             @if (isset($opening_balance) && !empty($data))
@@ -121,7 +121,7 @@
                                             </tr>
                                             <tr>
                                                 @if (isset($opening_balance))
-                                                    <td colspan="2" class="text-right"><strong>Total with O/P: </strong>
+                                                    <td colspan="2" class="text-right"><strong>Total Income with O/P: </strong>
                                                     </td>
 
                                                     @if (isset($others_total) && isset($opening_balance) && !empty($data))
@@ -212,7 +212,7 @@
                                             <tfoot>
                                                 <tr>
                                                     @if (isset($y_opening_balance))
-                                                        <td colspan="2" class="text-right"><strong>Total Income without
+                                                        <td colspan="2" class="text-right"><strong>Total Income Without
                                                                 O/P:
                                                             </strong></td>
                                                         @if (isset($other_total))
@@ -240,7 +240,7 @@
                                                 </tr>
                                                 <tr>
                                                     @if (isset($y_opening_balance))
-                                                        <td colspan="2" class="text-right"><strong>Total with O/P:
+                                                        <td colspan="2" class="text-right"><strong>Total Income with O/P:
                                                             </strong>
                                                         </td>
 
