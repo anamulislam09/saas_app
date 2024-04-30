@@ -40,13 +40,13 @@
                                                 @endphp
 
                                                 <div class="mb-3 mt-3">
-                                                    <label for="user_phone" class="form-label"> Customer phone:</label>
+                                                    <label for="user_phone" class="form-label"> Customer Phone:</label>
                                                     <input type="text" class="form-control" value="{{ $details->phone }}"
                                                         name="phone">
                                                 </div>
 
                                                 <div class="mb-3 mt-3">
-                                                    <label for="user_email" class="form-label"> Customer email:</label>
+                                                    <label for="user_email" class="form-label"> Customer Email:</label>
                                                     <input type="email" class="form-control" value="{{ $data->email }}"
                                                         name="email">
                                                 </div>
