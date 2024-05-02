@@ -315,6 +315,33 @@
                         </li>
                         {{-- All Setup history ends here --}}
 
+                         {{-- All Vendors mewnu start here --}}
+                     <li
+                     class="nav-item {{ Request::routeIs('manager.vendor.all') || Request::routeIs('manager.vendor.create') || Request::routeIs('manager.vendor.edit') ? 'menu-open' : '' }}">
+                     <a href="#" class="nav-link">
+                         <i class="nav-icon fas fa-circle"></i>
+                         <p>Vendors<i class="right fas fa-angle-left"></i>
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview ml-3">
+                         <li class="nav-item">
+                             <a href="{{ route('manager.vendor.create') }}"
+                                 class="nav-link {{ Request::routeIs('manager.vendor.create') ? 'active' : '' }}">
+                                 <i class="far fa-dot-circle nav-icon"></i>
+                                 <p>Add New Vendor</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{ route('manager.vendor.all') }}"
+                                 class="nav-link {{ Request::routeIs('manager.vendor.all') ? 'active' : '' }}">
+                                 <i class="far fa-dot-circle nav-icon"></i>
+                                 <p>All Vendors</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+                 {{-- All Vendors menu ends here --}}
+
                     {{-- Roles & Parmission start here --}}
                     {{-- <li class="nav-item">
                         <a href="#" class="nav-link">

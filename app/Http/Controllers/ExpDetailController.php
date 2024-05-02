@@ -54,8 +54,9 @@ class ExpDetailController extends Controller
 
         if (!$exp) {
             return redirect()->back()->with('message', 'Something went wrong');
+        } else {
+            return redirect()->back()->with('message', 'Expense creted successfully');
         }
-        return redirect()->back()->with('message', 'Expense creted successfully');
     }
 
     /**
@@ -98,5 +99,4 @@ class ExpDetailController extends Controller
         $data->delete();
         return redirect()->back()->with('message', 'Expense deleted successfully.');
     }
-
 }

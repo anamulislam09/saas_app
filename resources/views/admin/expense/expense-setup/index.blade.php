@@ -92,13 +92,13 @@
                                                     @foreach ($data as $key => $item)
                                                         @php
                                                             $category = App\Models\Category::where(
-                                                                'id',
-                                                                $item->exp_id,
+                                                                'id',$item->exp_id,
                                                             )->first();
                                                             $Vendor = App\Models\Addressbook::where(
                                                                 'customer_id',
                                                                 $item->customer_id,
-                                                            )->where('id', $item->vendor_id)->first();
+                                                            )->where('id', $item->vendor_id)
+                                                                ->first();
                                                         @endphp
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
@@ -107,6 +107,8 @@
                                                             <td>{{ $item->interval_days }}</td>
                                                             <td>{{ $item->start_date }}</td>
                                                             <td>{{ $item->end_date }}</td>
+                                                            
+                                                           
                                                             <td>
                                                                 @php
                                                                     $today = Carbon\Carbon::today()->toDateString();

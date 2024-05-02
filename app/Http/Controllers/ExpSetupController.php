@@ -22,7 +22,7 @@ class ExpSetupController extends Controller
     {
         $expenses = Category::get();
         $vendor = Addressbook::where('customer_id', Auth::guard('admin')->user()->id)->get();
-        $data = ExpSetup::get();
+        $data = ExpSetup::where('customer_id', Auth::guard('admin')->user()->id)->get();
         return view('admin.expense.expense-setup.index', compact('expenses', 'data', 'vendor'));
     }
 
@@ -38,8 +38,8 @@ class ExpSetupController extends Controller
         $datas['exp_id'] = $request->exp_id;
         $datas['vendor_id'] = $request->vendor_id;
         $datas['start_date'] = date('Y-m-d');
-        $datas['interval_days'] = $request->days;
-        $datas['end_date'] = $date->addDays($request->days)->toDateString();
+        $datas['interval_days'] = abs($request->days);
+        $datas['end_date'] = $date->addDays(abs($request->days))->toDateString();
         $setup = ExpSetup::create($datas);
 
         if ($setup) {
@@ -49,7 +49,7 @@ class ExpSetupController extends Controller
             $data['exp_id'] = $history->exp_id;
             $data['vendor_id'] = $history->vendor_id;
             $data['start_date'] = $history->start_date;
-            $data['interval_days'] = $history->interval_days;
+            $data['interval_days'] = abs($history->interval_days);
             $data['end_date'] = $history->end_date;
             SetupHistory::create($data);
         }
@@ -93,8 +93,8 @@ class ExpSetupController extends Controller
 
         $exp['start_date'] = date('Y-m-d');
         $exp['vendor_id'] = $request->vendor_id;
-        $exp['interval_days'] = $request->days;
-        $exp['end_date'] = $date->addDays($request->days)->toDateString();
+        $exp['interval_days'] = abs($request->days);
+        $exp['end_date'] = $date->addDays(abs($request->days))->toDateString();
         $setup = $exp->save();
         if ($setup) {
             // $history = ExpSetup::where('customer_id', Auth::guard('admin')->user()->id)->latest()->first();
@@ -104,8 +104,8 @@ class ExpSetupController extends Controller
             $data['exp_id'] = $request->exp_id;
             $data['vendor_id'] = $request->vendor_id;
             $data['start_date'] = date('Y-m-d');
-            $data['interval_days'] = $request->days;
-            $data['end_date'] = $date->addDays($request->days)->toDateString();
+            $data['interval_days'] = abs($request->days);
+            $data['end_date'] = $date->addDays(abs($request->days))->toDateString();
             SetupHistory::create($data);
         }
 

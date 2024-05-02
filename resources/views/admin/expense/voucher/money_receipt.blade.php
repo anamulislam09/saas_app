@@ -339,7 +339,6 @@
                 @endphp
                 @if ($inv->auth_id == Auth::guard('admin')->user()->id)
                     <p style=" margin-bottom:-0px; text-align:center; width:40%">
-
                         {{ $customer->name }}</p>
                 @else
                     <p style="margin-bottom:-0px; text-align:center; width:40%">

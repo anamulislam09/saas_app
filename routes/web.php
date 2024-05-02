@@ -20,7 +20,9 @@ use App\Http\Controllers\User\ExpSetupController as UserExpSetupController;
 use App\Http\Controllers\User\FlatController as UserFlatController;
 use App\Http\Controllers\User\IncomeController as UserIncomeController;
 use App\Http\Controllers\User\ReportController as UserReportController;
+use App\Http\Controllers\User\VendoreController as UserVendoreController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendoreController;
 use App\Http\Controllers\VoucherController;
 use App\Models\Category;
 use App\Models\OthersIncome;
@@ -46,6 +48,8 @@ Route::post('/admin/reset/{token}', [AdminController::class, 'PostReset']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
+
+    Route::get('/get-transaction/{date}', [AdminController::class, 'GetTransaction']); // get current transaction for Dashboard
 
     // Customer show 
     Route::get('/customers', [AdminController::class, 'Customer'])->name('customers.all');
@@ -104,16 +108,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
     Route::get('/expense-summary', [ExpDetailController::class, 'Index'])->name('expense-summary.index');
 
-    // Expense route 
+    // Expense setup route 
     Route::get('/expense-setup', [ExpSetupController::class, 'ExpenseSetupIndex'])->name('expense.setup');
     Route::post('/expense-setup/create', [ExpSetupController::class, 'ExpenseSetupCreate'])->name('expense.setup.create');
     Route::get('/expense-setup/edit/{id}', [ExpSetupController::class, 'ExpenseSetupEdit'])->name('expense.setup.edit');
     Route::post('/expense-setup/update', [ExpSetupController::class, 'ExpenseSetupUpdate'])->name('expense.setup.update');
 
-     // setup history route 
-     Route::get('/expense-setup/history', [ExpSetupController::class, 'ExpenseSetupHistory'])->name('expense.setup.history');
-     Route::get('/expense-setup/history/all/{exp_id}', [ExpSetupController::class, 'ExpenseSetupHistoryAll']);
- 
+    // setup history route 
+    Route::get('/expense-setup/history', [ExpSetupController::class, 'ExpenseSetupHistory'])->name('expense.setup.history');
+    Route::get('/expense-setup/history/all/{exp_id}', [ExpSetupController::class, 'ExpenseSetupHistoryAll']);
+
+    // Vendore route 
+    Route::get('/vendor-all', [VendoreController::class, 'VendorIndex'])->name('vendor.all');
+    Route::get('/vendor/create', [VendoreController::class, 'VendorCreate'])->name('vendor.create');
+    Route::post('/vendor/store', [VendoreController::class, 'VendorStore'])->name('vendor.store');
+    Route::get('/vendor/edit/{id}', [VendoreController::class, 'VendorEdit'])->name('vendor.edit');
+    Route::post('/vendor/update', [VendoreController::class, 'VendorUpdate'])->name('vendor.update');
+
 
     // report route start here 
     // Route::get('/expenses/all', [ExpProcessController::class, 'Index'])->name('expenses.process');
@@ -193,6 +204,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //    Report route 
     Route::get('/balance-sheet', [BlanceController::class, 'BalanceSheet'])->name('blance.index');
     // Route::get('/all-expenses', [BlanceController::class, 'Expenses'])->name('expense-all.index');
+
+    
 });
 
 /*---------------- Customer route ends here ------------------*/
@@ -264,11 +277,11 @@ Route::middleware('auth')->group(function () {
     //Balance sheet
     // Route::get('/account/balance', [AccountController::class, 'BalanceSheet'])->name('manager.account.balancesheet');
     // Route::post('/account/balance-all', [AccountController::class, 'AllBalanceSheet'])->name('manager.account.allbalancesheet');
-      //Balance sheet
-      Route::get('/account/balance', [AccountController::class, 'balanceSheetIndex'])->name('manager.account.balancesheet');
-      Route::get('/account/balance-sheet/{year}/{month}', [AccountController::class, 'balanceSheet'])->name('manager.account.allbalancesheet');
-  
-    
+    //Balance sheet
+    Route::get('/account/balance', [AccountController::class, 'balanceSheetIndex'])->name('manager.account.balancesheet');
+    Route::get('/account/balance-sheet/{year}/{month}', [AccountController::class, 'balanceSheet'])->name('manager.account.allbalancesheet');
+
+
     Route::get('/income-statement', [AccountController::class, 'Incomes'])->name('manager.income.statement');
 
     /*--------------- Accounts voucher route ends here ------------------*/
@@ -292,10 +305,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/manager/expense-setup/create', [UserExpSetupController::class, 'ExpenseSetupCreate'])->name('manager.expense.setup.create');
     Route::get('/manager/expense-setup/edit/{id}', [UserExpSetupController::class, 'ExpenseSetupEdit'])->name('manager.expense.setup.edit');
     Route::post('/manager/expense-setup/update', [UserExpSetupController::class, 'ExpenseSetupUpdate'])->name('manager.expense.setup.update');
-   
+
     // setup history route 
     Route::get('/manager/expense-setup/history', [UserExpSetupController::class, 'ExpenseSetupHistory'])->name('manager.expense.setup.history');
     Route::get('/manager/expense-setup/history/all/{exp_id}', [UserExpSetupController::class, 'ExpenseSetupHistoryAll']);
+
+
+    // Vendore route 
+    Route::get('/manager/vendor-all', [UserVendoreController::class, 'VendorIndex'])->name('manager.vendor.all');
+    Route::get('/manager/vendor/create', [UserVendoreController::class, 'VendorCreate'])->name('manager.vendor.create');
+    Route::post('/manager/vendor/store', [UserVendoreController::class, 'VendorStore'])->name('manager.vendor.store');
+    Route::get('/manager/vendor/edit/{id}', [UserVendoreController::class, 'VendorEdit'])->name('manager.vendor.edit');
+    Route::post('/manager/vendor/update', [UserVendoreController::class, 'VendorUpdate'])->name('manager.vendor.update');
 
     /*---------------- Manager route ends here ------------------*/
 

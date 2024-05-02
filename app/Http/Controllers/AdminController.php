@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\CustomerDetail;
 use App\Models\Exp_detail;
 use App\Models\Exp_process;
+use App\Models\Expense;
 use App\Models\ExpenseVoucher;
 use App\Models\Flat;
 use App\Models\Income;
@@ -241,6 +242,15 @@ class AdminController extends Controller
           }
       }
       //end method
+
+      public function GetTransaction($date)
+      {
+        $data['Flats'] = Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
+          $data['Expense'] = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+          $data['dateCollection'] = Ledger::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('collection');
+          $data['dateDue'] = Ledger::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('due');
+          return response()->json($data);
+      }
 
     /*--------------------customer data deleted method ends here -----------------*/
 }
