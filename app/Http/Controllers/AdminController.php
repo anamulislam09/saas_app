@@ -245,10 +245,30 @@ class AdminController extends Controller
 
       public function GetTransaction($date)
       {
+
+        dd('hello');
         $data['Flats'] = Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
-          $data['Expense'] = Expense::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
-          $data['dateCollection'] = Ledger::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('collection');
-          $data['dateDue'] = Ledger::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('due');
+          $data['Expense'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+          $data['income'] = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('paid');
+
+          $data['manualOpeningBlance'] = DB::table('opening_balances')->where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->first();
+          $data['others_income'] = DB::table('others_incomes')->where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+          $data['balance'] = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+
+            // $total_exp = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
+            // $total_income = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
+            // $manualOpeningBlance = DB::table('opening_balances')
+            //     ->where('customer_id', Auth::guard('admin')->user()->id)
+            //     ->first();
+            // $others_income = DB::table('others_incomes')
+            //     ->where('customer_id', Auth::guard('admin')->user()->id)
+            //     ->sum('amount');
+
+            // $balance = App\Models\MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
+            // $Customers = App\Models\Customer::where('role', 1)->count();
+            // $category = App\Models\Category::count();
+            // $superAdmin = Auth::guard('admin')->user()->id;
+
           return response()->json($data);
       }
 

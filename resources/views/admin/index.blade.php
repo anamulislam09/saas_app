@@ -80,7 +80,7 @@
                 @else
                     <div class="card " style="margin-top: -20px !important">
                         <div class="card-header row ">
-                            <h4><input value="{{ date('Y-m-d') }}" type="date" name="date" class="form-control"
+                            <h4><input value="{{ date('Y-m') }}" type="month" name="date" class="form-control"
                                     id="date"></h4>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <p>Total User</p>
+                                    <p>Total fgjhg User</p>
                                     <h3>{{ $user }}</h3>
 
                                 </div>
@@ -588,15 +588,17 @@
             $("#datewiseData").show();
             $("#todaydata").hide();
             var date = $(this).val();
+            // alert(date);
             $.ajax({
                 type: "GET",
                 url: "{{ url('admin/get-transaction') }}/" + date,
                 dataType: "json",
                 success: function(res) {
+                    console.log(res.data);
                     // $('#user').text(res.users.name + '`s');
-                        $('#dateAmount').text(res.dateAmount);
-                        $('#dateCollection').text(res.dateCollection);
-                        $('#dateDue').text(parseFloat(res.dateDue).toFixed(2));
+                        // $('#dateAmount').text(res.dateAmount);
+                        // $('#dateCollection').text(res.dateCollection);
+                        // $('#dateDue').text(parseFloat(res.dateDue).toFixed(2));
                         // console.log(res.dateAmount);
                     }
                 });
