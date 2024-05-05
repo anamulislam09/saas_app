@@ -17,9 +17,9 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->integer('customer_id');
             $table->string('auth_id');
-            $table->date('entry_datetime');
-            $table->bigInteger('profit')->nullable();
-            $table->bigInteger('loss')->nullable();
+            $table->string('entry_datetime');
+            $table->double('profit', 20, 2)->default(0);
+            $table->double('loss', 20, 2)->default(0);
             $table->integer('flag');
             $table->timestamps();
         });

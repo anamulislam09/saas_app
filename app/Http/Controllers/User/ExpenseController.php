@@ -56,7 +56,7 @@ class ExpenseController extends Controller
         $data['customer_id'] = $user->customer_id;
         $data['year'] = $year;
         $data['month'] = $month;
-        $data['amount'] = $request->amount;
+        $data['amount'] = abs($request->amount);
         $data['auth_id'] = $user->user_id;
         $exp = Exp_detail::create($data);
 
@@ -81,7 +81,7 @@ class ExpenseController extends Controller
         $id = $request->id;
         $data = Exp_detail::findOrFail($id);
         $data['cat_id'] = $request->cat_id;
-        $data['amount'] = $request->amount;
+        $data['amount'] = abs($request->amount);
         $data->save();
         return redirect()->back()->with('message', 'Expense updated successfully.');
     }
@@ -140,7 +140,7 @@ class ExpenseController extends Controller
         $data['customer_id'] = $exp->customer_id;
         $data['auth_id'] = $user->user_id;
         $data['cat_id'] = $exp->cat_id;
-        $data['amount'] = $request->amount;
+        $data['amount'] = abs($request->amount);
         $data['receiver_id'] = $request->receiver_id;
         $voucher = ExpenseVoucher::create($data);
         if ($voucher) {

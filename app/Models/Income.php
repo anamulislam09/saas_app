@@ -22,5 +22,6 @@ class Income extends Model
         'due',
         'paid',
         'status',
+        'date'
     ];
 }

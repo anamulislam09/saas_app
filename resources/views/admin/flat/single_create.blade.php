@@ -29,11 +29,11 @@
                                                 <input type="text" class="form-control" value="" name="floor_no"
                                                     id="" placeholder="Enter flat location" required>
                                             </div>
-                                            <div class=" form-group">
+                                            {{-- <div class=" form-group">
                                                 <label for="amount" class="">Service Charge</label>
                                                 <input type="text" class="form-control" value="" name="amount"
                                                     id="" placeholder="Enter service charge" required>
-                                            </div>
+                                            </div> --}}
                                             <div class="">
                                                 <button type="submit" class="btn btn-sm btn-primary"
                                                     id="generate">Submit</button>

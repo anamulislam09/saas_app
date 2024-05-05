@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exp_detail;
 use App\Models\Flat;
 use App\Models\Income;
+use App\Models\MonthlyBlance;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -154,4 +156,21 @@ class UserController extends Controller
   {
     return view('user.user_profile.index');
   }
+
+  // user dashboard date transaction start here 
+
+  public function GetTransaction($date)  
+  {
+    $Manager = User::where('user_id', Auth::user()->user_id)->first();
+
+    $data['flats'] = Flat::where('customer_id', $Manager->customer_id)->count();
+      $data['expense'] = Exp_detail::where('customer_id', $Manager->customer_id)->where('date', $date)->sum('amount');
+      $data['income'] = Income::where('customer_id', $Manager->customer_id)->where('date', $date)->sum('paid');
+      $manualOpeningBalance = DB::table('opening_balances')->where('customer_id', $Manager->customer_id)->where('entry_datetime', $date)->first();
+      $data['others_income'] = DB::table('others_incomes')->where('customer_id', $Manager->customer_id)->where('date', $date)->sum('amount');
+      $data['balance'] = MonthlyBlance::where('customer_id', $Manager->customer_id)->where('date', $date)->sum('amount');
+
+      return response()->json($data);
+  }
+    // user dashboard date transaction ends here 
 }

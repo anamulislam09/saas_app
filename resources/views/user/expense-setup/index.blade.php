@@ -105,8 +105,8 @@
                                                             <td>{{ $category->name }}</td>
                                                             <td>{{ $Vendor->name }}</td>
                                                             <td>{{ $item->interval_days }}</td>
-                                                            <td>{{ $item->start_date }}</td>
-                                                            <td>{{ $item->end_date }}</td>
+                                                            <td>{{ date_format(date_create($item->start_date), 'Y/m/d') }}</td>
+                                                            <td>{{ date_format(date_create($item->end_date), 'Y/m/d')}}</td>
                                                             <td>
                                                                 @php
                                                                     $today = Carbon\Carbon::today()->toDateString();

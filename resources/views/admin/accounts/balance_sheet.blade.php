@@ -23,15 +23,17 @@
                                                 </div> --}}
                                                 <div class="col-lg-3">
                                                     <select name="year" class="form-control" id="year" required>
-                                                        @foreach (range( date("Y"),2010) as $year)
+                                                        @foreach (range(date('Y'), 2010) as $year)
                                                             <option value="{{ $year }}">{{ $year }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <select name="month" class="form-control" id="month" required>
-                                                        @for ($i = 1 ; $i <= 12; $i++)
-                                                                <option value="{{ $i }}" @if($i==date('m')) selected @endif>{{ date("F",strtotime(date("Y")."-".$i."-01")) }}</option>
+                                                        @for ($i = 1; $i <= 12; $i++)
+                                                            <option value="{{ $i }}"
+                                                                @if ($i == date('m')) selected @endif>
+                                                                {{ date('F', strtotime(date('Y') . '-' . $i . '-01')) }}</option>
                                                         @endfor
                                                     </select>
                                                 </div>
@@ -44,15 +46,16 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-lg-10 col-sm-12">
-                                            <h3 class="card-title">Balance Sheet month of <span id="result_month"></span></h3>
-                                        </div>
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-12">
+                                        <h3 class="card-title">Balance Sheet month of <span id="result_month"></span></h3>
                                     </div>
                                 </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="table-responsive">
                                     <table id="" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
@@ -66,44 +69,44 @@
                                                 <td class="text-right" id="income"></td>
                                                 <td class="text-right" id="expense"></td>
                                                 <td class="text-right" id="balance"></td>
-                                                <td class="text-center"><span  id="flag" class="badge badge-light text-bold"></span></td>
+                                                <td class="text-center"><span id="flag"
+                                                        class="badge badge-light text-bold"></span></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<script>
-$(document).ready(function(){
-    balanceSheeat();
-    $('#year, #month').on('change', function() {
-        balanceSheeat();
-    });
-});
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            balanceSheeat();
+            $('#year, #month').on('change', function() {
+                balanceSheeat();
+            });
+        });
 
-function balanceSheeat(){
-    let year = $("#year").val();
-    let month = $("#month").val();
-    $("#result_month").html($("#month option:selected").text());
-    $.ajax({
-        url: "{{ url('admin/account/balance-sheet') }}/" + year +'/'+ month,
-        type: 'GET',
-        dataType: 'json',
-        success: function(res) {
-            $('#income').html(res.income);
-            $('#expense').html(res.expense);
-            $('#balance').html(res.balance);
-            $('#flag').html(res.flag );
+        function balanceSheeat() {
+            let year = $("#year").val();
+            let month = $("#month").val();
+            $("#result_month").html($("#month option:selected").text());
+            $.ajax({
+                url: "{{ url('admin/account/balance-sheet') }}/" + year + '/' + month,
+                type: 'GET',
+                dataType: 'json',
+                success: function(res) {
+                    $('#income').html(res.income);
+                    $('#expense').html(res.expense);
+                    $('#balance').html(res.balance);
+                    $('#flag').html(res.flag);
+                }
+            });
         }
-    });
-}
-
-
-</script>
-
+    </script>
 @endsection

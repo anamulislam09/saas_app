@@ -217,8 +217,8 @@ class IncomeController extends Controller
             if (isset($previousMonthData->due)) {
                 $amount = $previousMonthData->due + $data->amount;
 
-                $item['paid'] = $paid;
-                $item['due'] = $data->due - $paid;
+                $item['paid'] = abs($paid);
+                $item['due'] = $data->due - abs($paid);
                 $item['auth_id'] = Auth::user()->user_id;
 
                 $isExist = Income::where('customer_id', $user->customer_id)->exists();
@@ -238,8 +238,8 @@ class IncomeController extends Controller
             } else {
                 $amount = $data->amount;
 
-                $item['paid'] = $paid;
-                $item['due'] = $data->due - $paid;
+                $item['paid'] = abs($paid);
+                $item['due'] = $data->due - abs($paid);
 
                 $item['auth_id'] = Auth::user()->user_id;
 

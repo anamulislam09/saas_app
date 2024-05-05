@@ -21,22 +21,23 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            {{-- <th>Year</th>
-                                            <th>Month</th> --}}
-                                            <th>Total Income</th>
-                                            <th>Total Expense</th>
-                                            <th>Amount</th>
-                                            <th>Flag</th>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $key => $item)
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                {{-- <td>{{ $item->year }}</td>
+                                                <th>SL</th>
+                                                {{-- <th>Year</th>
+                                            <th>Month</th> --}}
+                                                <th>Total Income</th>
+                                                <th>Total Expense</th>
+                                                <th>Amount</th>
+                                                <th>Flag</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data as $key => $item)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    {{-- <td>{{ $item->year }}</td>
 
                                                 <td>
                                                     @if ($item->month == 1)
@@ -66,20 +67,21 @@
                                                     @endif
                                                 </td> --}}
 
-                                                <td>{{ $item->total_income}}</td>
-                                                <td>{{ $item->total_expense}}</td>
-                                                <td>{{ $item->amount}}</td>
-                                                <td>
-                                                    @if ($item->flag == 1)
-                                                    <span class="badge badge-success">Profit</span>
-                                                    @elseif ($item->flag == 0)
-                                                    <span class="badge badge-danger">Loss</span>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                    <td>{{ $item->total_income }}</td>
+                                                    <td>{{ $item->total_expense }}</td>
+                                                    <td>{{ $item->amount }}</td>
+                                                    <td>
+                                                        @if ($item->flag == 1)
+                                                            <span class="badge badge-success">Profit</span>
+                                                        @elseif ($item->flag == 0)
+                                                            <span class="badge badge-danger">Loss</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,4 +90,3 @@
         </section>
     </div>
 @endsection
-

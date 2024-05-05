@@ -53,6 +53,7 @@ class IncomeController extends Controller
                                 'charge' => $flats[$i]->charge,
                                 'amount' => $flats[$i]->amount,
                                 'due' => $flats[$i]->amount,
+                                'date' => date('Y-m'),
                             ]);
                         }
                         return redirect()->back()->with('message', 'Service charge added successfully');
@@ -87,6 +88,7 @@ class IncomeController extends Controller
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
                                         'due' => $flats[$i]->amount + $previousMonthData->due,
+                                        'date' => date('Y-m'),
                                     ]);
                                 }
 
@@ -111,6 +113,7 @@ class IncomeController extends Controller
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
                                         'due' => $flats[$i]->amount,
+                                        'date' => date('Y-m'),
                                     ]);
                                 }
                                 return redirect()->back()->with('message', 'Service charge added successfully');
@@ -144,6 +147,7 @@ class IncomeController extends Controller
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
                                         'due' => $flats[$i]->amount + $previousMonthData->due,
+                                        'date' => date('Y-m'),
                                     ]);
                                 }
                                 // dd($previousMonthData);
@@ -164,6 +168,7 @@ class IncomeController extends Controller
                                         'charge' => $flats[$i]->charge,
                                         'amount' => $flats[$i]->amount,
                                         'due' => $flats[$i]->amount,
+                                        'date' => date('Y-m'),
                                     ]);
                                 }
                                 return redirect()->back()->with('message', 'Service5 charge added successfully');
@@ -208,9 +213,10 @@ class IncomeController extends Controller
             if (isset($previousMonthData->due)) {
                 $amount = $previousMonthData->due + $data->amount;
 
-                $item['paid'] = $paid;
-                $item['due'] = $data->due - $paid;
+                $item['paid'] = abs($paid);
+                $item['due'] = $data->due - abs($paid);
                 $item['auth_id'] = Auth::guard('admin')->user()->id;
+                $item['date'] = date('Y-m');
 
                 $isExist = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
                 $inv_id = 1;
@@ -230,9 +236,10 @@ class IncomeController extends Controller
             } else {
                 $amount = $data->amount;
 
-                $item['paid'] = $paid;
-                $item['due'] = $data->due - $paid;
+                $item['paid'] = abs($paid);
+                $item['due'] = $data->due - abs($paid);
                 $item['auth_id'] = Auth::guard('admin')->user()->id;
+                $item['date'] = date('Y-m');
 
                 $isExist = Income::where('customer_id', Auth::guard('admin')->user()->id)->exists();
                 $inv_id = 1;

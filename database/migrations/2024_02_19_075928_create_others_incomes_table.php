@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('auth_id')->nullable();
             $table->string('invoice_id')->nullable();
             $table->string('income_info')->nullable();
-            $table->bigInteger('amount');
+            $table->double('amount', 20, 2)->default(0);
             $table->timestamps();
         });
     }

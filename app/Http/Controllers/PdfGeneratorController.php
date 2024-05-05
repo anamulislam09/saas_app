@@ -62,7 +62,7 @@ class PdfGeneratorController extends Controller
         $data['customer_id'] = $exp->customer_id;
         $data['auth_id'] = Auth::guard('admin')->user()->id;
         $data['cat_id'] = $exp->cat_id;
-        $data['amount'] = $request->amount;
+        $data['amount'] = abs($request->amount);
         $data['receiver_id'] = $request->receiver_id;
         $voucher = ExpenseVoucher::create($data);
         if ($voucher) {

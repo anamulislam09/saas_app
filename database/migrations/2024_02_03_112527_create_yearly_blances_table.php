@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('customer_id')->nullable();
             $table->string('auth_id')->nullable();
             $table->integer('year');
-            $table->bigInteger('amount');
+            $table->double('amount', 20, 2)->default(0);
             $table->tinyInteger('flag');
             $table->timestamps();
         });

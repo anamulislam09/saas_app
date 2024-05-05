@@ -40,7 +40,7 @@ class FlatController extends Controller
             $floor = $request->floor;
             $unit = $request->unit;
             $sequence = $request->sequence;
-            $amount = $request->amount;
+            $amount = abs($request->amount);
 
             $flatChar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
             //  $flats = $floor;

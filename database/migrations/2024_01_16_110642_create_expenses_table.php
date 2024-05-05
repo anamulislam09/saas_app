@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->string('month')->nullable();
             $table->integer('cat_id');
-            $table->integer('sub_total');
-            $table->integer('total');
+            $table->double('sub_total', 20, 2)->default(0);
+            $table->double('total', 20, 2)->default(0);
             $table->integer('customer_id');
             $table->string('auth_id');
             $table->timestamps();

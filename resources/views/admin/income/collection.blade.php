@@ -152,119 +152,123 @@
                                                     November
                                                 @elseif ('12' == date('m'))
                                                     December
-                                                @endif - {{date('Y')}}</strong>
+                                                @endif - {{ date('Y') }}</strong>
                                         </div>
                                     </div>
-                                    <table id="dataTable" class="table table-bordered table-striped mt-3">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 8%">SL</th>
-                                                <th style="width: 10%">Flat Name</th>
-                                                {{-- <th style="width: 15%">Charge</th> --}}
-                                                <th style="width: 15%">Current Amount</th>
-                                                <th style="width: 12%">Previous Due</th>
-                                                <th style="width: 10%">Payable</th>
-                                                <th style="width: 10%">Balance</th>
-                                                <th style="width: 10%">Paid</th>
-                                                <th style="width: 15%">Action</th>
-                                            </tr>
-                                        </thead>
+                                    <div class="table-responsive">
+                                        <table id="dataTable" class="table table-bordered table-striped mt-3">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%">SL</th>
+                                                    <th style="width: 10%">Flat Name</th>
+                                                    {{-- <th style="width: 15%">Charge</th> --}}
+                                                    <th style="width: 15%">Current Amount</th>
+                                                    <th style="width: 12%">Previous Due</th>
+                                                    <th style="width: 10%">Payable</th>
+                                                    <th style="width: 10%">Balance</th>
+                                                    <th style="width: 10%">Paid</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            @foreach ($data as $key => $item)
-                                                @php
-                                                    // $month = Carbon::now()->month;
-                                                    // $year = Carbon::now()->year;
-                                                    $previousDate = explode(
-                                                        '-',
-                                                        date('Y-m', strtotime(date('Y-m') . ' -1 month')),
-                                                    );
+                                            <tbody>
+                                                @foreach ($data as $key => $item)
+                                                    @php
+                                                        // $month = Carbon::now()->month;
+                                                        // $year = Carbon::now()->year;
+                                                        $previousDate = explode(
+                                                            '-',
+                                                            date('Y-m', strtotime(date('Y-m') . ' -1 month')),
+                                                        );
 
-                                                    $previousMonthData = App\Models\Income::where(
-                                                        'month',
-                                                        $item->month - 1,
-                                                    )->where('year', $previousDate[0])
-                                                        ->where('flat_id', $item->flat_id)
-                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->first();
+                                                        $previousMonthData = App\Models\Income::where(
+                                                            'month',
+                                                            $item->month - 1,
+                                                        )
+                                                            ->where('year', $previousDate[0])
+                                                            ->where('flat_id', $item->flat_id)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->first();
 
-                                                    // total all amount start here
-                                                    $total = App\Models\Income::where('month', $item->month)
-                                                        ->where('year', $item->year)
-                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->sum('amount');
-                                                    $previous_total = App\Models\Income::where(
-                                                        'month',
-                                                        $item->month - 1,
-                                                    )
-                                                        ->where('year', $item->year)
-                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->sum('due');
-                                                    $current_total = App\Models\Income::where('month', $item->month)
-                                                        ->where('year', $item->year)
-                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->sum('due');
-                                                    $collect_total = App\Models\Income::where('month', $item->month)
-                                                        ->where('year', $item->year)
-                                                        ->where('customer_id', Auth::guard('admin')->user()->id)
-                                                        ->sum('paid');
-                                                    // total all amount ends here
-                                                @endphp
+                                                        // total all amount start here
+                                                        $total = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->sum('amount');
+                                                        $previous_total = App\Models\Income::where(
+                                                            'month',
+                                                            $item->month - 1,
+                                                        )
+                                                            ->where('year', $item->year)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->sum('due');
+                                                        $current_total = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->sum('due');
+                                                        $collect_total = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('customer_id', Auth::guard('admin')->user()->id)
+                                                            ->sum('paid');
+                                                        // total all amount ends here
+                                                    @endphp
 
-                                                <form action="{{ route('income.collection.store') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="flat_id" value="{{ $item->flat_id }}">
-                                                    <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td>{{ $item->flat_name }}</td>
-                                                        {{-- <td>{{ $item->charge }}</td> --}}
-                                                        <td>{{ $item->amount }}</td>
-                                                        @if (!$previousMonthData)
-                                                            <td>000</td>
-                                                        @else
-                                                            <td>{{ $previousMonthData->due }}</td>
-                                                        @endif
-                                                        @if (!$previousMonthData)
+                                                    <form action="{{ route('income.collection.store') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="flat_id" value="{{ $item->flat_id }}">
+                                                        <tr>
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $item->flat_name }}</td>
+                                                            {{-- <td>{{ $item->charge }}</td> --}}
                                                             <td>{{ $item->amount }}</td>
-                                                        @else
-                                                            <td>{{ $item->amount + $previousMonthData->due }}</td>
-                                                        @endif
-                                                        <td>{{ $item->due }}</td>
-                                                        <td><input type="text"
-                                                                style="width:100%; border:none; border-radius:20px; text-align:center"
-                                                                name="paid" value="{{ old('paid') }}"
-                                                                placeholder="000" required></td>
-                                                        <td>
-                                                            @if ($item->status == 1)
-                                                                <span class="badge badge-success">Paid</span>
-                                                                <a
-                                                                    href="{{ route('income.voucher.generate', $item->id) }}"><span
-                                                                        class="badge badge-info">Voucher</span></a>
-                                                            @elseif($item->status == 2)
-                                                                <span class="badge badge-warning">Due</span>
-                                                                <a
-                                                                    href="{{ route('income.voucher.generate', $item->id) }}"><span
-                                                                        class="badge badge-info">Voucher</span></a>
+                                                            @if (!$previousMonthData)
+                                                                <td>000</td>
                                                             @else
-                                                                <input type="submit" class="btn btn-sm btn-primary"
-                                                                    value="Collect">
+                                                                <td>{{ $previousMonthData->due }}</td>
                                                             @endif
-                                                        </td>
-                                                    </tr>
-                                                </form>
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-                                                <td class="text-right"><strong>{{ $total }}</strong></td>
-                                                <td class="text-right"><strong>{{ $previous_total }}</strong></td>
-                                                <td class="text-right"><strong>{{ $total + $previous_total }}</strong></td>
-                                                <td class="text-right"><strong>{{ $current_total }}</strong></td>
-                                                <td class="text-right"><strong>{{ $collect_total }}</strong></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                                            @if (!$previousMonthData)
+                                                                <td>{{ $item->amount }}</td>
+                                                            @else
+                                                                <td>{{ $item->amount + $previousMonthData->due }}</td>
+                                                            @endif
+                                                            <td>{{ $item->due }}</td>
+                                                            <td><input type="text"
+                                                                    style="width:100%; border:none; border-radius:20px; text-align:center"
+                                                                    name="paid" value="{{ old('paid') }}"
+                                                                    placeholder="000" required></td>
+                                                            <td>
+                                                                @if ($item->status == 1)
+                                                                    <span class="badge badge-success">Paid</span>
+                                                                    <a
+                                                                        href="{{ route('income.voucher.generate', $item->id) }}"><span
+                                                                            class="badge badge-info">Voucher</span></a>
+                                                                @elseif($item->status == 2)
+                                                                    <span class="badge badge-warning">Due</span>
+                                                                    <a
+                                                                        href="{{ route('income.voucher.generate', $item->id) }}"><span
+                                                                            class="badge badge-info">Voucher</span></a>
+                                                                @else
+                                                                    <input type="submit" class="btn btn-sm btn-primary"
+                                                                        value="Collect">
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    </form>
+                                                @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                                                    <td class="text-right"><strong>{{ $total }}</strong></td>
+                                                    <td class="text-right"><strong>{{ $previous_total }}</strong></td>
+                                                    <td class="text-right"><strong>{{ $total + $previous_total }}</strong>
+                                                    </td>
+                                                    <td class="text-right"><strong>{{ $current_total }}</strong></td>
+                                                    <td class="text-right"><strong>{{ $collect_total }}</strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 @else
                                     <h5 class="text-center py-3">No Data Found</h5>
                                 @endif

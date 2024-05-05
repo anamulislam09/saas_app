@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->string('auth_id');
             $table->integer('cat_id')->nullable();
-            $table->bigInteger('amount')->nullable();
+            $table->double('amount', 20, 2)->default(0);
             $table->string('receiver_id')->nullable();
             $table->timestamps();
         });

@@ -122,7 +122,8 @@
                                         <div class="card-header">
                                             <div class="row">
                                                 <div class="col-lg-8 col-sm-6">
-                                                    Service Charge for the Month of <strong>  @if ('1' == date('m'))
+                                                    Service Charge for the Month of <strong>
+                                                        @if ('1' == date('m'))
                                                             January
                                                         @elseif ('2' == date('m'))
                                                             February
@@ -146,7 +147,8 @@
                                                             November
                                                         @elseif ('12' == date('m'))
                                                             December
-                                                        @endif - {{date('Y')}}</strong>
+                                                        @endif - {{ date('Y') }}
+                                                    </strong>
                                                 </div>
                                                 <div class="col-lg-8 col-sm-6">
                                                     @if (isset($opening_balance) && !empty($data))
@@ -163,44 +165,45 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <table id="" class="table table-bordered table-striped mt-3">
-
-                                        <thead>
-                                            <tr>
-                                                <th> SL</th>
-                                                <th>Flat Name</th>
-                                                {{-- <th>Charge</th> --}}
-                                                <th class="text-right">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- @if (isset($data) && !empty($data)) --}}
-                                            @foreach ($data as $key => $item)
-                                                @php
-                                                    $user = App\Models\User::where(
-                                                        'user_id',
-                                                        Auth::user()->user_id,
-                                                    )->first();
-                                                    $total = App\Models\Income::where('month', $item->month)
-                                                        ->where('year', $item->year)
-                                                        ->where('customer_id', $user->customer_id)
-                                                        ->sum('amount');
-                                                @endphp
+                                    <div class="table-responsive">
+                                        <table id="" class="table table-bordered table-striped mt-3">
+                                            <thead>
                                                 <tr>
-                                                    <td class="text-center">{{ $key + 1 }}</td>
-                                                    <td>{{ $item->flat_name }}</td>
-                                                    {{-- <td>{{ $item->charge }}</td> --}}
-                                                    <td class="text-right">{{ $item->amount }}</td>
+                                                    <th> SL</th>
+                                                    <th>Flat Name</th>
+                                                    {{-- <th>Charge</th> --}}
+                                                    <th class="text-right">Amount</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2" class="text-right"> <strong>Total :</strong></td>
-                                                <td class="text-right"><strong>{{ $total }}</strong></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {{-- @if (isset($data) && !empty($data)) --}}
+                                                @foreach ($data as $key => $item)
+                                                    @php
+                                                        $user = App\Models\User::where(
+                                                            'user_id',
+                                                            Auth::user()->user_id,
+                                                        )->first();
+                                                        $total = App\Models\Income::where('month', $item->month)
+                                                            ->where('year', $item->year)
+                                                            ->where('customer_id', $user->customer_id)
+                                                            ->sum('amount');
+                                                    @endphp
+                                                    <tr>
+                                                        <td class="text-center">{{ $key + 1 }}</td>
+                                                        <td>{{ $item->flat_name }}</td>
+                                                        {{-- <td>{{ $item->charge }}</td> --}}
+                                                        <td class="text-right">{{ $item->amount }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2" class="text-right"> <strong>Total :</strong></td>
+                                                    <td class="text-right"><strong>{{ $total }}</strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             @else
                                 <h5 class="text-center py-3">No Data Found</h5>
@@ -212,5 +215,5 @@
         </section>
     </div>
 
-    <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script> --}}
 @endsection

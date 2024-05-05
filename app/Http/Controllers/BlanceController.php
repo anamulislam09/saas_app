@@ -32,8 +32,8 @@ class BlanceController extends Controller
         } else {
             $month = Carbon::now()->month;
             $year = Carbon::now()->year;
-            $profit = $request->profit;
-            $loss = $request->loss;
+            $profit = abs($request->profit);
+            $loss = abs($request->loss);
 
         //    if($request->has('profit') && $request->has('loss')){
         //     return redirect()->back()->with('message', 'Something went wrong.');
@@ -45,7 +45,7 @@ class BlanceController extends Controller
             $data['month'] = $month;
             $data['profit'] = $profit;
             $data['loss'] = $loss;
-            $data['entry_datetime'] = date('Y-m-d H:i:s');
+            $data['entry_datetime'] = date('Y-m');
 
             if ($request->profit > 0) {
                 $data['flag'] = 1;

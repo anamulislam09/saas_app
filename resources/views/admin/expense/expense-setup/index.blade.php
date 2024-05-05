@@ -92,12 +92,14 @@
                                                     @foreach ($data as $key => $item)
                                                         @php
                                                             $category = App\Models\Category::where(
-                                                                'id',$item->exp_id,
+                                                                'id',
+                                                                $item->exp_id,
                                                             )->first();
                                                             $Vendor = App\Models\Addressbook::where(
                                                                 'customer_id',
                                                                 $item->customer_id,
-                                                            )->where('id', $item->vendor_id)
+                                                            )
+                                                                ->where('id', $item->vendor_id)
                                                                 ->first();
                                                         @endphp
                                                         <tr>
@@ -105,10 +107,10 @@
                                                             <td>{{ $category->name }}</td>
                                                             <td>{{ $Vendor->name }}</td>
                                                             <td>{{ $item->interval_days }}</td>
-                                                            <td>{{ $item->start_date }}</td>
-                                                            <td>{{ $item->end_date }}</td>
-                                                            
-                                                           
+                                                            <td>{{ date_format(date_create($item->start_date), 'Y/m/d ') }} </td>
+                                                            <td>{{ date_format(date_create($item->end_date), 'Y/m/d ') }}</td>
+
+
                                                             <td>
                                                                 @php
                                                                     $today = Carbon\Carbon::today()->toDateString();
@@ -116,7 +118,6 @@
                                                                     $datetime2 = new DateTime($today);
                                                                     $difference = $datetime1->diff($datetime2);
                                                                 @endphp
-
                                                                 @if ($difference->days < 31)
                                                                     <span class="badge badge-primary">Good</span>
                                                                 @elseif ($difference->days > 31 && $difference->days < $item->interval_days)

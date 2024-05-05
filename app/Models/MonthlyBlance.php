@@ -17,5 +17,6 @@ class MonthlyBlance extends Model
         'total_expense',
         'amount',
         'flag',
+        'date'
     ];
 }

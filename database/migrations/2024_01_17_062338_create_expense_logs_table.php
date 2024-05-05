@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->integer('cat_id');
             $table->integer('exp_id');
-            $table->integer('amount');
+            $table->double('amount', 20, 2)->default(0);
             $table->string('auth_id');
             $table->string('updated_date')->nullable();
             $table->timestamps();

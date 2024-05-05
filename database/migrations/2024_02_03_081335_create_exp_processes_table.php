@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('year');
             $table->string('month');
-            $table->bigInteger('total');
+            $table->double('total', 20, 2)->default(0);
             $table->integer('customer_id');
             $table->string('auth_id');
             $table->timestamps();

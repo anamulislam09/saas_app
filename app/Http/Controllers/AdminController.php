@@ -206,71 +206,54 @@ class AdminController extends Controller
 
     /*--------------------customer data deleted method start here -----------------*/
 
-      // delete all data from customers 
-      public function CustomerAll()
-      {
-          if (Auth::guard('admin')->user()->role == 0) {
-              $data = Customer::where('role', 1)->get();
-              return view('superadmin.customers.customerAll', compact('data'));
-          } else {
-              $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
-              return redirect()->back()->with($notification);
-          }
-      }
-      //end method
-  
-      public function CustomerDataDelete(Request $request)
-      {
-          // dd($request->id);
-          if (Auth::guard('admin')->user()->role == 0) {
-              Exp_detail::where('customer_id', $request->id)->delete();
-              ExpenseVoucher::where('customer_id', $request->id)->delete();
-              Exp_process::where('customer_id', $request->id)->delete();
-              YearlyBlance::where('customer_id', $request->id)->delete();
-              Income::where('customer_id', $request->id)->delete();
-              MonthlyBlance::where('customer_id', $request->id)->delete();
-              OpeningBalance::where('customer_id', $request->id)->delete();
-              OthersIncome::where('customer_id', $request->id)->delete();
-              User::where('customer_id', $request->id)->delete();
-              Flat::where('customer_id', $request->id)->delete();
-            
-             
-              return redirect()->back()->with('message', 'All data deleted successfully.');
-          } else {
-              $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
-              return redirect()->back()->with($notification);
-          }
-      }
-      //end method
+    // delete all data from customers 
+    public function CustomerAll()
+    {
+        if (Auth::guard('admin')->user()->role == 0) {
+            $data = Customer::where('role', 1)->get();
+            return view('superadmin.customers.customerAll', compact('data'));
+        } else {
+            $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+            return redirect()->back()->with($notification);
+        }
+    }
+    //end method
 
-      public function GetTransaction($date)
-      {
+    public function CustomerDataDelete(Request $request)
+    {
+        // dd($request->id);
+        if (Auth::guard('admin')->user()->role == 0) {
+            Exp_detail::where('customer_id', $request->id)->delete();
+            ExpenseVoucher::where('customer_id', $request->id)->delete();
+            Exp_process::where('customer_id', $request->id)->delete();
+            YearlyBlance::where('customer_id', $request->id)->delete();
+            Income::where('customer_id', $request->id)->delete();
+            MonthlyBlance::where('customer_id', $request->id)->delete();
+            OpeningBalance::where('customer_id', $request->id)->delete();
+            OthersIncome::where('customer_id', $request->id)->delete();
+            User::where('customer_id', $request->id)->delete();
+            Flat::where('customer_id', $request->id)->delete();
 
-        dd('hello');
-        $data['Flats'] = Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
-          $data['Expense'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
-          $data['income'] = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('paid');
 
-          $data['manualOpeningBlance'] = DB::table('opening_balances')->where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->first();
-          $data['others_income'] = DB::table('others_incomes')->where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
-          $data['balance'] = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
-
-            // $total_exp = App\Models\Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
-            // $total_income = App\Models\Income::where('customer_id', Auth::guard('admin')->user()->id)->sum('paid');
-            // $manualOpeningBlance = DB::table('opening_balances')
-            //     ->where('customer_id', Auth::guard('admin')->user()->id)
-            //     ->first();
-            // $others_income = DB::table('others_incomes')
-            //     ->where('customer_id', Auth::guard('admin')->user()->id)
-            //     ->sum('amount');
-
-            // $balance = App\Models\MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->sum('amount');
-            // $Customers = App\Models\Customer::where('role', 1)->count();
-            // $category = App\Models\Category::count();
-            // $superAdmin = Auth::guard('admin')->user()->id;
-
-          return response()->json($data);
-      }
-
+            return redirect()->back()->with('message', 'All data deleted successfully.');
+        } else {
+            $notification = array('message' => 'You have no permission.', 'alert_type' => 'warning');
+            return redirect()->back()->with($notification);
+        }
+    }
+    //end method
     /*--------------------customer data deleted method ends here -----------------*/
+
+    public function GetTransaction($date)
+    {
+
+        $data['flats'] = Flat::where('customer_id', Auth::guard('admin')->user()->id)->count();
+        $data['expense'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+        $data['income'] = Income::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('paid');
+        $manualOpeningBalance = DB::table('opening_balances')->where('customer_id', Auth::guard('admin')->user()->id)->where('entry_datetime', $date)->first();
+        $data['others_income'] = DB::table('others_incomes')->where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+        $data['balance'] = MonthlyBlance::where('customer_id', Auth::guard('admin')->user()->id)->where('date', $date)->sum('amount');
+
+        return response()->json($data);
+    }
 }

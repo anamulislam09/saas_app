@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('auth_id')->nullable();
             $table->integer('year');
             $table->string('month');
-            $table->bigInteger('total_income');
-            $table->bigInteger('total_expense');
-            $table->bigInteger('amount');
+            $table->double('total_income', 20, 2)->default(0);
+            $table->double('total_expense', 20, 2)->default(0);
+            $table->double('amount', 20, 2)->default(0);
             $table->tinyInteger('flag');
+            $table->string('date');
             $table->timestamps();
         });
     }

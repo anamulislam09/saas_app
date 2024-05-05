@@ -15,6 +15,7 @@ class Exp_detail extends Model
         'month',
         'amount',
         'customer_id',
-        'auth_id',
+        'date',
+        'auth_id'
     ];
 }

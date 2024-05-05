@@ -21,10 +21,11 @@ return new class extends Migration
             $table->string('flat_id')->nullable();
             $table->string('flat_name')->nullable();
             $table->string('charge')->nullable();
-            $table->bigInteger('amount')->nullable();
-            $table->bigInteger('due')->nullable();
-            $table->bigInteger('paid')->nullable();
+            $table->double('amount', 20, 2)->default(0);
+            $table->double('due', 20, 2)->default(0);
+            $table->double('paid', 20, 2)->default(0);
             $table->bigInteger('status')->default(0);
+            $table->string('date');
             $table->timestamps();
         });
     }

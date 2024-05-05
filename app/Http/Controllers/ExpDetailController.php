@@ -47,7 +47,8 @@ class ExpDetailController extends Controller
         $data['customer_id'] = Auth::guard('admin')->user()->id;
         $data['year'] = $year;
         $data['month'] = $month;
-        $data['amount'] = $request->amount;
+        $data['amount'] = abs($request->amount);
+        $data['date'] = date('Y-m');
         $data['auth_id'] = Auth::guard('admin')->user()->id;
         // dd($data);
         $exp = Exp_detail::create($data);
@@ -85,7 +86,7 @@ class ExpDetailController extends Controller
         $id = $request->id;
         $data = Exp_detail::findOrFail($id);
         $data['cat_id'] = $request->cat_id;
-        $data['amount'] = $request->amount;
+        $data['amount'] = abs($request->amount);
         $data->save();
         return redirect()->back()->with('message', 'Expense Updated Uuccessfully.');
     }

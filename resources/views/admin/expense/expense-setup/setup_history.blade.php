@@ -58,7 +58,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="item-table">
-                                                   
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -76,7 +76,7 @@
         // var searchRequest = null;
         $(function() {
             // $("#exp_id").change(function() {
-                $('#exp_id').on('change', function() {
+            $('#exp_id').on('change', function() {
                 let exp_id = $("#exp_id").val();
                 // alert(exp_id);
                 $.ajax({
@@ -85,17 +85,28 @@
                     dataType: "json",
                     success: function(res) {
                         // console.log(res);
-                     
+
                         var tbody = '';
                         res.history.forEach((element, index) => {
+
+                            const s_date = new Date(element.start_date)
+                            var start_date = (s_date.getMonth() +
+                                    1) + "/" + s_date.getDate() + "/" + s_date
+                                .getFullYear();
+
+                            const e_date = new Date(element.end_date)
+                            var end_date = (e_date.getMonth() +
+                                    1) + "/" + e_date.getDate() + "/" + e_date
+                                .getFullYear();
                             tbody += '<tr>'
                             tbody += '<td>' + (index + 1) + '</td>'
                             tbody += '<td>' + element.name + '</td>'
                             tbody += '<td>' + element.vName + '</td>'
                             tbody += '<td>' + element.interval_days + '</td>'
-                            tbody += '<td>' + element.start_date + '</td>'
-                            tbody += '<td>' + element.end_date + '</td>'
+                            tbody += '<td>' + start_date + '</td>'
+                            tbody += '<td>' + end_date + '</td>'
                             tbody += '</tr>'
+
                         });
                         $('#item-table').html(tbody);
                         // if(!res.history.length){

@@ -36,11 +36,11 @@ class OthersIncomeController extends Controller
         
         $item['month'] = $month;
         $item['year'] = $year;
-        $item['date'] = date('d');
+        $item['date'] = date('Y-m');
         $item['auth_id'] = Auth::guard('admin')->user()->id;
         $item['customer_id'] = Auth::guard('admin')->user()->id;
         $item['income_info'] = $request->income_info;
-        $item['amount'] = $request->amount;
+        $item['amount'] = abs($request->amount);
         OthersIncome::create($item);
 
         return redirect()->back()->with('message', 'Successfully Inserted');

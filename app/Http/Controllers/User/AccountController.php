@@ -90,6 +90,7 @@ class AccountController extends Controller
                     $data['amount'] = $balance;
                     $data['customer_id'] = $month_exp->customer_id;
                     $data['auth_id'] = $month_exp->auth_id;
+                    $data['date'] = date('Y-m');
                     if ($balance >= 0) {
                         $data['flag'] = 1;
                     } else {
@@ -113,6 +114,7 @@ class AccountController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
@@ -135,6 +137,7 @@ class AccountController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
@@ -159,6 +162,7 @@ class AccountController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
@@ -181,6 +185,7 @@ class AccountController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {

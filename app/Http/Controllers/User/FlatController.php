@@ -58,7 +58,7 @@ class FlatController extends Controller
                     'amount' => $latest_flat->amount,
                 ]);
                 if ($user) {
-                    return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
+                    return redirect()->route('manager.flat.index')->with('message', 'Flat creted successfully');
                 } else {
                     return redirect()->back()->with('message', 'Something Went Wrong');
                 }

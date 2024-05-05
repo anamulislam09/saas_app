@@ -38,106 +38,113 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>SL </th>
-                                            <th class="d-none">Year</th>
-                                            <th class="d-none">Month</th>
-                                            <th>Flat Name</th>
-                                            <th>Charge</th>
-                                            <th>Amount</th>
-                                            <th>Collection</th>
-                                            <th>Payble</th>
-                                            <th>Created By</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $key => $item)
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->exists();
-                                                $userName = DB::table('users')
-                                                    ->where('user_id', $item->auth_id)
-                                                    ->first();
-
-                                                $customer = DB::table('customers')
-                                                    ->where('id', $item->customer_id)
-                                                    ->exists();
-
-                                                $data = DB::table('categories')
-                                                    ->where('id', $item->cat_id)
-                                                    ->first();
-
-                                                    $id = App\Models\User::where('user_id', Auth::user()->user_id)->first();
-                                                $total = App\Models\Income::where('customer_id', $id->customer_id)
-                                                    ->sum('amount');
-                                                $collection = App\Models\Income::where('customer_id', $id->customer_id)
-                                                    ->sum('paid');
-                                            @endphp
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td class="d-none">{{ $item->year }}</td>
-                                                <td class="d-none">
-                                                    @if ($item->month == 1)
-                                                        January
-                                                    @elseif ($item->month == 2)
-                                                        February
-                                                    @elseif ($item->month == 3)
-                                                        March
-                                                    @elseif ($item->month == 4)
-                                                        April
-                                                    @elseif ($item->month == 5)
-                                                        May
-                                                    @elseif ($item->month == 6)
-                                                        June
-                                                    @elseif ($item->month == 7)
-                                                        July
-                                                    @elseif ($item->month == 8)
-                                                        August
-                                                    @elseif ($item->month == 9)
-                                                        September
-                                                    @elseif ($item->month == 10)
-                                                        October
-                                                    @elseif ($item->month == 11)
-                                                        November
-                                                    @elseif ($item->month == 12)
-                                                        December
-                                                    @endif
-                                                </td>
-                                                <td>{{ $item->flat_name }}</td>
-                                                <td>{{ $item->charge }}</td>
-                                                <td>{{ $item->amount }}</td>
-                                                <td>{{ $item->paid }}</td>
-                                                <td>{{ $item->due }}</td>
-                                                @if ($user)
-                                                    <td>{{ $userName->name }}</td>
-                                                @elseif ($customer)
-                                                    <td><span class="badge badge-success">Admin</span></td>
-                                                @endif
-                                              
+                                                <th>SL </th>
+                                                <th class="d-none">Year</th>
+                                                <th class="d-none">Month</th>
+                                                <th>Flat Name</th>
+                                                <th>Charge</th>
+                                                <th>Amount</th>
+                                                <th>Collection</th>
+                                                <th>Payble</th>
+                                                <th>Created By</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                    @if (Isset($data))
-                                    @else
-                                    <tr>
-                                        <td colspan="3" class="text-right"> <strong>Total :</strong></td>
-                                        <td class="text-right"><strong>{{ $total }}</strong></td>
-                                        @if (Isset($collection))
-                                        <td class="text-right"><strong>{{ $collection }}</strong></td>
-                                        <td class="text-right"><strong>{{ $total - $collection }}</strong></td>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data as $key => $item)
+                                                @php
+                                                    $user = DB::table('users')
+                                                        ->where('user_id', $item->auth_id)
+                                                        ->exists();
+                                                    $userName = DB::table('users')
+                                                        ->where('user_id', $item->auth_id)
+                                                        ->first();
+
+                                                    $customer = DB::table('customers')
+                                                        ->where('id', $item->customer_id)
+                                                        ->exists();
+
+                                                    $data = DB::table('categories')
+                                                        ->where('id', $item->cat_id)
+                                                        ->first();
+
+                                                    $id = App\Models\User::where(
+                                                        'user_id',
+                                                        Auth::user()->user_id,
+                                                    )->first();
+                                                    $total = App\Models\Income::where(
+                                                        'customer_id',
+                                                        $id->customer_id,
+                                                    )->sum('amount');
+                                                    $collection = App\Models\Income::where(
+                                                        'customer_id',
+                                                        $id->customer_id,
+                                                    )->sum('paid');
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td class="d-none">{{ $item->year }}</td>
+                                                    <td class="d-none">
+                                                        @if ($item->month == 1)
+                                                            January
+                                                        @elseif ($item->month == 2)
+                                                            February
+                                                        @elseif ($item->month == 3)
+                                                            March
+                                                        @elseif ($item->month == 4)
+                                                            April
+                                                        @elseif ($item->month == 5)
+                                                            May
+                                                        @elseif ($item->month == 6)
+                                                            June
+                                                        @elseif ($item->month == 7)
+                                                            July
+                                                        @elseif ($item->month == 8)
+                                                            August
+                                                        @elseif ($item->month == 9)
+                                                            September
+                                                        @elseif ($item->month == 10)
+                                                            October
+                                                        @elseif ($item->month == 11)
+                                                            November
+                                                        @elseif ($item->month == 12)
+                                                            December
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $item->flat_name }}</td>
+                                                    <td>{{ $item->charge }}</td>
+                                                    <td>{{ $item->amount }}</td>
+                                                    <td>{{ $item->paid }}</td>
+                                                    <td>{{ $item->due }}</td>
+                                                    @if ($user)
+                                                        <td>{{ $userName->name }}</td>
+                                                    @elseif ($customer)
+                                                        <td><span class="badge badge-success">Admin</span></td>
+                                                    @endif
+
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        @if (isset($data))
                                         @else
-                                        <td class="text-right"><strong>00</strong></td>
-                                        <td class="text-right"><strong>{{ $total }}</strong></td>
+                                            <tr>
+                                                <td colspan="3" class="text-right"> <strong>Total :</strong></td>
+                                                <td class="text-right"><strong>{{ $total }}</strong></td>
+                                                @if (isset($collection))
+                                                    <td class="text-right"><strong>{{ $collection }}</strong></td>
+                                                    <td class="text-right"><strong>{{ $total - $collection }}</strong></td>
+                                                @else
+                                                    <td class="text-right"><strong>00</strong></td>
+                                                    <td class="text-right"><strong>{{ $total }}</strong></td>
+                                                @endif
+                                                <td></td>
+                                            </tr>
                                         @endif
-                                        <td></td>
-                                    </tr>
-                                    
-                                    @endif
-                                </table>
-                               
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

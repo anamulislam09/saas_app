@@ -14,12 +14,12 @@ class VendoreController extends Controller
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
         $vendors = Addressbook::where('customer_id', $user->customer_id)->get();
-        return view('User.vendors.index', compact('vendors'));
+        return view('user.vendors.index', compact('vendors'));
     }
 
     public function VendorCreate()
     {
-        return view('User.vendors.create');
+        return view('user.vendors.create');
     }
 
     public function VendorStore(Request $request)
@@ -40,7 +40,7 @@ class VendoreController extends Controller
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
         $data = Addressbook::where('customer_id', $user->customer_id)->where('id', $id)->first();
-        return view('User.vendors.edit', compact('data'));
+        return view('user.vendors.edit', compact('data'));
     }
 
     public function VendorUpdate(Request $request)

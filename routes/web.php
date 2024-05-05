@@ -48,7 +48,6 @@ Route::post('/admin/reset/{token}', [AdminController::class, 'PostReset']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
-
     Route::get('/get-transaction/{date}', [AdminController::class, 'GetTransaction']); // get current transaction for Dashboard
 
     // Customer show 
@@ -216,6 +215,7 @@ Route::post('/user-login/owner', [UserController::class, 'Login'])->name('user.l
 
 Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [UserController::class, 'Profile'])->name('user.Profile');
+    Route::get('/get-transaction/{date}', [UserController::class, 'GetTransaction']); // get current transaction for Dashboard
     // admin login route start here 
     Route::post('/user/logout', [AccountController::class, 'AdminLogout'])->name('manager.logout');
     /*---------------- Manager route start here ------------------*/
@@ -224,7 +224,7 @@ Route::middleware('auth')->group(function () {
     // flat route start here 
     Route::get('/manage-flat', [UserFlatController::class, 'Index'])->name('manager.flat.index');
     Route::get('/manage-flat/single-create', [UserFlatController::class, 'SingleCreate'])->name('manager.flat.singlecreate');
-    Route::post('/manage-flat/single-store', [UserFlatController::class, 'SingleStore'])->name('manager.flat.singlestore');
+    Route::post('/manager/manage-flat/single-store', [UserFlatController::class, 'SingleStore'])->name('manager.flat.singlestore');
     // flat route start here 
 
     //    users route 
