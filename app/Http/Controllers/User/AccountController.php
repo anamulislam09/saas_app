@@ -46,6 +46,7 @@ class AccountController extends Controller
                 $data['total'] = Exp_detail::where('customer_id', $user->customer_id)->where('month', $expense->month)->where('year', $expense->year)->SUM('amount');
                 $data['customer_id'] = $expense->customer_id;
                 $data['auth_id'] = $expense->auth_id;
+                $data['date'] = date('Y-m');
                 $exp_process = Exp_process::create($data);
             }
 

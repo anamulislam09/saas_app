@@ -50,6 +50,7 @@ class ExpProcessController extends Controller
                 $data['total'] = Exp_detail::where('customer_id', Auth::guard('admin')->user()->id)->where('month', $expense->month)->where('year', $expense->year)->SUM('amount');
                 $data['customer_id'] = $expense->customer_id;
                 $data['auth_id'] = $expense->auth_id;
+                $data['date'] = date('Y-m');
                 $exp_process = Exp_process::create($data);
             }
 
@@ -94,6 +95,7 @@ class ExpProcessController extends Controller
                     $data['amount'] = $balance;
                     $data['customer_id'] = $month_exp->customer_id;
                     $data['auth_id'] = $month_exp->auth_id;
+                    $data['date'] = date('Y-m');
                     if ($balance >= 0) {
                         $data['flag'] = 1;
                     } else {
@@ -117,6 +119,7 @@ class ExpProcessController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
@@ -139,6 +142,7 @@ class ExpProcessController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
@@ -163,6 +167,7 @@ class ExpProcessController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {
@@ -185,6 +190,7 @@ class ExpProcessController extends Controller
                         $data['amount'] = $balance;
                         $data['customer_id'] = $month_exp->customer_id;
                         $data['auth_id'] = $month_exp->auth_id;
+                        $data['date'] = date('Y-m');
                         if ($balance >= 0) {
                             $data['flag'] = 1;
                         } else {

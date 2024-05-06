@@ -67,16 +67,6 @@ class FlatController extends Controller
                     // dd($flatmaster);
 
                     if ($flatmaster) {
-                        // $Fid = UniqueIdGenerator::generate(['table' => 'flatids', 'length' => 3]);
-                        // $start_at = 001;
-
-                        // if ($start_at) {
-                        //     $customer = Customer::find($start_at);
-                        //     if (!$customer) {
-                        //         $data['id'] = $start_at;
-                        //     }
-                        // }
-                
                         $flatid['flat_id'] = $this->formatSrl($k++);
                         $flatid['customer_id'] = Auth::guard('admin')->user()->id;
                         Flatid::create($flatid);
@@ -89,6 +79,7 @@ class FlatController extends Controller
 
                 foreach ($flatmasters as $flatmaster) {
                     $flatid = Flatid::where('id', $flatmaster->id)->where('customer_id', Auth::guard('admin')->user()->id)->first();
+                    // dd($flatid);
                     $flat['flat_unique_id'] = $flatid->flat_id;
                     $flat['customer_id'] = Auth::guard('admin')->user()->id;
                     $flat['flat_name'] = $flatmaster->flat_name;
@@ -116,7 +107,7 @@ class FlatController extends Controller
                 }
             }
             Flatmaster::where('customer_id', Auth::guard('admin')->user()->id)->delete();
-            // Flatid::where('customer_id', Auth::guard('admin')->user()->id)->delete();
+            Flatid::where('customer_id', Auth::guard('admin')->user()->id)->delete();
 
             return redirect()->route('flat.index')->with('message', 'Flat creted successfully');
         }

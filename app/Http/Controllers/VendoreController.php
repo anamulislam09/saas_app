@@ -29,7 +29,7 @@ class VendoreController extends Controller
         $data['phone'] = $request->phone;
         $data['address'] = $request->address;
         Addressbook::create($data);
-        return redirect()->route('vendore.all')->with('message', 'Vendor Created Successfully!');
+        return redirect()->route('vendor.all')->with('message', 'Vendor Created Successfully!');
     }
 
     public function VendorEdit($id)
